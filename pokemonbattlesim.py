@@ -5,13 +5,13 @@ venusaurBaseStats = [80,82,83,100,100,80]
 charizardBaseStats = [78,84,78,109,85,100]
 blastoiseBaseStats = [79,83,100,85,105,78]
 
-pokemonBaseStatListToDict = {'HP':0,'Atk':1,'Def':2,'SpAtk':3,'SpDef':4,'Spd':5}
-pokemonBaseStatDictToList = {0:'HP',1:'Atk',2:'Def',3:'SpAtk',4:'SpDef',5:'Spd'}
+pokemonBaseStatListToDict = {'HP':0,'Atk':1,'Def':2,'SpAtk':3,'SpDef':4,'Spd':5,'Accuracy':6}
+pokemonBaseStatDictToList = {0:'HP',1:'Atk',2:'Def',3:'SpAtk',4:'SpDef',5:'Spd','Accuracy':6}
 
-pokemonOneCurrentStatStage = [0,2,0,0,0,0]
-pokemonTwoCurrentStatStage = [0,5,0,0,0,0]
+myPokemonCurrentStatStage = [0,0,0,0,0,0,0]
+enemyPokemonCurrentStatStage = [0,0,0,0,0,0,0]
 
-pokemonCurrentStatStages = {'My Pokemon':pokemonOneCurrentStatStage, 'Enemy Pokemon':pokemonTwoCurrentStatStage}
+pokemonCurrentStatStages = {'My Pokemon':myPokemonCurrentStatStage, 'Enemy Pokemon':enemyPokemonCurrentStatStage}
 
 pokemonStatStageToMult = {-6:0.25,-5:0.28,-4:0.33,-4:0.40,-2:0.50,-1:0.66,0:1,1:1.5,2:2,3:2.5,4:3,5:3.5,6:4}
 
@@ -82,48 +82,54 @@ def getRandomMoveFromSet(pokemon):
 	moveNumber = randint(1,movesetSize) - 1
 	return moveSet[moveNumber]
 
-def getPokemonHPMult():
-	pokemonHPStage = pokemonOneCurrentStatStage[0]
+def getPokemonHPMult(pokemon):
+	pokemonCurrentStatStage = getPokemonStatStage(pokemon)
+	pokemonHPStage = pokemonCurrentStatStage[0]
 	if pokemonHPStage > 6:
 		pokemonHPStage = 6
 	if pokemonHPStage < -6:
 		pokemonHPStage = -6
 	pokemonHPMult = pokemonStatStageToMult[pokemonHPStage]
 	return pokemonHPMult
-def getPokemonAtkMult():
-	pokemonAtkStage = pokemonOneCurrentStatStage[1]
+def getPokemonAtkMult(pokemon):
+	pokemonCurrentStatStage = getPokemonStatStage(pokemon)
+	pokemonAtkStage = pokemonCurrentStatStage[1]
 	if pokemonAtkStage > 6:
 		pokemonAtkStage = 6
 	if pokemonAtkStage < -6:
 		pokemonAtkStage = -6
 	pokemonAtkMult = pokemonStatStageToMult[pokemonAtkStage]
 	return pokemonAtkMult
-def getPokemonDefMult():
-	pokemonDefStage = pokemonOneCurrentStatStage[2]
+def getPokemonDefMult(pokemon):
+	pokemonCurrentStatStage = getPokemonStatStage(pokemon)
+	pokemonDefStage = pokemonCurrentStatStage[2]
 	if pokemonDefStage > 6:
 		pokemonDefStage = 6
 	if pokemonDefStage < -6:
 		pokemonDefStage = -6
 	pokemonDefMult = pokemonStatStageToMult[pokemonDefStage]
 	return pokemonDefMult
-def getPokemonSpAtkMult():
-	pokemonSpAtkStage = pokemonOneCurrentStatStage[3]
+def getPokemonSpAtkMult(pokemon):
+	pokemonCurrentStatStage = getPokemonStatStage(pokemon)
+	pokemonSpAtkStage = pokemonCurrentStatStage[3]
 	if pokemonSpAtkStage > 6:
 		pokemonSpAtkStage = 6
 	if pokemonSpAtkStage < -6:
 		pokemonSpAtkStage = -6
 	pokemonSpAtkMult = pokemonStatStageToMult[pokemonSpAtkStage]
 	return pokemonSpAtkMult
-def getPokemonSpDefMult():
-	pokemonSpDefStage = pokemonOneCurrentStatStage[4]
+def getPokemonSpDefMult(pokemon):
+	pokemonCurrentStatStage = getPokemonStatStage(pokemon)
+	pokemonSpDefStage = pokemonCurrentStatStage[4]
 	if pokemonSpDefStage > 6:
 		pokemonSpDefStage = 6
 	if pokemonSpDefStage < -6:
 		pokemonSpDefStage = -6
 	pokemonSpDefMult = pokemonStatStageToMult[pokemonSpDefStage]
 	return pokemonSpDefMult
-def getPokemonSpdMult():
-	pokemonSpdStage = pokemonOneCurrentStatStage[5]
+def getPokemonSpdMult(pokemon):
+	pokemonCurrentStatStage = getPokemonStatStage(pokemon)
+	pokemonSpdStage = pokemonCurrentStatStage[5]
 	if pokemonSpdStage > 6:
 		pokemonSpdStage = 6
 	if pokemonSpdStage < -6:
@@ -131,31 +137,31 @@ def getPokemonSpdMult():
 	pokemonSpdMult = pokemonStatStageToMult[pokemonSpdStage]
 	return pokemonSpdMult
 
-def gethpStat(pokemon,level):
+def gethpStat(pokemon,level,team):
 	myPokemonStats = pokemonStats[pokemon]
 	return ((2 * myPokemonStats[0]) * level / 100 ) + level + 10
-def getAtkStat(pokemon,level):
+def getAtkStat(pokemon,level,team):
 	myPokemonStats = pokemonStats[pokemon]
-	pokemonAtkMult = getPokemonAtkMult()
+	pokemonAtkMult = getPokemonAtkMult(team)
 	return pokemonAtkMult * (((2 * myPokemonStats[1]) * level / 100 ) + 5)
-def getDefStat(pokemon,level):
+def getDefStat(pokemon,level,team):
 	myPokemonStats = pokemonStats[pokemon]
-	pokemonDefMult = getPokemonDefMult()
+	pokemonDefMult = getPokemonDefMult(team)
 	return pokemonDefMult * (((2 * myPokemonStats[2]) * level / 100 ) + 5)
-def getSpAtkStat(pokemon,level):
+def getSpAtkStat(pokemon,level,team):
 	myPokemonStats = pokemonStats[pokemon]
-	pokemonSpAtkMult = getPokemonSpAtkMult()
+	pokemonSpAtkMult = getPokemonSpAtkMult(team)
 	return pokemonSpAtkMult * (((2 * myPokemonStats[3]) * level / 100 ) + 5)
-def getSpDefStat(pokemon,level):
+def getSpDefStat(pokemon,level,team):
 	myPokemonStats = pokemonStats[pokemon]
-	pokemonSpDefMult = getPokemonSpDefMult()
+	pokemonSpDefMult = getPokemonSpDefMult(team)
 	return pokemonSpDefMult * (((2 * myPokemonStats[4]) * level / 100 ) + 5)
-def getSpdStat(pokemon,level):
+def getSpdStat(pokemon,level,team):
 	myPokemonStats = pokemonStats[pokemon]
-	pokemonSpdMult = getPokemonSpdMult()
+	pokemonSpdMult = getPokemonSpdMult(team)
 	return pokemonSpdMult * (((2 * myPokemonStats[5]) * level / 100 ) + 5)
 
-def getPokemonToApplyStatChange(pokemon):
+def getPokemonStatStage(pokemon):
 	pokemonToApplyStatChange = pokemonCurrentStatStages[pokemon]
 	return pokemonToApplyStatChange
 
@@ -211,19 +217,19 @@ def getHitOrMiss(move):
 		return 'Hit'
 	else:
 		return 'Miss'
-def getMoveDamage(move,atkPokemon,atkLevel,defPokemon,defLevel):
+def getMoveDamage(move,atkPokemon,atkLevel,defPokemon,defLevel,atkTeam,defTeam):
 	moveBaseDamage = getMoveBaseDamage(move)
 	effectiveness = getEffectiveness(move,defPokemon)
 	stabBonus = getStabBonus(move,atkPokemon)
 	moveVariety = getMoveVariety(move)
 	if moveVariety == 'Physical':
-		atkStat = getAtkStat(atkPokemon,atkLevel)
-		defStat = getDefStat(defPokemon,defLevel)
+		atkStat = getAtkStat(atkPokemon,atkLevel,atkTeam)
+		defStat = getDefStat(defPokemon,defLevel,defTeam)
 		moveDamage = int(((((2 * myLevel / 5 + 2) * atkStat * moveBaseDamage / defStat) / 50 ) + 2) * stabBonus * effectiveness * float(randint(0,15)+85)/100)
 		return moveDamage	
 	if moveVariety == 'Special':
-		atkStat = getSpAtkStat(atkPokemon,atkLevel)
-		defStat = getSpDefStat(defPokemon,defLevel)
+		atkStat = getSpAtkStat(atkPokemon,atkLevel,atkTeam)
+		defStat = getSpDefStat(defPokemon,defLevel,defTeam)
 		moveDamage = int(((((2 * myLevel / 5 + 2) * atkStat * moveBaseDamage / defStat) / 50 ) + 2) * stabBonus * effectiveness * float(randint(0,15)+85)/100)
 		return moveDamage
 	if moveVariety == 'Support':
@@ -237,11 +243,8 @@ def getPokemonBaseStatDictToList(i):
 	dictToList = pokemonBaseStatDictToList[i]
 	return dictToList
 
-
-
 #def getStatBuff(pokemon,stat):
 def getStatChange(move):
-	print move
 	statChange=[]
 	for i in range(0,6):
 		stat = getPokemonBaseStatDictToList(i)
@@ -249,15 +252,9 @@ def getStatChange(move):
 		statChange.append(moveStatChange)
 	return statChange
 
-
-
-
-getStatChange('Defense Curl')
-
-
 def getTurnOrder(myPokemon,myLevel,enemyPokemon,enemyLevel):
-	mySpd = getSpdStat(myPokemon,myLevel)
-	enemySpd = getSpdStat(enemyPokemon,enemyLevel)
+	mySpd = getSpdStat(myPokemon,myLevel,'My Pokemon')
+	enemySpd = getSpdStat(enemyPokemon,enemyLevel,'Enemy Pokemon')
 	if mySpd > enemySpd:
 		return 'myPokemonFirst'
 	if mySpd < enemySpd:
@@ -272,41 +269,67 @@ def getPokemonMove(move,myPokemon,myLevel,enemyPokemon,enemyLevel):
 	moveDamage = getMoveDamage(move,myPokemon,myLevel,enemyPokemon,enemyLevel)
 	effectiveness = getEffectiveness(move,enemyPokemon)
 	addedEffect = getMoveExtra(move)
-def startTurn(atkMove,atkPokemon,atkLevel,defPokemon,defLevel,defHP):
-	moveDamage = getMoveDamage(atkMove,atkPokemon,atkLevel,defPokemon,defLevel)
-	defMaxHP = gethpStat(defPokemon,defLevel)
-	hitOrMiss = getHitOrMiss(atkMove)
-	moveVariety = getMoveVariety(atkMove)
-	if hitOrMiss == 'Miss':
-		print atkPokemon, 'used', atkMove, 'but it missed!'
-		return defHP
-	if moveVariety == 'Support':
-		moveExtraForm = getMoveExtraForm(atkMove)
-		if moveExtraForm == 'Self':
-			if atkPokemon == myPokemon:
-				pokemonToApplyStatChange = getPokemonToApplyStatChange('My Pokemon')
-			if atkPokemon == enemyPokemon:
-				pokemonToApplyStatChange = getPokemonToApplyStatChange('Enemy Pokemon')
-		if moveExtraForm == 'Enemy':
-			if atkPokemon == myPokemon:
-				pokemonToApplyStatChange = getPokemonToApplyStatChange('Enemy Pokemon')
-			if atkPokemon == enemyPokemon:
-				pokemonToApplyStatChange = getPokemonToApplyStatChange('My Pokemon')
-		statChange = getStatChange(atkMove)
-		pokemonToApplyStatChange = list(map(add, pokemonToApplyStatChange, statChange))
-		print pokemonToApplyStatChange
-		print atkPokemon, 'used', atkMove, 'against', defPokemon, '- it changed the stat stage of', defPokemon, 'by', statChange, '.', defPokemon, 'has', defHP, '/', defMaxHP, 'HP remaining!'
-		HPList = [defHP]
-		print HPList
-		outcomeInfo = pokemonToApplyStatChange + HPList
-		print outcomeInfo
-		return outcomeInfo
 
-	defHP = defHP - moveDamage
-	if defHP < 0:
-		defHP = 0
-	print atkPokemon, 'used', atkMove, 'against', defPokemon, '- it dealt', moveDamage, 'HP damage!', defPokemon, 'has', defHP, '/', defMaxHP, 'HP remaining!'
-	return defHP
+def startMyTurn(move,myPokemon,myLevel,myHP,enemyPokemon,enemyLevel,enemyHP):
+	moveDamage = getMoveDamage(move,myPokemon,myLevel,enemyPokemon,enemyLevel,'My Pokemon','Enemy Pokemon')
+	enemyMaxHP = gethpStat(enemyPokemon,enemyLevel,'Enemy Pokemon')
+	hitOrMiss = getHitOrMiss(move)
+	moveVariety = getMoveVariety(move)
+	if hitOrMiss == 'Miss':
+		print myPokemon, 'used', move, 'but it missed!'
+		return enemyHP
+#	if moveVariety == 'Support':
+#		moveExtraForm = getMoveExtraForm(move)
+#		if moveExtraForm == 'Self':
+#			pokemonToApplyStatChange = getPokemonStatStage('My Pokemon')
+#		if moveExtraForm == 'Enemy':
+#			pokemonToApplyStatChange = getPokemonStatStage('Enemy Pokemon')
+#		statChange = getStatChange(move)
+#		pokemonToApplyStatChange = list(map(add, pokemonToApplyStatChange, statChange))
+#		print pokemonToApplyStatChange
+#		print myPokemon, 'used', move, 'against', enemyPokemon, '- it changed the stat stage of', enemyLevel, 'by', statChange, '.', enemyLevel, 'has', enemyHP, '/', enemyMaxHP, 'HP remaining!'
+#		HPList = [enemyHP]
+#		print HPList
+#		outcomeInfo = pokemonToApplyStatChange + HPList
+#		print outcomeInfo
+#		return outcomeInfo
+	enemyHP = enemyHP - moveDamage
+	if enemyHP < 0:
+		enemyHP = 0
+	print myPokemon, 'used', move, 'against the wild', enemyPokemon, '- it dealt', moveDamage, 'HP damage!', enemyPokemon, 'has', enemyHP, '/', enemyMaxHP, 'HP remaining!'
+	return enemyHP
+
+def startEnemyTurn(move,enemyPokemon,enemyLevel,enemyHP,myPokemon,MyPokemon,myHP):
+	moveDamage = getMoveDamage(move,enemyPokemon,enemyLevel,myPokemon,myLevel,'Enemy Pokemon','My Pokemon')
+	myMaxHP = gethpStat(myPokemon,myLevel,'My Pokemon')
+	hitOrMiss = getHitOrMiss(move)
+	moveVariety = getMoveVariety(move)
+	myPokemonCurrentStatStage = getPokemonStatStage('My Pokemon')
+	enemyPokemonCurrentStatStage = getPokemonStatStage('Enemy Pokemon')
+	if hitOrMiss == 'Miss':
+		print enemyPokemon, 'used', move, 'but it missed!'
+		return myHP
+#	if moveVariety == 'Support':
+#		moveExtraForm = getMoveExtraForm(move)
+#		if moveExtraForm == 'Self':
+#			pokemonToApplyStatChange = getPokemonStatStage('My Pokemon')
+#		if moveExtraForm == 'Enemy':
+#			pokemonToApplyStatChange = getPokemonStatStage('Enemy Pokemon')
+#		statChange = getStatChange(move)
+#		pokemonToApplyStatChange = list(map(add, pokemonToApplyStatChange, statChange))
+#		print pokemonToApplyStatChange
+#		print enemyPokemon, 'used', move, 'against', MyPokemon, '- it changed the stat stage of', MyPokemon, 'by', statChange, '.', MyPokemon, 'has', myHP, '/', myMaxHP, 'HP remaining!'
+#		HPList = [enemyHP]
+#		print HPList
+#		outcomeInfo = pokemonToApplyStatChange + HPList
+#		print outcomeInfo
+#		return outcomeInfo
+	myHP = myHP - moveDamage
+	if myHP < 0:
+		myHP = 0
+	print 'The wild', enemyPokemon, 'used', move, 'against', myPokemon, '- it dealt', moveDamage, 'HP damage!', myPokemon, 'has', myHP, '/', myMaxHP, 'HP remaining!'
+	return myHP
+
 def getMoveInput(myPokemon):
 	movesetSize = len(getMoveSet(myPokemon))
 	while True:
@@ -331,21 +354,20 @@ def startRound(myPokemon,myLevel,myHP,enemyPokemon,enemyLevel,enemyHP):
 	enemyMove = getRandomMoveFromSet(enemyPokemon)
 	turnOrder = getTurnOrder(myPokemon,myLevel,enemyPokemon,enemyLevel)
 	if turnOrder == 'myPokemonFirst':
-		enemyHP = startTurn(myMove,myPokemon,myLevel,enemyPokemon,enemyLevel,enemyHP)
+		enemyHP = startMyTurn(myMove,myPokemon,myLevel,myHP,enemyPokemon,enemyLevel,enemyHP)
 		if enemyHP == 0:
 			return [myHP,enemyHP]
-		myHP = startTurn(enemyMove,enemyPokemon,enemyLevel,myPokemon,myLevel,myHP)
+		myHP = startEnemyTurn(enemyMove,enemyPokemon,enemyLevel,enemyHP,myPokemon,myLevel,myHP)
 	if turnOrder == 'enemyPokemonFirst':
-		myHP = startTurn(enemyMove,enemyPokemon,enemyLevel,myPokemon,myLevel,myHP)
+		myHP = startEnemyTurn(enemyMove,enemyPokemon,enemyLevel,enemyHP,myPokemon,myLevel,myHP)
 		if myHP == 0:
 			return [myHP,enemyHP]
-		enemyHP = startTurn(myMove,myPokemon,myLevel,enemyPokemon,enemyLevel,enemyHP)
-	print [myHP,enemyHP]
+		enemyHP = startMyTurn(myMove,myPokemon,myLevel,myHP,enemyPokemon,enemyLevel,enemyHP)
 	return [myHP,enemyHP]
 def startBattle(myPokemon,myLevel,enemyPokemon,enemyLevel):
 	print 'A wild Level', enemyLevel, enemyPokemon, 'appeared! Go', myPokemon, '!'
-	myHP = gethpStat(myPokemon,myLevel)
-	enemyHP = gethpStat(enemyPokemon,enemyLevel)
+	myHP = gethpStat(myPokemon,myLevel,'My Pokemon')
+	enemyHP = gethpStat(enemyPokemon,enemyLevel,'Enemy Pokemon')
 	while myHP > 0 and enemyHP > 0:
 		newHP = startRound(myPokemon,myLevel,myHP,enemyPokemon,enemyLevel,enemyHP)
 		myHP = newHP[0]
@@ -357,10 +379,10 @@ def startBattle(myPokemon,myLevel,enemyPokemon,enemyLevel):
 
 
 myPokemon='Charizard'
-#enemyPokemon='Venusaur'
+enemyPokemon='Venusaur'
 myLevel=100
-#enemyLevel=100
-enemyPokemon = getRandomPokemon()
-enemyLevel = getRandomLevel()
+enemyLevel=100
+#enemyPokemon = getRandomPokemon()
+#enemyLevel = getRandomLevel()
 
 startBattle(myPokemon,myLevel,enemyPokemon,enemyLevel)
