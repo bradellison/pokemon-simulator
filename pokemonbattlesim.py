@@ -239,18 +239,18 @@ def getMoveDamage(move,atkPokemon,atkLevel,defPokemon,defLevel,atkTeam,defTeam):
 		if moveExtraForm == 'Enemy':
 			return 0
 
-def getPokemonBaseStatDictToList(i):
-	dictToList = pokemonBaseStatDictToList[i]
-	return dictToList
-
-#def getStatBuff(pokemon,stat):
-def getStatChange(move):
-	statChange=[]
-	for i in range(0,6):
-		stat = getPokemonBaseStatDictToList(i)
-		moveStatChange = getMoveStatChangeInfo(move,stat)
-		statChange.append(moveStatChange)
-	return statChange
+#def getPokemonBaseStatDictToList(i):
+#	dictToList = pokemonBaseStatDictToList[i]
+#	return dictToList
+#
+##def getStatBuff(pokemon,stat):
+#def getStatChange(move):
+#	statChange=[]
+#	for i in range(0,6):
+#		stat = getPokemonBaseStatDictToList(i)
+#		moveStatChange = getMoveStatChangeInfo(move,stat)
+#		statChange.append(moveStatChange)
+#	return statChange
 
 def getTurnOrder(myPokemon,myLevel,enemyPokemon,enemyLevel):
 	mySpd = getSpdStat(myPokemon,myLevel,'My Pokemon')
@@ -358,12 +358,13 @@ def startRound(myPokemon,myLevel,myHP,enemyPokemon,enemyLevel,enemyHP):
 		if enemyHP == 0:
 			return [myHP,enemyHP]
 		myHP = startEnemyTurn(enemyMove,enemyPokemon,enemyLevel,enemyHP,myPokemon,myLevel,myHP)
+		return [myHP,enemyHP]
 	if turnOrder == 'enemyPokemonFirst':
 		myHP = startEnemyTurn(enemyMove,enemyPokemon,enemyLevel,enemyHP,myPokemon,myLevel,myHP)
 		if myHP == 0:
 			return [myHP,enemyHP]
 		enemyHP = startMyTurn(myMove,myPokemon,myLevel,myHP,enemyPokemon,enemyLevel,enemyHP)
-	return [myHP,enemyHP]
+		return [myHP,enemyHP]
 def startBattle(myPokemon,myLevel,enemyPokemon,enemyLevel):
 	print 'A wild Level', enemyLevel, enemyPokemon, 'appeared! Go', myPokemon, '!'
 	myHP = gethpStat(myPokemon,myLevel,'My Pokemon')
@@ -377,12 +378,11 @@ def startBattle(myPokemon,myLevel,enemyPokemon,enemyLevel):
 	if myHP > 0:
 		print 'The wild', enemyPokemon, 'fainted! You win!'
 
-
 myPokemon='Charizard'
-enemyPokemon='Venusaur'
+#enemyPokemon='Venusaur'
 myLevel=100
-enemyLevel=100
-#enemyPokemon = getRandomPokemon()
-#enemyLevel = getRandomLevel()
+#enemyLevel=100
+enemyPokemon = getRandomPokemon()
+enemyLevel = getRandomLevel()
 
 startBattle(myPokemon,myLevel,enemyPokemon,enemyLevel)
