@@ -84,13 +84,16 @@ moveInfo = {'Tackle':tackleInfo,'Ember':emberInfo,'Bubble':bubbleInfo,'Vine Whip
 moveExtraInfo = {'Ember':emberExtraInfo,'Growl':growlExtraInfo,'Defense Curl':defenseCurlExtraInfo,'Tail Whip':tailWhipExtraInfo}
 moveStatChangeInfo = {'Growl':growlStatChangeInfo,'Defense Curl':defenseCurlStatChangeInfo,'Tail Whip':tailWhipStatChangeInfo}
 
+
 def getRandomPokemon():
 	pokemonSetSize = len(pokemonWild)
 	pokemonNumber = randint(1,pokemonSetSize) - 1
 	return pokemonWild[pokemonNumber]
+
 def getRandomLevel():
 	pokemonLevel = randint(1,100)
 	return pokemonLevel
+
 def getMoveOption(pokemon,moveNumber):
 	pokemonMoveset = pokemonMoves[pokemon]
 	if moveNumber == 0:
@@ -101,12 +104,14 @@ def getMoveOption(pokemon,moveNumber):
 		return pokemonMoveset['Move Three']
 	if moveNumber == 3:
 		return pokemonMoveset['Move Four']
+
 def getRandomIV():
 	IV = []
-	for i in range(6):
+	for _ in range(6):
 		x = randint(1,31)
 		IV.append(x)
 	return IV
+
 def getMoveSet(pokemon):
 	moveSet = []
 	pokemonMovesetSize = len(pokemonMoves[pokemon])
@@ -114,11 +119,13 @@ def getMoveSet(pokemon):
 		moveI = getMoveOption(pokemon,i)
 		moveSet.append(moveI)
 	return moveSet
+
 def getRandomMoveFromSet(pokemon):
 	moveSet = getMoveSet(pokemon)
 	movesetSize = len(moveSet)
 	moveNumber = randint(1,movesetSize) - 1
 	return moveSet[moveNumber]
+
 def getPokemonHPMult(pokemon):
 	pokemonCurrentStatStage = statStage
 	pokemonHPStage = pokemonCurrentStatStage[0]
@@ -128,6 +135,7 @@ def getPokemonHPMult(pokemon):
 		pokemonHPStage = -6
 	pokemonHPMult = pokemonStatStageToMult[pokemonHPStage]
 	return pokemonHPMult
+
 def getPokemonAtkMult(statStage):
 	pokemonCurrentStatStage = statStage
 	pokemonAtkStage = pokemonCurrentStatStage[1]
@@ -137,6 +145,7 @@ def getPokemonAtkMult(statStage):
 		pokemonAtkStage = -6
 	pokemonAtkMult = pokemonStatStageToMult[pokemonAtkStage]
 	return pokemonAtkMult
+
 def getPokemonDefMult(statStage):
 	pokemonCurrentStatStage = statStage
 	pokemonDefStage = pokemonCurrentStatStage[2]
@@ -146,6 +155,7 @@ def getPokemonDefMult(statStage):
 		pokemonDefStage = -6
 	pokemonDefMult = pokemonStatStageToMult[pokemonDefStage]
 	return pokemonDefMult
+
 def getPokemonSpAtkMult(statStage):
 	pokemonCurrentStatStage = statStage
 	pokemonSpAtkStage = pokemonCurrentStatStage[3]
@@ -155,6 +165,7 @@ def getPokemonSpAtkMult(statStage):
 		pokemonSpAtkStage = -6
 	pokemonSpAtkMult = pokemonStatStageToMult[pokemonSpAtkStage]
 	return pokemonSpAtkMult
+
 def getPokemonSpDefMult(statStage):
 	pokemonCurrentStatStage = statStage
 	pokemonSpDefStage = pokemonCurrentStatStage[4]
@@ -164,6 +175,7 @@ def getPokemonSpDefMult(statStage):
 		pokemonSpDefStage = -6
 	pokemonSpDefMult = pokemonStatStageToMult[pokemonSpDefStage]
 	return pokemonSpDefMult
+
 def getPokemonSpdMult(statStage):
 	pokemonCurrentStatStage = statStage
 	pokemonSpdStage = pokemonCurrentStatStage[5]
@@ -173,74 +185,93 @@ def getPokemonSpdMult(statStage):
 		pokemonSpdStage = -6
 	pokemonSpdMult = pokemonStatStageToMult[pokemonSpdStage]
 	return pokemonSpdMult
+
 def gethpStat(pokemon,level,iv,statStage):
 	myPokemonStats = pokemonStats[pokemon]
 	iv = iv[0]
 	return ((2 * myPokemonStats[0] + iv) * level / 100 ) + level + 10
+
 def getAtkStat(pokemon,level,iv,statStage):
 	myPokemonStats = pokemonStats[pokemon]
 	iv = iv[1]
 	pokemonAtkMult = getPokemonAtkMult(statStage)
 	return pokemonAtkMult * (((2 * myPokemonStats[1] + iv) * level / 100 ) + 5)
+
 def getDefStat(pokemon,level,iv,statStage):
 	myPokemonStats = pokemonStats[pokemon]
 	iv = iv[2]
 	pokemonDefMult = getPokemonDefMult(statStage)
 	return pokemonDefMult * (((2 * myPokemonStats[2] + iv) * level / 100 ) + 5)
+
 def getSpAtkStat(pokemon,level,iv,statStage):
 	myPokemonStats = pokemonStats[pokemon]
 	iv = iv[3]
 	pokemonSpAtkMult = getPokemonSpAtkMult(statStage)
 	return pokemonSpAtkMult * (((2 * myPokemonStats[3] + iv) * level / 100 ) + 5)
+
 def getSpDefStat(pokemon,level,iv,statStage):
 	myPokemonStats = pokemonStats[pokemon]
 	iv = iv[4]
 	pokemonSpDefMult = getPokemonSpDefMult(statStage)
 	return pokemonSpDefMult * (((2 * myPokemonStats[4] + iv) * level / 100 ) + 5)
+
 def getSpdStat(pokemon,level,iv,statStage):
 	myPokemonStats = pokemonStats[pokemon]
 	iv = iv[5]
 	pokemonSpdMult = getPokemonSpdMult(statStage)
 	return pokemonSpdMult * (((2 * myPokemonStats[5] + iv) * level / 100 ) + 5)
+
 def getPokemonStatStage(pokemon):
 	pokemonToApplyStatChange = pokemonCurrentStatStages[pokemon]
 	return pokemonToApplyStatChange
+
 def getPokemonTypeOne(pokemon):
 	pokemonType = pokemonTypes[pokemon]
 	return pokemonType['Type One']
+
 def getPokemonTypeTwo(pokemon):
 	pokemonType = pokemonTypes[pokemon]
 	return pokemonType['Type Two']
+
 def getMoveBaseDamage(move):
 	moveBaseDam = moveInfo[move]
 	return moveBaseDam['Base Damage']
+
 def getMoveType(move):
 	moveType = moveInfo[move]
 	return moveType['Move Type']
+
 def getMoveVariety(move):
 	moveVariety = moveInfo[move]
 	return moveVariety['Move Variety']
+
 def getMoveExtra(move):
 	moveExtra = moveInfo[move]
 	return moveExtra['Added Effect'] 
+
 def getMoveExtraForm(move):
 	moveExtraForm = moveExtraInfo[move]
 	return moveExtraForm['Stat Change']
+
 def getMoveStatChangeInfo(move,stat):
 	moveStatChange = moveStatChangeInfo[move]
 	return moveStatChange[stat]
+
 def getMoveAccuracy(move):
 	moveAccuracy = moveInfo[move]
 	return moveAccuracy['Move Accuracy']
+
 def getEffectiveness(move,pokemon):
 	moveType = getMoveType(move)
 	pokemonTypeOne = getPokemonTypeOne(pokemon)
 	pokemonTypeTwo = getPokemonTypeTwo(pokemon)
 	moveType2 = allType[moveType]
 	return moveType2[pokemonTypeOne] * moveType2[pokemonTypeTwo]
+
 def getEffectivesnessWording(i):
 	effectivenessWording = effectivenessScale[i]
 	return effectivenessWording
+
 def getStabBonus(move,pokemon):
 	moveType = getMoveType(move)
 	pokemonTypeOne = getPokemonTypeOne(pokemon)
@@ -251,6 +282,7 @@ def getStabBonus(move,pokemon):
 		return 1.5
 	else:
 		return 1 
+
 def getHitOrMiss(move):
 	accuracy = getMoveAccuracy(move)
 	randomOf100 = randint(1,100)
@@ -258,6 +290,7 @@ def getHitOrMiss(move):
 		return 'Hit'
 	else:
 		return 'Miss'
+
 def getMoveDamage(move,atkPokemon,atkLevel,atkIV,atkStatStage,defPokemon,defLevel,defIV,defStatStage):
 	moveBaseDamage = getMoveBaseDamage(move)
 	effectiveness = getEffectiveness(move,defPokemon)
@@ -279,9 +312,11 @@ def getMoveDamage(move,atkPokemon,atkLevel,atkIV,atkStatStage,defPokemon,defLeve
 			return 0
 		if moveExtraForm == 'Enemy':
 			return 0
+
 def getPokemonBaseStatDictToList(i):
 	dictToList = pokemonBaseStatDictToList[i]
 	return dictToList
+
 def getStatChange(move):
 	statChange=[]
 	for i in range(0,7):
@@ -289,8 +324,10 @@ def getStatChange(move):
 		moveStatChange = getMoveStatChangeInfo(move,stat)
 		statChange.append(moveStatChange)
 	return statChange
-#def getStatChangeWording(i):
+#
+# def getStatChangeWording(i):
 #	todo
+
 def getTurnOrder(myPokemon,myLevel,myIV,enemyPokemon,enemyLevel,enemyIV):
 	mySpd = getSpdStat(myPokemon,myLevel,myIV,'My Pokemon')
 	enemySpd = getSpdStat(enemyPokemon,enemyLevel,enemyIV,'Enemy Pokemon')
@@ -304,10 +341,12 @@ def getTurnOrder(myPokemon,myLevel,myIV,enemyPokemon,enemyLevel,enemyIV):
 			return 'myPokemonFirst'
 		if x == 1:
 			return 'enemyPokemonFirst'
+
 def getPokemonMove(move,myPokemon,myLevel,enemyPokemon,enemyLevel):
 	moveDamage = getMoveDamage(move,myPokemon,myLevel,enemyPokemon,enemyLevel)
 	effectiveness = getEffectiveness(move,enemyPokemon)
 	addedEffect = getMoveExtra(move)
+
 def startMyTurn(move,myPokemon,myLevel,myHP,myIV,myStatStage,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage):
 	moveDamage = getMoveDamage(move,myPokemon,myLevel,myIV,myStatStage,enemyPokemon,enemyLevel,enemyIV,enemyStatStage)
 	enemyMaxHP = gethpStat(enemyPokemon,enemyLevel,enemyIV,'Enemy Pokemon')
@@ -341,6 +380,7 @@ def startMyTurn(move,myPokemon,myLevel,myHP,myIV,myStatStage,enemyPokemon,enemyL
 	hpList = [myHP,enemyHP]
 	outcomeInfo = hpList + myStatStage + enemyStatStage
 	return outcomeInfo
+
 def startEnemyTurn(move,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,myPokemon,myLevel,myHP,myIV,myStatStage):
 	moveDamage = getMoveDamage(move,enemyPokemon,enemyLevel,enemyIV,enemyStatStage,myPokemon,myLevel,myIV,myStatStage)
 	myMaxHP = gethpStat(myPokemon,myLevel,myIV,'My Pokemon')
@@ -373,6 +413,7 @@ def startEnemyTurn(move,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,m
 	hpList = [myHP,enemyHP]
 	outcomeInfo = hpList + myStatStage + enemyStatStage
 	return outcomeInfo
+
 def getMoveInput(myPokemon):
 	movesetSize = len(getMoveSet(myPokemon))
 	while True:
@@ -389,6 +430,7 @@ def getMoveInput(myPokemon):
 			print("Please choose a move from the list below!")
 		except ValueError:
 			print("Please choose a move from the list.")
+
 def startRound(myPokemon,myLevel,myHP,myIV,myStatStage,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage):
 	print('\nWhat will', myPokemon, 'do?')
 	print(getMoveSet(myPokemon))
@@ -416,6 +458,7 @@ def startRound(myPokemon,myLevel,myHP,myIV,myStatStage,enemyPokemon,enemyLevel,e
 			return turnOutcomeInfo
 		turnOutcomeInfo = startMyTurn(myMove,myPokemon,myLevel,myHP,myIV,myStatStage,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage)
 		return turnOutcomeInfo
+
 def startBattle(myPokemon,myLevel,myIV,enemyPokemon,enemyLevel):
 	print('A wild Level', enemyLevel, enemyPokemon, 'appeared! Go', myPokemon, '!')
 	enemyIV = getRandomIV()
@@ -433,6 +476,7 @@ def startBattle(myPokemon,myLevel,myIV,enemyPokemon,enemyLevel):
 		print(myPokemon, 'fainted! You lose!')
 	if myHP > 0:
 		print('The wild', enemyPokemon, 'fainted! You win!')
+
 
 def startGame():
 	print('Professor Oak: \n- Hello! Welcome to the wonderful world of Pokemon. My name is Professor Oak, it\'s great to meet you. What was your name again?')
@@ -458,6 +502,7 @@ def startGame():
 	print('Gary: \n Fine, I choose', enemyPokemon + '! Let\'s fight!')
 	input()
 	startBattle(myPokemon,myLevel,myIV,enemyPokemon,enemyLevel)
+
 
 def chooseGameplay():
 	print('> To begin the game as normal, type 1\n> For a random battle (both yours and the enemy Pokemon and levels random), type 2\n> To fight a random level random Pokemon with a Level 100 Charizard, type 3\n> To fight a level 100 random pokemon with a random level 100 pokemon, type 4')
