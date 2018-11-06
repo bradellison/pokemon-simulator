@@ -126,15 +126,15 @@ def getRandomMoveFromSet(pokemon):
 	moveNumber = randint(1,movesetSize) - 1
 	return moveSet[moveNumber]
 
-def getPokemonHPMult(pokemon):
-	pokemonCurrentStatStage = statStage
-	pokemonHPStage = pokemonCurrentStatStage[0]
-	if pokemonHPStage > 6:
-		pokemonHPStage = 6
-	if pokemonHPStage < -6:
-		pokemonHPStage = -6
-	pokemonHPMult = pokemonStatStageToMult[pokemonHPStage]
-	return pokemonHPMult
+# def getPokemonHPMult(pokemon):
+# 	pokemonCurrentStatStage = statStage
+# 	pokemonHPStage = pokemonCurrentStatStage[0]
+# 	if pokemonHPStage > 6:
+# 		pokemonHPStage = 6
+# 	if pokemonHPStage < -6:
+# 		pokemonHPStage = -6
+# 	pokemonHPMult = pokemonStatStageToMult[pokemonHPStage]
+# 	return pokemonHPMult
 
 def getPokemonAtkMult(statStage):
 	pokemonCurrentStatStage = statStage
