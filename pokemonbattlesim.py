@@ -25,7 +25,7 @@ pokemonCurrentStatStages = {'My Pokemon':myPokemonCurrentStatStage, 'Enemy Pokem
 
 pokemonStatStageToMult = {-6:0.25,-5:0.28,-4:0.33,-3:0.40,-2:0.50,-1:0.66,0:1,1:1.5,2:2,3:2.5,4:3,5:3.5,6:4}
 
-statusNumberToType = {1:'Burn',2:'Paralyze',3:'Sleep',4:'Frozen',5:'Confused'}
+statusNumberToType = {0:'Nothing',1:'Burn',2:'Paralyze',3:'Sleep',4:'Frozen',5:'Confused'}
 
 bulbasaurType = {'Type One':'Grass','Type Two':'Poison'}
 ivysaurType = {'Type One':'Grass','Type Two':'Poison'}
@@ -189,7 +189,7 @@ def getPokemonSpdMult(statStage):
 def gethpStat(pokemon,level,iv,statStage):
 	myPokemonStats = pokemonStats[pokemon]
 	iv = iv[0]
-	return ((2 * myPokemonStats[0] + iv) * level / 100 ) + level + 10
+	return int(((2 * myPokemonStats[0] + iv) * level / 100 ) + level + 10)
 
 def getAtkStat(pokemon,level,iv,statStage):
 	myPokemonStats = pokemonStats[pokemon]
@@ -328,9 +328,9 @@ def getStatChange(move):
 # def getStatChangeWording(i):
 #	todo
 
-def getTurnOrder(myPokemon,myLevel,myIV,enemyPokemon,enemyLevel,enemyIV):
-	mySpd = getSpdStat(myPokemon,myLevel,myIV,'My Pokemon')
-	enemySpd = getSpdStat(enemyPokemon,enemyLevel,enemyIV,'Enemy Pokemon')
+def getTurnOrder(myPokemon,myLevel,myIV,myStatStage,enemyPokemon,enemyLevel,enemyIV,enemyStatStage):
+	mySpd = getSpdStat(myPokemon,myLevel,myIV,myStatStage)
+	enemySpd = getSpdStat(enemyPokemon,enemyLevel,enemyIV,enemyStatStage)
 	if mySpd > enemySpd:
 		return 'myPokemonFirst'
 	if mySpd < enemySpd:
@@ -431,13 +431,13 @@ def getMoveInput(myPokemon):
 		except ValueError:
 			print("Please choose a move from the list.")
 
-def startRound(myPokemon,myLevel,myHP,myIV,myStatStage,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage):
+def startRound(myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,enemyStatusCount):
 	print('\nWhat will', myPokemon, 'do?')
 	print(getMoveSet(myPokemon))
 	myMove = getMoveInput(myPokemon)
 	print('')
 	enemyMove = getRandomMoveFromSet(enemyPokemon)
-	turnOrder = getTurnOrder(myPokemon,myLevel,myIV,enemyPokemon,enemyLevel,enemyIV)
+	turnOrder = getTurnOrder(myPokemon,myLevel,myIV,myStatStage,enemyPokemon,enemyLevel,enemyIV,enemyStatStage)
 	if turnOrder == 'myPokemonFirst':
 		turnOutcomeInfo = startMyTurn(myMove,myPokemon,myLevel,myHP,myIV,myStatStage,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage)
 		myHP = turnOutcomeInfo[0]
@@ -459,15 +459,18 @@ def startRound(myPokemon,myLevel,myHP,myIV,myStatStage,enemyPokemon,enemyLevel,e
 		turnOutcomeInfo = startMyTurn(myMove,myPokemon,myLevel,myHP,myIV,myStatStage,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage)
 		return turnOutcomeInfo
 
-def startBattle(myPokemon,myLevel,myIV,enemyPokemon,enemyLevel):
+def startBattle(myPokemon,myLevel,myIV,myStatus,enemyPokemon,enemyLevel):
 	print('A wild Level', enemyLevel, enemyPokemon, 'appeared! Go', myPokemon, '!')
 	enemyIV = getRandomIV()
+	enemyStatus = 0
+	myStatusCount = 0
+	enemyStatusCount = 0
 	myHP = gethpStat(myPokemon,myLevel,myIV,'My Pokemon')
 	enemyHP = gethpStat(enemyPokemon,enemyLevel,enemyIV,'Enemy Pokemon')
 	myStatStage = getPokemonStatStage('My Pokemon')
 	enemyStatStage = getPokemonStatStage('Enemy Pokemon')
 	while myHP > 0 and enemyHP > 0:
-		roundOutcomeInfo = startRound(myPokemon,myLevel,myHP,myIV,myStatStage,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage)
+		roundOutcomeInfo = startRound(myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,enemyStatusCount)
 		myHP = roundOutcomeInfo[0]
 		enemyHP = roundOutcomeInfo[1]
 		myStatStage = list(operator.itemgetter(2,3,4,5,6,7,8)(roundOutcomeInfo))
@@ -476,7 +479,6 @@ def startBattle(myPokemon,myLevel,myIV,enemyPokemon,enemyLevel):
 		print(myPokemon, 'fainted! You lose!')
 	if myHP > 0:
 		print('The wild', enemyPokemon, 'fainted! You win!')
-
 
 def startGame():
 	print('Professor Oak: \n- Hello! Welcome to the wonderful world of Pokemon. My name is Professor Oak, it\'s great to meet you. What was your name again?')
@@ -497,12 +499,12 @@ def startGame():
 	if myPokemon == 'Squirtle':
 		enemyPokemon = 'Bulbasaur'
 	myIV = getRandomIV()
+	myStatus = 0
 	myLevel = 5
 	enemyLevel = 5
 	print('Gary: \n Fine, I choose', enemyPokemon + '! Let\'s fight!')
 	input()
-	startBattle(myPokemon,myLevel,myIV,enemyPokemon,enemyLevel)
-
+	startBattle(myPokemon,myLevel,myIV,myStatus,enemyPokemon,enemyLevel)
 
 def chooseGameplay():
 	print('> To begin the game as normal, type 1\n> For a random battle (both yours and the enemy Pokemon and levels random), type 2\n> To fight a random level random Pokemon with a Level 100 Charizard, type 3\n> To fight a level 100 random pokemon with a random level 100 pokemon, type 4')
@@ -515,25 +517,27 @@ def chooseGameplay():
 		enemyPokemon = getRandomPokemon()
 		enemyLevel = getRandomLevel()
 		myIV = getRandomIV()
+		myStatus = 0
 		print('Your', myPokemon, 'is level', myLevel)
-		startBattle(myPokemon,myLevel,myIV,enemyPokemon,enemyLevel)
+		startBattle(myPokemon,myLevel,myIV,myStatus,enemyPokemon,enemyLevel)
 	if x == '3':
 		myPokemon = 'Charizard'
 		myLevel = 100
 		enemyPokemon = getRandomPokemon()
 		enemyLevel = getRandomLevel()
 		myIV = getRandomIV()
+		myStatus = 0
 		print('Your', myPokemon, 'is level', myLevel)
-		startBattle(myPokemon,myLevel,myIV,enemyPokemon,enemyLevel)
+		startBattle(myPokemon,myLevel,myIV,myStatus,enemyPokemon,enemyLevel)
 	if x == '4':
 		myPokemon = getRandomPokemon()
 		myLevel = 100
 		enemyPokemon = getRandomPokemon()
 		enemyLevel = 100
 		myIV = getRandomIV()
+		myStatus = 0
 		print('Your', myPokemon, 'is level', myLevel)
-		startBattle(myPokemon,myLevel,myIV,enemyPokemon,enemyLevel)
-
+		startBattle(myPokemon,myLevel,myIV,myStatus,enemyPokemon,enemyLevel)
 
 chooseGameplay()
 
