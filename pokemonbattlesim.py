@@ -316,28 +316,28 @@ def startMyTurn(move,myPokemon,myLevel,myHP,myIV,myStatStage,enemyPokemon,enemyL
 	effectiveness = getEffectiveness(move,enemyPokemon)
 	effectivenessWording = getEffectivesnessWording(effectiveness)
 	if hitOrMiss == 'Miss':
-		print myPokemon, 'used', move, 'but it missed!'
+		print(myPokemon, 'used', move, 'but it missed!')
 		hpList = [myHP,enemyHP]	
 		outcomeInfo = hpList + myStatStage + enemyStatStage
-		print outcomeInfo
+		print(outcomeInfo)
 		return outcomeInfo
 	if moveVariety == 'Support':
 		moveExtraForm = getMoveExtraForm(move)
 		if moveExtraForm == 'Enemy':
 			statChange = getStatChange(move)
 			enemyStatStage = list(map(add, enemyStatStage, statChange))
-			print myPokemon, 'used', move, 'against the wild', enemyPokemon, 'and it\'s stats changed by', statChange, '. They are now', enemyStatStage, '.'
+			print(myPokemon, 'used', move, 'against the wild', enemyPokemon, 'and it\'s stats changed by', statChange, '. They are now', enemyStatStage, '.')
 		if moveExtraForm == 'Self':
 			statChange = getStatChange(move)
 			myStatStage = list(map(add, myStatStage, statChange))
-			print 'Your', myPokemon, 'used', move, 'and it\'s stats changed by', statChange, '. They are now', myStatStage, '.'
+			print('Your', myPokemon, 'used', move, 'and it\'s stats changed by', statChange, '. They are now', myStatStage, '.')
 		hpList = [myHP,enemyHP]
 		outcomeInfo = hpList + myStatStage + enemyStatStage
 		return outcomeInfo
 	enemyHP = enemyHP - moveDamage
 	if enemyHP < 0:
 		enemyHP = 0
-	print myPokemon, 'used', move, 'against the wild', enemyPokemon, '-', effectivenessWording, 'it dealt', moveDamage, 'HP damage!', enemyPokemon, 'has', enemyHP, '/', enemyMaxHP, 'HP remaining!'
+	print(myPokemon, 'used', move, 'against the wild', enemyPokemon, '-', effectivenessWording, 'it dealt', moveDamage, 'HP damage!', enemyPokemon, 'has', enemyHP, '/', enemyMaxHP, 'HP remaining!')
 	hpList = [myHP,enemyHP]
 	outcomeInfo = hpList + myStatStage + enemyStatStage
 	return outcomeInfo
@@ -349,7 +349,7 @@ def startEnemyTurn(move,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,m
 	effectiveness = getEffectiveness(move,myPokemon)
 	effectivenessWording = getEffectivesnessWording(effectiveness)
 	if hitOrMiss == 'Miss':
-		print enemyPokemon, 'used', move, 'but it missed!'
+		print(enemyPokemon, 'used', move, 'but it missed!')
 		hpList = [myHP,enemyHP]
 		outcomeInfo = hpList + myStatStage + enemyStatStage
 		return outcomeInfo
@@ -358,18 +358,18 @@ def startEnemyTurn(move,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,m
 		if moveExtraForm == 'Self':
 			statChange = getStatChange(move)
 			enemyStatStage = list(map(add, enemyStatStage, statChange))
-			print 'The wild', enemyPokemon, 'used', move, 'and it\'s stats changed by', statChange, '. They are now', enemyStatStage, '.'
+			print('The wild', enemyPokemon, 'used', move, 'and it\'s stats changed by', statChange, '. They are now', enemyStatStage, '.')
 		if moveExtraForm == 'Enemy':
 			statChange = getStatChange(move)
 			myStatStage = list(map(add, myStatStage, statChange))
-			print 'The wild', enemyPokemon, 'used', move, 'against your', myPokemon, 'and it\'s stats changed by', statChange, '. They are now', myStatStage, '.'
+			print('The wild', enemyPokemon, 'used', move, 'against your', myPokemon, 'and it\'s stats changed by', statChange, '. They are now', myStatStage, '.')
 		hpList = [myHP,enemyHP]
 		outcomeInfo = hpList + myStatStage + enemyStatStage
 		return outcomeInfo
 	myHP = myHP - moveDamage
 	if myHP < 0:
 		myHP = 0
-	print 'The wild', enemyPokemon, 'used', move, 'against', myPokemon, '-', effectivenessWording, 'it dealt', moveDamage, 'HP damage!', myPokemon, 'has', myHP, '/', myMaxHP, 'HP remaining!'
+	print('The wild', enemyPokemon, 'used', move, 'against', myPokemon, '-', effectivenessWording, 'it dealt', moveDamage, 'HP damage!', myPokemon, 'has', myHP, '/', myMaxHP, 'HP remaining!')
 	hpList = [myHP,enemyHP]
 	outcomeInfo = hpList + myStatStage + enemyStatStage
 	return outcomeInfo
@@ -377,7 +377,7 @@ def getMoveInput(myPokemon):
 	movesetSize = len(getMoveSet(myPokemon))
 	while True:
 		try:
-			moveInput = raw_input('-- ')
+			moveInput = input('-- ')
 			if moveInput in getMoveSet(myPokemon):
 				return moveInput
 				break			
@@ -388,12 +388,12 @@ def getMoveInput(myPokemon):
 				break	
 			print("Please choose a move from the list below!")
 		except ValueError:
-			print("Please choose a move from the list.")	
+			print("Please choose a move from the list.")
 def startRound(myPokemon,myLevel,myHP,myIV,myStatStage,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage):
-	print '\nWhat will', myPokemon, 'do?'
-	print getMoveSet(myPokemon)
+	print('\nWhat will', myPokemon, 'do?')
+	print(getMoveSet(myPokemon))
 	myMove = getMoveInput(myPokemon)
-	print ''
+	print('')
 	enemyMove = getRandomMoveFromSet(enemyPokemon)
 	turnOrder = getTurnOrder(myPokemon,myLevel,myIV,enemyPokemon,enemyLevel,enemyIV)
 	if turnOrder == 'myPokemonFirst':
@@ -417,7 +417,7 @@ def startRound(myPokemon,myLevel,myHP,myIV,myStatStage,enemyPokemon,enemyLevel,e
 		turnOutcomeInfo = startMyTurn(myMove,myPokemon,myLevel,myHP,myIV,myStatStage,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage)
 		return turnOutcomeInfo
 def startBattle(myPokemon,myLevel,myIV,enemyPokemon,enemyLevel):
-	print 'A wild Level', enemyLevel, enemyPokemon, 'appeared! Go', myPokemon, '!'
+	print('A wild Level', enemyLevel, enemyPokemon, 'appeared! Go', myPokemon, '!')
 	enemyIV = getRandomIV()
 	myHP = gethpStat(myPokemon,myLevel,myIV,'My Pokemon')
 	enemyHP = gethpStat(enemyPokemon,enemyLevel,enemyIV,'Enemy Pokemon')
@@ -430,22 +430,22 @@ def startBattle(myPokemon,myLevel,myIV,enemyPokemon,enemyLevel):
 		myStatStage = list(operator.itemgetter(2,3,4,5,6,7,8)(roundOutcomeInfo))
 		enemyStatStage = list(operator.itemgetter(9,10,11,12,13,14,15)(roundOutcomeInfo))
 	if myHP == 0:
-		print myPokemon, 'fainted! You lose!'
+		print(myPokemon, 'fainted! You lose!')
 	if myHP > 0:
-		print 'The wild', enemyPokemon, 'fainted! You win!'
+		print('The wild', enemyPokemon, 'fainted! You win!')
 
 def startGame():
-	print 'Professor Oak: \n- Hello! Welcome to the wonderful world of Pokemon. My name is Professor Oak, it\'s great to meet you. What was your name again?'
-	name = raw_input(': ')
-	print 'Professor Oak: \n- Ah yes,', name + '. How could I forget?'
-	raw_input()
-	print '- Woah now! You don\'t want to go into that long grass without a Pokemon! Come with me!'
-	raw_input()
-	print 'Gary: \n- Wahwahwah, I want one first!'
-	raw_input()
-	print 'Professor Oak: \n- Be patient, Gary!', name, 'is our guest. Go ahead and choose one of the balls in from of you. Will you choose:'
-	print 'Bulbasaur - the grass Pokemon. \nCharmander - the fire Pokemon. \nSquirtle - the water Pokemon.'
-	myPokemon = raw_input('Choose: ')
+	print('Professor Oak: \n- Hello! Welcome to the wonderful world of Pokemon. My name is Professor Oak, it\'s great to meet you. What was your name again?')
+	name = input(': ')
+	print('Professor Oak: \n- Ah yes,', name + '. How could I forget?')
+	input()
+	print('- Woah now! You don\'t want to go into that long grass without a Pokemon! Come with me!')
+	input()
+	print('Gary: \n- Wahwahwah, I want one first!')
+	input()
+	print('Professor Oak: \n- Be patient, Gary!', name, 'is our guest. Go ahead and choose one of the balls in from of you. Will you choose:')
+	print('Bulbasaur - the grass Pokemon. \nCharmander - the fire Pokemon. \nSquirtle - the water Pokemon.')
+	myPokemon = input('Choose: ')
 	if myPokemon == 'Bulbasaur':
 		enemyPokemon = 'Charmander'	
 	if myPokemon == 'Charmander':
@@ -455,13 +455,13 @@ def startGame():
 	myIV = getRandomIV()
 	myLevel = 5
 	enemyLevel = 5
-	print 'Gary: \n Fine, I choose', enemyPokemon + '! Let\'s fight!'
-	raw_input()
+	print('Gary: \n Fine, I choose', enemyPokemon + '! Let\'s fight!')
+	input()
 	startBattle(myPokemon,myLevel,myIV,enemyPokemon,enemyLevel)
 
 def chooseGameplay():
-	print '> To begin the game as normal, type 1\n> For a random battle (both yours and the enemy Pokemon and levels random), type 2\n> To fight a random level random Pokemon with a Level 100 Charizard, type 3\n> To fight a level 100 random pokemon with a random level 100 pokemon, type 4'
-	x = raw_input()
+	print('> To begin the game as normal, type 1\n> For a random battle (both yours and the enemy Pokemon and levels random), type 2\n> To fight a random level random Pokemon with a Level 100 Charizard, type 3\n> To fight a level 100 random pokemon with a random level 100 pokemon, type 4')
+	x = input()
 	if x == '1':
 		startGame()
 	if x == '2':
@@ -470,7 +470,7 @@ def chooseGameplay():
 		enemyPokemon = getRandomPokemon()
 		enemyLevel = getRandomLevel()
 		myIV = getRandomIV()
-		print 'Your', myPokemon, 'is level', myLevel
+		print('Your', myPokemon, 'is level', myLevel)
 		startBattle(myPokemon,myLevel,myIV,enemyPokemon,enemyLevel)
 	if x == '3':
 		myPokemon = 'Charizard'
@@ -478,7 +478,7 @@ def chooseGameplay():
 		enemyPokemon = getRandomPokemon()
 		enemyLevel = getRandomLevel()
 		myIV = getRandomIV()
-		print 'Your', myPokemon, 'is level', myLevel
+		print('Your', myPokemon, 'is level', myLevel)
 		startBattle(myPokemon,myLevel,myIV,enemyPokemon,enemyLevel)
 	if x == '4':
 		myPokemon = getRandomPokemon()
@@ -486,7 +486,7 @@ def chooseGameplay():
 		enemyPokemon = getRandomPokemon()
 		enemyLevel = 100
 		myIV = getRandomIV()
-		print 'Your', myPokemon, 'is level', myLevel
+		print('Your', myPokemon, 'is level', myLevel)
 		startBattle(myPokemon,myLevel,myIV,enemyPokemon,enemyLevel)
 
 
