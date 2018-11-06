@@ -421,12 +421,10 @@ def getMoveInput(myPokemon):
 			moveInput = input('-- ')
 			if moveInput in getMoveSet(myPokemon):
 				return moveInput
-				break			
 			moveInput
 			if int(moveInput) <= movesetSize and int(moveInput) > 0:
 				moveset = getMoveSet(myPokemon)
 				return moveset[int(moveInput)-1]
-				break	
 			print("Please choose a move from the list below!")
 		except ValueError:
 			print("Please choose a move from the list.")
