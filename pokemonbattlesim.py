@@ -329,8 +329,8 @@ def getStatChange(move):
 #	todo
 
 def getTurnOrder(myPokemon,myLevel,myIV,enemyPokemon,enemyLevel,enemyIV):
-	mySpd = getSpdStat(myPokemon,myLevel,myIV,'My Pokemon')
-	enemySpd = getSpdStat(enemyPokemon,enemyLevel,enemyIV,'Enemy Pokemon')
+	mySpd = getSpdStat(myPokemon,myLevel,myIV, getPokemonStatStage('My Pokemon'))
+	enemySpd = getSpdStat(enemyPokemon,enemyLevel,enemyIV, getPokemonStatStage('Enemy Pokemon'))
 	if mySpd > enemySpd:
 		return 'myPokemonFirst'
 	if mySpd < enemySpd:
@@ -349,7 +349,7 @@ def getPokemonMove(move,myPokemon,myLevel,enemyPokemon,enemyLevel):
 
 def startMyTurn(move,myPokemon,myLevel,myHP,myIV,myStatStage,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage):
 	moveDamage = getMoveDamage(move,myPokemon,myLevel,myIV,myStatStage,enemyPokemon,enemyLevel,enemyIV,enemyStatStage)
-	enemyMaxHP = gethpStat(enemyPokemon,enemyLevel,enemyIV,'Enemy Pokemon')
+	enemyMaxHP = gethpStat(enemyPokemon,enemyLevel,enemyIV,getPokemonStatStage('My Pokemon'))
 	hitOrMiss = getHitOrMiss(move)
 	moveVariety = getMoveVariety(move)
 	effectiveness = getEffectiveness(move,enemyPokemon)
@@ -383,7 +383,7 @@ def startMyTurn(move,myPokemon,myLevel,myHP,myIV,myStatStage,enemyPokemon,enemyL
 
 def startEnemyTurn(move,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,myPokemon,myLevel,myHP,myIV,myStatStage):
 	moveDamage = getMoveDamage(move,enemyPokemon,enemyLevel,enemyIV,enemyStatStage,myPokemon,myLevel,myIV,myStatStage)
-	myMaxHP = gethpStat(myPokemon,myLevel,myIV,'My Pokemon')
+	myMaxHP = gethpStat(myPokemon,myLevel,myIV,getPokemonStatStage('My Pokemon'))
 	hitOrMiss = getHitOrMiss(move)
 	moveVariety = getMoveVariety(move)
 	effectiveness = getEffectiveness(move,myPokemon)
@@ -420,7 +420,7 @@ def getMoveInput(myPokemon):
 		try:
 			moveInput = input('-- ')
 			if moveInput in getMoveSet(myPokemon):
-				return moveInput
+				return moveInput		
 			moveInput
 			if int(moveInput) <= movesetSize and int(moveInput) > 0:
 				moveset = getMoveSet(myPokemon)
@@ -460,10 +460,10 @@ def startRound(myPokemon,myLevel,myHP,myIV,myStatStage,enemyPokemon,enemyLevel,e
 def startBattle(myPokemon,myLevel,myIV,enemyPokemon,enemyLevel):
 	print('A wild Level', enemyLevel, enemyPokemon, 'appeared! Go', myPokemon, '!')
 	enemyIV = getRandomIV()
-	myHP = gethpStat(myPokemon,myLevel,myIV,'My Pokemon')
-	enemyHP = gethpStat(enemyPokemon,enemyLevel,enemyIV,'Enemy Pokemon')
 	myStatStage = getPokemonStatStage('My Pokemon')
 	enemyStatStage = getPokemonStatStage('Enemy Pokemon')
+	myHP = gethpStat(myPokemon,myLevel,myIV,myStatStage)
+	enemyHP = gethpStat(enemyPokemon,enemyLevel,enemyIV,enemyStatStage)
 	while myHP > 0 and enemyHP > 0:
 		roundOutcomeInfo = startRound(myPokemon,myLevel,myHP,myIV,myStatStage,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage)
 		myHP = roundOutcomeInfo[0]
