@@ -13,6 +13,9 @@ squirtleBaseStats = [44,48,65,50,64,43]
 wartortleBaseStats = [59,63,80,65,80,58]
 blastoiseBaseStats = [79,83,100,85,105,78]
 
+geodudeBaseStats = [40,80,100,30,30,20]
+onixBaseStats = [35,45,160,30,45,70]
+
 pokemonBaseStatListToDict = {'HP':0,'Atk':1,'Def':2,'SpAtk':3,'SpDef':4,'Spd':5,'Accuracy':6}
 pokemonBaseStatDictToList = {0:'HP',1:'Atk',2:'Def',3:'SpAtk',4:'SpDef',5:'Spd',6:'Accuracy'}
 
@@ -37,19 +40,39 @@ squirtleType = {'Type One':'Water','Type Two':'Null'}
 wartortleType = {'Type One':'Water','Type Two':'Null'}
 blastoiseType = {'Type One':'Water','Type Two':'Null'}
 
-bulbasaurMoves = {'Move One':'Tackle', 'Move Two':'Growl'}
+bulbasaurExpGroup = {'Fast'}
+ivysaurExpGroup = {'Fast'}
+venusaurExpGroup = {'Fast'}
+charmanderExpGroup = {'Fast'}
+charmeleonExpGroup = {'Fast'}
+charizardExpGroup = {'Fast'}
+squirtleExpGroup = {'Fast'}
+wartortleExpGroup = {'Fast'}
+blastoiseExpGroup = {'Fast'}
+geodudeExpGroup = {'Fast'}
+onixExpGroup = {'Fast'}
+
+geodudeType = {'Type One':'Rock', 'Type Two':'Ground'}
+onixType = {'Type One':'Rock', 'Type Two':'Ground'}
+
+bulbasaurMoves = {'Move One':'Tackle', 'Move Two':'Growl', 'Move Three':'Vine Whip'}
 ivysaurMoves = {'Move One':'Tackle', 'Move Two':'Growl', 'Move Three':'Vine Whip'}
 venusaurMoves = {'Move One':'Tackle', 'Move Two':'Growl', 'Move Three':'Vine Whip', 'Move Four':'Petal Blizzard'}
-charmanderMoves = {'Move One':'Scratch', 'Move Two':'Growl'}
+charmanderMoves = {'Move One':'Scratch', 'Move Two':'Growl', 'Move Three':'Ember'}
 charmeleonMoves = {'Move One':'Scratch', 'Move Two':'Growl', 'Move Three':'Ember'}
 charizardMoves = {'Move One':'Scratch', 'Move Two':'Growl', 'Move Three':'Ember', 'Move Four':'Flamethrower'}
-squirtleMoves = {'Move One':'Tackle', 'Move Two':'Tail Whip'}
+squirtleMoves = {'Move One':'Tackle', 'Move Two':'Tail Whip', 'Move Three':'Bubble'}
 wartortleMoves = {'Move One':'Tackle', 'Move Two':'Tail Whip', 'Move Three':'Bubble'}
 blastoiseMoves = {'Move One':'Tackle', 'Move Two':'Tail Whip', 'Move Three':'Bubble', 'Move Four':'Hydro Pump'}
 
-pokemonStats = {'Bulbasaur':bulbasaurBaseStats,'Ivysaur':ivysaurBaseStats,'Venusaur':venusaurBaseStats,'Charmander':charmanderBaseStats,'Charmeleon':charmeleonBaseStats,'Charizard':charizardBaseStats,'Squirtle':squirtleBaseStats,'Wartortle':wartortleBaseStats,'Blastoise':blastoiseBaseStats}
-pokemonTypes = {'Bulbasaur':bulbasaurType,'Ivysaur':ivysaurType,'Venusaur':venusaurType,'Charmander':charmanderType,'Charmeleon':charmeleonType,'Charizard':charizardType,'Squirtle':squirtleType,'Wartortle':wartortleType,'Blastoise':blastoiseType}
-pokemonMoves = {'Bulbasaur':bulbasaurMoves,'Ivysaur':ivysaurMoves,'Venusaur':venusaurMoves,'Charmander':charmanderMoves,'Charmeleon':charmeleonMoves,'Charizard':charizardMoves,'Squirtle':squirtleMoves,'Wartortle':wartortleMoves,'Blastoise':blastoiseMoves}
+geodudeMoves = {'Move One':'Tackle', 'Move Two':'Harden', 'Move Three':'Rock Polish', 'Move Four':'Magnitude'}
+onixMoves = {'Move One':'Tackle', 'Move Two':'Harden', 'Move Three':'Rock Tomb', 'Move Four':'Rock Throw'}
+#{'Move One':'', 'Move Two':'', 'Move Three':'', 'Move Four':''}
+
+pokemonStats = {'Bulbasaur':bulbasaurBaseStats,'Ivysaur':ivysaurBaseStats,'Venusaur':venusaurBaseStats,'Charmander':charmanderBaseStats,'Charmeleon':charmeleonBaseStats,'Charizard':charizardBaseStats,'Squirtle':squirtleBaseStats,'Wartortle':wartortleBaseStats,'Blastoise':blastoiseBaseStats,'Geodude':geodudeBaseStats,'Onix':onixBaseStats}
+pokemonTypes = {'Bulbasaur':bulbasaurType,'Ivysaur':ivysaurType,'Venusaur':venusaurType,'Charmander':charmanderType,'Charmeleon':charmeleonType,'Charizard':charizardType,'Squirtle':squirtleType,'Wartortle':wartortleType,'Blastoise':blastoiseType,'Geodude':geodudeType,'Onix':onixType}
+pokemonMoves = {'Bulbasaur':bulbasaurMoves,'Ivysaur':ivysaurMoves,'Venusaur':venusaurMoves,'Charmander':charmanderMoves,'Charmeleon':charmeleonMoves,'Charizard':charizardMoves,'Squirtle':squirtleMoves,'Wartortle':wartortleMoves,'Blastoise':blastoiseMoves,'Geodude':geodudeMoves,'Onix':onixMoves}
+pokemonExpGroup = {'Bulbasaur':bulbasaurExpGroup,'Ivysaur':ivysaurExpGroup,'Venusaur':venusaurExpGroup,'Charmander':charmanderExpGroup,'Charmeleon':charmeleonExpGroup,'Charizard':charizardExpGroup,'Squirtle':squirtleExpGroup,'Wartortle':wartortleExpGroup,'Blastoise':blastoiseExpGroup,'Geodude':geodudeExpGroup,'Onix':onixExpGroup}
 pokemonWild = ['Bulbasaur','Ivysaur','Venusaur','Charmander','Charmeleon','Charizard','Squirtle','Wartortle','Blastoise']
 
 tackleInfo = {'Base Damage':40, 'Move Type':'Normal', 'Move Accuracy':100, 'Move Variety':'Physical', 'Added Effect':'No', 'Priority':0}
@@ -63,28 +86,53 @@ tailWhipInfo = {'Base Damage':0, 'Move Type':'Normal', 'Move Accuracy':100, 'Mov
 flamethrowerInfo = {'Base Damage':90, 'Move Type':'Fire', 'Move Accuracy':90, 'Move Variety':'Special', 'Added Effect':'No', 'Priority':0}
 hydroPumpInfo = {'Base Damage':110, 'Move Type':'Water', 'Move Accuracy':80, 'Move Variety':'Special', 'Added Effect':'No', 'Priority':0}
 petalBlizzardInfo = {'Base Damage':90, 'Move Type':'Grass', 'Move Accuracy':90, 'Move Variety':'Physical', 'Added Effect':'No', 'Priority':0}
+hardenInfo = {'Base Damage':0, 'Move Type':'Normal', 'Move Accuracy':100, 'Move Variety':'Support', 'Added Effect':'No', 'Priority':0}
+rockTombInfo = {'Base Damage':60, 'Move Type':'Rock', 'Move Accuracy':90, 'Move Variety':'Physical', 'Added Effect':'Yes', 'Priority':0}
+rockThrowInfo = {'Base Damage':50, 'Move Type':'Rock', 'Move Accuracy':90, 'Move Variety':'Physical', 'Added Effect':'No', 'Priority':0}
+rockPolishInfo = {'Base Damage':0, 'Move Type':'Rock', 'Move Accuracy':100, 'Move Variety':'Support', 'Added Effect':'No', 'Priority':0}
+magnitudeInfo = {'Base Damage':50, 'Move Type':'Ground', 'Move Accuracy':100, 'Move Variety':'Physical', 'Added Effect':'No', 'Priority':0}
 
 growlExtraInfo = {'Stat Change':'Enemy', 'Status Change':'No'}
 tailWhipExtraInfo = {'Stat Change':'Enemy', 'Status Change':'No'}
-emberExtraInfo = {'Stat Change':'No', 'Status Change':'Yes'}
+emberExtraInfo = {'Stat Change':'None', 'Status Change':'Yes'}
 defenseCurlExtraInfo = {'Stat Change':'Self', 'Status Change':'No'}
+hardenExtraInfo = {'Stat Change':'Self', 'Status Change':'No'}
+rockPolishExtraInfo = {'Stat Change':'Self', 'Status Change':'No'}
+rockTombExtraInfo = {'Stat Change':'Enemy', 'Status Change':'No'}
 
-growlStatChangeInfo = {'HP':0,'Atk':-1,'Def':0,'SpAtk':0,'SpDef':0,'Spd':0, 'Accuracy':0}
-defenseCurlStatChangeInfo = {'HP':0,'Atk':0,'Def':1,'SpAtk':0,'SpDef':0,'Spd':0, 'Accuracy':0}
-tailWhipStatChangeInfo = {'HP':0,'Atk':0,'Def':-1,'SpAtk':0,'SpDef':0,'Spd':0, 'Accuracy':0}
+growlStatChangeInfo = {'HP':0,'Atk':-1,'Def':0,'SpAtk':0,'SpDef':0,'Spd':0,'Accuracy':0,'Chance':100}
+defenseCurlStatChangeInfo = {'HP':0,'Atk':0,'Def':1,'SpAtk':0,'SpDef':0,'Spd':0,'Accuracy':0,'Chance':100}
+tailWhipStatChangeInfo = {'HP':0,'Atk':0,'Def':-1,'SpAtk':0,'SpDef':0,'Spd':0,'Accuracy':0,'Chance':100}
+hardenStatChangeInfo = {'HP':0,'Atk':0,'Def':1,'SpAtk':0,'SpDef':0,'Spd':0,'Accuracy':0,'Chance':100}
+rockPolishStatChangeInfo = {'HP':0,'Atk':0,'Def':0,'SpAtk':0,'SpDef':0,'Spd':2,'Accuracy':0,'Chance':100}
+rockTombStatChangeInfo = {'HP':0,'Atk':0,'Def':0,'SpAtk':0,'SpDef':0,'Spd':-1,'Accuracy':0,'Chance':100}
 
 emberStatusChangeInfo = {'Type':1,'Chance':10}
 
-normalEffect = {'Normal':1, 'Water':1, 'Grass':1, 'Fire':1, 'Poison':1, 'Flying':1, 'Null':1}
-grassEffect = {'Normal':1, 'Water':2, 'Grass':1, 'Fire':0.5, 'Poison':1, 'Flying':1, 'Null':1}
-fireEffect = {'Normal':1, 'Water':0.5, 'Grass':2, 'Fire':1, 'Poison':1, 'Flying':1, 'Null':1}
-waterEffect = {'Normal':1, 'Water':1, 'Grass':0.5, 'Fire':2, 'Poison':1, 'Flying':1, 'Null':1}
+normalEffect = {'Normal':1, 'Fighting':1, 'Flying':1, 'Poison':1, 'Ground':1, 'Rock':0.5, 'Bug':1, 'Ghost':0, 'Steel':0.5, 'Fire':1, 'Water':1, 'Grass':1, 'Electric':1, 'Psychic':1, 'Ice':1, 'Dragon':1, 'Dark':1, 'Fairy':1, 'Null':1}
+fightingEffect = {'Normal':2, 'Fighting':1, 'Flying':0.5, 'Poison':0.5, 'Ground':1, 'Rock':2, 'Bug':0.5, 'Ghost':0, 'Steel':2, 'Fire':1, 'Water':1, 'Grass':1, 'Electric':1, 'Psychic':0.5, 'Ice':2, 'Dragon':1, 'Dark':2, 'Fairy':0.5, 'Null':1}
+flyingEffect = {'Normal':1, 'Fighting':2, 'Flying':1, 'Poison':1, 'Ground':1, 'Rock':0.5, 'Bug':2, 'Ghost':1, 'Steel':0.5, 'Fire':1, 'Water':1, 'Grass':2, 'Electric':0.5, 'Psychic':1, 'Ice':1, 'Dragon':1, 'Dark':1, 'Fairy':1, 'Null':1}
+poisonEffect = {'Normal':1, 'Fighting':1, 'Flying':1, 'Poison':0.5, 'Ground':0.5, 'Rock':0.5, 'Bug':1, 'Ghost':0.5, 'Steel':0, 'Fire':1, 'Water':1, 'Grass':2, 'Electric':1, 'Psychic':1, 'Ice':1, 'Dragon':1, 'Dark':1, 'Fairy':2, 'Null':1}
+groundEffect = {'Normal':1, 'Fighting':1, 'Flying':0, 'Poison':2, 'Ground':1, 'Rock':2, 'Bug':0.5, 'Ghost':1, 'Steel':2, 'Fire':2, 'Water':1, 'Grass':0.5, 'Electric':2, 'Psychic':1, 'Ice':1, 'Dragon':1, 'Dark':1, 'Fairy':1, 'Null':1}
+rockEffect = {'Normal':1, 'Fighting':0.5, 'Flying':2, 'Poison':1, 'Ground':0.5, 'Rock':1, 'Bug':2, 'Ghost':1, 'Steel':0.5, 'Fire':2, 'Water':1, 'Grass':1, 'Electric':1, 'Psychic':1, 'Ice':2, 'Dragon':1, 'Dark':1, 'Fairy':1, 'Null':1}
+bugEffect = {'Normal':1, 'Fighting':0.5, 'Flying':0.5, 'Poison':0.5, 'Ground':1, 'Rock':1, 'Bug':1, 'Ghost':0.5, 'Steel':0.5, 'Fire':0.5, 'Water':1, 'Grass':2, 'Electric':1, 'Psychic':2, 'Ice':1, 'Dragon':1, 'Dark':2, 'Fairy':0.5, 'Null':1}
+ghostEffect = {'Normal':0, 'Fighting':1, 'Flying':1, 'Poison':1, 'Ground':1, 'Rock':1, 'Bug':1, 'Ghost':2, 'Steel':1, 'Fire':1, 'Water':1, 'Grass':1, 'Electric':1, 'Psychic':2, 'Ice':1, 'Dragon':1, 'Dark':0.5, 'Fairy':1, 'Null':1}
+steelEffect = {'Normal':1, 'Fighting':1, 'Flying':1, 'Poison':1, 'Ground':1, 'Rock':2, 'Bug':1, 'Ghost':1, 'Steel':0.5, 'Fire':0.5, 'Water':0.5, 'Grass':1, 'Electric':0.5, 'Psychic':1, 'Ice':2, 'Dragon':1, 'Dark':1, 'Fairy':2, 'Null':1}
+fireEffect = {'Normal':1, 'Fighting':1, 'Flying':1, 'Poison':1, 'Ground':1, 'Rock':0.5, 'Bug':2, 'Ghost':1, 'Steel':2, 'Fire':0.5, 'Water':0.5, 'Grass':1, 'Electric':1, 'Psychic':1, 'Ice':2, 'Dragon':0.5, 'Dark':1, 'Fairy':1, 'Null':1}
+waterEffect = {'Normal':1, 'Fighting':1, 'Flying':1, 'Poison':1, 'Ground':2, 'Rock':2, 'Bug':1, 'Ghost':1, 'Steel':1, 'Fire':2, 'Water':0.5, 'Grass':0.5, 'Electric':1, 'Psychic':1, 'Ice':1, 'Dragon':0.5, 'Dark':1, 'Fairy':1, 'Null':1}
+grassEffect = {'Normal':1, 'Fighting':1, 'Flying':0.5, 'Poison':0.5, 'Ground':2, 'Rock':2, 'Bug':0.5, 'Ghost':1, 'Steel':0.5, 'Fire':0.5, 'Water':2, 'Grass':0.5, 'Electric':1, 'Psychic':1, 'Ice':1, 'Dragon':0.5, 'Dark':1, 'Fairy':1, 'Null':1}
+electricEffect = {'Normal':1, 'Fighting':1, 'Flying':2, 'Poison':1, 'Ground':0, 'Rock':1, 'Bug':1, 'Ghost':1, 'Steel':1, 'Fire':1, 'Water':2, 'Grass':0.5, 'Electric':0.5, 'Psychic':1, 'Ice':1, 'Dragon':0.5, 'Dark':1, 'Fairy':1, 'Null':1}
+psychicEffect = {'Normal':1, 'Fighting':2, 'Flying':1, 'Poison':2, 'Ground':1, 'Rock':1, 'Bug':1, 'Ghost':1, 'Steel':0.5, 'Fire':1, 'Water':1, 'Grass':1, 'Electric':1, 'Psychic':0.5, 'Ice':1, 'Dragon':1, 'Dark':0, 'Fairy':1, 'Null':1}
+iceEffect = {'Normal':1, 'Fighting':1, 'Flying':2, 'Poison':1, 'Ground':2, 'Rock':1, 'Bug':1, 'Ghost':1, 'Steel':0.5, 'Fire':0.5, 'Water':0.5, 'Grass':2, 'Electric':1, 'Psychic':1, 'Ice':0.5, 'Dragon':2, 'Dark':1, 'Fairy':1, 'Null':1}
+dragonEffect = {'Normal':1, 'Fighting':1, 'Flying':1, 'Poison':1, 'Ground':1, 'Rock':1, 'Bug':1, 'Ghost':1, 'Steel':0.5, 'Fire':1, 'Water':1, 'Grass':1, 'Electric':1, 'Psychic':1, 'Ice':1, 'Dragon':2, 'Dark':1, 'Fairy':0, 'Null':1}
+darkEffect = {'Normal':1, 'Fighting':0.5, 'Flying':1, 'Poison':1, 'Ground':1, 'Rock':1, 'Bug':1, 'Ghost':2, 'Steel':1, 'Fire':1, 'Water':1, 'Grass':1, 'Electric':1, 'Psychic':2, 'Ice':1, 'Dragon':1, 'Dark':0.5, 'Fairy':0.5, 'Null':1}
+fairyEffect = {'Normal':1, 'Fighting':2, 'Flying':1, 'Poison':0.5, 'Ground':1, 'Rock':1, 'Bug':1, 'Ghost':1, 'Steel':0.5, 'Fire':0.5, 'Water':1, 'Grass':1, 'Electric':1, 'Psychic':1, 'Ice':1, 'Dragon':2, 'Dark':2, 'Fairy':1, 'Null':1}
 
-allType = {'Normal':normalEffect, 'Grass':grassEffect, 'Fire':fireEffect, 'Water':waterEffect}
 
-moveInfo = {'Tackle':tackleInfo,'Ember':emberInfo,'Bubble':bubbleInfo,'Vine Whip':vineWhipInfo,'Growl':growlInfo,'Defense Curl':defenseCurlInfo,'Scratch':scratchInfo,'Tail Whip':tailWhipInfo,'Flamethrower':flamethrowerInfo,'Hydro Pump':hydroPumpInfo,'Petal Blizzard':petalBlizzardInfo}
-moveExtraInfo = {'Ember':emberExtraInfo,'Growl':growlExtraInfo,'Defense Curl':defenseCurlExtraInfo,'Tail Whip':tailWhipExtraInfo}
-moveStatChangeInfo = {'Growl':growlStatChangeInfo,'Defense Curl':defenseCurlStatChangeInfo,'Tail Whip':tailWhipStatChangeInfo}
+allType = {'Normal':normalEffect, 'Fighting':fightingEffect, 'Flying':flyingEffect, 'Poison':poisonEffect, 'Ground':groundEffect, 'Rock':rockEffect, 'Bug':bugEffect, 'Ghost':ghostEffect, 'Steel':steelEffect, 'Fire':fireEffect, 'Water':waterEffect, 'Grass':grassEffect, 'Electric':electricEffect, 'Psychic':psychicEffect, 'Ice':iceEffect, 'Dragon':dragonEffect, 'Dark':darkEffect, 'Fairy':fairyEffect}
+moveInfo = {'Tackle':tackleInfo,'Ember':emberInfo,'Bubble':bubbleInfo,'Vine Whip':vineWhipInfo,'Growl':growlInfo,'Defense Curl':defenseCurlInfo,'Scratch':scratchInfo,'Tail Whip':tailWhipInfo,'Flamethrower':flamethrowerInfo,'Hydro Pump':hydroPumpInfo,'Petal Blizzard':petalBlizzardInfo,'Harden':hardenInfo,'Rock Tomb':rockTombInfo,'Rock Throw':rockThrowInfo,'Rock Polish':rockPolishInfo,'Magnitude':magnitudeInfo}
+moveExtraInfo = {'Ember':emberExtraInfo,'Growl':growlExtraInfo,'Defense Curl':defenseCurlExtraInfo,'Tail Whip':tailWhipExtraInfo,'Harden':hardenExtraInfo,'Rock Polish':rockPolishExtraInfo,'Rock Tomb':rockTombExtraInfo}
+moveStatChangeInfo = {'Growl':growlStatChangeInfo,'Defense Curl':defenseCurlStatChangeInfo,'Tail Whip':tailWhipStatChangeInfo,'Harden':hardenStatChangeInfo,'Rock Polish':rockPolishStatChangeInfo,'Rock Tomb':rockTombStatChangeInfo}
 moveStatusChangeInfo = {'Ember':emberStatusChangeInfo}
 
 
@@ -315,6 +363,36 @@ def getHitOrMiss(move):
 	else:
 		return 'Miss'
 
+def getExpGroup(pokemon,level):
+	expGroup = getPokemonExpGroup
+	exp = getExp(expGroup,level)
+
+#def getExp(expGroup,level):
+#	n = level
+#	if expGroup == 'Erratic':
+#		if n <= 50:
+#			exp = ((n^3)*100-n)/50
+#		if 50 < n <= 68:
+#			exp = ((n^3)*150-n)/50
+#		if 68 < n <= 98:
+#			exp = ((n^3)*((1911-10*n)/3)/500
+#		if 98 < n <= 100:
+#			exp = ((n^3)*160-n)/100
+#	if expGroup == 'Fast':
+#		exp = (4*n^3)/5
+#	if expGroup == 'MediumFast':
+#		exp = n^3
+#	if expGroup == 'MediumSlow':
+#		exp = (6/5)*n^3 - 15*n^2 + 100*n - 140
+#	if expGroup == 'Slow':
+#		exp = (5*n^3)/4
+#	return exp
+
+
+
+
+
+
 def getMoveDamage(move,atkPokemon,atkLevel,atkIV,atkStatStage,atkStatus,defPokemon,defLevel,defIV,defStatStage):
 	moveBaseDamage = getMoveBaseDamage(move)
 	effectiveness = getEffectiveness(move,defPokemon)
@@ -345,6 +423,7 @@ def getMoveDamage(move,atkPokemon,atkLevel,atkIV,atkStatStage,atkStatus,defPokem
 def getPokemonBaseStatDictToList(i):
 	dictToList = pokemonBaseStatDictToList[i]
 	return dictToList
+
 
 def getStatChange(move):
 	statChange=[]
@@ -380,10 +459,11 @@ def getPokemonMove(move,myPokemon,myPokemonLevel,enemyPokemon,enemyPokemonLevel)
 	effectiveness = getEffectiveness(move,enemyPokemon)
 	addedEffect = getMoveExtra(move)
 
-def startMyTurn(move,myTeam,enemyTeam):
+def startMyTurn(move,myTeam,enemyTeam,myTrainerInfo,enemyTrainerInfo):
 	myPokemonInfo = myTeam[0]; enemyPokemonInfo = enemyTeam[0]
 	myPokemon = myPokemonInfo[0]; myPokemonLevel = myPokemonInfo[1]; myPokemonHP = myPokemonInfo[2]; myPokemonIV = myPokemonInfo[3]; myPokemonStatus = myPokemonInfo[4]; myPokemonStatusCount = myPokemonInfo[5]; myPokemonStatStage = myPokemonInfo[6]
 	enemyPokemon = enemyPokemonInfo[0]; enemyPokemonLevel = enemyPokemonInfo[1]; enemyPokemonHP = enemyPokemonInfo[2]; enemyPokemonIV = enemyPokemonInfo[3]; enemyPokemonStatus = enemyPokemonInfo[4]; enemyPokemonStatusCount = enemyPokemonInfo[5]; enemyPokemonStatStage = enemyPokemonInfo[6]
+	enemyBattleType = enemyTrainerInfo[0]; enemyTrainerName = enemyTrainerInfo[1]; enemyWording = enemyTrainerInfo[2]
 	moveDamage = getMoveDamage(move,myPokemon,myPokemonLevel,myPokemonIV,myPokemonStatStage,myPokemonStatus,enemyPokemon,enemyPokemonLevel,enemyPokemonIV,enemyPokemonStatStage)
 	myPokemonStatusType = getStatusType(myPokemonStatus)
 	enemyPokemonStatusType = getStatusType(enemyPokemonStatus)
@@ -393,6 +473,7 @@ def startMyTurn(move,myTeam,enemyTeam):
 	moveVariety = getMoveVariety(move)
 	effectiveness = getEffectiveness(move,enemyPokemon)
 	effectivenessWording = getEffectivesnessWording(effectiveness)
+
 	if myPokemonStatus != 'Nothing':
 		if myPokemonStatusType == 'Paralyzed':
 			print(myPokemon, 'is paralyzed and may not be able to move!')
@@ -440,7 +521,7 @@ def startMyTurn(move,myTeam,enemyTeam):
 		if moveExtraForm == 'Enemy':
 			statChange = getStatChange(move)
 			enemyPokemonStatStage = list(map(add, enemyPokemonStatStage, statChange))
-			print(myPokemon, 'used', move, 'against the wild', enemyPokemon, 'and it\'s stats changed by', statChange, '. They are now', enemyPokemonStatStage, '.')
+			print(myPokemon, 'used', move, 'against the', enemyWording, enemyPokemon, 'and it\'s stats changed by', statChange, '. They are now', enemyPokemonStatStage, '.')
 		if moveExtraForm == 'Self':
 			statChange = getStatChange(move)
 			myPokemonStatStage = list(map(add, myPokemonStatStage, statChange))
@@ -453,9 +534,18 @@ def startMyTurn(move,myTeam,enemyTeam):
 	enemyPokemonHP = enemyPokemonHP - moveDamage
 	if enemyPokemonHP < 0:
 		enemyPokemonHP = 0
-	print(myPokemon, 'used', move, 'against the wild', enemyPokemon, '-', effectivenessWording, 'it dealt', moveDamage, 'HP damage!', enemyPokemon, 'has', enemyPokemonHP, '/', enemyMaxHP, 'HP remaining!')
+	print(myPokemon, 'used', move, 'against the', enemyWording, enemyPokemon, '-', effectivenessWording, 'it dealt', moveDamage, 'HP damage!', enemyPokemon, 'has', enemyPokemonHP, '/', enemyMaxHP, 'HP remaining!')
 	moveExtra = getMoveExtra(move)
-	if moveExtra == 'Yes':
+	if moveExtra == 'Yes':		
+		moveExtraForm = getMoveExtraForm(move)
+		if moveExtraForm == 'Enemy':
+			statChange = getStatChange(move)
+			enemyPokemonStatStage = list(map(add, enemyPokemonStatStage, statChange))
+			print('The', enemyWording, enemyPokemon, '\'s stats changed by', statChange, '. They are now', enemyPokemonStatStage, '.')
+		if moveExtraForm == 'Self':
+			statChange = getStatChange(move)
+			myPokemonStatStage = list(map(add, myPokemonStatStage, statChange))
+			print(myPokemon, '\'s stats changed by', statChange, '. They are now', myPokemonStatStage, '.')
 		statusChange = getStatusChange(move)
 		if statusChange == 'Yes':
 			if enemyPokemonStatus == 0:
@@ -490,10 +580,11 @@ def startMyTurn(move,myTeam,enemyTeam):
 	enemyTeam[0] = enemyPokemonInfo
 	return [myTeam,enemyTeam]
 
-def startEnemyTurn(move,myTeam,enemyTeam):
+def startEnemyTurn(move,myTeam,enemyTeam,myTrainerInfo,enemyTrainerInfo):
 	myPokemonInfo = myTeam[0]; enemyPokemonInfo = enemyTeam[0]
 	myPokemon = myPokemonInfo[0]; myPokemonLevel = myPokemonInfo[1]; myPokemonHP = myPokemonInfo[2]; myPokemonIV = myPokemonInfo[3]; myPokemonStatus = myPokemonInfo[4]; myPokemonStatusCount = myPokemonInfo[5]; myPokemonStatStage = myPokemonInfo[6]
 	enemyPokemon = enemyPokemonInfo[0]; enemyPokemonLevel = enemyPokemonInfo[1]; enemyPokemonHP = enemyPokemonInfo[2]; enemyPokemonIV = enemyPokemonInfo[3]; enemyPokemonStatus = enemyPokemonInfo[4]; enemyPokemonStatusCount = enemyPokemonInfo[5]; enemyPokemonStatStage = enemyPokemonInfo[6]
+	enemyBattleType = enemyTrainerInfo[0]; enemyTrainerName = enemyTrainerInfo[1]; enemyWording = enemyTrainerInfo[2]
 	moveDamage = getMoveDamage(move,enemyPokemon,enemyPokemonLevel,enemyPokemonIV,enemyPokemonStatStage,enemyPokemonStatus,myPokemon,myPokemonLevel,myPokemonIV,myPokemonStatStage)
 	myPokemonStatusType = getStatusType(myPokemonStatus)
 	enemyPokemonStatusType = getStatusType(enemyPokemonStatus)
@@ -506,7 +597,7 @@ def startEnemyTurn(move,myTeam,enemyTeam):
 	effectivenessWording = getEffectivesnessWording(effectiveness)
 	if enemyPokemonStatusType != 'Nothing':
 		if enemyPokemonStatusType == 'Paralyzed':
-			print('The wild', enemyPokemon, 'is paralyzed and may not be able to move!')
+			print('The', enemyWording, enemyPokemon, 'is paralyzed and may not be able to move!')
 			i = randint(1,4)
 			if i == 1:
 				print(enemyPokemon, 'couldn\'t move!')
@@ -516,7 +607,7 @@ def startEnemyTurn(move,myTeam,enemyTeam):
 				enemyTeam[0] = enemyPokemonInfo
 				return [myTeam,enemyTeam]
 		if enemyPokemonStatusType == 'Sleep':
-			print('The wild', enemyPokemon, 'is sleeping!')
+			print('The', enemyWording, enemyPokemon, 'is sleeping!')
 			enemyPokemonStatusCount = enemyPokemonStatusCount - 1
 			if enemyPokemonStatusCount > 0:
 				myPokemonInfo = [myPokemon,myPokemonLevel,myPokemonHP,myPokemonIV,myPokemonStatus,myPokemonStatusCount,myPokemonStatStage]
@@ -526,14 +617,14 @@ def startEnemyTurn(move,myTeam,enemyTeam):
 				return [myTeam,enemyTeam]
 			enemyPokemonStatus = 0
 			enemyPokemonStatusType = getStatusType(enemyPokemonStatus)
-			print('The wild', enemyPokemon, 'woke up!')
+			print('The', enemyWording, enemyPokemon, 'woke up!')
 		if enemyPokemonStatusType == 'Frozen':
 			i = randint(1,5)
 			if i == 1:
 				enemyPokemonStatus = 0
 				enemyPokemonStatusType = getStatusType(enemyPokemonStatus)
 			else:
-				print('The wild', enemyPokemon, 'is frozen and couldn\'t move!')
+				print('The', enemyWording, enemyPokemon, 'is frozen and couldn\'t move!')
 				myPokemonInfo = [myPokemon,myPokemonLevel,myPokemonHP,myPokemonIV,myPokemonStatus,myPokemonStatusCount,myPokemonStatStage]
 				enemyPokemonInfo = [enemyPokemon,enemyPokemonLevel,enemyPokemonHP,enemyPokemonIV,enemyPokemonStatus,enemyPokemonStatusCount,enemyPokemonStatStage]
 				myTeam[0] = myPokemonInfo
@@ -551,11 +642,11 @@ def startEnemyTurn(move,myTeam,enemyTeam):
 		if moveExtraForm == 'Self':
 			statChange = getStatChange(move)
 			enemyPokemonStatStage = list(map(add, enemyPokemonStatStage, statChange))
-			print('The wild', enemyPokemon, 'used', move, 'and it\'s stats changed by', statChange, '. They are now', enemyPokemonStatStage, '.')
+			print('The', enemyWording, enemyPokemon, 'used', move, 'and it\'s stats changed by', statChange, '. They are now', enemyPokemonStatStage, '.')
 		if moveExtraForm == 'Enemy':
 			statChange = getStatChange(move)
 			myPokemonStatStage = list(map(add, myPokemonStatStage, statChange))
-			print('The wild', enemyPokemon, 'used', move, 'against your', myPokemon, 'and it\'s stats changed by', statChange, '. They are now', myPokemonStatStage, '.')
+			print('The', enemyWording, enemyPokemon, 'used', move, 'against your', myPokemon, 'and it\'s stats changed by', statChange, '. They are now', myPokemonStatStage, '.')
 		myPokemonInfo = [myPokemon,myPokemonLevel,myPokemonHP,myPokemonIV,myPokemonStatus,myPokemonStatusCount,myPokemonStatStage]
 		enemyPokemonInfo = [enemyPokemon,enemyPokemonLevel,enemyPokemonHP,enemyPokemonIV,enemyPokemonStatus,enemyPokemonStatusCount,enemyPokemonStatStage]
 		myTeam[0] = myPokemonInfo
@@ -564,9 +655,18 @@ def startEnemyTurn(move,myTeam,enemyTeam):
 	myPokemonHP = myPokemonHP - moveDamage
 	if myPokemonHP < 0:
 		myPokemonHP = 0
-	print('The wild', enemyPokemon, 'used', move, 'against', myPokemon, '-', effectivenessWording, 'it dealt', moveDamage, 'HP damage!', myPokemon, 'has', myPokemonHP, '/', myMaxHP, 'HP remaining!')
+	print('The', enemyWording, enemyPokemon, 'used', move, 'against', myPokemon, '-', effectivenessWording, 'it dealt', moveDamage, 'HP damage!', myPokemon, 'has', myPokemonHP, '/', myMaxHP, 'HP remaining!')
 	moveExtra = getMoveExtra(move)
-	if moveExtra == 'Yes':
+	if moveExtra == 'Yes':	
+		moveExtraForm = getMoveExtraForm(move)
+		if moveExtraForm == 'Self':
+			statChange = getStatChange(move)
+			enemyPokemonStatStage = list(map(add, enemyPokemonStatStage, statChange))
+			print('The', enemyWording, enemyPokemon, '\'s stats changed by', statChange, '. They are now', enemyPokemonStatStage, '.')
+		if moveExtraForm == 'Enemy':
+			statChange = getStatChange(move)
+			myPokemonStatStage = list(map(add, myPokemonStatStage, statChange))
+			print(myPokemon, '\'s stats changed by', statChange, '. They are now', myPokemonStatStage, '.')
 		statusChange = getStatusChange(move)
 		if statusChange == 'Yes':
 			if myPokemonStatus == 0:
@@ -585,16 +685,16 @@ def startEnemyTurn(move,myTeam,enemyTeam):
 		if enemyPokemonStatusType == 'Burned':
 			burnDamage = int(enemyMaxHP / 16)
 			enemyPokemonHP = (enemyPokemonHP - burnDamage)
-			print('The wild', enemyPokemon, 'took', burnDamage, 'HP damage due to it\'s burn! It has', enemyPokemonHP, '/', enemyMaxHP, 'HP remaining!')
+			print('The', enemyWording, enemyPokemon, 'took', burnDamage, 'HP damage due to it\'s burn! It has', enemyPokemonHP, '/', enemyMaxHP, 'HP remaining!')
 		if enemyPokemonStatusType == 'Poisoned':
 			poisonDamage = int(enemyMaxHP / 8)
 			enemyPokemonHP = (enemyPokemonHP - poisonDamage)
-			print('The wild', enemyPokemon, 'took', poisonDamage, 'HP damage due to being poisoned! It has', enemyPokemonHP, '/', enemyMaxHP, 'HP remaining!')
+			print('The', enemyWording, enemyPokemon, 'took', poisonDamage, 'HP damage due to being poisoned! It has', enemyPokemonHP, '/', enemyMaxHP, 'HP remaining!')
 		if enemyPokemonStatusType == 'Toxic':
 			enemyPokemonStatusCount = enemyPokemonStatusCount + 1
 			toxicDamage = int(enemyMaxHP * meneyStatusCount / 16)
 			enemyPokemonHP = enemyPokemonHP - toxicDamage
-			print('The wild', enemyPokemon, 'took', toxicDamage, 'HP damage due to being badly poisoned! It has', enemyPokemonHP, '/', enemyMaxHP, 'HP remaining!')
+			print('The', enemyWording, enemyPokemon, 'took', toxicDamage, 'HP damage due to being badly poisoned! It has', enemyPokemonHP, '/', enemyMaxHP, 'HP remaining!')
 	myPokemonInfo = [myPokemon,myPokemonLevel,myPokemonHP,myPokemonIV,myPokemonStatus,myPokemonStatusCount,myPokemonStatStage]
 	enemyPokemonInfo = [enemyPokemon,enemyPokemonLevel,enemyPokemonHP,enemyPokemonIV,enemyPokemonStatus,enemyPokemonStatusCount,enemyPokemonStatStage]
 	myTeam[0] = myPokemonInfo
@@ -711,13 +811,14 @@ def getSwitchPokemon(myTeam):
 					change = 0
 				else:
 					change = 1
-					pokemonToChangeTo = myTeam[choice]
-					pokemonHP = pokemonToChangeTo[2]
+					pokemonToChangeToInfo = myTeam[choice]
+					pokemon = pokemonToChangeToInfo[0]
+					pokemonHP = pokemonToChangeToInfo[2]
 					if pokemonHP > 0:
 						myTeam[choice], myTeam[0] = myTeam[0], myTeam[choice]
 						return [myTeam, change]
 					if pokemonHP == 0:
-						print(pokemonToChangeTo, 'has fainted! Choose another!')
+						print(pokemon, 'has fainted! Choose another!')
 			print('Please choose one of the above!')
 		except ValueError:
 			print("Please choose one of the above!")
@@ -760,7 +861,7 @@ def getRandomSwitchPokemon(myTeam):
 			change
 
 #def startRound(myPokemon,myPokemonLevel,myPokemonHP,myPokemonIV,myPokemonStatStage,myPokemonStatus,myPokemonStatusCount,enemyPokemon,enemyPokemonLevel,enemyPokemonHP,enemyPokemonIV,enemyPokemonStatStage,enemyPokemonStatus,enemyPokemonStatusCount):
-def startRound(myTeam,enemyTeam):
+def startRound(myTeam,enemyTeam,myTrainerInfo,enemyTrainerInfo):
 	myPokemonInfo = myTeam[0]; enemyPokemonInfo = enemyTeam[0]
 	myPokemon = myPokemonInfo[0]; myPokemonLevel = myPokemonInfo[1]; myPokemonHP = myPokemonInfo[2]; myPokemonIV = myPokemonInfo[3]; myPokemonStatus = myPokemonInfo[4]; myPokemonStatusCount = myPokemonInfo[5]; myPokemonStatStage = myPokemonInfo[6]
 	enemyPokemon = enemyPokemonInfo[0]; enemyPokemonLevel = enemyPokemonInfo[1]; enemyPokemonHP = enemyPokemonInfo[2]; enemyPokemonIV = enemyPokemonInfo[3]; enemyPokemonStatus = enemyPokemonInfo[4]; enemyPokemonStatusCount = enemyPokemonInfo[5]; enemyPokemonStatStage = enemyPokemonInfo[6]
@@ -776,27 +877,27 @@ def startRound(myTeam,enemyTeam):
 		enemyMove = getRandomMoveFromSet(enemyPokemon)
 		turnOrder = getTurnOrder(myPokemon,myPokemonLevel,myPokemonIV,myPokemonStatStage,myPokemonStatus,enemyPokemon,enemyPokemonLevel,enemyPokemonIV,enemyPokemonStatStage,enemyPokemonStatus)
 		if turnOrder == 'myPokemonFirst':
-			turnOutcomeInfo = startMyTurn(myMove,myTeam,enemyTeam)
+			turnOutcomeInfo = startMyTurn(myMove,myTeam,enemyTeam,myTrainerInfo,enemyTrainerInfo)
 			myTeam = turnOutcomeInfo[0]; myPokemonInfo = myTeam[0]
 			enemyTeam = turnOutcomeInfo[1]; enemyPokemonInfo = enemyTeam[0]
 			myPokemonHP = myPokemonInfo[2]; enemyPokemonHP = enemyPokemonInfo[2]
 			if enemyPokemonHP == 0 or myPokemonHP == 0:
 				roundOutcomeInfo = [myTeam,enemyTeam,run]
 				return roundOutcomeInfo
-			turnOutcomeInfo = startEnemyTurn(enemyMove,myTeam,enemyTeam)
+			turnOutcomeInfo = startEnemyTurn(enemyMove,myTeam,enemyTeam,myTrainerInfo,enemyTrainerInfo)
 			myTeam = turnOutcomeInfo[0]; myPokemonInfo = myTeam[0]
 			enemyTeam = turnOutcomeInfo[1]; enemyPokemonInfo = enemyTeam[0]
 			roundOutcomeInfo = [myTeam,enemyTeam,run]
 			return roundOutcomeInfo
 		if turnOrder == 'enemyPokemonFirst':
-			turnOutcomeInfo = startEnemyTurn(enemyMove,myTeam,enemyTeam)
+			turnOutcomeInfo = startEnemyTurn(enemyMove,myTeam,enemyTeam,myTrainerInfo,enemyTrainerInfo)
 			myTeam = turnOutcomeInfo[0]; myPokemonInfo = myTeam[0]
 			enemyTeam = turnOutcomeInfo[1]; enemyPokemonInfo = enemyTeam[0]
 			myPokemonHP = myPokemonInfo[2]; enemyPokemonHP = enemyPokemonInfo[2]
 			if myPokemonHP == 0 or enemyPokemonHP == 0:
 				roundOutcomeInfo = [myTeam,enemyTeam,run]
 				return roundOutcomeInfo
-			turnOutcomeInfo = startMyTurn(myMove,myTeam,enemyTeam)
+			turnOutcomeInfo = startMyTurn(myMove,myTeam,enemyTeam,myTrainerInfo,enemyTrainerInfo)
 			myTeam = turnOutcomeInfo[0]; myPokemonInfo = myTeam[0]
 			enemyTeam = turnOutcomeInfo[1]; enemyPokemonInfo = enemyTeam[0]
 			roundOutcomeInfo = [myTeam,enemyTeam,run]
@@ -809,7 +910,7 @@ def startRound(myTeam,enemyTeam):
 		print('Nothing in your bag!')
 		run = [0]
 		enemyMove = getRandomMoveFromSet(enemyPokemon)
-		turnOutcomeInfo = startEnemyTurn(enemyMove,myTeam,enemyTeam)
+		turnOutcomeInfo = startEnemyTurn(enemyMove,myTeam,enemyTeam,myTrainerInfo,enemyTrainerInfo)
 		myTeam = turnOutcomeInfo[0]; myPokemonInfo = myTeam[0]
 		enemyTeam = turnOutcomeInfo[1]; enemyPokemonInfo = enemyTeam[0]
 		roundOutcomeInfo = [myTeam,enemyTeam,run]
@@ -825,7 +926,7 @@ def startRound(myTeam,enemyTeam):
 		myPokemonInfo = myTeam[0]; myPokemon = myPokemonInfo[0]
 		print ('You switched from', oldPokemon, 'into', myPokemon + '!')
 		enemyMove = getRandomMoveFromSet(enemyPokemon)
-		turnOutcomeInfo = startEnemyTurn(enemyMove,myTeam,enemyTeam)
+		turnOutcomeInfo = startEnemyTurn(enemyMove,myTeam,enemyTeam,myTrainerInfo,enemyTrainerInfo)
 		myTeam = turnOutcomeInfo[0]; myPokemonInfo = myTeam[0]; myPokemon = myPokemonInfo[0]
 		enemyTeam = turnOutcomeInfo[1]; enemyPokemonInfo = enemyTeam[0]
 		roundOutcomeInfo = [myTeam,enemyTeam,run]
@@ -888,16 +989,20 @@ def getTeamTotalHP(myTeam):
 		myTeamTotalHP = myPokemonOneHP + myPokemonTwoHP + myPokemonThreeHP + myPokemonFourHP + myPokemonFiveHP + myPokemonSixHP
 	return myTeamTotalHP
 
-def startWildBattle(myTeam,enemyTeam):
+def startBattle(myTeam,enemyTeam,myTrainerInfo,enemyTrainerInfo):
 	myPokemonInfo = myTeam[0]; enemyPokemonInfo = enemyTeam[0]
 	myPokemon = myPokemonInfo[0]; myPokemonLevel = myPokemonInfo[1]; myPokemonHP = myPokemonInfo[2]; myPokemonIV = myPokemonInfo[3]; myPokemonStatus = myPokemonInfo[4]; myPokemonStatusCount = myPokemonInfo[5]; myPokemonStatStage = [6]
 	enemyPokemon = enemyPokemonInfo[0]; enemyPokemonLevel = enemyPokemonInfo[1]; enemyPokemonHP = enemyPokemonInfo[2]; enemyPokemonIV = enemyPokemonInfo[3]; enemyPokemonStatus = enemyPokemonInfo[4]; enemyPokemonStatusCount = enemyPokemonInfo[5]; enemyPokemonStatStage = [6]
-	print('A wild Level', enemyPokemonLevel, enemyPokemon, 'appeared! Go', myPokemon, '!')
+	enemyBattleType = enemyTrainerInfo[0]; enemyTrainerName = enemyTrainerInfo[1]
+	if enemyBattleType == 'Trainer':
+		print(enemyTrainerName, 'sent out a lvl', enemyPokemonLevel, enemyPokemon + '!', 'Go', myPokemon + '!')
+	if enemyBattleType == 'Wild':
+		print('A wild lvl', enemyPokemonLevel, enemyPokemon, 'appeared! Go', myPokemon, '!')
 	myTeamTotalHP = getTeamTotalHP(myTeam)
 	enemyTeamTotalHP = getTeamTotalHP(enemyTeam)
 	while myTeamTotalHP > 0 and enemyPokemonHP > 0:
 		while myPokemonHP > 0 and enemyPokemonHP > 0:
-			roundOutcomeInfo = startRound(myTeam,enemyTeam)
+			roundOutcomeInfo = startRound(myTeam,enemyTeam,myTrainerInfo,enemyTrainerInfo)
 			myTeam = roundOutcomeInfo[0]; enemyTeam = roundOutcomeInfo[1]
 			myPokemonInfo = myTeam[0]; enemyPokemonInfo = enemyTeam[0]
 			myPokemon = myPokemonInfo[0]; myPokemonLevel = myPokemonInfo[1]; myPokemonHP = myPokemonInfo[2]; myPokemonIV = myPokemonInfo[3]; myPokemonStatus = myPokemonInfo[4]; myPokemonStatusCount = myPokemonInfo[5]; myPokemonStatStage = [6]
@@ -937,7 +1042,7 @@ def startWildBattle(myTeam,enemyTeam):
 			enemyTeam = changePokemon[0]; change = changePokemon[1]
 			enemyPokemonInfo = enemyTeam[0]; enemyPokemon = enemyPokemonInfo[0]
 			enemyPokemonHP = enemyPokemonInfo[2]
-			print ('The enemy switched from', oldEnemyPokemon, 'into', enemyPokemon + '!')
+			print (enemyTrainerName, 'switched from', oldEnemyPokemon, 'into', enemyPokemon + '!')
 	myTeamTotalHP = getTeamTotalHP(myTeam)
 	if myTeamTotalHP == 0:
 		print('You whited out!')
@@ -970,10 +1075,10 @@ def startGame():
 	enemyTeam = [enemyPokemonOneList]
 	print('Gary: \n Fine, I choose', enemyPokemonOne + '! Let\'s fight!')
 	input()
-	startWildBattle(myTeam,enemyTeam)
+	startBattle(myTeam,enemyTeam,1)
 
 def chooseGameplay():
-	print('> To begin the game as normal, type 1\n> For a preset battle, type 2')
+	print('> To begin the game as normal, type 1\n> For a preset battle, type 2\n > Gym Leader Challenge, type 3')
 	x = input()
 	if x == '1':
 		startGame()
@@ -990,7 +1095,25 @@ def chooseGameplay():
 		enemyPokemonTwoList = [enemyPokemonTwo,enemyPokemonTwoLevel,enemyPokemonTwoHP,enemyPokemonTwoIV,enemyPokemonTwoStatus,enemyPokemonTwoStatusCount,enemyPokemonTwoStatStage]
 		myTeam = [myPokemonOneList,myPokemonTwoList,myPokemonThreeList]
 		enemyTeam = [enemyPokemonOneList,enemyPokemonTwoList]
-		startWildBattle(myTeam,enemyTeam)
+		myTrainerInfo = [1]
+		enemyTrainerInfo = ['Trainer','Jimbo','opposing']
+		startBattle(myTeam,enemyTeam,myTrainerInfo,enemyTrainerInfo)
+	if x == '3':
+		myPokemonOne = 'Onix'; myPokemonOneLevel = 13; myPokemonOneIV = getRandomIV(); myPokemonOneStatus = 0; myPokemonOneStatStage = [0,0,0,0,0,0,0]; myPokemonOneStatusCount = 0; myPokemonOneHP = gethpStat(myPokemonOne,myPokemonOneLevel,myPokemonOneIV,myPokemonOneStatStage)
+		myPokemonTwo = 'Bulbasaur'; myPokemonTwoLevel = 13; myPokemonTwoIV = getRandomIV(); myPokemonTwoStatus = 0; myPokemonTwoStatStage = [0,0,0,0,0,0,0]; myPokemonTwoStatusCount = 0; myPokemonTwoHP = gethpStat(myPokemonTwo,myPokemonTwoLevel,myPokemonTwoIV,myPokemonTwoStatStage)
+		myPokemonThree = 'Squirtle'; myPokemonThreeLevel = 13; myPokemonThreeIV = getRandomIV(); myPokemonThreeStatus = 0; myPokemonThreeStatStage = [0,0,0,0,0,0,0]; myPokemonThreeStatusCount = 0; myPokemonThreeHP = gethpStat(myPokemonThree,myPokemonThreeLevel,myPokemonThreeIV,myPokemonThreeStatStage)
+		enemyPokemonOne = 'Geodude'; enemyPokemonOneLevel = 12; enemyPokemonOneIV = getRandomIV(); enemyPokemonOneStatus = 0; enemyPokemonOneStatStage = [0,0,0,0,0,0,0]; enemyPokemonOneStatusCount = 0; enemyPokemonOneHP = gethpStat(enemyPokemonOne,enemyPokemonOneLevel,enemyPokemonOneIV,enemyPokemonOneStatStage)
+		enemyPokemonTwo = 'Onix'; enemyPokemonTwoLevel = 14; enemyPokemonTwoIV = getRandomIV(); enemyPokemonTwoStatus = 0; enemyPokemonTwoStatStage = [0,0,0,0,0,0,0]; enemyPokemonTwoStatusCount = 0; enemyPokemonTwoHP = gethpStat(enemyPokemonTwo,enemyPokemonTwoLevel,enemyPokemonTwoIV,enemyPokemonTwoStatStage)
+		myPokemonOneList = [myPokemonOne,myPokemonOneLevel,myPokemonOneHP,myPokemonOneIV,myPokemonOneStatus,myPokemonOneStatusCount,myPokemonOneStatStage]
+		myPokemonTwoList = [myPokemonTwo,myPokemonTwoLevel,myPokemonTwoHP,myPokemonTwoIV,myPokemonTwoStatus,myPokemonTwoStatusCount,myPokemonTwoStatStage]
+		myPokemonThreeList = [myPokemonThree,myPokemonThreeLevel,myPokemonThreeHP,myPokemonThreeIV,myPokemonThreeStatus,myPokemonThreeStatusCount,myPokemonThreeStatStage]
+		enemyPokemonOneList = [enemyPokemonOne,enemyPokemonOneLevel,enemyPokemonOneHP,enemyPokemonOneIV,enemyPokemonOneStatus,enemyPokemonOneStatusCount,enemyPokemonOneStatStage]
+		enemyPokemonTwoList = [enemyPokemonTwo,enemyPokemonTwoLevel,enemyPokemonTwoHP,enemyPokemonTwoIV,enemyPokemonTwoStatus,enemyPokemonTwoStatusCount,enemyPokemonTwoStatStage]
+		myTeam = [myPokemonOneList,myPokemonTwoList,myPokemonThreeList]
+		enemyTeam = [enemyPokemonOneList,enemyPokemonTwoList]
+		myTrainerInfo = [1]
+		enemyTrainerInfo = ['Trainer','Brock','gym leader\'s']
+		startBattle(myTeam,enemyTeam,myTrainerInfo,enemyTrainerInfo)
 
 
 chooseGameplay()
