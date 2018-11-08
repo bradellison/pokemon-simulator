@@ -589,7 +589,6 @@ def getChoiceInput():
 	while True:
 		try:
 			choiceInput = input('-- ')
-			print(choiceInput, 'input')
 			if choiceInput == 'Fight':
 				return choiceInput
 			if choiceInput == 'Bag':
@@ -618,7 +617,6 @@ def startRound(myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount,en
 	print('What will you do?')
 	print('Fight - Bag - Pokemon - Run')
 	choiceInput = getChoiceInput()
-	print(choiceInput, 'input2')
 	if choiceInput == 'Fight':
 		run = [0]
 		print('\nWhat will', myPokemon, 'do?')
@@ -648,7 +646,25 @@ def startRound(myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount,en
 			roundOutcomeInfo = turnOutcomeInfo + run
 			return roundOutcomeInfo
 	if choiceInput == 'Run':
-		run = ['Run']
+		run = [1]
+		hpList = [myHP,enemyHP]
+		statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]
+		roundOutcomeInfo = hpList + myStatStage + enemyStatStage + statusList + run
+		return roundOutcomeInfo
+	if choiceInput == 'Bag':
+		print('Nothing in your bag!')
+		run = [0]
+		enemyMove = getRandomMoveFromSet(enemyPokemon)
+		turnOutcomeInfo = startEnemyTurn(enemyMove,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,enemyStatus,enemyStatusCount,myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount)
+		hpList = [myHP,enemyHP]
+		statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]
+		roundOutcomeInfo = hpList + myStatStage + enemyStatStage + statusList + run
+		return roundOutcomeInfo
+	if choiceInput == 'Pokemon':
+		print('No other Pokemon!')
+		run = [0]
+		enemyMove = getRandomMoveFromSet(enemyPokemon)
+		turnOutcomeInfo = startEnemyTurn(enemyMove,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,enemyStatus,enemyStatusCount,myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount)
 		hpList = [myHP,enemyHP]
 		statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]
 		roundOutcomeInfo = hpList + myStatStage + enemyStatStage + statusList + run
@@ -674,11 +690,10 @@ def startBattle(myPokemon,myLevel,myIV,myStatus,enemyPokemon,enemyLevel):
 		myStatusCount = roundOutcomeInfo[17]
 		enemyStatus = roundOutcomeInfo[18]
 		enemyStatusCount=roundOutcomeInfo[19]
-		run=roundOutcomeInfo[20]
-		print(run, 'yep')
-	if run == 'Run':
-		print('You got away safely!')
-		return 1
+		runLast=roundOutcomeInfo[20]
+		if int(runLast) > 0:
+			print('You got away safely!')
+			return 1
 	if myHP == 0:
 		print(myPokemon, 'fainted! You lose!')
 	if myHP > 0:
