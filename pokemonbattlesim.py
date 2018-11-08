@@ -73,7 +73,7 @@ growlStatChangeInfo = {'HP':0,'Atk':-1,'Def':0,'SpAtk':0,'SpDef':0,'Spd':0, 'Acc
 defenseCurlStatChangeInfo = {'HP':0,'Atk':0,'Def':1,'SpAtk':0,'SpDef':0,'Spd':0, 'Accuracy':0}
 tailWhipStatChangeInfo = {'HP':0,'Atk':0,'Def':-1,'SpAtk':0,'SpDef':0,'Spd':0, 'Accuracy':0}
 
-emberStatusChangeInfo = {'Type':3,'Chance':100}
+emberStatusChangeInfo = {'Type':1,'Chance':10}
 
 normalEffect = {'Normal':1, 'Water':1, 'Grass':1, 'Fire':1, 'Poison':1, 'Flying':1, 'Null':1}
 grassEffect = {'Normal':1, 'Water':2, 'Grass':1, 'Fire':0.5, 'Poison':1, 'Flying':1, 'Null':1}
@@ -361,9 +361,9 @@ def getStatusType(i):
 	StatusType = nonVolatileStatusNumberToType[i]
 	return StatusType
 
-def getTurnOrder(myPokemon,myLevel,myIV,myStatStage,myStatus,enemyPokemon,enemyLevel,enemyIV,enemyStatStage,enemyStatus):
-	mySpd = getSpdStat(myPokemon,myLevel,myIV,myStatStage,myStatus)
-	enemySpd = getSpdStat(enemyPokemon,enemyLevel,enemyIV,enemyStatStage,enemyStatus)
+def getTurnOrder(myPokemon,myPokemonLevel,myPokemonIV,myPokemonStatStage,myPokemonStatus,enemyPokemon,enemyPokemonLevel,enemyPokemonIV,enemyPokemonStatStage,enemyPokemonStatus):
+	mySpd = getSpdStat(myPokemon,myPokemonLevel,myPokemonIV,myPokemonStatStage,myPokemonStatus)
+	enemySpd = getSpdStat(enemyPokemon,enemyPokemonLevel,enemyPokemonIV,enemyPokemonStatStage,enemyPokemonStatus)
 	if mySpd > enemySpd:
 		return 'myPokemonFirst'
 	if mySpd < enemySpd:
@@ -375,198 +375,231 @@ def getTurnOrder(myPokemon,myLevel,myIV,myStatStage,myStatus,enemyPokemon,enemyL
 		if x == 1:
 			return 'enemyPokemonFirst'
 
-def getPokemonMove(move,myPokemon,myLevel,enemyPokemon,enemyLevel):
-	moveDamage = getMoveDamage(move,myPokemon,myLevel,enemyPokemon,enemyLevel)
+def getPokemonMove(move,myPokemon,myPokemonLevel,enemyPokemon,enemyPokemonLevel):
+	moveDamage = getMoveDamage(move,myPokemon,myPokemonLevel,enemyPokemon,enemyPokemonLevel)
 	effectiveness = getEffectiveness(move,enemyPokemon)
 	addedEffect = getMoveExtra(move)
 
-def startMyTurn(move,myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,enemyStatus,enemyStatusCount):
-	moveDamage = getMoveDamage(move,myPokemon,myLevel,myIV,myStatStage,myStatus,enemyPokemon,enemyLevel,enemyIV,enemyStatStage)
-	myStatusType = getStatusType(myStatus)
-	enemyStatusType = getStatusType(enemyStatus)
-	enemyMaxHP = gethpStat(enemyPokemon,enemyLevel,enemyIV,'Enemy Pokemon')
-	myMaxHP = gethpStat(myPokemon,myLevel,myIV,'My Pokemon')
+def startMyTurn(move,myTeam,enemyTeam):
+	myPokemonInfo = myTeam[0]; enemyPokemonInfo = enemyTeam[0]
+	myPokemon = myPokemonInfo[0]; myPokemonLevel = myPokemonInfo[1]; myPokemonHP = myPokemonInfo[2]; myPokemonIV = myPokemonInfo[3]; myPokemonStatus = myPokemonInfo[4]; myPokemonStatusCount = myPokemonInfo[5]; myPokemonStatStage = myPokemonInfo[6]
+	enemyPokemon = enemyPokemonInfo[0]; enemyPokemonLevel = enemyPokemonInfo[1]; enemyPokemonHP = enemyPokemonInfo[2]; enemyPokemonIV = enemyPokemonInfo[3]; enemyPokemonStatus = enemyPokemonInfo[4]; enemyPokemonStatusCount = enemyPokemonInfo[5]; enemyPokemonStatStage = enemyPokemonInfo[6]
+	moveDamage = getMoveDamage(move,myPokemon,myPokemonLevel,myPokemonIV,myPokemonStatStage,myPokemonStatus,enemyPokemon,enemyPokemonLevel,enemyPokemonIV,enemyPokemonStatStage)
+	myPokemonStatusType = getStatusType(myPokemonStatus)
+	enemyPokemonStatusType = getStatusType(enemyPokemonStatus)
+	enemyMaxHP = gethpStat(enemyPokemon,enemyPokemonLevel,enemyPokemonIV,'Enemy Pokemon')
+	myMaxHP = gethpStat(myPokemon,myPokemonLevel,myPokemonIV,'My Pokemon')
 	hitOrMiss = getHitOrMiss(move)
 	moveVariety = getMoveVariety(move)
 	effectiveness = getEffectiveness(move,enemyPokemon)
 	effectivenessWording = getEffectivesnessWording(effectiveness)
-	if myStatus != 'Nothing':
-		if myStatusType == 'Paralyzed':
+	if myPokemonStatus != 'Nothing':
+		if myPokemonStatusType == 'Paralyzed':
 			print(myPokemon, 'is paralyzed and may not be able to move!')
 			i = randint(1,4)
 			if i == 1:
 				print(myPokemon, 'couldn\'t move!')
-				hpList = [myHP,enemyHP]
-				statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]	
-				outcomeInfo = hpList + myStatStage + enemyStatStage + statusList
-				return outcomeInfo
-		if myStatusType == 'Sleep':
+				myPokemonInfo = [myPokemon,myPokemonLevel,myPokemonHP,myPokemonIV,myPokemonStatus,myPokemonStatusCount,myPokemonStatStage]
+				enemyPokemonInfo = [enemyPokemon,enemyPokemonLevel,enemyPokemonHP,enemyPokemonIV,enemyPokemonStatus,enemyPokemonStatusCount,enemyPokemonStatStage]
+				myTeam[0] = myPokemonInfo
+				enemyTeam[0] = enemyPokemonInfo
+				return [myTeam,enemyTeam]	
+		if myPokemonStatusType == 'Sleep':
 			print(myPokemon, 'is sleeping!')
-			myStatusCount = myStatusCount - 1
-			if myStatusCount > 0:
-				hpList = [myHP,enemyHP]
-				statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]	
-				outcomeInfo = hpList + myStatStage + enemyStatStage + statusList
-				return outcomeInfo
-			myStatus = 0
-			myStatusType = getStatusType(myStatus)
+			myPokemonStatusCount = myPokemonStatusCount - 1
+			if myPokemonStatusCount > 0:
+				myPokemonInfo = [myPokemon,myPokemonLevel,myPokemonHP,myPokemonIV,myPokemonStatus,myPokemonStatusCount,myPokemonStatStage]
+				enemyPokemonInfo = [enemyPokemon,enemyPokemonLevel,enemyPokemonHP,enemyPokemonIV,enemyPokemonStatus,enemyPokemonStatusCount,enemyPokemonStatStage]
+				myTeam[0] = myPokemonInfo
+				enemyTeam[0] = enemyPokemonInfo
+				return [myTeam,enemyTeam]	
+			myPokemonStatus = 0
+			myPokemonStatusType = getStatusType(myPokemonStatus)
 			print(myPokemon, 'woke up!')
-		if myStatusType == 'Frozen':
+		if myPokemonStatusType == 'Frozen':
 			i = randint(1,5)
 			if i == 1:
-				myStatus = 0
-				myStatusType = getStatusType(myStatus)
+				myPokemonStatus = 0
+				myPokemonStatusType = getStatusType(myPokemonStatus)
 			else:
 				print(myPokemon, 'is frozen and couldn\'t move!')
-				hpList = [myHP,enemyHP]
-				statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]	
-				outcomeInfo = hpList + myStatStage + enemyStatStage + statusList
-				return outcomeInfo			
+				myPokemonInfo = [myPokemon,myPokemonLevel,myPokemonHP,myPokemonIV,myPokemonStatus,myPokemonStatusCount,myPokemonStatStage]
+				enemyPokemonInfo = [enemyPokemon,enemyPokemonLevel,enemyPokemonHP,enemyPokemonIV,enemyPokemonStatus,enemyPokemonStatusCount,enemyPokemonStatStage]
+				myTeam[0] = myPokemonInfo
+				enemyTeam[0] = enemyPokemonInfo
+				return [myTeam,enemyTeam]		
 	if hitOrMiss == 'Miss':
 		print(myPokemon, 'used', move, 'but it missed!')
-		hpList = [myHP,enemyHP]
-		statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]	
-		outcomeInfo = hpList + myStatStage + enemyStatStage + statusList
-		return outcomeInfo
+		myPokemonInfo = [myPokemon,myPokemonLevel,myPokemonHP,myPokemonIV,myPokemonStatus,myPokemonStatusCount,myPokemonStatStage]
+		enemyPokemonInfo = [enemyPokemon,enemyPokemonLevel,enemyPokemonHP,enemyPokemonIV,enemyPokemonStatus,enemyPokemonStatusCount,enemyPokemonStatStage]
+		myTeam[0] = myPokemonInfo
+		enemyTeam[0] = enemyPokemonInfo
+		return [myTeam,enemyTeam]
 	if moveVariety == 'Support':
 		moveExtraForm = getMoveExtraForm(move)
 		if moveExtraForm == 'Enemy':
 			statChange = getStatChange(move)
-			enemyStatStage = list(map(add, enemyStatStage, statChange))
-			print(myPokemon, 'used', move, 'against the wild', enemyPokemon, 'and it\'s stats changed by', statChange, '. They are now', enemyStatStage, '.')
+			enemyPokemonStatStage = list(map(add, enemyPokemonStatStage, statChange))
+			print(myPokemon, 'used', move, 'against the wild', enemyPokemon, 'and it\'s stats changed by', statChange, '. They are now', enemyPokemonStatStage, '.')
 		if moveExtraForm == 'Self':
 			statChange = getStatChange(move)
-			myStatStage = list(map(add, myStatStage, statChange))
-			print('Your', myPokemon, 'used', move, 'and it\'s stats changed by', statChange, '. They are now', myStatStage, '.')
-		hpList = [myHP,enemyHP]
-		statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]
-		outcomeInfo = hpList + myStatStage + enemyStatStage + statusList
-		return outcomeInfo
-	enemyHP = enemyHP - moveDamage
-	if enemyHP < 0:
-		enemyHP = 0
-	print(myPokemon, 'used', move, 'against the wild', enemyPokemon, '-', effectivenessWording, 'it dealt', moveDamage, 'HP damage!', enemyPokemon, 'has', enemyHP, '/', enemyMaxHP, 'HP remaining!')
+			myPokemonStatStage = list(map(add, myPokemonStatStage, statChange))
+			print('Your', myPokemon, 'used', move, 'and it\'s stats changed by', statChange, '. They are now', myPokemonStatStage, '.')
+		myPokemonInfo = [myPokemon,myPokemonLevel,myPokemonHP,myPokemonIV,myPokemonStatus,myPokemonStatusCount,myPokemonStatStage]
+		enemyPokemonInfo = [enemyPokemon,enemyPokemonLevel,enemyPokemonHP,enemyPokemonIV,enemyPokemonStatus,enemyPokemonStatusCount,enemyPokemonStatStage]
+		myTeam[0] = myPokemonInfo
+		enemyTeam[0] = enemyPokemonInfo
+		return [myTeam,enemyTeam]
+	enemyPokemonHP = enemyPokemonHP - moveDamage
+	if enemyPokemonHP < 0:
+		enemyPokemonHP = 0
+	print(myPokemon, 'used', move, 'against the wild', enemyPokemon, '-', effectivenessWording, 'it dealt', moveDamage, 'HP damage!', enemyPokemon, 'has', enemyPokemonHP, '/', enemyMaxHP, 'HP remaining!')
 	moveExtra = getMoveExtra(move)
 	if moveExtra == 'Yes':
 		statusChange = getStatusChange(move)
 		if statusChange == 'Yes':
-			if enemyStatus == 0:
+			if enemyPokemonStatus == 0:
 				statusChangeType = getStatusChangeType(move)
 				statusChangeChance = getStatusChangeChance(move)
 				x = randint(1,100)
 				if x <= statusChangeChance:
-					enemyStatus = statusChangeType
-					statusType = getStatusType(enemyStatus)
+					enemyPokemonStatus = statusChangeType
+					statusType = getStatusType(enemyPokemonStatus)
 					print(enemyPokemon, 'was', statusType + '!')
 				if statusChangeType == 3:
 					x = randint(1,3)	
-					enemyStatusCount = x
-	myStatusType = getStatusType(myStatus)
-	if myStatusType != 'Nothing':
-		if myStatusType == 'Burned':
+					enemyPokemonStatusCount = x
+	myPokemonStatusType = getStatusType(myPokemonStatus)
+	if myPokemonStatusType != 'Nothing':
+		if myPokemonStatusType == 'Burned':
 			burnDamage = int(myMaxHP / 16)
-			myHP = (myHP - burnDamage)
-			print(myPokemon, 'took', burnDamage, 'HP damage due to it\'s burn! It has', myHP, '/', myMaxHP, 'HP remaining!')
-		if myStatusType == 'Poisoned':
+			myPokemonHP = (myPokemonHP - burnDamage)
+			print(myPokemon, 'took', burnDamage, 'HP damage due to it\'s burn! It has', myPokemonHP, '/', myMaxHP, 'HP remaining!')
+		if myPokemonStatusType == 'Poisoned':
 			poisonDamage = int(myMaxHP / 8)
-			myHP = (myHP - poisonDamage)
-			print(myPokemon, 'took', poisonDamage, 'HP damage due to being poisoned! It has', myHP, '/', myMaxHP, 'HP remaining!')
-		if myStatusType == 'Toxic':
-			myStatusCount = myStatusCount + 1
-			toxicDamage = int(myMaxHP * myStatusCount / 16)
-			myHP = myHP - toxicDamage
-			print(myPokemon, 'took', toxicDamage, 'HP damage due to being badly poisoned! It has', myHP, '/', myMaxHP, 'HP remaining!')
-	hpList = [myHP,enemyHP]
-	statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]
-	outcomeInfo = hpList + myStatStage + enemyStatStage + statusList
-	return outcomeInfo
+			myPokemonHP = (myPokemonHP - poisonDamage)
+			print(myPokemon, 'took', poisonDamage, 'HP damage due to being poisoned! It has', myPokemonHP, '/', myMaxHP, 'HP remaining!')
+		if myPokemonStatusType == 'Toxic':
+			myPokemonStatusCount = myPokemonStatusCount + 1
+			toxicDamage = int(myMaxHP * myPokemonStatusCount / 16)
+			myPokemonHP = myPokemonHP - toxicDamage
+			print(myPokemon, 'took', toxicDamage, 'HP damage due to being badly poisoned! It has', myPokemonHP, '/', myMaxHP, 'HP remaining!')
+	myPokemonInfo = [myPokemon,myPokemonLevel,myPokemonHP,myPokemonIV,myPokemonStatus,myPokemonStatusCount,myPokemonStatStage]
+	enemyPokemonInfo = [enemyPokemon,enemyPokemonLevel,enemyPokemonHP,enemyPokemonIV,enemyPokemonStatus,enemyPokemonStatusCount,enemyPokemonStatStage]
+	myTeam[0] = myPokemonInfo
+	enemyTeam[0] = enemyPokemonInfo
+	return [myTeam,enemyTeam]
 
-def startEnemyTurn(move,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,enemyStatus,enemyStatusCount,myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount):
-	moveDamage = getMoveDamage(move,enemyPokemon,enemyLevel,enemyIV,enemyStatStage,enemyStatus,myPokemon,myLevel,myIV,myStatStage)
-	myStatusType = getStatusType(myStatus)
-	enemyStatusType = getStatusType(enemyStatus)
-	myMaxHP = gethpStat(myPokemon,myLevel,myIV,'My Pokemon')
-	enemyMaxHP = gethpStat(enemyPokemon,enemyLevel,enemyIV,'Enemy Pokemon')
+def startEnemyTurn(move,myTeam,enemyTeam):
+	myPokemonInfo = myTeam[0]; enemyPokemonInfo = enemyTeam[0]
+	myPokemon = myPokemonInfo[0]; myPokemonLevel = myPokemonInfo[1]; myPokemonHP = myPokemonInfo[2]; myPokemonIV = myPokemonInfo[3]; myPokemonStatus = myPokemonInfo[4]; myPokemonStatusCount = myPokemonInfo[5]; myPokemonStatStage = myPokemonInfo[6]
+	enemyPokemon = enemyPokemonInfo[0]; enemyPokemonLevel = enemyPokemonInfo[1]; enemyPokemonHP = enemyPokemonInfo[2]; enemyPokemonIV = enemyPokemonInfo[3]; enemyPokemonStatus = enemyPokemonInfo[4]; enemyPokemonStatusCount = enemyPokemonInfo[5]; enemyPokemonStatStage = enemyPokemonInfo[6]
+	moveDamage = getMoveDamage(move,enemyPokemon,enemyPokemonLevel,enemyPokemonIV,enemyPokemonStatStage,enemyPokemonStatus,myPokemon,myPokemonLevel,myPokemonIV,myPokemonStatStage)
+	myPokemonStatusType = getStatusType(myPokemonStatus)
+	enemyPokemonStatusType = getStatusType(enemyPokemonStatus)
+	myMaxHP = gethpStat(myPokemon,myPokemonLevel,myPokemonIV,'My Pokemon')
+	enemyMaxHP = gethpStat(enemyPokemon,enemyPokemonLevel,enemyPokemonIV,'Enemy Pokemon')
 	hitOrMiss = getHitOrMiss(move)
 	moveVariety = getMoveVariety(move)
 	moveExtra = getMoveExtra(move)
 	effectiveness = getEffectiveness(move,myPokemon)
 	effectivenessWording = getEffectivesnessWording(effectiveness)
-	if enemyStatusType != 'Nothing':
-		if enemyStatusType == 'Paralyzed':
+	if enemyPokemonStatusType != 'Nothing':
+		if enemyPokemonStatusType == 'Paralyzed':
 			print('The wild', enemyPokemon, 'is paralyzed and may not be able to move!')
 			i = randint(1,4)
 			if i == 1:
 				print(enemyPokemon, 'couldn\'t move!')
-				hpList = [myHP,enemyHP]
-				statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]	
-				outcomeInfo = hpList + myStatStage + enemyStatStage + statusList
-				return outcomeInfo
-		if enemyStatusType == 'Sleep':
+				myPokemonInfo = [myPokemon,myPokemonLevel,myPokemonHP,myPokemonIV,myPokemonStatus,myPokemonStatusCount,myPokemonStatStage]
+				enemyPokemonInfo = [enemyPokemon,enemyPokemonLevel,enemyPokemonHP,enemyPokemonIV,enemyPokemonStatus,enemyPokemonStatusCount,enemyPokemonStatStage]
+				myTeam[0] = myPokemonInfo
+				enemyTeam[0] = enemyPokemonInfo
+				return [myTeam,enemyTeam]
+		if enemyPokemonStatusType == 'Sleep':
 			print('The wild', enemyPokemon, 'is sleeping!')
-			enemyStatusCount = enemyStatusCount - 1
-			if enemyStatusCount > 0:
-				hpList = [myHP,enemyHP]
-				statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]	
-				outcomeInfo = hpList + myStatStage + enemyStatStage + statusList
-				return outcomeInfo
-			enemyStatus = 0
-			enemyStatusType = getStatusType(enemyStatus)
+			enemyPokemonStatusCount = enemyPokemonStatusCount - 1
+			if enemyPokemonStatusCount > 0:
+				myPokemonInfo = [myPokemon,myPokemonLevel,myPokemonHP,myPokemonIV,myPokemonStatus,myPokemonStatusCount,myPokemonStatStage]
+				enemyPokemonInfo = [enemyPokemon,enemyPokemonLevel,enemyPokemonHP,enemyPokemonIV,enemyPokemonStatus,enemyPokemonStatusCount,enemyPokemonStatStage]
+				myTeam[0] = myPokemonInfo
+				enemyTeam[0] = enemyPokemonInfo
+				return [myTeam,enemyTeam]
+			enemyPokemonStatus = 0
+			enemyPokemonStatusType = getStatusType(enemyPokemonStatus)
 			print('The wild', enemyPokemon, 'woke up!')
-		if enemyStatusType == 'Frozen':
+		if enemyPokemonStatusType == 'Frozen':
 			i = randint(1,5)
 			if i == 1:
-				enemyStatus = 0
-				enemyStatusType = getStatusType(enemyStatus)
+				enemyPokemonStatus = 0
+				enemyPokemonStatusType = getStatusType(enemyPokemonStatus)
 			else:
 				print('The wild', enemyPokemon, 'is frozen and couldn\'t move!')
-				hpList = [myHP,enemyHP]
-				statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]	
-				outcomeInfo = hpList + myStatStage + enemyStatStage + statusList
-				return outcomeInfo	
+				myPokemonInfo = [myPokemon,myPokemonLevel,myPokemonHP,myPokemonIV,myPokemonStatus,myPokemonStatusCount,myPokemonStatStage]
+				enemyPokemonInfo = [enemyPokemon,enemyPokemonLevel,enemyPokemonHP,enemyPokemonIV,enemyPokemonStatus,enemyPokemonStatusCount,enemyPokemonStatStage]
+				myTeam[0] = myPokemonInfo
+				enemyTeam[0] = enemyPokemonInfo
+				return [myTeam,enemyTeam]	
 	if hitOrMiss == 'Miss':
 		print(enemyPokemon, 'used', move, 'but it missed!')
-		hpList = [myHP,enemyHP]
-		statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]
-		outcomeInfo = hpList + myStatStage + enemyStatStage + statusList
-		return outcomeInfo
+		myPokemonInfo = [myPokemon,myPokemonLevel,myPokemonHP,myPokemonIV,myPokemonStatus,myPokemonStatusCount,myPokemonStatStage]
+		enemyPokemonInfo = [enemyPokemon,enemyPokemonLevel,enemyPokemonHP,enemyPokemonIV,enemyPokemonStatus,enemyPokemonStatusCount,enemyPokemonStatStage]
+		myTeam[0] = myPokemonInfo
+		enemyTeam[0] = enemyPokemonInfo
+		return [myTeam,enemyTeam]
 	if moveVariety == 'Support':
 		moveExtraForm = getMoveExtraForm(move)
 		if moveExtraForm == 'Self':
 			statChange = getStatChange(move)
-			enemyStatStage = list(map(add, enemyStatStage, statChange))
-			print('The wild', enemyPokemon, 'used', move, 'and it\'s stats changed by', statChange, '. They are now', enemyStatStage, '.')
+			enemyPokemonStatStage = list(map(add, enemyPokemonStatStage, statChange))
+			print('The wild', enemyPokemon, 'used', move, 'and it\'s stats changed by', statChange, '. They are now', enemyPokemonStatStage, '.')
 		if moveExtraForm == 'Enemy':
 			statChange = getStatChange(move)
-			myStatStage = list(map(add, myStatStage, statChange))
-			print('The wild', enemyPokemon, 'used', move, 'against your', myPokemon, 'and it\'s stats changed by', statChange, '. They are now', myStatStage, '.')
-		hpList = [myHP,enemyHP]
-		statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]
-		outcomeInfo = hpList + myStatStage + enemyStatStage + statusList
-		return outcomeInfo
-	myHP = myHP - moveDamage
-	if myHP < 0:
-		myHP = 0
-	print('The wild', enemyPokemon, 'used', move, 'against', myPokemon, '-', effectivenessWording, 'it dealt', moveDamage, 'HP damage!', myPokemon, 'has', myHP, '/', myMaxHP, 'HP remaining!')
-	enemyStatusType = getStatusType(enemyStatus)
-	if enemyStatusType != 'Nothing':
-		if enemyStatusType == 'Burned':
+			myPokemonStatStage = list(map(add, myPokemonStatStage, statChange))
+			print('The wild', enemyPokemon, 'used', move, 'against your', myPokemon, 'and it\'s stats changed by', statChange, '. They are now', myPokemonStatStage, '.')
+		myPokemonInfo = [myPokemon,myPokemonLevel,myPokemonHP,myPokemonIV,myPokemonStatus,myPokemonStatusCount,myPokemonStatStage]
+		enemyPokemonInfo = [enemyPokemon,enemyPokemonLevel,enemyPokemonHP,enemyPokemonIV,enemyPokemonStatus,enemyPokemonStatusCount,enemyPokemonStatStage]
+		myTeam[0] = myPokemonInfo
+		enemyTeam[0] = enemyPokemonInfo
+		return [myTeam,enemyTeam]
+	myPokemonHP = myPokemonHP - moveDamage
+	if myPokemonHP < 0:
+		myPokemonHP = 0
+	print('The wild', enemyPokemon, 'used', move, 'against', myPokemon, '-', effectivenessWording, 'it dealt', moveDamage, 'HP damage!', myPokemon, 'has', myPokemonHP, '/', myMaxHP, 'HP remaining!')
+	moveExtra = getMoveExtra(move)
+	if moveExtra == 'Yes':
+		statusChange = getStatusChange(move)
+		if statusChange == 'Yes':
+			if myPokemonStatus == 0:
+				statusChangeType = getStatusChangeType(move)
+				statusChangeChance = getStatusChangeChance(move)
+				x = randint(1,100)
+				if x <= statusChangeChance:
+					myPokemonStatus = statusChangeType
+					statusType = getStatusType(myPokemonStatus)
+					print(myPokemon, 'was', statusType + '!')
+				if statusChangeType == 3:
+					x = randint(1,3)	
+					myPokemonStatusCount = x
+	enemyPokemonStatusType = getStatusType(enemyPokemonStatus)
+	if enemyPokemonStatusType != 'Nothing':
+		if enemyPokemonStatusType == 'Burned':
 			burnDamage = int(enemyMaxHP / 16)
-			enemyHP = (enemyHP - burnDamage)
-			print('The wild', enemyPokemon, 'took', burnDamage, 'HP damage due to it\'s burn! It has', enemyHP, '/', enemyMaxHP, 'HP remaining!')
-		if enemyStatusType == 'Poisoned':
+			enemyPokemonHP = (enemyPokemonHP - burnDamage)
+			print('The wild', enemyPokemon, 'took', burnDamage, 'HP damage due to it\'s burn! It has', enemyPokemonHP, '/', enemyMaxHP, 'HP remaining!')
+		if enemyPokemonStatusType == 'Poisoned':
 			poisonDamage = int(enemyMaxHP / 8)
-			enemyHP = (enemyHP - poisonDamage)
-			print('The wild', enemyPokemon, 'took', poisonDamage, 'HP damage due to being poisoned! It has', enemyHP, '/', enemyMaxHP, 'HP remaining!')
-		if enemyStatusType == 'Toxic':
-			enemyStatusCount = enemyStatusCount + 1
+			enemyPokemonHP = (enemyPokemonHP - poisonDamage)
+			print('The wild', enemyPokemon, 'took', poisonDamage, 'HP damage due to being poisoned! It has', enemyPokemonHP, '/', enemyMaxHP, 'HP remaining!')
+		if enemyPokemonStatusType == 'Toxic':
+			enemyPokemonStatusCount = enemyPokemonStatusCount + 1
 			toxicDamage = int(enemyMaxHP * meneyStatusCount / 16)
-			enemyHP = enemyHP - toxicDamage
-			print('The wild', enemyPokemon, 'took', toxicDamage, 'HP damage due to being badly poisoned! It has', enemyHP, '/', enemyMaxHP, 'HP remaining!')
-	hpList = [myHP,enemyHP]
-	statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]
-	outcomeInfo = hpList + myStatStage + enemyStatStage + statusList
-	return outcomeInfo
+			enemyPokemonHP = enemyPokemonHP - toxicDamage
+			print('The wild', enemyPokemon, 'took', toxicDamage, 'HP damage due to being badly poisoned! It has', enemyPokemonHP, '/', enemyMaxHP, 'HP remaining!')
+	myPokemonInfo = [myPokemon,myPokemonLevel,myPokemonHP,myPokemonIV,myPokemonStatus,myPokemonStatusCount,myPokemonStatStage]
+	enemyPokemonInfo = [enemyPokemon,enemyPokemonLevel,enemyPokemonHP,enemyPokemonIV,enemyPokemonStatus,enemyPokemonStatusCount,enemyPokemonStatStage]
+	myTeam[0] = myPokemonInfo
+	enemyTeam[0] = enemyPokemonInfo
+	return [myTeam,enemyTeam]
 
 def getMoveInput(myPokemon):
 	movesetSize = len(getMoveSet(myPokemon))
@@ -613,7 +646,124 @@ def getChoiceInput():
 		except ValueError:
 			print("Please choose a move from the list.")
 
-def startRound(myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,enemyStatus,enemyStatusCount):
+def getStarterInput():
+	while True:
+		try:
+			choiceInput = input('-- ')
+			if choiceInput == 'Bulbasaur':
+				return choiceInput
+			if choiceInput == 'Charmander':
+				return choiceInput
+			if choiceInput == 'Squirtle':
+				return choiceInput					
+			if int(choiceInput) == 1:
+				choiceInput = 'Bulbasaur'
+				return choiceInput
+			if int(choiceInput) == 2:
+				choiceInput = 'Charmander'
+				return choiceInput
+			if int(choiceInput) == 3:
+				choiceInput = 'Squirtle'
+				return choiceInput
+			print("Please choose a Pokemon from the list above!")
+		except ValueError:
+			print("Please choose a move from the list.")
+
+def getSwitchPokemon(myTeam):
+	numberOfPokemon = len(myTeam)
+	if numberOfPokemon > 0:
+		myPokemonOneInfo = myTeam[0];
+		myPokemonOne = myPokemonOneInfo[0]; myPokemonOneLevel = myPokemonOneInfo[1]; myPokemonOneHP = myPokemonOneInfo[2]; myPokemonOneIV = myPokemonOneInfo[3]; myPokemonOneStatus = myPokemonOneInfo[4]; myPokemonOneStatusCount = myPokemonOneInfo[5]; myPokemonOneStatStage = myPokemonOneInfo[6]; myPokemonOneMaxHP = gethpStat(myPokemonOne,myPokemonOneLevel,myPokemonOneIV,myPokemonOneStatStage)
+	if numberOfPokemon > 1:
+		myPokemonTwoInfo = myTeam[1]
+		myPokemonTwo = myPokemonTwoInfo[0]; myPokemonTwoLevel = myPokemonTwoInfo[1]; myPokemonTwoHP = myPokemonTwoInfo[2]; myPokemonTwoIV = myPokemonTwoInfo[3]; myPokemonTwoStatus = myPokemonTwoInfo[4]; myPokemonTwoStatusCount = myPokemonTwoInfo[5]; myPokemonTwoStatStage = myPokemonTwoInfo[6]; myPokemonTwoMaxHP = gethpStat(myPokemonTwo,myPokemonTwoLevel,myPokemonTwoIV,myPokemonTwoStatStage)
+	if numberOfPokemon > 2:
+		myPokemonThreeInfo = myTeam[2]	
+		myPokemonThree = myPokemonThreeInfo[0]; myPokemonThreeLevel = myPokemonThreeInfo[1]; myPokemonThreeHP = myPokemonThreeInfo[2]; myPokemonThreeIV = myPokemonThreeInfo[3]; myPokemonThreeStatus = myPokemonThreeInfo[4]; myPokemonThreeStatusCount = myPokemonThreeInfo[5]; myPokemonThreeStatStage = myPokemonThreeInfo[6]; myPokemonThreeMaxHP = gethpStat(myPokemonThree,myPokemonThreeLevel,myPokemonThreeIV,myPokemonThreeStatStage)
+	if numberOfPokemon > 3:
+		myPokemonFourInfo = myTeam[3]
+		myPokemonFour = myPokemonFourInfo[0]; myPokemonFourLevel = myPokemonFourInfo[1]; myPokemonFourHP = myPokemonFourInfo[2]; myPokemonFourIV = myPokemonFourInfo[3]; myPokemonFourStatus = myPokemonFourInfo[4]; myPokemonFourStatusCount = myPokemonFourInfo[5]; myPokemonFourStatStage = myPokemonFourInfo[6]; myPokemonFourMaxHP = gethpStat(myPokemonFour,myPokemonFourLevel,myPokemonFourIV,myPokemonFourStatStage)
+	if numberOfPokemon > 4:
+		myPokemonFiveInfo = myTeam[4]
+		myPokemonFive = myPokemonFiveInfo[0]; myPokemonFiveLevel = myPokemonFiveInfo[1]; myPokemonFiveHP = myPokemonFiveInfo[2]; myPokemonFiveIV = myPokemonFiveInfo[3]; myPokemonFiveStatus = myPokemonFiveInfo[4]; myPokemonFiveStatusCount = myPokemonFiveInfo[5]; myPokemonFiveStatStage = myPokemonFiveInfo[6]; myPokemonFiveMaxHP = gethpStat(myPokemonFive,myPokemonFiveLevel,myPokemonFiveIV,myPokemonFiveStatStage)
+	if numberOfPokemon > 5:
+		myPokemonSixInfo = myTeam[5]
+		myPokemonSix = myPokemonSixInfo[0]; myPokemonSixLevel = myPokemonSixInfo[1]; myPokemonSixHP = myPokemonSixInfo[2]; myPokemonSixIV = myPokemonSixInfo[3]; myPokemonSixStatus = myPokemonSixInfo[4]; myPokemonSixStatusCount = myPokemonSixInfo[5]; myPokemonSixStatStage = myPokemonSixInfo[6]; myPokemonSixMaxHP = gethpStat(myPokemonSix,myPokemonSixLevel,myPokemonSixIV,myPokemonSixStatStage)
+	print('Who would you like to choose?')
+	if numberOfPokemon > 0:
+		print('1 -', myPokemonOne, '- Lvl', myPokemonOneLevel, '-', myPokemonOneHP, '/', myPokemonOneMaxHP, 'HP.')
+	if numberOfPokemon > 1:
+		print('2 -', myPokemonTwo, '- Lvl', myPokemonTwoLevel, '-', myPokemonTwoHP, '/', myPokemonTwoMaxHP, 'HP.')
+	if numberOfPokemon > 2:
+		print('3 -', myPokemonThree, '- Lvl', myPokemonThreeLevel, '-', myPokemonThreeHP, '/', myPokemonThreeMaxHP, 'HP.')			
+	if numberOfPokemon > 3:
+		print('4 -', myPokemonFour, '- Lvl', myPokemonFourLevel, '-', myPokemonFourHP, '/', myPokemonFourMaxHP, 'HP.')	
+	if numberOfPokemon > 4:
+		print('5 -', myPokemonFive, '- Lvl', myPokemonFiveLevel, '-', myPokemonFiveHP, '/', myPokemonFiveMaxHP, 'HP.')	
+	if numberOfPokemon > 5:
+		print('Pokemon 6 -', myPokemonSix, '- Lvl', myPokemonSixLevel, '-', myPokemonSixHP, '/', myPokemonSixMaxHP, 'HP.')
+	while True:
+		try:
+			choice = input('-- ')
+			if int(choice) > 0 and int(choice) <= numberOfPokemon:
+				choice = int(choice) - 1
+				if choice == 0:
+					change = 0
+				else:
+					change = 1
+					pokemonToChangeTo = myTeam[choice]
+					pokemonHP = pokemonToChangeTo[2]
+					if pokemonHP > 0:
+						myTeam[choice], myTeam[0] = myTeam[0], myTeam[choice]
+						return [myTeam, change]
+					if pokemonHP == 0:
+						print(pokemonToChangeTo, 'has fainted! Choose another!')
+			print('Please choose one of the above!')
+		except ValueError:
+			print("Please choose one of the above!")
+
+def getRandomSwitchPokemon(myTeam):
+	numberOfPokemon = len(myTeam)
+	if numberOfPokemon > 0:
+		myPokemonOneInfo = myTeam[0];
+		myPokemonOne = myPokemonOneInfo[0]; myPokemonOneLevel = myPokemonOneInfo[1]; myPokemonOneHP = myPokemonOneInfo[2]; myPokemonOneIV = myPokemonOneInfo[3]; myPokemonOneStatus = myPokemonOneInfo[4]; myPokemonOneStatusCount = myPokemonOneInfo[5]; myPokemonOneStatStage = myPokemonOneInfo[6]; myPokemonOneMaxHP = gethpStat(myPokemonOne,myPokemonOneLevel,myPokemonOneIV,myPokemonOneStatStage)
+	if numberOfPokemon > 1:
+		myPokemonTwoInfo = myTeam[1]
+		myPokemonTwo = myPokemonTwoInfo[0]; myPokemonTwoLevel = myPokemonTwoInfo[1]; myPokemonTwoHP = myPokemonTwoInfo[2]; myPokemonTwoIV = myPokemonTwoInfo[3]; myPokemonTwoStatus = myPokemonTwoInfo[4]; myPokemonTwoStatusCount = myPokemonTwoInfo[5]; myPokemonTwoStatStage = myPokemonTwoInfo[6]; myPokemonTwoMaxHP = gethpStat(myPokemonTwo,myPokemonTwoLevel,myPokemonTwoIV,myPokemonTwoStatStage)
+	if numberOfPokemon > 2:
+		myPokemonThreeInfo = myTeam[2]	
+		myPokemonThree = myPokemonThreeInfo[0]; myPokemonThreeLevel = myPokemonThreeInfo[1]; myPokemonThreeHP = myPokemonThreeInfo[2]; myPokemonThreeIV = myPokemonThreeInfo[3]; myPokemonThreeStatus = myPokemonThreeInfo[4]; myPokemonThreeStatusCount = myPokemonThreeInfo[5]; myPokemonThreeStatStage = myPokemonThreeInfo[6]; myPokemonThreeMaxHP = gethpStat(myPokemonThree,myPokemonThreeLevel,myPokemonThreeIV,myPokemonThreeStatStage)
+	if numberOfPokemon > 3:
+		myPokemonFourInfo = myTeam[3]
+		myPokemonFour = myPokemonFourInfo[0]; myPokemonFourLevel = myPokemonFourInfo[1]; myPokemonFourHP = myPokemonFourInfo[2]; myPokemonFourIV = myPokemonFourInfo[3]; myPokemonFourStatus = myPokemonFourInfo[4]; myPokemonFourStatusCount = myPokemonFourInfo[5]; myPokemonFourStatStage = myPokemonFourInfo[6]; myPokemonFourMaxHP = gethpStat(myPokemonFour,myPokemonFourLevel,myPokemonFourIV,myPokemonFourStatStage)
+	if numberOfPokemon > 4:
+		myPokemonFiveInfo = myTeam[4]
+		myPokemonFive = myPokemonFiveInfo[0]; myPokemonFiveLevel = myPokemonFiveInfo[1]; myPokemonFiveHP = myPokemonFiveInfo[2]; myPokemonFiveIV = myPokemonFiveInfo[3]; myPokemonFiveStatus = myPokemonFiveInfo[4]; myPokemonFiveStatusCount = myPokemonFiveInfo[5]; myPokemonFiveStatStage = myPokemonFiveInfo[6]; myPokemonFiveMaxHP = gethpStat(myPokemonFive,myPokemonFiveLevel,myPokemonFiveIV,myPokemonFiveStatStage)
+	if numberOfPokemon > 5:
+		myPokemonSixInfo = myTeam[5]
+		myPokemonSix = myPokemonSixInfo[0]; myPokemonSixLevel = myPokemonSixInfo[1]; myPokemonSixHP = myPokemonSixInfo[2]; myPokemonSixIV = myPokemonSixInfo[3]; myPokemonSixStatus = myPokemonSixInfo[4]; myPokemonSixStatusCount = myPokemonSixInfo[5]; myPokemonSixStatStage = myPokemonSixInfo[6]; myPokemonSixMaxHP = gethpStat(myPokemonSix,myPokemonSixLevel,myPokemonSixIV,myPokemonSixStatStage)
+	while True:
+		try:
+			choice = randint(1,numberOfPokemon)
+			if int(choice) > 0 and int(choice) <= numberOfPokemon:
+				choice = int(choice) - 1
+				if choice == 0:
+					change = 0
+				else:
+					change = 1
+					pokemonToChangeTo = myTeam[choice]
+					pokemonHP = pokemonToChangeTo[2]
+					if pokemonHP > 0:
+						myTeam[choice], myTeam[0] = myTeam[0], myTeam[choice]
+						return [myTeam, change]
+		except ValueError:
+			change
+
+#def startRound(myPokemon,myPokemonLevel,myPokemonHP,myPokemonIV,myPokemonStatStage,myPokemonStatus,myPokemonStatusCount,enemyPokemon,enemyPokemonLevel,enemyPokemonHP,enemyPokemonIV,enemyPokemonStatStage,enemyPokemonStatus,enemyPokemonStatusCount):
+def startRound(myTeam,enemyTeam):
+	myPokemonInfo = myTeam[0]; enemyPokemonInfo = enemyTeam[0]
+	myPokemon = myPokemonInfo[0]; myPokemonLevel = myPokemonInfo[1]; myPokemonHP = myPokemonInfo[2]; myPokemonIV = myPokemonInfo[3]; myPokemonStatus = myPokemonInfo[4]; myPokemonStatusCount = myPokemonInfo[5]; myPokemonStatStage = myPokemonInfo[6]
+	enemyPokemon = enemyPokemonInfo[0]; enemyPokemonLevel = enemyPokemonInfo[1]; enemyPokemonHP = enemyPokemonInfo[2]; enemyPokemonIV = enemyPokemonInfo[3]; enemyPokemonStatus = enemyPokemonInfo[4]; enemyPokemonStatusCount = enemyPokemonInfo[5]; enemyPokemonStatStage = enemyPokemonInfo[6]
 	print('What will you do?')
 	print('Fight - Bag - Pokemon - Run')
 	choiceInput = getChoiceInput()
@@ -624,79 +774,174 @@ def startRound(myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount,en
 		myMove = getMoveInput(myPokemon)
 		print('')
 		enemyMove = getRandomMoveFromSet(enemyPokemon)
-		turnOrder = getTurnOrder(myPokemon,myLevel,myIV,myStatStage,myStatus,enemyPokemon,enemyLevel,enemyIV,enemyStatStage,enemyStatus)
+		turnOrder = getTurnOrder(myPokemon,myPokemonLevel,myPokemonIV,myPokemonStatStage,myPokemonStatus,enemyPokemon,enemyPokemonLevel,enemyPokemonIV,enemyPokemonStatStage,enemyPokemonStatus)
 		if turnOrder == 'myPokemonFirst':
-			turnOutcomeInfo = startMyTurn(myMove,myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,enemyStatus,enemyStatusCount)
-			myHP = turnOutcomeInfo[0]
-			enemyHP = turnOutcomeInfo[1]
-			if enemyHP == 0 or myHP == 0:
-				roundOutcomeInfo = turnOutcomeInfo + run
+			turnOutcomeInfo = startMyTurn(myMove,myTeam,enemyTeam)
+			myTeam = turnOutcomeInfo[0]; myPokemonInfo = myTeam[0]
+			enemyTeam = turnOutcomeInfo[1]; enemyPokemonInfo = enemyTeam[0]
+			myPokemonHP = myPokemonInfo[2]; enemyPokemonHP = enemyPokemonInfo[2]
+			if enemyPokemonHP == 0 or myPokemonHP == 0:
+				roundOutcomeInfo = [myTeam,enemyTeam,run]
 				return roundOutcomeInfo
-			turnOutcomeInfo = startEnemyTurn(enemyMove,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,enemyStatus,enemyStatusCount,myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount)
-			roundOutcomeInfo = turnOutcomeInfo + run
+			turnOutcomeInfo = startEnemyTurn(enemyMove,myTeam,enemyTeam)
+			myTeam = turnOutcomeInfo[0]; myPokemonInfo = myTeam[0]
+			enemyTeam = turnOutcomeInfo[1]; enemyPokemonInfo = enemyTeam[0]
+			roundOutcomeInfo = [myTeam,enemyTeam,run]
 			return roundOutcomeInfo
 		if turnOrder == 'enemyPokemonFirst':
-			turnOutcomeInfo = startEnemyTurn(enemyMove,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,enemyStatus,enemyStatusCount,myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount)
-			myHP = turnOutcomeInfo[0]
-			enemyHP = turnOutcomeInfo[1]
-			if myHP == 0 or enemyHP == 0:
-				roundOutcomeInfo = turnOutcomeInfo + run
+			turnOutcomeInfo = startEnemyTurn(enemyMove,myTeam,enemyTeam)
+			myTeam = turnOutcomeInfo[0]; myPokemonInfo = myTeam[0]
+			enemyTeam = turnOutcomeInfo[1]; enemyPokemonInfo = enemyTeam[0]
+			myPokemonHP = myPokemonInfo[2]; enemyPokemonHP = enemyPokemonInfo[2]
+			if myPokemonHP == 0 or enemyPokemonHP == 0:
+				roundOutcomeInfo = [myTeam,enemyTeam,run]
 				return roundOutcomeInfo
-			turnOutcomeInfo = startMyTurn(myMove,myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,enemyStatus,enemyStatusCount)
-			roundOutcomeInfo = turnOutcomeInfo + run
+			turnOutcomeInfo = startMyTurn(myMove,myTeam,enemyTeam)
+			myTeam = turnOutcomeInfo[0]; myPokemonInfo = myTeam[0]
+			enemyTeam = turnOutcomeInfo[1]; enemyPokemonInfo = enemyTeam[0]
+			roundOutcomeInfo = [myTeam,enemyTeam,run]
 			return roundOutcomeInfo
 	if choiceInput == 'Run':
 		run = [1]
-		hpList = [myHP,enemyHP]
-		statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]
-		roundOutcomeInfo = hpList + myStatStage + enemyStatStage + statusList + run
+		roundOutcomeInfo = [myTeam,enemyTeam,run]
 		return roundOutcomeInfo
 	if choiceInput == 'Bag':
 		print('Nothing in your bag!')
 		run = [0]
 		enemyMove = getRandomMoveFromSet(enemyPokemon)
-		turnOutcomeInfo = startEnemyTurn(enemyMove,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,enemyStatus,enemyStatusCount,myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount)
-		hpList = [myHP,enemyHP]
-		statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]
-		roundOutcomeInfo = hpList + myStatStage + enemyStatStage + statusList + run
+		turnOutcomeInfo = startEnemyTurn(enemyMove,myTeam,enemyTeam)
+		myTeam = turnOutcomeInfo[0]; myPokemonInfo = myTeam[0]
+		enemyTeam = turnOutcomeInfo[1]; enemyPokemonInfo = enemyTeam[0]
+		roundOutcomeInfo = [myTeam,enemyTeam,run]
 		return roundOutcomeInfo
 	if choiceInput == 'Pokemon':
-		print('No other Pokemon!')
 		run = [0]
+		oldPokemon = myPokemon
+		changePokemon = getSwitchPokemon(myTeam)
+		myTeam = changePokemon[0]; change = changePokemon[1]
+		if change == 0:
+			roundOutcomeInfo = [myTeam,enemyTeam,run]
+			return roundOutcomeInfo
+		myPokemonInfo = myTeam[0]; myPokemon = myPokemonInfo[0]
+		print ('You switched from', oldPokemon, 'into', myPokemon + '!')
 		enemyMove = getRandomMoveFromSet(enemyPokemon)
-		turnOutcomeInfo = startEnemyTurn(enemyMove,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,enemyStatus,enemyStatusCount,myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount)
-		hpList = [myHP,enemyHP]
-		statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]
-		roundOutcomeInfo = hpList + myStatStage + enemyStatStage + statusList + run
+		turnOutcomeInfo = startEnemyTurn(enemyMove,myTeam,enemyTeam)
+		myTeam = turnOutcomeInfo[0]; myPokemonInfo = myTeam[0]; myPokemon = myPokemonInfo[0]
+		enemyTeam = turnOutcomeInfo[1]; enemyPokemonInfo = enemyTeam[0]
+		roundOutcomeInfo = [myTeam,enemyTeam,run]
 		return roundOutcomeInfo
 
-def startBattle(myPokemon,myLevel,myIV,myStatus,enemyPokemon,enemyLevel):
-	print('A wild Level', enemyLevel, enemyPokemon, 'appeared! Go', myPokemon, '!')
-	enemyIV = getRandomIV()
-	enemyStatus = 0
-	myStatusCount = 0
-	enemyStatusCount = 0
-	myHP = gethpStat(myPokemon,myLevel,myIV,'My Pokemon')
-	enemyHP = gethpStat(enemyPokemon,enemyLevel,enemyIV,'Enemy Pokemon')
-	myStatStage = getPokemonStatStage('My Pokemon')
-	enemyStatStage = getPokemonStatStage('Enemy Pokemon')
-	while myHP > 0 and enemyHP > 0:
-		roundOutcomeInfo = startRound(myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,enemyStatus,enemyStatusCount)
-		myHP = roundOutcomeInfo[0]
-		enemyHP = roundOutcomeInfo[1]
-		myStatStage = list(operator.itemgetter(2,3,4,5,6,7,8)(roundOutcomeInfo))
-		enemyStatStage = list(operator.itemgetter(9,10,11,12,13,14,15)(roundOutcomeInfo))
-		myStatus = roundOutcomeInfo[16]
-		myStatusCount = roundOutcomeInfo[17]
-		enemyStatus = roundOutcomeInfo[18]
-		enemyStatusCount=roundOutcomeInfo[19]
-		runLast=roundOutcomeInfo[20]
-		if int(runLast) > 0:
-			print('You got away safely!')
-			return 1
-	if myHP == 0:
-		print(myPokemon, 'fainted! You lose!')
-	if myHP > 0:
+#def startBattle(myTeam,enemyTeam):
+#	print('A wild Level', enemyPokemonLevel, enemyPokemon, 'appeared! Go', myPokemon, '!')
+#	enemyPokemonIV = getRandomIV()
+#	enemyPokemonStatus = 0
+#	myPokemonStatusCount = 0
+#	enemyPokemonStatusCount = 0
+#	myPokemonHP = gethpStat(myPokemon,myPokemonLevel,myPokemonIV,'My Pokemon')
+#	enemyPokemonHP = gethpStat(enemyPokemon,enemyPokemonLevel,enemyPokemonIV,'Enemy Pokemon')
+#	myPokemonStatStage = getPokemonStatStage('My Pokemon')
+#	enemyPokemonStatStage = getPokemonStatStage('Enemy Pokemon')
+#	while myPokemonHP > 0 and enemyPokemonHP > 0:
+#		roundOutcomeInfo = startRound(myPokemon,myPokemonLevel,myPokemonHP,myPokemonIV,myPokemonStatStage,myPokemonStatus,myPokemonStatusCount,enemyPokemon,enemyPokemonLevel,enemyPokemonHP,enemyPokemonIV,enemyPokemonStatStage,enemyPokemonStatus,enemyPokemonStatusCount)
+#		myPokemonHP = roundOutcomeInfo[0]
+#		enemyPokemonHP = roundOutcomeInfo[1]
+#		myPokemonStatStage = list(operator.itemgetter(2,3,4,5,6,7,8)(roundOutcomeInfo))
+#		enemyPokemonStatStage = list(operator.itemgetter(9,10,11,12,13,14,15)(roundOutcomeInfo))
+#		myPokemonStatus = roundOutcomeInfo[16]
+#		myPokemonStatusCount = roundOutcomeInfo[17]
+#		enemyPokemonStatus = roundOutcomeInfo[18]
+#		enemyPokemonStatusCount=roundOutcomeInfo[19]
+#		runLast=roundOutcomeInfo[20]
+#		if int(runLast) > 0:
+#			print('You got away safely!')
+#			return 1
+#	if myPokemonHP == 0:
+#		print(myPokemon, 'fainted! You lose!')
+#	if myPokemonHP > 0:
+#		print('The wild', enemyPokemon, 'fainted! You win!')
+
+def getTeamTotalHP(myTeam):
+	numberOfPokemon = len(myTeam)
+	if numberOfPokemon > 0:
+		myPokemonOneInfo = myTeam[0];
+		myPokemonOne = myPokemonOneInfo[0]; myPokemonOneLevel = myPokemonOneInfo[1]; myPokemonOneHP = myPokemonOneInfo[2]; myPokemonOneIV = myPokemonOneInfo[3]; myPokemonOneStatus = myPokemonOneInfo[4]; myPokemonOneStatusCount = myPokemonOneInfo[5]; myPokemonOneStatStage = myPokemonOneInfo[6]; myPokemonOneMaxHP = gethpStat(myPokemonOne,myPokemonOneLevel,myPokemonOneIV,myPokemonOneStatStage)
+		myTeamTotalHP = myPokemonOneHP
+	if numberOfPokemon > 1:
+		myPokemonTwoInfo = myTeam[1]
+		myPokemonTwo = myPokemonTwoInfo[0]; myPokemonTwoLevel = myPokemonTwoInfo[1]; myPokemonTwoHP = myPokemonTwoInfo[2]; myPokemonTwoIV = myPokemonTwoInfo[3]; myPokemonTwoStatus = myPokemonTwoInfo[4]; myPokemonTwoStatusCount = myPokemonTwoInfo[5]; myPokemonTwoStatStage = myPokemonTwoInfo[6]; myPokemonTwoMaxHP = gethpStat(myPokemonTwo,myPokemonTwoLevel,myPokemonTwoIV,myPokemonTwoStatStage)
+		myTeamTotalHP = myPokemonOneHP + myPokemonTwoHP
+	if numberOfPokemon > 2:
+		myPokemonThreeInfo = myTeam[2]	
+		myPokemonThree = myPokemonThreeInfo[0]; myPokemonThreeLevel = myPokemonThreeInfo[1]; myPokemonThreeHP = myPokemonThreeInfo[2]; myPokemonThreeIV = myPokemonThreeInfo[3]; myPokemonThreeStatus = myPokemonThreeInfo[4]; myPokemonThreeStatusCount = myPokemonThreeInfo[5]; myPokemonThreeStatStage = myPokemonThreeInfo[6]; myPokemonThreeMaxHP = gethpStat(myPokemonThree,myPokemonThreeLevel,myPokemonThreeIV,myPokemonThreeStatStage)
+		myTeamTotalHP = myPokemonOneHP + myPokemonTwoHP + myPokemonThreeHP
+	if numberOfPokemon > 3:
+		myPokemonFourInfo = myTeam[3]
+		myPokemonFour = myPokemonFourInfo[0]; myPokemonFourLevel = myPokemonFourInfo[1]; myPokemonFourHP = myPokemonFourInfo[2]; myPokemonFourIV = myPokemonFourInfo[3]; myPokemonFourStatus = myPokemonFourInfo[4]; myPokemonFourStatusCount = myPokemonFourInfo[5]; myPokemonFourStatStage = myPokemonFourInfo[6]; myPokemonFourMaxHP = gethpStat(myPokemonFour,myPokemonFourLevel,myPokemonFourIV,myPokemonFourStatStage)
+		myTeamTotalHP = myPokemonOneHP + myPokemonTwoHP + myPokemonThreeHP + myPokemonFourHP
+	if numberOfPokemon > 4:
+		myPokemonFiveInfo = myTeam[4]
+		myPokemonFive = myPokemonFiveInfo[0]; myPokemonFiveLevel = myPokemonFiveInfo[1]; myPokemonFiveHP = myPokemonFiveInfo[2]; myPokemonFiveIV = myPokemonFiveInfo[3]; myPokemonFiveStatus = myPokemonFiveInfo[4]; myPokemonFiveStatusCount = myPokemonFiveInfo[5]; myPokemonFiveStatStage = myPokemonFiveInfo[6]; myPokemonFiveMaxHP = gethpStat(myPokemonFive,myPokemonFiveLevel,myPokemonFiveIV,myPokemonFiveStatStage)
+		myTeamTotalHP = myPokemonOneHP + myPokemonTwoHP + myPokemonThreeHP + myPokemonFourHP + myPokemonFiveHP
+	if numberOfPokemon > 5:
+		myPokemonSixInfo = myTeam[5]
+		myPokemonSix = myPokemonSixInfo[0]; myPokemonSixLevel = myPokemonSixInfo[1]; myPokemonSixHP = myPokemonSixInfo[2]; myPokemonSixIV = myPokemonSixInfo[3]; myPokemonSixStatus = myPokemonSixInfo[4]; myPokemonSixStatusCount = myPokemonSixInfo[5]; myPokemonSixStatStage = myPokemonSixInfo[6]; myPokemonSixMaxHP = gethpStat(myPokemonSix,myPokemonSixLevel,myPokemonSixIV,myPokemonSixStatStage)
+		myTeamTotalHP = myPokemonOneHP + myPokemonTwoHP + myPokemonThreeHP + myPokemonFourHP + myPokemonFiveHP + myPokemonSixHP
+	return myTeamTotalHP
+
+def startWildBattle(myTeam,enemyTeam):
+	myPokemonInfo = myTeam[0]; enemyPokemonInfo = enemyTeam[0]
+	myPokemon = myPokemonInfo[0]; myPokemonLevel = myPokemonInfo[1]; myPokemonHP = myPokemonInfo[2]; myPokemonIV = myPokemonInfo[3]; myPokemonStatus = myPokemonInfo[4]; myPokemonStatusCount = myPokemonInfo[5]; myPokemonStatStage = [6]
+	enemyPokemon = enemyPokemonInfo[0]; enemyPokemonLevel = enemyPokemonInfo[1]; enemyPokemonHP = enemyPokemonInfo[2]; enemyPokemonIV = enemyPokemonInfo[3]; enemyPokemonStatus = enemyPokemonInfo[4]; enemyPokemonStatusCount = enemyPokemonInfo[5]; enemyPokemonStatStage = [6]
+	print('A wild Level', enemyPokemonLevel, enemyPokemon, 'appeared! Go', myPokemon, '!')
+	myTeamTotalHP = getTeamTotalHP(myTeam)
+	enemyTeamTotalHP = getTeamTotalHP(enemyTeam)
+	while myTeamTotalHP > 0 and enemyPokemonHP > 0:
+		while myPokemonHP > 0 and enemyPokemonHP > 0:
+			roundOutcomeInfo = startRound(myTeam,enemyTeam)
+			myTeam = roundOutcomeInfo[0]; enemyTeam = roundOutcomeInfo[1]
+			myPokemonInfo = myTeam[0]; enemyPokemonInfo = enemyTeam[0]
+			myPokemon = myPokemonInfo[0]; myPokemonLevel = myPokemonInfo[1]; myPokemonHP = myPokemonInfo[2]; myPokemonIV = myPokemonInfo[3]; myPokemonStatus = myPokemonInfo[4]; myPokemonStatusCount = myPokemonInfo[5]; myPokemonStatStage = [6]
+			enemyPokemon = enemyPokemonInfo[0]; enemyPokemonLevel = enemyPokemonInfo[1]; enemyPokemonHP = enemyPokemonInfo[2]; enemyPokemonIV = enemyPokemonInfo[3]; enemyPokemonStatus = enemyPokemonInfo[4]; enemyPokemonStatusCount = enemyPokemonInfo[5]; enemyPokemonStatStage = [6]
+			runLast=roundOutcomeInfo[2]; runLast=runLast[0]
+			if int(runLast) > 0:
+				print('You got away safely!')
+				return 1
+		myTeamTotalHP = int(getTeamTotalHP(myTeam)); enemyTeamTotalHP = int(getTeamTotalHP(enemyTeam))
+		if myTeamTotalHP == 0:
+			break
+		if enemyTeamTotalHP == 0:
+			break
+		if myPokemonHP == 0:	
+			print (myPokemon, 'fainted! Who would you like to switch to?')
+			myTeam = roundOutcomeInfo[0]; enemyTeam = roundOutcomeInfo[1]
+			myPokemonInfo = myTeam[0]; enemyPokemonInfo = enemyTeam[0]
+			myPokemon = myPokemonInfo[0]; myPokemonLevel = myPokemonInfo[1]; myPokemonHP = myPokemonInfo[2]; myPokemonIV = myPokemonInfo[3]; myPokemonStatus = myPokemonInfo[4]; myPokemonStatusCount = myPokemonInfo[5]; myPokemonStatStage = [6]
+			enemyPokemon = enemyPokemonInfo[0]; enemyPokemonLevel = enemyPokemonInfo[1]; enemyPokemonHP = enemyPokemonInfo[2]; enemyPokemonIV = enemyPokemonInfo[3]; enemyPokemonStatus = enemyPokemonInfo[4]; enemyPokemonStatusCount = enemyPokemonInfo[5]; enemyPokemonStatStage = [6]
+			oldPokemon = myPokemon
+			changePokemon = getSwitchPokemon(myTeam)
+			myTeam = changePokemon[0]; change = changePokemon[1]
+			if change == 0:
+				roundOutcomeInfo = [myTeam,enemyTeam,run]
+				return roundOutcomeInfo
+			myPokemonInfo = myTeam[0]; myPokemon = myPokemonInfo[0]
+			myPokemonHP = myPokemonInfo[2]
+			print ('You switched from', oldPokemon, 'into', myPokemon + '!')
+		if enemyPokemonHP == 0:
+			print (enemyPokemon, 'fainted!')
+			myTeam = roundOutcomeInfo[0]; enemyTeam = roundOutcomeInfo[1]
+			myPokemonInfo = myTeam[0]; enemyPokemonInfo = enemyTeam[0]
+			myPokemon = myPokemonInfo[0]; myPokemonLevel = myPokemonInfo[1]; myPokemonHP = myPokemonInfo[2]; myPokemonIV = myPokemonInfo[3]; myPokemonStatus = myPokemonInfo[4]; myPokemonStatusCount = myPokemonInfo[5]; myPokemonStatStage = [6]
+			enemyPokemon = enemyPokemonInfo[0]; enemyPokemonLevel = enemyPokemonInfo[1]; enemyPokemonHP = enemyPokemonInfo[2]; enemyPokemonIV = enemyPokemonInfo[3]; enemyPokemonStatus = enemyPokemonInfo[4]; enemyPokemonStatusCount = enemyPokemonInfo[5]; enemyPokemonStatStage = [6]
+			oldEnemyPokemon = enemyPokemon
+			changePokemon = getRandomSwitchPokemon(enemyTeam)
+			enemyTeam = changePokemon[0]; change = changePokemon[1]
+			enemyPokemonInfo = enemyTeam[0]; enemyPokemon = enemyPokemonInfo[0]
+			enemyPokemonHP = enemyPokemonInfo[2]
+			print ('The enemy switched from', oldEnemyPokemon, 'into', enemyPokemon + '!')
+	myTeamTotalHP = getTeamTotalHP(myTeam)
+	if myTeamTotalHP == 0:
+		print('You whited out!')
+	if enemyPokemonHP == 0:
 		print('The wild', enemyPokemon, 'fainted! You win!')
 
 def startGame():
@@ -710,65 +955,60 @@ def startGame():
 	input()
 	print('Professor Oak: \n- Be patient, Gary!', name, 'is our guest. Go ahead and choose one of the balls in from of you. Will you choose:')
 	print('Bulbasaur - the grass Pokemon. \nCharmander - the fire Pokemon. \nSquirtle - the water Pokemon.')
-	myPokemon = input('Choose: ')
-	if myPokemon == 'Bulbasaur':
-		enemyPokemon = 'Charmander'	
-	if myPokemon == 'Charmander':
-		enemyPokemon = 'Squirtle'
-	if myPokemon == 'Squirtle':
-		enemyPokemon = 'Bulbasaur'
-	myIV = getRandomIV()
-	myStatus = 0
-	myLevel = 5
-	enemyLevel = 5
-	print('Gary: \n Fine, I choose', enemyPokemon + '! Let\'s fight!')
+	myPokemonOne = getStarterInput()
+	if myPokemonOne == 'Bulbasaur':
+		enemyPokemonOne = 'Charmander'
+	if myPokemonOne == 'Charmander':
+		enemyPokemonOne = 'Squirtle'
+	if myPokemonOne == 'Squirtle':
+		enemyPokemonOne = 'Bulbasaur'
+	myPokemonOneLevel = 5; myPokemonOneIV = getRandomIV(); myPokemonOneStatus = 0; myPokemonOneStatStage = [0,0,0,0,0,0,0]; myPokemonOneStatusCount = 0; myPokemonOneHP = gethpStat(myPokemonOne,myPokemonOneLevel,myPokemonOneIV,myPokemonOneStatStage)
+	enemyPokemonOneLevel = 5; enemyPokemonOneIV = getRandomIV(); enemyPokemonOneStatus = 0; enemyPokemonOneStatStage = [0,0,0,0,0,0,0]; enemyPokemonOneStatusCount = 0; enemyPokemonOneHP = gethpStat(enemyPokemonOne,enemyPokemonOneLevel,enemyPokemonOneIV,enemyPokemonOneStatStage)
+	myPokemonOneList = [myPokemonOne,myPokemonOneLevel,myPokemonOneHP,myPokemonOneIV,myPokemonOneStatus,myPokemonOneStatusCount,myPokemonOneStatStage]
+	enemyPokemonOneList = [enemyPokemonOne,enemyPokemonOneLevel,enemyPokemonOneHP,enemyPokemonOneIV,enemyPokemonOneStatus,enemyPokemonOneStatusCount,enemyPokemonOneStatStage]
+	myTeam = [myPokemonOneList]
+	enemyTeam = [enemyPokemonOneList]
+	print('Gary: \n Fine, I choose', enemyPokemonOne + '! Let\'s fight!')
 	input()
-	startBattle(myPokemon,myLevel,myIV,myStatus,enemyPokemon,enemyLevel)
+	startWildBattle(myTeam,enemyTeam)
 
 def chooseGameplay():
-	print('> To begin the game as normal, type 1\n> For a random battle (both yours and the enemy Pokemon and levels random), type 2\n> To fight a level 100 Venusaur with a Level 100 Charizard, type 3\n> To fight a level 100 random pokemon with a random level 100 pokemon, type 4')
+	print('> To begin the game as normal, type 1\n> For a preset battle, type 2')
 	x = input()
 	if x == '1':
 		startGame()
 	if x == '2':
-		myPokemon = getRandomPokemon()
-		myLevel = getRandomLevel()
-		enemyPokemon = getRandomPokemon()
-		enemyLevel = getRandomLevel()
-		myIV = getRandomIV()
-		myStatus = 0
-		print('Your', myPokemon, 'is level', myLevel)
-		startBattle(myPokemon,myLevel,myIV,myStatus,enemyPokemon,enemyLevel)
-	if x == '3':
-		myPokemon = 'Charizard'
-		myLevel = 100
-		enemyPokemon = 'Venusaur'
-		enemyLevel = 100
-		myIV = getRandomIV()
-		myStatus = 0
-		print('Your', myPokemon, 'is level', myLevel)
-		startBattle(myPokemon,myLevel,myIV,myStatus,enemyPokemon,enemyLevel)
-	if x == '4':
-		myPokemon = getRandomPokemon()
-		myLevel = 100
-		enemyPokemon = getRandomPokemon()
-		enemyLevel = 100
-		myIV = getRandomIV()
-		myStatus = 0
-		print('Your', myPokemon, 'is level', myLevel)
-		startBattle(myPokemon,myLevel,myIV,myStatus,enemyPokemon,enemyLevel)
+		myPokemonOne = 'Charizard'; myPokemonOneLevel = 100; myPokemonOneIV = getRandomIV(); myPokemonOneStatus = 0; myPokemonOneStatStage = [0,0,0,0,0,0,0]; myPokemonOneStatusCount = 0; myPokemonOneHP = gethpStat(myPokemonOne,myPokemonOneLevel,myPokemonOneIV,myPokemonOneStatStage)
+		myPokemonTwo = 'Charmander'; myPokemonTwoLevel = 50; myPokemonTwoIV = getRandomIV(); myPokemonTwoStatus = 0; myPokemonTwoStatStage = [0,0,0,0,0,0,0]; myPokemonTwoStatusCount = 0; myPokemonTwoHP = gethpStat(myPokemonTwo,myPokemonTwoLevel,myPokemonTwoIV,myPokemonTwoStatStage)
+		myPokemonThree = 'Bulbasaur'; myPokemonThreeLevel = 19; myPokemonThreeIV = getRandomIV(); myPokemonThreeStatus = 0; myPokemonThreeStatStage = [0,0,0,0,0,0,0]; myPokemonThreeStatusCount = 0; myPokemonThreeHP = gethpStat(myPokemonThree,myPokemonThreeLevel,myPokemonThreeIV,myPokemonThreeStatStage)
+		enemyPokemonOne = 'Venusaur'; enemyPokemonOneLevel = 100; enemyPokemonOneIV = getRandomIV(); enemyPokemonOneStatus = 0; enemyPokemonOneStatStage = [0,0,0,0,0,0,0]; enemyPokemonOneStatusCount = 0; enemyPokemonOneHP = gethpStat(enemyPokemonOne,enemyPokemonOneLevel,enemyPokemonOneIV,enemyPokemonOneStatStage)
+		enemyPokemonTwo = 'Ivysaur'; enemyPokemonTwoLevel = 50; enemyPokemonTwoIV = getRandomIV(); enemyPokemonTwoStatus = 0; enemyPokemonTwoStatStage = [0,0,0,0,0,0,0]; enemyPokemonTwoStatusCount = 0; enemyPokemonTwoHP = gethpStat(enemyPokemonTwo,enemyPokemonTwoLevel,enemyPokemonTwoIV,enemyPokemonTwoStatStage)
+		myPokemonOneList = [myPokemonOne,myPokemonOneLevel,myPokemonOneHP,myPokemonOneIV,myPokemonOneStatus,myPokemonOneStatusCount,myPokemonOneStatStage]
+		myPokemonTwoList = [myPokemonTwo,myPokemonTwoLevel,myPokemonTwoHP,myPokemonTwoIV,myPokemonTwoStatus,myPokemonTwoStatusCount,myPokemonTwoStatStage]
+		myPokemonThreeList = [myPokemonThree,myPokemonThreeLevel,myPokemonThreeHP,myPokemonThreeIV,myPokemonThreeStatus,myPokemonThreeStatusCount,myPokemonThreeStatStage]
+		enemyPokemonOneList = [enemyPokemonOne,enemyPokemonOneLevel,enemyPokemonOneHP,enemyPokemonOneIV,enemyPokemonOneStatus,enemyPokemonOneStatusCount,enemyPokemonOneStatStage]
+		enemyPokemonTwoList = [enemyPokemonTwo,enemyPokemonTwoLevel,enemyPokemonTwoHP,enemyPokemonTwoIV,enemyPokemonTwoStatus,enemyPokemonTwoStatusCount,enemyPokemonTwoStatStage]
+		myTeam = [myPokemonOneList,myPokemonTwoList,myPokemonThreeList]
+		enemyTeam = [enemyPokemonOneList,enemyPokemonTwoList]
+		startWildBattle(myTeam,enemyTeam)
+
 
 chooseGameplay()
 
+#team (pre battle) = [pokemonOneList,pokemonTwoList,pokemonThreeList,pokemonFourList]
+#pokemonOneList (pre battle) = [pokemonOne,pokemonOneLevel,pokemonOneHP,pokemonOneIV,pokemonOneStatus]
+
+		#myPokemonList = [myPokemon,myPokemonLevel,myPokemonHP,myPokemonIV,myPokemonStatus,myPokemonStatusCount,myPokemonStatStage]
+
 myPokemon='Charizard'
 enemyPokemon='Venusaur'
-myLevel=100
-enemyLevel=100
-myIV = [31, 31, 31, 31, 31, 31]
+myPokemonLevel=100
+enemyPokemonLevel=100
+myPokemonIV = [31, 31, 31, 31, 31, 31]
 #enemyPokemon = getRandomPokemon()
-#enemyLevel = getRandomLevel()
+#enemyPokemonLevel = getRandomLevel()
 
 
 
 
-#startBattle(myPokemon,myLevel,myIV,enemyPokemon,enemyLevel)
+#startBattle(myPokemon,myPokemonLevel,myPokemonIV,enemyPokemon,enemyPokemonLevel)
