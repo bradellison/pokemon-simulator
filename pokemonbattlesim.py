@@ -25,7 +25,7 @@ pokemonCurrentStatStages = {'My Pokemon':myPokemonCurrentStatStage, 'Enemy Pokem
 
 pokemonStatStageToMult = {-6:0.25,-5:0.28,-4:0.33,-3:0.40,-2:0.50,-1:0.66,0:1,1:1.5,2:2,3:2.5,4:3,5:3.5,6:4}
 
-statusNumberToType = {0:'Nothing',1:'Burn',2:'Paralyze',3:'Sleep',4:'Frozen',5:'Confused'}
+nonVolatileStatusNumberToType = {0:'Nothing',1:'Burned',2:'Paralyzed',3:'Sleep',4:'Frozen',5:'Poisoned',6:'Toxic'}
 
 bulbasaurType = {'Type One':'Grass','Type Two':'Poison'}
 ivysaurType = {'Type One':'Grass','Type Two':'Poison'}
@@ -52,26 +52,28 @@ pokemonTypes = {'Bulbasaur':bulbasaurType,'Ivysaur':ivysaurType,'Venusaur':venus
 pokemonMoves = {'Bulbasaur':bulbasaurMoves,'Ivysaur':ivysaurMoves,'Venusaur':venusaurMoves,'Charmander':charmanderMoves,'Charmeleon':charmeleonMoves,'Charizard':charizardMoves,'Squirtle':squirtleMoves,'Wartortle':wartortleMoves,'Blastoise':blastoiseMoves}
 pokemonWild = ['Bulbasaur','Ivysaur','Venusaur','Charmander','Charmeleon','Charizard','Squirtle','Wartortle','Blastoise']
 
-tackleInfo = {'Base Damage':40, 'Move Type':'Normal', 'Move Accuracy':100, 'Move Variety':'Physical', 'Added Effect':'No'}
-scratchInfo = {'Base Damage':40, 'Move Type':'Normal', 'Move Accuracy':100, 'Move Variety':'Physical', 'Added Effect':'No'}
-emberInfo = {'Base Damage':45, 'Move Type':'Fire', 'Move Accuracy':90, 'Move Variety':'Special', 'Added Effect':'Yes'}
-bubbleInfo = {'Base Damage':35, 'Move Type':'Water', 'Move Accuracy':90, 'Move Variety':'Special', 'Added Effect':'No'}
-vineWhipInfo = {'Base Damage':40, 'Move Type':'Grass', 'Move Accuracy':90, 'Move Variety':'Physical', 'Added Effect':'No'}
-growlInfo = {'Base Damage':0, 'Move Type':'Normal', 'Move Accuracy':90, 'Move Variety':'Support', 'Added Effect':'No'}
-defenseCurlInfo = {'Base Damage':0, 'Move Type':'Normal', 'Move Accuracy':100, 'Move Variety':'Support', 'Added Effect':'No'}
-tailWhipInfo = {'Base Damage':0, 'Move Type':'Normal', 'Move Accuracy':100, 'Move Variety':'Support', 'Added Effect':'No'}
-flamethrowerInfo = {'Base Damage':90, 'Move Type':'Fire', 'Move Accuracy':90, 'Move Variety':'Special', 'Added Effect':'No'}
-hydroPumpInfo = {'Base Damage':110, 'Move Type':'Water', 'Move Accuracy':80, 'Move Variety':'Special', 'Added Effect':'No'}
-petalBlizzardInfo = {'Base Damage':90, 'Move Type':'Grass', 'Move Accuracy':90, 'Move Variety':'Physical', 'Added Effect':'No'}
+tackleInfo = {'Base Damage':40, 'Move Type':'Normal', 'Move Accuracy':100, 'Move Variety':'Physical', 'Added Effect':'No', 'Priority':0}
+scratchInfo = {'Base Damage':40, 'Move Type':'Normal', 'Move Accuracy':100, 'Move Variety':'Physical', 'Added Effect':'No', 'Priority':0}
+emberInfo = {'Base Damage':45, 'Move Type':'Fire', 'Move Accuracy':90, 'Move Variety':'Special', 'Added Effect':'Yes', 'Priority':0}
+bubbleInfo = {'Base Damage':35, 'Move Type':'Water', 'Move Accuracy':90, 'Move Variety':'Special', 'Added Effect':'No', 'Priority':0}
+vineWhipInfo = {'Base Damage':40, 'Move Type':'Grass', 'Move Accuracy':90, 'Move Variety':'Physical', 'Added Effect':'No', 'Priority':0}
+growlInfo = {'Base Damage':0, 'Move Type':'Normal', 'Move Accuracy':90, 'Move Variety':'Support', 'Added Effect':'No', 'Priority':0}
+defenseCurlInfo = {'Base Damage':0, 'Move Type':'Normal', 'Move Accuracy':100, 'Move Variety':'Support', 'Added Effect':'No', 'Priority':0}
+tailWhipInfo = {'Base Damage':0, 'Move Type':'Normal', 'Move Accuracy':100, 'Move Variety':'Support', 'Added Effect':'No', 'Priority':0}
+flamethrowerInfo = {'Base Damage':90, 'Move Type':'Fire', 'Move Accuracy':90, 'Move Variety':'Special', 'Added Effect':'No', 'Priority':0}
+hydroPumpInfo = {'Base Damage':110, 'Move Type':'Water', 'Move Accuracy':80, 'Move Variety':'Special', 'Added Effect':'No', 'Priority':0}
+petalBlizzardInfo = {'Base Damage':90, 'Move Type':'Grass', 'Move Accuracy':90, 'Move Variety':'Physical', 'Added Effect':'No', 'Priority':0}
 
-growlExtraInfo = {'Stat Change':'Enemy', 'Condition Change':'No'}
-tailWhipExtraInfo = {'Stat Change':'Enemy', 'Condition Change':'No'}
-emberExtraInfo = {'Stat Change':'No', 'Condition Change':'Yes'}
-defenseCurlExtraInfo = {'Stat Change':'Self', 'Condition Change':'No'}
+growlExtraInfo = {'Stat Change':'Enemy', 'Status Change':'No'}
+tailWhipExtraInfo = {'Stat Change':'Enemy', 'Status Change':'No'}
+emberExtraInfo = {'Stat Change':'No', 'Status Change':'Yes'}
+defenseCurlExtraInfo = {'Stat Change':'Self', 'Status Change':'No'}
 
 growlStatChangeInfo = {'HP':0,'Atk':-1,'Def':0,'SpAtk':0,'SpDef':0,'Spd':0, 'Accuracy':0}
 defenseCurlStatChangeInfo = {'HP':0,'Atk':0,'Def':1,'SpAtk':0,'SpDef':0,'Spd':0, 'Accuracy':0}
 tailWhipStatChangeInfo = {'HP':0,'Atk':0,'Def':-1,'SpAtk':0,'SpDef':0,'Spd':0, 'Accuracy':0}
+
+emberStatusChangeInfo = {'Type':3,'Chance':100}
 
 normalEffect = {'Normal':1, 'Water':1, 'Grass':1, 'Fire':1, 'Poison':1, 'Flying':1, 'Null':1}
 grassEffect = {'Normal':1, 'Water':2, 'Grass':1, 'Fire':0.5, 'Poison':1, 'Flying':1, 'Null':1}
@@ -83,6 +85,7 @@ allType = {'Normal':normalEffect, 'Grass':grassEffect, 'Fire':fireEffect, 'Water
 moveInfo = {'Tackle':tackleInfo,'Ember':emberInfo,'Bubble':bubbleInfo,'Vine Whip':vineWhipInfo,'Growl':growlInfo,'Defense Curl':defenseCurlInfo,'Scratch':scratchInfo,'Tail Whip':tailWhipInfo,'Flamethrower':flamethrowerInfo,'Hydro Pump':hydroPumpInfo,'Petal Blizzard':petalBlizzardInfo}
 moveExtraInfo = {'Ember':emberExtraInfo,'Growl':growlExtraInfo,'Defense Curl':defenseCurlExtraInfo,'Tail Whip':tailWhipExtraInfo}
 moveStatChangeInfo = {'Growl':growlStatChangeInfo,'Defense Curl':defenseCurlStatChangeInfo,'Tail Whip':tailWhipStatChangeInfo}
+moveStatusChangeInfo = {'Ember':emberStatusChangeInfo}
 
 
 def getRandomPokemon():
@@ -215,11 +218,16 @@ def getSpDefStat(pokemon,level,iv,statStage):
 	pokemonSpDefMult = getPokemonSpDefMult(statStage)
 	return pokemonSpDefMult * (((2 * myPokemonStats[4] + iv) * level / 100 ) + 5)
 
-def getSpdStat(pokemon,level,iv,statStage):
+def getSpdStat(pokemon,level,iv,statStage,status):
 	myPokemonStats = pokemonStats[pokemon]
+	statusType = getStatusType(status)
+	if statusType == 'Paralyzed':
+		statusMult = 0.5
+	else:
+		statusMult = 1
 	iv = iv[5]
 	pokemonSpdMult = getPokemonSpdMult(statStage)
-	return pokemonSpdMult * (((2 * myPokemonStats[5] + iv) * level / 100 ) + 5)
+	return pokemonSpdMult * statusMult * (((2 * myPokemonStats[5] + iv) * level / 100 ) + 5)
 
 def getPokemonStatStage(pokemon):
 	pokemonToApplyStatChange = pokemonCurrentStatStages[pokemon]
@@ -253,6 +261,18 @@ def getMoveExtraForm(move):
 	moveExtraForm = moveExtraInfo[move]
 	return moveExtraForm['Stat Change']
 
+def getStatusChange(move):
+	statusChange = moveExtraInfo[move]
+	return statusChange['Status Change']
+
+def getStatusChangeType(move):
+	statusChangeType = moveStatusChangeInfo[move]
+	return statusChangeType['Type']
+
+def getStatusChangeChance(move):
+	statusChangeChance = moveStatusChangeInfo[move]
+	return statusChangeChance['Chance']
+
 def getMoveStatChangeInfo(move,stat):
 	moveStatChange = moveStatChangeInfo[move]
 	return moveStatChange[stat]
@@ -260,6 +280,10 @@ def getMoveStatChangeInfo(move,stat):
 def getMoveAccuracy(move):
 	moveAccuracy = moveInfo[move]
 	return moveAccuracy['Move Accuracy']
+
+def getMovePriority(move):
+	movePriority = moveInfo[move]
+	return movePriority['Priority']
 
 def getEffectiveness(move,pokemon):
 	moveType = getMoveType(move)
@@ -291,15 +315,20 @@ def getHitOrMiss(move):
 	else:
 		return 'Miss'
 
-def getMoveDamage(move,atkPokemon,atkLevel,atkIV,atkStatStage,defPokemon,defLevel,defIV,defStatStage):
+def getMoveDamage(move,atkPokemon,atkLevel,atkIV,atkStatStage,atkStatus,defPokemon,defLevel,defIV,defStatStage):
 	moveBaseDamage = getMoveBaseDamage(move)
 	effectiveness = getEffectiveness(move,defPokemon)
 	stabBonus = getStabBonus(move,atkPokemon)
 	moveVariety = getMoveVariety(move)
+	statusType = getStatusType(atkStatus)
 	if moveVariety == 'Physical':
 		atkStat = getAtkStat(atkPokemon,atkLevel,atkIV,atkStatStage)
 		defStat = getDefStat(defPokemon,defLevel,defIV,defStatStage)
-		moveDamage = int((((((2 * atkLevel / 5) + 2) * atkStat * moveBaseDamage / defStat) / 50 ) + 2) * stabBonus * effectiveness * float(randint(0,15)+85)/100)
+		if statusType == 'Burned':
+			statusMult = 0.5
+		else:
+			statusMult = 1
+		moveDamage = int((((((2 * atkLevel / 5) + 2) * atkStat * moveBaseDamage / defStat) / 50 ) + 2) * stabBonus * effectiveness * statusMult * float(randint(0,15)+85)/100)
 		return moveDamage	
 	if moveVariety == 'Special':
 		atkStat = getSpAtkStat(atkPokemon,atkLevel,atkIV,atkStatStage)
@@ -328,9 +357,13 @@ def getStatChange(move):
 # def getStatChangeWording(i):
 #	todo
 
-def getTurnOrder(myPokemon,myLevel,myIV,myStatStage,enemyPokemon,enemyLevel,enemyIV,enemyStatStage):
-	mySpd = getSpdStat(myPokemon,myLevel,myIV,myStatStage)
-	enemySpd = getSpdStat(enemyPokemon,enemyLevel,enemyIV,enemyStatStage)
+def getStatusType(i):
+	StatusType = nonVolatileStatusNumberToType[i]
+	return StatusType
+
+def getTurnOrder(myPokemon,myLevel,myIV,myStatStage,myStatus,enemyPokemon,enemyLevel,enemyIV,enemyStatStage,enemyStatus):
+	mySpd = getSpdStat(myPokemon,myLevel,myIV,myStatStage,myStatus)
+	enemySpd = getSpdStat(enemyPokemon,enemyLevel,enemyIV,enemyStatStage,enemyStatus)
 	if mySpd > enemySpd:
 		return 'myPokemonFirst'
 	if mySpd < enemySpd:
@@ -347,18 +380,53 @@ def getPokemonMove(move,myPokemon,myLevel,enemyPokemon,enemyLevel):
 	effectiveness = getEffectiveness(move,enemyPokemon)
 	addedEffect = getMoveExtra(move)
 
-def startMyTurn(move,myPokemon,myLevel,myHP,myIV,myStatStage,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage):
-	moveDamage = getMoveDamage(move,myPokemon,myLevel,myIV,myStatStage,enemyPokemon,enemyLevel,enemyIV,enemyStatStage)
+def startMyTurn(move,myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,enemyStatus,enemyStatusCount):
+	moveDamage = getMoveDamage(move,myPokemon,myLevel,myIV,myStatStage,myStatus,enemyPokemon,enemyLevel,enemyIV,enemyStatStage)
+	myStatusType = getStatusType(myStatus)
+	enemyStatusType = getStatusType(enemyStatus)
 	enemyMaxHP = gethpStat(enemyPokemon,enemyLevel,enemyIV,'Enemy Pokemon')
+	myMaxHP = gethpStat(myPokemon,myLevel,myIV,'My Pokemon')
 	hitOrMiss = getHitOrMiss(move)
 	moveVariety = getMoveVariety(move)
 	effectiveness = getEffectiveness(move,enemyPokemon)
 	effectivenessWording = getEffectivesnessWording(effectiveness)
+	if myStatus != 'Nothing':
+		if myStatusType == 'Paralyzed':
+			print(myPokemon, 'is paralyzed and may not be able to move!')
+			i = randint(1,4)
+			if i == 1:
+				print(myPokemon, 'couldn\'t move!')
+				hpList = [myHP,enemyHP]
+				statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]	
+				outcomeInfo = hpList + myStatStage + enemyStatStage + statusList
+				return outcomeInfo
+		if myStatusType == 'Sleep':
+			print(myPokemon, 'is sleeping!')
+			myStatusCount = myStatusCount - 1
+			if myStatusCount > 0:
+				hpList = [myHP,enemyHP]
+				statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]	
+				outcomeInfo = hpList + myStatStage + enemyStatStage + statusList
+				return outcomeInfo
+			myStatus = 0
+			myStatusType = getStatusType(myStatus)
+			print(myPokemon, 'woke up!')
+		if myStatusType == 'Frozen':
+			i = randint(1,5)
+			if i == 1:
+				myStatus = 0
+				myStatusType = getStatusType(myStatus)
+			else:
+				print(myPokemon, 'is frozen and couldn\'t move!')
+				hpList = [myHP,enemyHP]
+				statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]	
+				outcomeInfo = hpList + myStatStage + enemyStatStage + statusList
+				return outcomeInfo			
 	if hitOrMiss == 'Miss':
 		print(myPokemon, 'used', move, 'but it missed!')
-		hpList = [myHP,enemyHP]	
-		outcomeInfo = hpList + myStatStage + enemyStatStage
-		print(outcomeInfo)
+		hpList = [myHP,enemyHP]
+		statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]	
+		outcomeInfo = hpList + myStatStage + enemyStatStage + statusList
 		return outcomeInfo
 	if moveVariety == 'Support':
 		moveExtraForm = getMoveExtraForm(move)
@@ -371,27 +439,96 @@ def startMyTurn(move,myPokemon,myLevel,myHP,myIV,myStatStage,enemyPokemon,enemyL
 			myStatStage = list(map(add, myStatStage, statChange))
 			print('Your', myPokemon, 'used', move, 'and it\'s stats changed by', statChange, '. They are now', myStatStage, '.')
 		hpList = [myHP,enemyHP]
-		outcomeInfo = hpList + myStatStage + enemyStatStage
+		statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]
+		outcomeInfo = hpList + myStatStage + enemyStatStage + statusList
 		return outcomeInfo
 	enemyHP = enemyHP - moveDamage
 	if enemyHP < 0:
 		enemyHP = 0
 	print(myPokemon, 'used', move, 'against the wild', enemyPokemon, '-', effectivenessWording, 'it dealt', moveDamage, 'HP damage!', enemyPokemon, 'has', enemyHP, '/', enemyMaxHP, 'HP remaining!')
+	moveExtra = getMoveExtra(move)
+	if moveExtra == 'Yes':
+		statusChange = getStatusChange(move)
+		if statusChange == 'Yes':
+			if enemyStatus == 0:
+				statusChangeType = getStatusChangeType(move)
+				statusChangeChance = getStatusChangeChance(move)
+				x = randint(1,100)
+				if x <= statusChangeChance:
+					enemyStatus = statusChangeType
+					statusType = getStatusType(enemyStatus)
+					print(enemyPokemon, 'was', statusType + '!')
+				if statusChangeType == 3:
+					x = randint(1,3)	
+					enemyStatusCount = x
+	myStatusType = getStatusType(myStatus)
+	if myStatusType != 'Nothing':
+		if myStatusType == 'Burned':
+			burnDamage = int(myMaxHP / 16)
+			myHP = (myHP - burnDamage)
+			print(myPokemon, 'took', burnDamage, 'HP damage due to it\'s burn! It has', myHP, '/', myMaxHP, 'HP remaining!')
+		if myStatusType == 'Poisoned':
+			poisonDamage = int(myMaxHP / 8)
+			myHP = (myHP - poisonDamage)
+			print(myPokemon, 'took', poisonDamage, 'HP damage due to being poisoned! It has', myHP, '/', myMaxHP, 'HP remaining!')
+		if myStatusType == 'Toxic':
+			myStatusCount = myStatusCount + 1
+			toxicDamage = int(myMaxHP * myStatusCount / 16)
+			myHP = myHP - toxicDamage
+			print(myPokemon, 'took', toxicDamage, 'HP damage due to being badly poisoned! It has', myHP, '/', myMaxHP, 'HP remaining!')
 	hpList = [myHP,enemyHP]
-	outcomeInfo = hpList + myStatStage + enemyStatStage
+	statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]
+	outcomeInfo = hpList + myStatStage + enemyStatStage + statusList
 	return outcomeInfo
 
-def startEnemyTurn(move,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,myPokemon,myLevel,myHP,myIV,myStatStage):
-	moveDamage = getMoveDamage(move,enemyPokemon,enemyLevel,enemyIV,enemyStatStage,myPokemon,myLevel,myIV,myStatStage)
+def startEnemyTurn(move,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,enemyStatus,enemyStatusCount,myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount):
+	moveDamage = getMoveDamage(move,enemyPokemon,enemyLevel,enemyIV,enemyStatStage,enemyStatus,myPokemon,myLevel,myIV,myStatStage)
+	myStatusType = getStatusType(myStatus)
+	enemyStatusType = getStatusType(enemyStatus)
 	myMaxHP = gethpStat(myPokemon,myLevel,myIV,'My Pokemon')
+	enemyMaxHP = gethpStat(enemyPokemon,enemyLevel,enemyIV,'Enemy Pokemon')
 	hitOrMiss = getHitOrMiss(move)
 	moveVariety = getMoveVariety(move)
+	moveExtra = getMoveExtra(move)
 	effectiveness = getEffectiveness(move,myPokemon)
 	effectivenessWording = getEffectivesnessWording(effectiveness)
+	if enemyStatusType != 'Nothing':
+		if enemyStatusType == 'Paralyzed':
+			print('The wild', enemyPokemon, 'is paralyzed and may not be able to move!')
+			i = randint(1,4)
+			if i == 1:
+				print(enemyPokemon, 'couldn\'t move!')
+				hpList = [myHP,enemyHP]
+				statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]	
+				outcomeInfo = hpList + myStatStage + enemyStatStage + statusList
+				return outcomeInfo
+		if enemyStatusType == 'Sleep':
+			print('The wild', enemyPokemon, 'is sleeping!')
+			enemyStatusCount = enemyStatusCount - 1
+			if enemyStatusCount > 0:
+				hpList = [myHP,enemyHP]
+				statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]	
+				outcomeInfo = hpList + myStatStage + enemyStatStage + statusList
+				return outcomeInfo
+			enemyStatus = 0
+			enemyStatusType = getStatusType(enemyStatus)
+			print('The wild', enemyPokemon, 'woke up!')
+		if enemyStatusType == 'Frozen':
+			i = randint(1,5)
+			if i == 1:
+				enemyStatus = 0
+				enemyStatusType = getStatusType(enemyStatus)
+			else:
+				print('The wild', enemyPokemon, 'is frozen and couldn\'t move!')
+				hpList = [myHP,enemyHP]
+				statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]	
+				outcomeInfo = hpList + myStatStage + enemyStatStage + statusList
+				return outcomeInfo	
 	if hitOrMiss == 'Miss':
 		print(enemyPokemon, 'used', move, 'but it missed!')
 		hpList = [myHP,enemyHP]
-		outcomeInfo = hpList + myStatStage + enemyStatStage
+		statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]
+		outcomeInfo = hpList + myStatStage + enemyStatStage + statusList
 		return outcomeInfo
 	if moveVariety == 'Support':
 		moveExtraForm = getMoveExtraForm(move)
@@ -404,14 +541,31 @@ def startEnemyTurn(move,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,m
 			myStatStage = list(map(add, myStatStage, statChange))
 			print('The wild', enemyPokemon, 'used', move, 'against your', myPokemon, 'and it\'s stats changed by', statChange, '. They are now', myStatStage, '.')
 		hpList = [myHP,enemyHP]
-		outcomeInfo = hpList + myStatStage + enemyStatStage
+		statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]
+		outcomeInfo = hpList + myStatStage + enemyStatStage + statusList
 		return outcomeInfo
 	myHP = myHP - moveDamage
 	if myHP < 0:
 		myHP = 0
 	print('The wild', enemyPokemon, 'used', move, 'against', myPokemon, '-', effectivenessWording, 'it dealt', moveDamage, 'HP damage!', myPokemon, 'has', myHP, '/', myMaxHP, 'HP remaining!')
+	enemyStatusType = getStatusType(enemyStatus)
+	if enemyStatusType != 'Nothing':
+		if enemyStatusType == 'Burned':
+			burnDamage = int(enemyMaxHP / 16)
+			enemyHP = (enemyHP - burnDamage)
+			print('The wild', enemyPokemon, 'took', burnDamage, 'HP damage due to it\'s burn! It has', enemyHP, '/', enemyMaxHP, 'HP remaining!')
+		if enemyStatusType == 'Poisoned':
+			poisonDamage = int(enemyMaxHP / 8)
+			enemyHP = (enemyHP - poisonDamage)
+			print('The wild', enemyPokemon, 'took', poisonDamage, 'HP damage due to being poisoned! It has', enemyHP, '/', enemyMaxHP, 'HP remaining!')
+		if enemyStatusType == 'Toxic':
+			enemyStatusCount = enemyStatusCount + 1
+			toxicDamage = int(enemyMaxHP * meneyStatusCount / 16)
+			enemyHP = enemyHP - toxicDamage
+			print('The wild', enemyPokemon, 'took', toxicDamage, 'HP damage due to being badly poisoned! It has', enemyHP, '/', enemyMaxHP, 'HP remaining!')
 	hpList = [myHP,enemyHP]
-	outcomeInfo = hpList + myStatStage + enemyStatStage
+	statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]
+	outcomeInfo = hpList + myStatStage + enemyStatStage + statusList
 	return outcomeInfo
 
 def getMoveInput(myPokemon):
@@ -431,33 +585,71 @@ def getMoveInput(myPokemon):
 		except ValueError:
 			print("Please choose a move from the list.")
 
-def startRound(myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,enemyStatusCount):
-	print('\nWhat will', myPokemon, 'do?')
-	print(getMoveSet(myPokemon))
-	myMove = getMoveInput(myPokemon)
-	print('')
-	enemyMove = getRandomMoveFromSet(enemyPokemon)
-	turnOrder = getTurnOrder(myPokemon,myLevel,myIV,myStatStage,enemyPokemon,enemyLevel,enemyIV,enemyStatStage)
-	if turnOrder == 'myPokemonFirst':
-		turnOutcomeInfo = startMyTurn(myMove,myPokemon,myLevel,myHP,myIV,myStatStage,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage)
-		myHP = turnOutcomeInfo[0]
-		enemyHP = turnOutcomeInfo[1]
-		myStatStage = list(operator.itemgetter(2,3,4,5,6,7,8)(turnOutcomeInfo))
-		enemyStatStage = list(operator.itemgetter(9,10,11,12,13,14,15)(turnOutcomeInfo))
-		if enemyHP == 0 or myHP == 0:
+def getChoiceInput():
+	while True:
+		try:
+			choiceInput = input('-- ')
+			print(choiceInput)
+			if choiceInput == 'Fight' or 'Bag' or 'Pokemon' or 'Run':
+				return choiceInput
+				break			
+			if choiceInput == 1:
+				choiceInput = 'Fight'
+				print(choiceInput)
+				return choiceInput
+			if int(choiceInput) == 2:
+				choiceInput = 'Bag'
+				return choiceInput
+			if int(choiceInput) == 3:
+				choiceInput = 'Pokemon'
+				return choiceInput
+			if int(choiceInput) == 4:
+				choiceInput = 'Run'
+				return choiceInput
+			print("Please choose a move from the list below!")
+		except ValueError:
+			print("Please choose a move from the list.")
+
+def startRound(myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,enemyStatus,enemyStatusCount):
+	print('What will you do?')
+	print('Fight - Bag - Pokemon - Run')
+	choiceInput = getChoiceInput()
+	
+	if choiceInput == 'Fight':
+		print('\nWhat will', myPokemon, 'do?')
+		print(getMoveSet(myPokemon))
+		myMove = getMoveInput(myPokemon)
+		print('')
+		enemyMove = getRandomMoveFromSet(enemyPokemon)
+		turnOrder = getTurnOrder(myPokemon,myLevel,myIV,myStatStage,myStatus,enemyPokemon,enemyLevel,enemyIV,enemyStatStage,enemyStatus)
+		if turnOrder == 'myPokemonFirst':
+			turnOutcomeInfo = startMyTurn(myMove,myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,enemyStatus,enemyStatusCount)
+			myHP = turnOutcomeInfo[0]
+			enemyHP = turnOutcomeInfo[1]
+			myStatStage = list(operator.itemgetter(2,3,4,5,6,7,8)(turnOutcomeInfo))
+			enemyStatStage = list(operator.itemgetter(9,10,11,12,13,14,15)(turnOutcomeInfo))
+			myStatus = turnOutcomeInfo[16]
+			myStatusCount = turnOutcomeInfo[17]
+			enemyStatus = turnOutcomeInfo[18]
+			enemyStatusCount=turnOutcomeInfo[19]
+			if enemyHP == 0 or myHP == 0:
+				return turnOutcomeInfo
+			turnOutcomeInfo = startEnemyTurn(enemyMove,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,enemyStatus,enemyStatusCount,myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount)
 			return turnOutcomeInfo
-		turnOutcomeInfo = startEnemyTurn(enemyMove,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,myPokemon,myLevel,myHP,myIV,myStatStage)
-		return turnOutcomeInfo
-	if turnOrder == 'enemyPokemonFirst':
-		turnOutcomeInfo = startEnemyTurn(enemyMove,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,myPokemon,myLevel,myHP,myIV,myStatStage)
-		myHP = turnOutcomeInfo[0]
-		enemyHP = turnOutcomeInfo[1]
-		myStatStage = list(operator.itemgetter(2,3,4,5,6,7,8)(turnOutcomeInfo))
-		enemyStatStage = list(operator.itemgetter(9,10,11,12,13,14,15)(turnOutcomeInfo))
-		if myHP == 0 or enemyHP == 0:
+		if turnOrder == 'enemyPokemonFirst':
+			turnOutcomeInfo = startEnemyTurn(enemyMove,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,enemyStatus,enemyStatusCount,myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount)
+			myHP = turnOutcomeInfo[0]
+			enemyHP = turnOutcomeInfo[1]
+			myStatStage = list(operator.itemgetter(2,3,4,5,6,7,8)(turnOutcomeInfo))
+			enemyStatStage = list(operator.itemgetter(9,10,11,12,13,14,15)(turnOutcomeInfo))
+			myStatus = turnOutcomeInfo[16]
+			myStatusCount = turnOutcomeInfo[17]
+			enemyStatus = turnOutcomeInfo[18]
+			enemyStatusCount=turnOutcomeInfo[19]
+			if myHP == 0 or enemyHP == 0:
+				return turnOutcomeInfo
+			turnOutcomeInfo = startMyTurn(myMove,myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,enemyStatus,enemyStatusCount)
 			return turnOutcomeInfo
-		turnOutcomeInfo = startMyTurn(myMove,myPokemon,myLevel,myHP,myIV,myStatStage,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage)
-		return turnOutcomeInfo
 
 def startBattle(myPokemon,myLevel,myIV,myStatus,enemyPokemon,enemyLevel):
 	print('A wild Level', enemyLevel, enemyPokemon, 'appeared! Go', myPokemon, '!')
@@ -470,11 +662,15 @@ def startBattle(myPokemon,myLevel,myIV,myStatus,enemyPokemon,enemyLevel):
 	myStatStage = getPokemonStatStage('My Pokemon')
 	enemyStatStage = getPokemonStatStage('Enemy Pokemon')
 	while myHP > 0 and enemyHP > 0:
-		roundOutcomeInfo = startRound(myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,enemyStatusCount)
+		roundOutcomeInfo = startRound(myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,enemyStatus,enemyStatusCount)
 		myHP = roundOutcomeInfo[0]
 		enemyHP = roundOutcomeInfo[1]
 		myStatStage = list(operator.itemgetter(2,3,4,5,6,7,8)(roundOutcomeInfo))
 		enemyStatStage = list(operator.itemgetter(9,10,11,12,13,14,15)(roundOutcomeInfo))
+		myStatus = roundOutcomeInfo[16]
+		myStatusCount = roundOutcomeInfo[17]
+		enemyStatus = roundOutcomeInfo[18]
+		enemyStatusCount=roundOutcomeInfo[19]
 	if myHP == 0:
 		print(myPokemon, 'fainted! You lose!')
 	if myHP > 0:
@@ -507,7 +703,7 @@ def startGame():
 	startBattle(myPokemon,myLevel,myIV,myStatus,enemyPokemon,enemyLevel)
 
 def chooseGameplay():
-	print('> To begin the game as normal, type 1\n> For a random battle (both yours and the enemy Pokemon and levels random), type 2\n> To fight a random level random Pokemon with a Level 100 Charizard, type 3\n> To fight a level 100 random pokemon with a random level 100 pokemon, type 4')
+	print('> To begin the game as normal, type 1\n> For a random battle (both yours and the enemy Pokemon and levels random), type 2\n> To fight a level 100 Venusaur with a Level 100 Charizard, type 3\n> To fight a level 100 random pokemon with a random level 100 pokemon, type 4')
 	x = input()
 	if x == '1':
 		startGame()
@@ -523,8 +719,8 @@ def chooseGameplay():
 	if x == '3':
 		myPokemon = 'Charizard'
 		myLevel = 100
-		enemyPokemon = getRandomPokemon()
-		enemyLevel = getRandomLevel()
+		enemyPokemon = 'Venusaur'
+		enemyLevel = 100
 		myIV = getRandomIV()
 		myStatus = 0
 		print('Your', myPokemon, 'is level', myLevel)
