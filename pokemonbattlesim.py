@@ -589,13 +589,17 @@ def getChoiceInput():
 	while True:
 		try:
 			choiceInput = input('-- ')
-			print(choiceInput)
-			if choiceInput == 'Fight' or 'Bag' or 'Pokemon' or 'Run':
+			print(choiceInput, 'input')
+			if choiceInput == 'Fight':
 				return choiceInput
-				break			
-			if choiceInput == 1:
+			if choiceInput == 'Bag':
+				return choiceInput
+			if choiceInput == 'Pokemon':
+				return choiceInput
+			if choiceInput == 'Run':
+				return choiceInput						
+			if int(choiceInput) == 1:
 				choiceInput = 'Fight'
-				print(choiceInput)
 				return choiceInput
 			if int(choiceInput) == 2:
 				choiceInput = 'Bag'
@@ -614,8 +618,9 @@ def startRound(myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount,en
 	print('What will you do?')
 	print('Fight - Bag - Pokemon - Run')
 	choiceInput = getChoiceInput()
-	
+	print(choiceInput, 'input2')
 	if choiceInput == 'Fight':
+		run = [0]
 		print('\nWhat will', myPokemon, 'do?')
 		print(getMoveSet(myPokemon))
 		myMove = getMoveInput(myPokemon)
@@ -626,30 +631,28 @@ def startRound(myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount,en
 			turnOutcomeInfo = startMyTurn(myMove,myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,enemyStatus,enemyStatusCount)
 			myHP = turnOutcomeInfo[0]
 			enemyHP = turnOutcomeInfo[1]
-			myStatStage = list(operator.itemgetter(2,3,4,5,6,7,8)(turnOutcomeInfo))
-			enemyStatStage = list(operator.itemgetter(9,10,11,12,13,14,15)(turnOutcomeInfo))
-			myStatus = turnOutcomeInfo[16]
-			myStatusCount = turnOutcomeInfo[17]
-			enemyStatus = turnOutcomeInfo[18]
-			enemyStatusCount=turnOutcomeInfo[19]
 			if enemyHP == 0 or myHP == 0:
-				return turnOutcomeInfo
+				roundOutcomeInfo = turnOutcomeInfo + run
+				return roundOutcomeInfo
 			turnOutcomeInfo = startEnemyTurn(enemyMove,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,enemyStatus,enemyStatusCount,myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount)
-			return turnOutcomeInfo
+			roundOutcomeInfo = turnOutcomeInfo + run
+			return roundOutcomeInfo
 		if turnOrder == 'enemyPokemonFirst':
 			turnOutcomeInfo = startEnemyTurn(enemyMove,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,enemyStatus,enemyStatusCount,myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount)
 			myHP = turnOutcomeInfo[0]
 			enemyHP = turnOutcomeInfo[1]
-			myStatStage = list(operator.itemgetter(2,3,4,5,6,7,8)(turnOutcomeInfo))
-			enemyStatStage = list(operator.itemgetter(9,10,11,12,13,14,15)(turnOutcomeInfo))
-			myStatus = turnOutcomeInfo[16]
-			myStatusCount = turnOutcomeInfo[17]
-			enemyStatus = turnOutcomeInfo[18]
-			enemyStatusCount=turnOutcomeInfo[19]
 			if myHP == 0 or enemyHP == 0:
-				return turnOutcomeInfo
+				roundOutcomeInfo = turnOutcomeInfo + run
+				return roundOutcomeInfo
 			turnOutcomeInfo = startMyTurn(myMove,myPokemon,myLevel,myHP,myIV,myStatStage,myStatus,myStatusCount,enemyPokemon,enemyLevel,enemyHP,enemyIV,enemyStatStage,enemyStatus,enemyStatusCount)
-			return turnOutcomeInfo
+			roundOutcomeInfo = turnOutcomeInfo + run
+			return roundOutcomeInfo
+	if choiceInput == 'Run':
+		run = ['Run']
+		hpList = [myHP,enemyHP]
+		statusList = [myStatus,myStatusCount,enemyStatus,enemyStatusCount]
+		roundOutcomeInfo = hpList + myStatStage + enemyStatStage + statusList + run
+		return roundOutcomeInfo
 
 def startBattle(myPokemon,myLevel,myIV,myStatus,enemyPokemon,enemyLevel):
 	print('A wild Level', enemyLevel, enemyPokemon, 'appeared! Go', myPokemon, '!')
@@ -671,6 +674,11 @@ def startBattle(myPokemon,myLevel,myIV,myStatus,enemyPokemon,enemyLevel):
 		myStatusCount = roundOutcomeInfo[17]
 		enemyStatus = roundOutcomeInfo[18]
 		enemyStatusCount=roundOutcomeInfo[19]
+		run=roundOutcomeInfo[20]
+		print(run, 'yep')
+	if run == 'Run':
+		print('You got away safely!')
+		return 1
 	if myHP == 0:
 		print(myPokemon, 'fainted! You lose!')
 	if myHP > 0:
