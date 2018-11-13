@@ -2,9 +2,7 @@ To do:
 Preset battles, like the League and gym leaders, perhaps with easy, normal and hard modes
 PP tracking
 Items
-Exp system with level-up moves and evolution
 Catching wild pokemon
-Pokemon select 4 random moves from a learnable list
 EVs
 Add data for more moves and pokemon
 Volatile status conditions (confusion, infatuation etc)
@@ -15,6 +13,21 @@ Correct calculation for escaping a battle
 Other weird moves, like roar, baton pass, volt switch etc
 
 
+
+turnorder (check for priority)
+start battle
+check v-status
+check nv-status
+check item
+
+check move
+check move type
+
+check move extra
+
+check v-status
+checknvstatus
+check item
 
 
 Done:
@@ -29,3 +42,4 @@ Correct damage calculation
 Allow move input to be done by numbers
 Teams
 Move added effects eg burn (extra damage, burn halves atkr damage)
+Exp system with level-up moves and evolution
