@@ -38,7 +38,6 @@ volatileStatusNumberToType = {0:'Confused',1:'Leech Seed'}
 ballCatchModifiers = {'PokeBall':1,'Great Ball':2,'Ultra Ball':3,'Master Ball':'Master'}
 statusCatchModifiers = {0:1,1:1.5,2:1.5,3:2,4:2,5:1.5,6:1.5}
 
-#statusCatchModifiers = {'Frozen':2,'Sleep':2,'Paralysis':1.5,'Burn':1.5,'Poison':1.5,'None':1}
 pokemonCatchRate = {'Bulbasaur':45,'Ivysaur':45,'Venusaur':45,'Charmander':45,'Charmeleon':45,'Charizard':45,'Squirtle':45,'Wartortle':45,'Blastoise':45,'Pidgey':255,'Rattata':255}
 
 bulbasaurType = {'Type One':'Grass','Type Two':'Poison'}
@@ -84,9 +83,9 @@ rattataEvolution = {'Evolve':'No'}
 geodudeEvolution = {'Evolve':'No'}
 onixEvolution = {'Evolve':'No'}
 
-bulbasaurMovesByLevel = {1:'Tackle',3:'Growl',7:'Leech Seed',9:'Vine Whip',1300:'Poison Powder',1400:'Sleep Powder',1500:'Take Down',1900:'Razor Leaf'}
-ivysaurMovesByLevel = {1:'Tackle',3:'Growl',700:'Leech Seed',9:'Vine Whip',1300:'Poison Powder',1400:'Sleep Powder',1500:'Take Down',2000:'Razor Leaf'}
-venusaurMovesByLevel = {1:'Tackle',3:'Growl',700:'Leech Seed',9:'Vine Whip',1300:'Poison Powder',1400:'Sleep Powder',1500:'Take Down',2000:'Razor Leaf'}
+bulbasaurMovesByLevel = {1:'Tackle',3:'Growl',7:'Leech Seed',9:'Vine Whip',13:'Poison Powder',1400:'Sleep Powder',1500:'Take Down',1900:'Razor Leaf'}
+ivysaurMovesByLevel = {1:'Tackle',3:'Growl',700:'Leech Seed',9:'Vine Whip',13:'Poison Powder',1400:'Sleep Powder',1500:'Take Down',2000:'Razor Leaf'}
+venusaurMovesByLevel = {1:'Tackle',3:'Growl',700:'Leech Seed',9:'Vine Whip',13:'Poison Powder',1400:'Sleep Powder',1500:'Take Down',2000:'Razor Leaf'}
 charmanderMovesByLevel = {1:'Scratch',2:'Growl',7:'Ember',10:'Smokescreen',16:'Dragon Rage',19:'Scary Face',25:'Fire Fang'}
 charmeleonMovesByLevel = {1:'Scratch',2:'Growl',7:'Ember',10:'Smokescreen',17:'Dragon Rage',21:'Scary Face',28:'Fire Fang'}
 charizardMovesByLevel = {1:'Scratch',2:'Growl',7:'Ember',10:'Smokescreen',17:'Dragon Rage',21:'Scary Face',28:'Fire Fang'}
@@ -118,7 +117,7 @@ emberInfo = {'Base Damage':45, 'Move Type':'Fire', 'Move Accuracy':90, 'Move Var
 bubbleInfo = {'Base Damage':35, 'Move Type':'Water', 'Move Accuracy':90, 'Move Variety':'Special', 'Added Effect':'No', 'Priority':0}
 vineWhipInfo = {'Base Damage':40, 'Move Type':'Grass', 'Move Accuracy':90, 'Move Variety':'Physical', 'Added Effect':'No', 'Priority':0}
 growlInfo = {'Base Damage':0, 'Move Type':'Normal', 'Move Accuracy':90, 'Move Variety':'Support', 'Added Effect':'No', 'Priority':0}
-defenseCurlInfo = {'Base Damage':0, 'Move Type':'Normal', 'Move Accuracy':100, 'Move Variety':'Support', 'Added Effect':'No', 'Priority':0}
+defenseCurlInfo = {'Base Damage':0, 'Move Type':'Normal', 'Move Accuracy':10000, 'Move Variety':'Support', 'Added Effect':'No', 'Priority':0}
 tailWhipInfo = {'Base Damage':0, 'Move Type':'Normal', 'Move Accuracy':100, 'Move Variety':'Support', 'Added Effect':'No', 'Priority':0}
 flamethrowerInfo = {'Base Damage':90, 'Move Type':'Fire', 'Move Accuracy':90, 'Move Variety':'Special', 'Added Effect':'No', 'Priority':0}
 hydroPumpInfo = {'Base Damage':110, 'Move Type':'Water', 'Move Accuracy':80, 'Move Variety':'Special', 'Added Effect':'No', 'Priority':0}
@@ -129,6 +128,9 @@ rockThrowInfo = {'Base Damage':50, 'Move Type':'Rock', 'Move Accuracy':90, 'Move
 rockPolishInfo = {'Base Damage':0, 'Move Type':'Rock', 'Move Accuracy':100, 'Move Variety':'Support', 'Added Effect':'No', 'Priority':0}
 magnitudeInfo = {'Base Damage':50, 'Move Type':'Ground', 'Move Accuracy':100, 'Move Variety':'Physical', 'Added Effect':'No', 'Priority':0}
 leechSeedInfo = {'Base Damage':0, 'Move Type':'Grass', 'Move Accuracy':100, 'Move Variety':'Support', 'Added Effect':'No', 'Priority':0}
+gustInfo = {'Base Damage':40, 'Move Type':'Flying', 'Move Accuracy':100, 'Move Variety':'Physical', 'Added Effect':'No', 'Priority':0}
+quickAttackInfo = {'Base Damage':40, 'Move Type':'Normal', 'Move Accuracy':100, 'Move Variety':'Physical', 'Added Effect':'No', 'Priority':1}
+sandAttackInfo = {'Base Damage':0, 'Move Type':'Normal', 'Move Accuracy':100, 'Move Variety':'Support', 'Added Effect':'No', 'Priority':0}
 
 growlExtraInfo = {'Stat Change':'Enemy', 'Non-Volatile Status Change':'No', 'Volatile Status Change':'No'}
 tailWhipExtraInfo = {'Stat Change':'Enemy', 'Non-Volatile Status Change':'No', 'Volatile Status Change':'No'}
@@ -138,6 +140,7 @@ hardenExtraInfo = {'Stat Change':'Self', 'Non-Volatile Status Change':'No', 'Vol
 rockPolishExtraInfo = {'Stat Change':'Self', 'Non-Volatile Status Change':'No', 'Volatile Status Change':'No'}
 rockTombExtraInfo = {'Stat Change':'Enemy', 'Non-Volatile Status Change':'No', 'Volatile Status Change':'No'}
 leechSeedExtraInfo = {'Stat Change':'None', 'Non-Volatile Status Change':'No', 'Volatile Status Change':'Yes'}
+sandAttackExtraInfo = {'Stat Change':'Enemy', 'Non-Volatile Status Change':'No', 'Volatile Status Change':'No'}
 
 growlStatChangeInfo = {'HP':0,'Atk':-1,'Def':0,'SpAtk':0,'SpDef':0,'Spd':0,'Accuracy':0,'Chance':100}
 defenseCurlStatChangeInfo = {'HP':0,'Atk':0,'Def':1,'SpAtk':0,'SpDef':0,'Spd':0,'Accuracy':0,'Chance':100}
@@ -145,6 +148,7 @@ tailWhipStatChangeInfo = {'HP':0,'Atk':0,'Def':-1,'SpAtk':0,'SpDef':0,'Spd':0,'A
 hardenStatChangeInfo = {'HP':0,'Atk':0,'Def':1,'SpAtk':0,'SpDef':0,'Spd':0,'Accuracy':0,'Chance':100}
 rockPolishStatChangeInfo = {'HP':0,'Atk':0,'Def':0,'SpAtk':0,'SpDef':0,'Spd':2,'Accuracy':0,'Chance':100}
 rockTombStatChangeInfo = {'HP':0,'Atk':0,'Def':0,'SpAtk':0,'SpDef':0,'Spd':-1,'Accuracy':0,'Chance':100}
+sandAttackStatChangeInfo = {'HP':0,'Atk':0,'Def':0,'SpAtk':0,'SpDef':0,'Spd':0,'Accuracy':-1,'Chance':100}
 
 emberNonVolatileStatusChangeInfo = {'Type':1,'Chance':10}
 
@@ -170,9 +174,9 @@ darkEffect = {'Normal':1, 'Fighting':0.5, 'Flying':1, 'Poison':1, 'Ground':1, 'R
 fairyEffect = {'Normal':1, 'Fighting':2, 'Flying':1, 'Poison':0.5, 'Ground':1, 'Rock':1, 'Bug':1, 'Ghost':1, 'Steel':0.5, 'Fire':0.5, 'Water':1, 'Grass':1, 'Electric':1, 'Psychic':1, 'Ice':1, 'Dragon':2, 'Dark':2, 'Fairy':1, 'Null':1}
 allType = {'Normal':normalEffect, 'Fighting':fightingEffect, 'Flying':flyingEffect, 'Poison':poisonEffect, 'Ground':groundEffect, 'Rock':rockEffect, 'Bug':bugEffect, 'Ghost':ghostEffect, 'Steel':steelEffect, 'Fire':fireEffect, 'Water':waterEffect, 'Grass':grassEffect, 'Electric':electricEffect, 'Psychic':psychicEffect, 'Ice':iceEffect, 'Dragon':dragonEffect, 'Dark':darkEffect, 'Fairy':fairyEffect}
 
-moveInfo = {'Tackle':tackleInfo,'Ember':emberInfo,'Bubble':bubbleInfo,'Vine Whip':vineWhipInfo,'Growl':growlInfo,'Defense Curl':defenseCurlInfo,'Scratch':scratchInfo,'Tail Whip':tailWhipInfo,'Flamethrower':flamethrowerInfo,'Hydro Pump':hydroPumpInfo,'Petal Blizzard':petalBlizzardInfo,'Harden':hardenInfo,'Rock Tomb':rockTombInfo,'Rock Throw':rockThrowInfo,'Rock Polish':rockPolishInfo,'Magnitude':magnitudeInfo,'Leech Seed':leechSeedInfo}
-moveExtraInfo = {'Ember':emberExtraInfo,'Growl':growlExtraInfo,'Defense Curl':defenseCurlExtraInfo,'Tail Whip':tailWhipExtraInfo,'Harden':hardenExtraInfo,'Rock Polish':rockPolishExtraInfo,'Rock Tomb':rockTombExtraInfo,'Leech Seed':leechSeedExtraInfo}
-moveStatChangeInfo = {'Growl':growlStatChangeInfo,'Defense Curl':defenseCurlStatChangeInfo,'Tail Whip':tailWhipStatChangeInfo,'Harden':hardenStatChangeInfo,'Rock Polish':rockPolishStatChangeInfo,'Rock Tomb':rockTombStatChangeInfo}
+moveInfo = {'Tackle':tackleInfo,'Ember':emberInfo,'Bubble':bubbleInfo,'Vine Whip':vineWhipInfo,'Growl':growlInfo,'Defense Curl':defenseCurlInfo,'Scratch':scratchInfo,'Tail Whip':tailWhipInfo,'Flamethrower':flamethrowerInfo,'Hydro Pump':hydroPumpInfo,'Petal Blizzard':petalBlizzardInfo,'Harden':hardenInfo,'Rock Tomb':rockTombInfo,'Rock Throw':rockThrowInfo,'Rock Polish':rockPolishInfo,'Magnitude':magnitudeInfo,'Leech Seed':leechSeedInfo,'Gust':gustInfo,'Quick Attack':quickAttackInfo,'Sand Attack':sandAttackInfo}
+moveExtraInfo = {'Ember':emberExtraInfo,'Growl':growlExtraInfo,'Defense Curl':defenseCurlExtraInfo,'Tail Whip':tailWhipExtraInfo,'Harden':hardenExtraInfo,'Rock Polish':rockPolishExtraInfo,'Rock Tomb':rockTombExtraInfo,'Leech Seed':leechSeedExtraInfo,'Sand Attack':sandAttackExtraInfo}
+moveStatChangeInfo = {'Growl':growlStatChangeInfo,'Defense Curl':defenseCurlStatChangeInfo,'Tail Whip':tailWhipStatChangeInfo,'Harden':hardenStatChangeInfo,'Rock Polish':rockPolishStatChangeInfo,'Rock Tomb':rockTombStatChangeInfo,'Sand Attack':sandAttackStatChangeInfo}
 moveNonVolatileStatusChangeInfo = {'Ember':emberNonVolatileStatusChangeInfo}
 moveVolatileStatusChangeInfo = {'Leech Seed':leechSeedVolatileStatusChangeInfo}
 
@@ -292,6 +296,16 @@ def getPokemonSpdMult(statStage):
 		pokemonSpdStage = -6
 	pokemonSpdMult = pokemonStatStageToMult[pokemonSpdStage]
 	return pokemonSpdMult
+
+def getPokemonAccMult(statStage):
+	pokemonCurrentStatStage = statStage
+	pokemonAccStage = pokemonCurrentStatStage[6]
+	if pokemonAccStage > 6:
+		pokemonAccStage = 6
+	if pokemonAccStage < -6:
+		pokemonAccStage = -6
+	pokemonAccMult = pokemonStatStageToMult[pokemonAccStage]
+	return pokemonAccMult
 
 def gethpStat(pokemon,level,iv):
 	myPokemonStats = pokemonStats[pokemon]
@@ -465,10 +479,11 @@ def getStabBonus(move,pokemon):
 	else:
 		return 1 
 
-def getHitOrMiss(move):
+def getHitOrMiss(move,statStage):
 	accuracy = getMoveAccuracy(move)
+	accMult = getPokemonAccMult(statStage)
 	randomOf100 = randint(1,100)
-	if randomOf100 <= accuracy:
+	if randomOf100 <= accuracy * accMult:
 		return 'Hit'
 	else:
 		return 'Miss'
@@ -564,9 +579,7 @@ def getStatChange(move):
 		moveStatChange = getMoveStatChangeInfo(move,stat)
 		statChange.append(moveStatChange)
 	return statChange
-#
-# def getStatChangeWording(i):
-#	todo
+
 
 def getNonVolatileStatusType(i):
 	StatusType = nonVolatileStatusNumberToType[i]
@@ -655,7 +668,7 @@ def startMyTurn(move,myInformation,enemyInformation,environmentInformation):
 		#preMoveVStatusCheck = getPreMoveVStatusCheck(myPokemon,myPokemonVStatus,myPokemonVStatusCount)
 		#myPokemonInfo[17]=preMoveVStatusCheck[1],myPokemonInfo[16]=preMoveVStatusCheck[2],interrupt=preMoveVStatusCheck[3]
 		if interrupt == 0:
-			hitOrMiss = getHitOrMiss(move)
+			hitOrMiss = getHitOrMiss(move,myPokemonCurrentStatStage)
 			if hitOrMiss == 'Miss':
 				print(myPokemon, 'used', move, 'but it missed!')
 				interrupt = 1
@@ -665,7 +678,7 @@ def startMyTurn(move,myInformation,enemyInformation,environmentInformation):
 					moveExtraForm = getMoveExtraForm(move)
 					if moveExtraForm == 'Enemy':
 						statChange = getStatChange(move)
-						enemyPokemonStatStage = list(map(add, enemyPokemonCurrentStatStage, statChange))
+						enemyPokemonCurrentStatStage = list(map(add, enemyPokemonCurrentStatStage, statChange))
 						enemyPokemonInfo[19]=enemyPokemonCurrentStatStage
 						print(myPokemon, 'used', move, 'against the', enemyWording, enemyPokemon + '!')
 						statChangeWording = getStatChangeWording(enemyPokemon,statChange)
@@ -744,7 +757,7 @@ def startEnemyTurn(move,myInformation,enemyInformation,environmentInformation):
 		#preMoveVStatusCheck = getPreMoveVStatusCheck(myPokemon,myPokemonVStatus,myPokemonVStatusCount)
 		#myPokemonInfo[17]=preMoveVStatusCheck[1],myPokemonInfo[16]=preMoveVStatusCheck[2],interrupt=preMoveVStatusCheck[3]
 		if interrupt == 0:
-			hitOrMiss = getHitOrMiss(move)
+			hitOrMiss = getHitOrMiss(move,enemyPokemonCurrentStatStage)
 			if hitOrMiss == 'Miss':
 				print('The', enemyWording, enemyPokemon, 'used', move, 'but it missed!')
 				interrupt = 1
@@ -1014,17 +1027,20 @@ def startRound(myInformation,enemyInformation,environmentInformation):
 		myMove = getMoveInput(myPokemonMoveSet + ['Back'])
 		if myMove == 'Back':
 			turnOutcomeInfo = startRound(myInformation,enemyInformation,environmentInformation)
-
 			myInformation = turnOutcomeInfo[0]; myTeam = myInformation[0]; myPokemonInfo = myTeam[0]
 			enemyInformation = turnOutcomeInfo[1]; enemyTeam = enemyInformation[0]; enemyPokemonInfo = enemyTeam[0]
 			myPokemonHP = myPokemonInfo[5]; enemyPokemonHP = enemyPokemonInfo[5]
 			return turnOutcomeInfo
 		print('')
-		enemyMoveList = random.sample(enemyPokemonMoveSet,1); enemyMove = enemyMoveList[0]
 		turnOrder = getTurnOrder(myPokemon,myPokemonLevel,myPokemonIV,myPokemonCurrentStatStage,myPokemonNVStatus,enemyPokemon,enemyPokemonLevel,enemyPokemonIV,enemyPokemonCurrentStatStage,enemyPokemonNVStatus)
+		enemyMoveList = random.sample(enemyPokemonMoveSet,1); enemyMove = enemyMoveList[0]
+		myMovePriority = getMovePriority(myMove); enemyMovePriority = getMovePriority(enemyMove)
+		if myMovePriority > enemyMovePriority:
+			turnOrder = 'myPokemonFirst'
+		if enemyMovePriority > myMovePriority:
+			turnOrder = 'EnemyPokemonFirst'
 		if turnOrder == 'myPokemonFirst':
-			turnOutcomeInfo = startMyTurn(myMove,myInformation,enemyInformation,environmentInformation)
-			
+			turnOutcomeInfo = startMyTurn(myMove,myInformation,enemyInformation,environmentInformation)			
 			myInformation = turnOutcomeInfo[0]; myTeam = myInformation[0]; myPokemonInfo = myTeam[0]
 			enemyInformation = turnOutcomeInfo[1]; enemyTeam = enemyInformation[0]; enemyPokemonInfo = enemyTeam[0]
 			myPokemonHP = myPokemonInfo[5]; enemyPokemonHP = enemyPokemonInfo[5]
@@ -1346,7 +1362,7 @@ def chooseGameplay():
 		myPokemonOneTypeOne = 'Grass'
 		myPokemonOneTypeTwo = 'Poison'
 		myPokemonOneItem = 'None'
-		myPokemonOneMoveSet = ['Tackle', 'Vine Whip', 'Defense Curl','Flamethrower']
+		myPokemonOneMoveSet = ['Tackle', 'Vine Whip', 'Tail Whip','Sand Attack']
 		myPokemonOneMovePP = [10, 10, 10]
 		myPokemonOneNVStatus = 0
 		myPokemonOneNVStatusCount = 0
