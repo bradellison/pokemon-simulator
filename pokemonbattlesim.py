@@ -3,6 +3,7 @@ from operator import add
 import operator
 import time
 import random
+import math
 
 bulbasaurBaseStats = [45,49,49,65,65,45]
 ivysaurBaseStats = [60,62,63,80,80,60]
@@ -13,6 +14,8 @@ charizardBaseStats = [78,84,78,109,85,100]
 squirtleBaseStats = [44,48,65,50,64,43]
 wartortleBaseStats = [59,63,80,65,80,58]
 blastoiseBaseStats = [79,83,100,85,105,78]
+pidgeyBaseStats = [40,45,40,35,35,56]
+rattataBaseStats = [30,56,35,25,35,72]
 
 geodudeBaseStats = [40,80,100,30,30,20]
 onixBaseStats = [35,45,160,30,45,70]
@@ -32,6 +35,12 @@ pokemonStatStageToMult = {-6:0.25,-5:0.28,-4:0.33,-3:0.40,-2:0.50,-1:0.66,0:1,1:
 nonVolatileStatusNumberToType = {0:'Nothing',1:'Burned',2:'Paralyzed',3:'Sleep',4:'Frozen',5:'Poisoned',6:'Toxic'}
 volatileStatusNumberToType = {0:'Confused',1:'Leech Seed'}
 
+ballCatchModifiers = {'PokeBall':1,'Great Ball':2,'Ultra Ball':3,'Master Ball':'Master'}
+statusCatchModifiers = {0:1,1:1.5,2:1.5,3:2,4:2,5:1.5,6:1.5}
+
+#statusCatchModifiers = {'Frozen':2,'Sleep':2,'Paralysis':1.5,'Burn':1.5,'Poison':1.5,'None':1}
+pokemonCatchRate = {'Bulbasaur':45,'Ivysaur':45,'Venusaur':45,'Charmander':45,'Charmeleon':45,'Charizard':45,'Squirtle':45,'Wartortle':45,'Blastoise':45,'Pidgey':255,'Rattata':255}
+
 bulbasaurType = {'Type One':'Grass','Type Two':'Poison'}
 ivysaurType = {'Type One':'Grass','Type Two':'Poison'}
 venusaurType = {'Type One':'Grass','Type Two':'Poison'}
@@ -41,6 +50,8 @@ charizardType = {'Type One':'Fire','Type Two':'Flying'}
 squirtleType = {'Type One':'Water','Type Two':'Null'}
 wartortleType = {'Type One':'Water','Type Two':'Null'}
 blastoiseType = {'Type One':'Water','Type Two':'Null'}
+pidgeyType = {'Type One':'Normal','Type Two':'Flying'}
+rattataType = {'Type One':'Normal','Type Two':'Null'}
 geodudeType = {'Type One':'Rock', 'Type Two':'Ground'}
 onixType = {'Type One':'Rock', 'Type Two':'Ground'}
 
@@ -53,8 +64,11 @@ charizardExpGroup = {'Exp Group':'Fast','Exp Yield':240}
 squirtleExpGroup = {'Exp Group':'Fast','Exp Yield':63}
 wartortleExpGroup = {'Exp Group':'Fast','Exp Yield':142}
 blastoiseExpGroup = {'Exp Group':'Fast','Exp Yield':239}
+pidgeyExpGroup = {'Exp Group':'Medium Slow','Exp Yield':55}
+rattataExpGroup = {'Exp Group':'Medium Fast','Exp Yield':57}
 geodudeExpGroup = {'Exp Group':'Fast','Exp Yield':90}
 onixExpGroup = {'Exp Group':'Fast','Exp Yield':77}
+
 
 bulbasaurEvolution = {'Evolve':'Yes','Level':16,'Pokemon':'Ivysaur'}
 ivysaurEvolution = {'Evolve':'Yes','Level':36,'Pokemon':'Venusaur'}
@@ -65,6 +79,8 @@ charizardEvolution = {'Evolve':'No'}
 squirtleEvolution = {'Evolve':'Yes','Level':16,'Pokemon':'Wartortle'}
 wartortleEvolution = {'Evolve':'Yes','Level':36,'Pokemon':'Blastoise'}
 blastoiseEvolution = {'Evolve':'No'}
+pidgeyEvolution = {'Evolve':'No'}
+rattataEvolution = {'Evolve':'No'}
 geodudeEvolution = {'Evolve':'No'}
 onixEvolution = {'Evolve':'No'}
 
@@ -77,20 +93,24 @@ charizardMovesByLevel = {1:'Scratch',2:'Growl',7:'Ember',10:'Smokescreen',17:'Dr
 squirtleMovesByLevel = {1:'Tackle',4:'Tail Whip',7:'Water Gun',10:'Withdraw',13:'Bubble',16:'Bite'}
 wartortleMovesByLevel = {1:'Tackle',4:'Tail Whip',7:'Water Gun',10:'Withdraw',13:'Bubble',16:'Bite'}
 blastoiseMovesByLevel = {1:'Tackle',4:'Tail Whip',7:'Water Gun',10:'Withdraw',13:'Bubble',16:'Bite'}
+pidgeyMovesByLevel = {1:'Tackle',500:'Sand Attack',900:'Gust',1300:'Quick Attack'}
+rattataMovesByLevel = {1:'Tackle',2:'Tail Whip'}
 geodudeMovesByLevel = {1:'Tackle',2:'Defense Curl',4:'Rock Polish',12:'Magnitude',16:'Rock Throw'}
 onixMovesByLevel = {1:'Tackle',2:'Defense Curl',400:'Mud Sport',6:'Rock Polish',1000:'Rollout',12:'Magnitude',16:'Rock Throw'}
 
-geodudeMoves = {'Move One':'Tackle', 'Move Two':'Harden', 'Move Three':'Rock Polish', 'Move Four':'Magnitude'}
-onixMoves = {'Move One':'Tackle', 'Move Two':'Harden', 'Move Three':'Rock Tomb', 'Move Four':'Rock Throw'}
-#{'Move One':'', 'Move Two':'', 'Move Three':'', 'Move Four':''}
+pokemonStats = {'Bulbasaur':bulbasaurBaseStats,'Ivysaur':ivysaurBaseStats,'Venusaur':venusaurBaseStats,'Charmander':charmanderBaseStats,'Charmeleon':charmeleonBaseStats,'Charizard':charizardBaseStats,'Squirtle':squirtleBaseStats,'Wartortle':wartortleBaseStats,'Blastoise':blastoiseBaseStats,'Pidgey':pidgeyBaseStats,'Rattata':rattataBaseStats,'Geodude':geodudeBaseStats,'Onix':onixBaseStats}
+pokemonTypes = {'Bulbasaur':bulbasaurType,'Ivysaur':ivysaurType,'Venusaur':venusaurType,'Charmander':charmanderType,'Charmeleon':charmeleonType,'Charizard':charizardType,'Squirtle':squirtleType,'Wartortle':wartortleType,'Blastoise':blastoiseType,'Pidgey':pidgeyType,'Rattata':rattataType,'Geodude':geodudeType,'Onix':onixType}
+pokemonMovesByLevel = {'Bulbasaur':bulbasaurMovesByLevel,'Ivysaur':ivysaurMovesByLevel,'Venusaur':venusaurMovesByLevel,'Charmander':charmanderMovesByLevel,'Charmeleon':charmeleonMovesByLevel,'Charizard':charizardMovesByLevel,'Squirtle':squirtleMovesByLevel,'Wartortle':wartortleMovesByLevel,'Blastoise':blastoiseMovesByLevel,'Pidgey':pidgeyMovesByLevel,'Rattata':rattataMovesByLevel,'Geodude':geodudeMovesByLevel,'Onix':onixMovesByLevel}
 
-pokemonStats = {'Bulbasaur':bulbasaurBaseStats,'Ivysaur':ivysaurBaseStats,'Venusaur':venusaurBaseStats,'Charmander':charmanderBaseStats,'Charmeleon':charmeleonBaseStats,'Charizard':charizardBaseStats,'Squirtle':squirtleBaseStats,'Wartortle':wartortleBaseStats,'Blastoise':blastoiseBaseStats,'Geodude':geodudeBaseStats,'Onix':onixBaseStats}
-pokemonTypes = {'Bulbasaur':bulbasaurType,'Ivysaur':ivysaurType,'Venusaur':venusaurType,'Charmander':charmanderType,'Charmeleon':charmeleonType,'Charizard':charizardType,'Squirtle':squirtleType,'Wartortle':wartortleType,'Blastoise':blastoiseType,'Geodude':geodudeType,'Onix':onixType}
-pokemonMovesByLevel = {'Bulbasaur':bulbasaurMovesByLevel,'Ivysaur':ivysaurMovesByLevel,'Venusaur':venusaurMovesByLevel,'Charmander':charmanderMovesByLevel,'Charmeleon':charmeleonMovesByLevel,'Charizard':charizardMovesByLevel,'Squirtle':squirtleMovesByLevel,'Wartortle':wartortleMovesByLevel,'Blastoise':blastoiseMovesByLevel,'Geodude':geodudeMovesByLevel,'Onix':onixMovesByLevel}
+pokemonExpGroup = {'Bulbasaur':bulbasaurExpGroup,'Ivysaur':ivysaurExpGroup,'Venusaur':venusaurExpGroup,'Charmander':charmanderExpGroup,'Charmeleon':charmeleonExpGroup,'Charizard':charizardExpGroup,'Squirtle':squirtleExpGroup,'Wartortle':wartortleExpGroup,'Blastoise':blastoiseExpGroup,'Pidgey':pidgeyExpGroup,'Rattata':rattataExpGroup,'Geodude':geodudeExpGroup,'Onix':onixExpGroup}
+pokemonEvolutionDetails = {'Bulbasaur':bulbasaurEvolution,'Ivysaur':ivysaurEvolution,'Venusaur':venusaurEvolution,'Charmander':charmanderEvolution,'Charmeleon':charmeleonEvolution,'Charizard':charizardEvolution,'Squirtle':squirtleEvolution,'Wartortle':wartortleEvolution,'Blastoise':blastoiseEvolution,'Pidgey':pidgeyEvolution,'Rattata':rattataEvolution,'Geodude':geodudeEvolution,'Onix':onixEvolution}
 
-pokemonExpGroup = {'Bulbasaur':bulbasaurExpGroup,'Ivysaur':ivysaurExpGroup,'Venusaur':venusaurExpGroup,'Charmander':charmanderExpGroup,'Charmeleon':charmeleonExpGroup,'Charizard':charizardExpGroup,'Squirtle':squirtleExpGroup,'Wartortle':wartortleExpGroup,'Blastoise':blastoiseExpGroup,'Geodude':geodudeExpGroup,'Onix':onixExpGroup}
-pokemonEvolutionDetails = {'Bulbasaur':bulbasaurEvolution,'Ivysaur':ivysaurEvolution,'Venusaur':venusaurEvolution,'Charmander':charmanderEvolution,'Charmeleon':charmeleonEvolution,'Charizard':charizardEvolution,'Squirtle':squirtleEvolution,'Wartortle':wartortleEvolution,'Blastoise':blastoiseEvolution,'Geodude':geodudeEvolution,'Onix':onixEvolution}
 pokemonWild = ['Bulbasaur','Ivysaur','Venusaur','Charmander','Charmeleon','Charizard','Squirtle','Wartortle','Blastoise']
+routeTwoWildPokemon = ['Pidgey','Rattata']
+routeTwoWildLevels = [2,3,4]
+
+wildPokemonLocations = {'Route Two':routeTwoWildPokemon}
+wildLevelLocations =  {'Route Two':routeTwoWildLevels}
 
 tackleInfo = {'Base Damage':40, 'Move Type':'Normal', 'Move Accuracy':100, 'Move Variety':'Physical', 'Added Effect':'No', 'Priority':0}
 scratchInfo = {'Base Damage':40, 'Move Type':'Normal', 'Move Accuracy':100, 'Move Variety':'Physical', 'Added Effect':'No', 'Priority':0}
@@ -160,6 +180,13 @@ def getRandomPokemon():
 	pokemonSetSize = len(pokemonWild)
 	pokemonNumber = randint(1,pokemonSetSize) - 1
 	return pokemonWild[pokemonNumber]
+
+def getWildPokemonByLocation(location):
+	location
+	
+
+def getWildLevelByLocation(location):
+	location	
 
 def getRandomLevel():
 	pokemonLevel = randint(1,100)
@@ -339,6 +366,18 @@ def getStatChangeWording(myPokemon,statChange):
 			print(myPokemon + '\'s', stat, 'fell greatly!')
 		if changeForStat <= -3:
 			print(myPokemon + '\'s', stat, 'fell hugely!')
+
+def getBallCatchModifier(ball):
+	modifier = ballCatchModifiers[ball]
+	return modifier
+
+def getStatusCatchModifier(status):
+	modifier = statusCatchModifiers[status]
+	return modifier
+
+def getPokemonCatchRate(pokemon):
+	modifier = pokemonCatchRate[pokemon]
+	return modifier
 
 def getPokemonTypeOne(pokemon):
 	pokemonType = pokemonTypes[pokemon]
@@ -533,24 +572,24 @@ def getNonVolatileStatusType(i):
 	StatusType = nonVolatileStatusNumberToType[i]
 	return StatusType
 
-def getPostMoveNVStatusCheck(myPokemon,myPokemonNVStatus,myPokemonNVStatusCount,myPokemonHP,myMaxHP):
+def getPostMoveNVStatusCheck(myPokemon,myPokemonNVStatus,myPokemonNVStatusCount,myPokemonHP,myPokemonMaxHP):
 	myPokemonNVStatusType = getNonVolatileStatusType(myPokemonNVStatus)
 	if myPokemonNVStatusType != 'Nothing':
 		if myPokemonNVStatusType == 'Burned':
-			burnDamage = int(myMaxHP / 16)
+			burnDamage = int(myPokemonMaxHP / 16)
 			myPokemonHP = (myPokemonHP - burnDamage)
-			print(myPokemon, 'took', burnDamage, 'HP damage due to it\'s burn! It has', myPokemonHP, '/', myMaxHP, 'HP remaining!')
+			print(myPokemon, 'took', burnDamage, 'HP damage due to it\'s burn! It has', myPokemonHP, '/', myPokemonMaxHP, 'HP remaining!')
 			return [myPokemon,myPokemonNVStatus,myPokemonNVStatusCount,myPokemonHP]
 		elif myPokemonNonVolatileStatusType == 'Poisoned':
-			poisonDamage = int(myMaxHP / 8)
+			poisonDamage = int(myPokemonMaxHP / 8)
 			myPokemonHP = (myPokemonHP - poisonDamage)
-			print(myPokemon, 'took', poisonDamage, 'HP damage due to being poisoned! It has', myPokemonHP, '/', myMaxHP, 'HP remaining!')
+			print(myPokemon, 'took', poisonDamage, 'HP damage due to being poisoned! It has', myPokemonHP, '/', myPokemonMaxHP, 'HP remaining!')
 			return [myPokemon,myPokemonNVStatus,myPokemonNVStatusCount,myPokemonHP]
 		elif myPokemonNonVolatileStatusType == 'Toxic':
 			myPokemonStatusCount = myPokemonStatusCount + 1
-			toxicDamage = int(myMaxHP * myPokemonStatusCount / 16)
+			toxicDamage = int(myPokemonMaxHP * myPokemonStatusCount / 16)
 			myPokemonHP = myPokemonHP - toxicDamage
-			print(myPokemon, 'took', toxicDamage, 'HP damage due to being badly poisoned! It has', myPokemonHP, '/', myMaxHP, 'HP remaining!')
+			print(myPokemon, 'took', toxicDamage, 'HP damage due to being badly poisoned! It has', myPokemonHP, '/', myPokemonMaxHP, 'HP remaining!')
 			return [myPokemon,myPokemonNVStatus,myPokemonNVStatusCount,myPokemonHP]
 	return [myPokemon,myPokemonNVStatus,myPokemonNVStatusCount,myPokemonHP]
 
@@ -602,7 +641,6 @@ def getPokemonMove(move,myPokemon,myPokemonLevel,enemyPokemon,enemyPokemonLevel)
 	addedEffect = getMoveExtra(move)
 
 def startMyTurn(move,myInformation,enemyInformation,environmentInformation):
-
 	myTeam = myInformation[0];myBag = myInformation[1];myPlayer = myInformation[2]
 	myPokemonInfo = myTeam[0]
 	myPokemon = myPokemonInfo[0];myPokemonName = myPokemonInfo[1];myPokemonLevel = myPokemonInfo[2];myPokemonIV = myPokemonInfo[3];myPokemonEV = myPokemonInfo[4];myPokemonHP = myPokemonInfo[5];myPokemonExperience = myPokemonInfo[6];myPokemonForm = myPokemonInfo[7];myPokemonGender = myPokemonInfo[8];myPokemonAbility = myPokemonInfo[9];myPokemonTypeOne = myPokemonInfo[10];myPokemonTypeTwo = myPokemonInfo[11];myPokemonItem = myPokemonInfo[12];myPokemonMoveSet = myPokemonInfo[13];myPokemonMovePP = myPokemonInfo[14];myPokemonNVStatus = myPokemonInfo[15];myPokemonNVStatusCount = myPokemonInfo[16];myPokemonVStatus = myPokemonInfo[17];myPokemonVStatusCount = myPokemonInfo[18];myPokemonCurrentStatStage = myPokemonInfo[19]
@@ -610,7 +648,7 @@ def startMyTurn(move,myInformation,enemyInformation,environmentInformation):
 	enemyPokemonInfo = enemyTeam[0]
 	enemyPokemon = enemyPokemonInfo[0];enemyPokemonName = enemyPokemonInfo[1];enemyPokemonLevel = enemyPokemonInfo[2];enemyPokemonIV = enemyPokemonInfo[3];enemyPokemonEV = enemyPokemonInfo[4];enemyPokemonHP = enemyPokemonInfo[5];enemyPokemonExperience = enemyPokemonInfo[6];enemyPokemonForm = enemyPokemonInfo[7];enemyPokemonGender = enemyPokemonInfo[8];enemyPokemonAbility = enemyPokemonInfo[9];enemyPokemonTypeOne = enemyPokemonInfo[10];enemyPokemonTypeTwo = enemyPokemonInfo[11];enemyPokemonItem = enemyPokemonInfo[12];enemyPokemonMoveSet = enemyPokemonInfo[13];enemyPokemonMovePP = enemyPokemonInfo[14];enemyPokemonNVStatus = enemyPokemonInfo[15];enemyPokemonNVStatusCount = enemyPokemonInfo[16];enemyPokemonVStatus = enemyPokemonInfo[17];enemyPokemonVStatusCount = enemyPokemonInfo[18];enemyPokemonCurrentStatStage = enemyPokemonInfo[19]
 	enemyPlayerName = enemyPlayer[0]; enemyWording = enemyPlayer[1]
-	enemyMaxHP = gethpStat(enemyPokemon,enemyPokemonLevel,enemyPokemonIV); myMaxHP = gethpStat(myPokemon,myPokemonLevel,myPokemonIV)					
+	enemyPokemonMaxHP = gethpStat(enemyPokemon,enemyPokemonLevel,enemyPokemonIV); myPokemonMaxHP = gethpStat(myPokemon,myPokemonLevel,myPokemonIV)					
 	preMoveNVStatusCheck = getPreMoveNVStatusCheck(myPokemon,myPokemonNVStatus,myPokemonNVStatusCount)
 	myPokemonInfo[15]=preMoveNVStatusCheck[1];myPokemonInfo[16]=preMoveNVStatusCheck[2];interrupt=preMoveNVStatusCheck[3]
 	if interrupt == 0:
@@ -654,7 +692,7 @@ def startMyTurn(move,myInformation,enemyInformation,environmentInformation):
 
 					enemyPokemonInfo[5] = enemyPokemonHP	
 
-					print(myPokemon, 'used', move, 'against the', enemyWording, enemyPokemon, '-', effectivenessWording, 'it dealt', moveDamage, 'HP damage!', enemyPokemon, 'has', enemyPokemonHP, '/', enemyMaxHP, 'HP remaining!')
+					print(myPokemon, 'used', move, 'against the', enemyWording, enemyPokemon, '-', effectivenessWording, 'it dealt', moveDamage, 'HP damage!', enemyPokemon, 'has', enemyPokemonHP, '/', enemyPokemonMaxHP, 'HP remaining!')
 					moveExtra = getMoveExtra(move)
 					if moveExtra == 'Yes':		
 						moveExtraForm = getMoveExtraForm(move)
@@ -683,7 +721,7 @@ def startMyTurn(move,myInformation,enemyInformation,environmentInformation):
 								if statusChangeType == 3:
 									x = randint(1,3)	
 									enemyPokemonStatusCount = x
-	postMoveNVStatusCheck = getPostMoveNVStatusCheck(myPokemon,myPokemonNVStatus,myPokemonNVStatusCount,myPokemonHP,myMaxHP)
+	postMoveNVStatusCheck = getPostMoveNVStatusCheck(myPokemon,myPokemonNVStatus,myPokemonNVStatusCount,myPokemonHP,myPokemonMaxHP)
 	myPokemonInfo[15]=preMoveNVStatusCheck[1];myPokemonInfo[16]=preMoveNVStatusCheck[2];myPokemonHP=preMoveNVStatusCheck[3]
 	myTeam[0]=myPokemonInfo; myInformation[0]=myTeam
 	enemyTeam[0]=enemyPokemonInfo; enemyInformation[0]=enemyTeam
@@ -698,7 +736,7 @@ def startEnemyTurn(move,myInformation,enemyInformation,environmentInformation):
 	enemyPokemonInfo = enemyTeam[0]
 	enemyPokemon = enemyPokemonInfo[0];enemyPokemonName = enemyPokemonInfo[1];enemyPokemonLevel = enemyPokemonInfo[2];enemyPokemonIV = enemyPokemonInfo[3];enemyPokemonEV = enemyPokemonInfo[4];enemyPokemonHP = enemyPokemonInfo[5];enemyPokemonExperience = enemyPokemonInfo[6];enemyPokemonForm = enemyPokemonInfo[7];enemyPokemonGender = enemyPokemonInfo[8];enemyPokemonAbility = enemyPokemonInfo[9];enemyPokemonTypeOne = enemyPokemonInfo[10];enemyPokemonTypeTwo = enemyPokemonInfo[11];enemyPokemonItem = enemyPokemonInfo[12];enemyPokemonMoveSet = enemyPokemonInfo[13];enemyPokemonMovePP = enemyPokemonInfo[14];enemyPokemonNVStatus = enemyPokemonInfo[15];enemyPokemonNVStatusCount = enemyPokemonInfo[16];enemyPokemonVStatus = enemyPokemonInfo[17];enemyPokemonVStatusCount = enemyPokemonInfo[18];enemyPokemonCurrentStatStage = enemyPokemonInfo[19]
 	enemyPlayerName = enemyPlayer[0]; enemyWording = enemyPlayer[1]
-	enemyMaxHP = gethpStat(enemyPokemon,enemyPokemonLevel,enemyPokemonIV); myMaxHP = gethpStat(myPokemon,myPokemonLevel,myPokemonIV)					
+	enemyPokemonMaxHP = gethpStat(enemyPokemon,enemyPokemonLevel,enemyPokemonIV); myPokemonMaxHP = gethpStat(myPokemon,myPokemonLevel,myPokemonIV)					
 	#Check for Non-Volatile Status
 	preMoveNVStatusCheck = getPreMoveNVStatusCheck(enemyPokemon,enemyPokemonNVStatus,enemyPokemonNVStatusCount)
 	enemyPokemonInfo[15]=preMoveNVStatusCheck[1];enemyPokemonInfo[16]=preMoveNVStatusCheck[2];interrupt=preMoveNVStatusCheck[3]
@@ -738,7 +776,7 @@ def startEnemyTurn(move,myInformation,enemyInformation,environmentInformation):
 					if myPokemonHP < 0:
 						myPokemonHP = 0
 					myPokemonInfo[5] = myPokemonHP
-					print('The', enemyWording, enemyPokemon, 'used', move, 'against', myPokemon, '-', effectivenessWording, 'it dealt', moveDamage, 'HP damage!', myPokemon, 'has', myPokemonHP, '/', myMaxHP, 'HP remaining!')
+					print('The', enemyWording, enemyPokemon, 'used', move, 'against', myPokemon, '-', effectivenessWording, 'it dealt', moveDamage, 'HP damage!', myPokemon, 'has', myPokemonHP, '/', myPokemonMaxHP, 'HP remaining!')
 					moveExtra = getMoveExtra(move)
 					if moveExtra == 'Yes':		
 						moveExtraForm = getMoveExtraForm(move)
@@ -764,7 +802,7 @@ def startEnemyTurn(move,myInformation,enemyInformation,environmentInformation):
 								if statusChangeType == 3:
 									x = randint(1,3)	
 									myPokemonInfo[16]=x
-	postMoveNVStatusCheck = getPostMoveNVStatusCheck(enemyPokemon,enemyPokemonNVStatus,enemyPokemonNVStatusCount,enemyPokemonHP,enemyMaxHP)
+	postMoveNVStatusCheck = getPostMoveNVStatusCheck(enemyPokemon,enemyPokemonNVStatus,enemyPokemonNVStatusCount,enemyPokemonHP,enemyPokemonMaxHP)
 	enemyPokemonInfo[15]=preMoveNVStatusCheck[1];enemyPokemonInfo[16]=preMoveNVStatusCheck[2];enemyPokemonHP=preMoveNVStatusCheck[3]
 	myTeam[0]=myPokemonInfo; myInformation[0]=myTeam
 	enemyTeam[0]=enemyPokemonInfo; enemyInformation[0]=enemyTeam
@@ -782,7 +820,7 @@ def getMoveInput(pokemonMoveSet):
 			if int(moveInput) <= movesetSize and int(moveInput) > 0:
 				return pokemonMoveSet[int(moveInput)-1]
 				break	
-			print("Please choose a move from the list below!")
+			print("Please choose a move from the list above!")
 		except ValueError:
 			print("Please choose a move from the list.")
 
@@ -964,7 +1002,7 @@ def startRound(myInformation,enemyInformation,environmentInformation):
 	enemyPokemonInfo = enemyTeam[0]
 	enemyPokemon = enemyPokemonInfo[0];enemyPokemonName = enemyPokemonInfo[1];enemyPokemonLevel = enemyPokemonInfo[2];enemyPokemonIV = enemyPokemonInfo[3];enemyPokemonEV = enemyPokemonInfo[4];enemyPokemonHP = enemyPokemonInfo[5];enemyPokemonExperience = enemyPokemonInfo[6];enemyPokemonForm = enemyPokemonInfo[7];enemyPokemonGender = enemyPokemonInfo[8];enemyPokemonAbility = enemyPokemonInfo[9];enemyPokemonTypeOne = enemyPokemonInfo[10];enemyPokemonTypeTwo = enemyPokemonInfo[11];enemyPokemonItem = enemyPokemonInfo[12];enemyPokemonMoveSet = enemyPokemonInfo[13];enemyPokemonMovePP = enemyPokemonInfo[14];enemyPokemonNVStatus = enemyPokemonInfo[15];enemyPokemonNVStatusCount = enemyPokemonInfo[16];enemyPokemonVStatus = enemyPokemonInfo[17];enemyPokemonVStatusCount = enemyPokemonInfo[18];enemyPokemonCurrentStatStage = enemyPokemonInfo[19]
 	enemyPlayerName = enemyPlayer[0]; enemyPlayerWording = enemyPlayer[1]
-	enemyMaxHP = gethpStat(enemyPokemon,enemyPokemonLevel,enemyPokemonIV); myMaxHP = gethpStat(myPokemon,myPokemonLevel,myPokemonIV)					
+	enemyPokemonMaxHP = gethpStat(enemyPokemon,enemyPokemonLevel,enemyPokemonIV); myPokemonMaxHP = gethpStat(myPokemon,myPokemonLevel,myPokemonIV)					
 
 	print('What will you do?')
 	print('Fight - Bag - Pokemon - Run')
@@ -1020,11 +1058,45 @@ def startRound(myInformation,enemyInformation,environmentInformation):
 		roundOutcomeInfo = [myTeam,enemyTeam,run]
 		return roundOutcomeInfo
 	if choiceInput == 'Bag':
-		print('Nothing in your bag!')
+		print('You opened your bag! What pocket would you like to go into?')
 		run = [0]
-		
-		useItem = getUseItem(myInformation)
-
+		myBalls = myBag[0]; myMedicine = myBag[1]
+		print('Balls - Medicine - Back')
+		pocketChoice = getPocketChoice()
+		if pocketChoice == 'Back':
+			turnOutcomeInfo = startRound(myInformation,enemyInformation,environmentInformation)
+			myInformation = turnOutcomeInfo[0]; myTeam = myInformation[0]; myPokemonInfo = myTeam[0]
+			enemyInformation = turnOutcomeInfo[1]; enemyTeam = enemyInformation[0]; enemyPokemonInfo = enemyTeam[0]
+			myPokemonHP = myPokemonInfo[5]; enemyPokemonHP = enemyPokemonInfo[5]
+			return turnOutcomeInfo
+		if pocketChoice == 'Balls':
+			numberOfBallTypes = len(myBalls)
+			if numberOfBallTypes == 0:
+				print('Empty!')
+				return
+			print(numberOfBallTypes)
+			for i in range(0,numberOfBallTypes):
+				currentBall = myBalls[i]
+				print(i + 1, '-', currentBall[1] + 's x', currentBall[0])
+			print(i+2,'- Back')
+			print('What would you like to choose?')
+			print(i)
+			ballChoiceInput = int(getBallChoice(i))
+			print(ballChoiceInput)
+			if (ballChoiceInput) == i+2:
+				turnOutcomeInfo = startRound(myInformation,enemyInformation,environmentInformation)
+				myInformation = turnOutcomeInfo[0]; myTeam = myInformation[0]; myPokemonInfo = myTeam[0]
+				enemyInformation = turnOutcomeInfo[1]; enemyTeam = enemyInformation[0]; enemyPokemonInfo = enemyTeam[0]
+				myPokemonHP = myPokemonInfo[5]; enemyPokemonHP = enemyPokemonInfo[5]
+				return turnOutcomeInfo
+			ballChoice = myBalls[ballChoiceInput - 1]
+			ball = ballChoice[1]
+			catch = getCatch(enemyPokemon,enemyPokemonLevel,enemyPokemonMaxHP,enemyPokemonHP,ball,enemyPokemonNVStatus)
+			if catch == 1:
+				print('You caught the', enemyPokemon + '!')
+				myTeam.append(enemyPokemonInfo)
+				print(myTeam)
+				return 'Caught'
 		enemyMoveList = random.sample(enemyPokemonMoveSet,1); enemyMove = enemyMoveList[0]
 		turnOutcomeInfo = startEnemyTurn(enemyMove,myInformation,enemyInformation,environmentInformation)
 		myTeam = turnOutcomeInfo[0]; myPokemonInfo = myTeam[0]
@@ -1048,19 +1120,77 @@ def startRound(myInformation,enemyInformation,environmentInformation):
 		roundOutcomeInfo = [myInformation,enemyInformation,environmentInformation]
 		return roundOutcomeInfo
 
+def getCatch(enemyPokemon,enemyPokemonLevel,enemyPokemonMaxHP,enemyPokemonHP,ball,enemyPokemonNVStatus):
+	ballModifier = getBallCatchModifier(ball)
+	if ballModifier == 'Master':
+		print('Catch')
+		return 1
+	pokemonCatchRate = getPokemonCatchRate(enemyPokemon)
+	statusModifier = getStatusCatchModifier(enemyPokemonNVStatus)
+	catchValue = ((( 3 * enemyPokemonMaxHP - 2 * enemyPokemonHP) * pokemonCatchRate * ballModifier) / ( 3 * enemyPokemonMaxHP) ) * statusModifier
+	catch = 1048560 / math.sqrt(math.sqrt(16711680 / catchValue))
+	count = 0
+	for i in range(3):
+		random = randint(1,65535)
+		count = count + 1
+		print('Shook', count, 'times!')
+		if catch > random:		
+			if count == 3:
+				print('Catch')
+				return 1
+		else:
+			if count == 1:
+				print('Not even close!')
+			if count == 2:
+				print('Oh, nearly had it!')
+			if count == 3:
+				print('So so close!')
+			return 0
+
 def getUseItem(myInformation):
 
 	myTeam = myInformation[0];myBag = myInformation[1];myPlayer = myInformation[2]
 	myPokemonInfo = myTeam[0]
 	myPokemon = myPokemonInfo[0];myPokemonName = myPokemonInfo[1];myPokemonLevel = myPokemonInfo[2];myPokemonIV = myPokemonInfo[3];myPokemonEV = myPokemonInfo[4];myPokemonHP = myPokemonInfo[5];myPokemonExperience = myPokemonInfo[6];myPokemonForm = myPokemonInfo[7];myPokemonGender = myPokemonInfo[8];myPokemonAbility = myPokemonInfo[9];myPokemonTypeOne = myPokemonInfo[10];myPokemonTypeTwo = myPokemonInfo[11];myPokemonItem = myPokemonInfo[12];myPokemonMoveSet = myPokemonInfo[13];myPokemonMovePP = myPokemonInfo[14];myPokemonNVStatus = myPokemonInfo[15];myPokemonNVStatusCount = myPokemonInfo[16];myPokemonVStatus = myPokemonInfo[17];myPokemonVStatusCount = myPokemonInfo[18];myPokemonCurrentStatStage = myPokemonInfo[19]
 	myBalls = myBag[0]; myMedicine = myBag[1]
-	
+	print('Which pocket would you like to look in?')
+	print('Balls - Medicine - Go Back')
+	pocketChoice = getPocketChoice()
+
+def getBallChoice(i):
+	options = i + 2
+	while True:
+		try:
+			choiceInput = input('-- ')
+			if int(choiceInput) <= options and int(choiceInput) > 0:
+				return choiceInput
+			print("Please choose an option from the list above!")
+		except ValueError:
+			print("Please choose an option from the list.")
 
 
-
-
-
-
+def getPocketChoice():
+	while True:
+		try:
+			choiceInput = input('-- ')
+			if choiceInput == 'Balls':
+				return choiceInput
+			if choiceInput == 'Medicine':
+				return choiceInput
+			if choiceInput == 'Back':
+				return choiceInput			
+			if int(choiceInput) == 1:
+				choiceInput = 'Balls'
+				return choiceInput
+			if int(choiceInput) == 2:
+				choiceInput = 'Medicine'
+				return choiceInput
+			if int(choiceInput) == 3:
+				choiceInput = 'Back'
+				return choiceInput
+			print("Please choose an option from the list above!")
+		except ValueError:
+			print("Please choose an option from the list.")
 
 def startBattle(myInformation,enemyInformation,environmentInformation):
 	myTeam = myInformation[0];myBag = myInformation[1];myPlayer = myInformation[2]
@@ -1070,13 +1200,15 @@ def startBattle(myInformation,enemyInformation,environmentInformation):
 	enemyPokemonInfo = enemyTeam[0]
 	enemyPokemon = enemyPokemonInfo[0];enemyPokemonName = enemyPokemonInfo[1];enemyPokemonLevel = enemyPokemonInfo[2];enemyPokemonIV = enemyPokemonInfo[3];enemyPokemonEV = enemyPokemonInfo[4];enemyPokemonHP = enemyPokemonInfo[5];enemyPokemonExperience = enemyPokemonInfo[6];enemyPokemonForm = enemyPokemonInfo[7];enemyPokemonGender = enemyPokemonInfo[8];enemyPokemonAbility = enemyPokemonInfo[9];enemyPokemonTypeOne = enemyPokemonInfo[10];enemyPokemonTypeTwo = enemyPokemonInfo[11];enemyPokemonItem = enemyPokemonInfo[12];enemyPokemonMoveSet = enemyPokemonInfo[13];enemyPokemonMovePP = enemyPokemonInfo[14];enemyPokemonNVStatus = enemyPokemonInfo[15];enemyPokemonNVStatusCount = enemyPokemonInfo[16];enemyPokemonVStatus = enemyPokemonInfo[17];enemyPokemonVStatusCount = enemyPokemonInfo[18];enemyPokemonCurrentStatStage = enemyPokemonInfo[19]
 	enemyPlayerName = enemyPlayer[0]; enemyPlayerWording = enemyPlayer[1]
-	enemyMaxHP = gethpStat(enemyPokemon,enemyPokemonLevel,enemyPokemonIV); myMaxHP = gethpStat(myPokemon,myPokemonLevel,myPokemonIV)					
+	enemyPokemonMaxHP = gethpStat(enemyPokemon,enemyPokemonLevel,enemyPokemonIV); myPokemonMaxHP = gethpStat(myPokemon,myPokemonLevel,myPokemonIV)					
 	print('A wild lvl', enemyPokemonLevel, enemyPokemon, 'appeared! Go', myPokemon, '!')	
 	myTeamTotalHP = getTeamTotalHP(myTeam)
 	enemyTeamTotalHP = getTeamTotalHP(enemyTeam)
 	while myTeamTotalHP > 0 and enemyPokemonHP > 0:
 		while myPokemonHP > 0 and enemyPokemonHP > 0:
 			turnOutcomeInfo = startRound(myInformation,enemyInformation,environmentInformation)
+			if turnOutcomeInfo == 'Caught':
+				return
 			myInformation = turnOutcomeInfo[0]; myTeam = myInformation[0]; myPokemonInfo = myTeam[0]
 			enemyInformation = turnOutcomeInfo[1]; enemyTeam = enemyInformation[0]; enemyPokemonInfo = enemyTeam[0]
 			myPokemonHP = myPokemonInfo[5]; enemyPokemonHP = enemyPokemonInfo[5]
@@ -1180,7 +1312,7 @@ def startGame():
 	startBattle(myTeam,enemyTeam,1)
 
 def chooseGameplay():
-	print('> To begin the game as normal, type 1\n> For a preset battle, type 2\n> Gym Leader Challenge, type 3')
+	print('> To begin the game as normal, type 1\n> For a preset battle, type 2\n> Gym Leader Challenge, type 3\n Wild Pokemon Hunt')
 	x = input()
 	if x == '1':
 		startGame()
@@ -1268,20 +1400,31 @@ def chooseGameplay():
 
 		myInformation=[myTeam,myBag,myPlayer]; enemyInformation=[enemyTeam,enemyBag,enemyPlayer]
 		startBattle(myInformation,enemyInformation,environmentInformation)
+	if x == 4:
+		myPokemonOne = 'Charmander'
+		myPokemonOneName = 'Charmander'
+		myPokemonOneLevel = 5
+		myPokemonOneIV = getRandomIV()
+		myPokemonOneEV = 'xxx'
+		myPokemonOneHP = gethpStat(myPokemonOne,myPokemonOneLevel,myPokemonOneIV)
+		myPokemonOneExperience = getExp(myPokemonOne,myPokemonOneLevel)
+		myPokemonOneForm = 'NA'
+		myPokemonOneGender = 'Male'
+		myPokemonOneAbility = 'Chloraphyll'
+		myPokemonOneTypeOne = 'Grass'
+		myPokemonOneTypeTwo = 'Poison'
+		myPokemonOneItem = 'None'
+		myPokemonOneMoveSet = ['Tackle', 'Growl']
+		myPokemonOneMovePP = [10, 10]
+		myPokemonOneNVStatus = 0
+		myPokemonOneNVStatusCount = 0
+		myPokemonOneVStatus = 0
+		myPokemonOneVStatusCount = 0
+		myPokemonOneCurrentStatStage = [0,0,0,0,0,0,0]		
+		myPokemonOneList = [myPokemonOne,myPokemonOneName,myPokemonOneLevel,myPokemonOneIV,myPokemonOneEV,myPokemonOneHP,myPokemonOneExperience,myPokemonOneForm,myPokemonOneGender,myPokemonOneAbility,myPokemonOneTypeOne,myPokemonOneTypeTwo,myPokemonOneItem,myPokemonOneMoveSet,myPokemonOneMovePP,myPokemonOneNVStatus,myPokemonOneNVStatusCount,myPokemonOneVStatus,myPokemonOneVStatusCount,myPokemonOneCurrentStatStage]
+
+
 
 chooseGameplay()
 
-#team (pre battle) = [pokemonOneList,pokemonTwoList,pokemonThreeList,pokemonFourList]
-#pokemonOneList (pre battle) = [pokemonOne,pokemonOneLevel,pokemonOneHP,pokemonOneIV,pokemonOneStatus]
 
-		#myPokemonList = [myPokemon,myPokemonLevel,myPokemonHP,myPokemonIV,myPokemonStatus,myPokemonStatusCount,myPokemonStatStage]
-
-myPokemon='Charizard'
-enemyPokemon='Venusaur'
-myPokemonLevel=100
-enemyPokemonLevel=100
-myPokemonIV = [31, 31, 31, 31, 31, 31]
-#enemyPokemon = getRandomPokemon()
-#enemyPokemonLevel = getRandomLevel()
-
-#startBattle(myPokemon,myPokemonLevel,myPokemonIV,enemyPokemon,enemyPokemonLevel)
