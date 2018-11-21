@@ -709,7 +709,7 @@ def startEnemyTurn(move,myInformation,enemyInformation,environmentInformation):
 			hitOrMiss = getHitOrMiss(move)
 			if hitOrMiss == 'Miss':
 				print('The', enemyWording, enemyPokemon, 'used', move, 'but it missed!')
-				interrupt = 0
+				interrupt = 1
 			if interrupt == 0:
 				moveVariety = getMoveVariety(move)
 				if moveVariety == 'Support':
@@ -1022,6 +1022,9 @@ def startRound(myInformation,enemyInformation,environmentInformation):
 	if choiceInput == 'Bag':
 		print('Nothing in your bag!')
 		run = [0]
+		
+		useItem = getUseItem(myInformation)
+
 		enemyMoveList = random.sample(enemyPokemonMoveSet,1); enemyMove = enemyMoveList[0]
 		turnOutcomeInfo = startEnemyTurn(enemyMove,myInformation,enemyInformation,environmentInformation)
 		myTeam = turnOutcomeInfo[0]; myPokemonInfo = myTeam[0]
@@ -1044,6 +1047,20 @@ def startRound(myInformation,enemyInformation,environmentInformation):
 		enemyTeam = turnOutcomeInfo[1]; enemyPokemonInfo = enemyTeam[0]
 		roundOutcomeInfo = [myInformation,enemyInformation,environmentInformation]
 		return roundOutcomeInfo
+
+def getUseItem(myInformation):
+
+	myTeam = myInformation[0];myBag = myInformation[1];myPlayer = myInformation[2]
+	myPokemonInfo = myTeam[0]
+	myPokemon = myPokemonInfo[0];myPokemonName = myPokemonInfo[1];myPokemonLevel = myPokemonInfo[2];myPokemonIV = myPokemonInfo[3];myPokemonEV = myPokemonInfo[4];myPokemonHP = myPokemonInfo[5];myPokemonExperience = myPokemonInfo[6];myPokemonForm = myPokemonInfo[7];myPokemonGender = myPokemonInfo[8];myPokemonAbility = myPokemonInfo[9];myPokemonTypeOne = myPokemonInfo[10];myPokemonTypeTwo = myPokemonInfo[11];myPokemonItem = myPokemonInfo[12];myPokemonMoveSet = myPokemonInfo[13];myPokemonMovePP = myPokemonInfo[14];myPokemonNVStatus = myPokemonInfo[15];myPokemonNVStatusCount = myPokemonInfo[16];myPokemonVStatus = myPokemonInfo[17];myPokemonVStatusCount = myPokemonInfo[18];myPokemonCurrentStatStage = myPokemonInfo[19]
+	myBalls = myBag[0]; myMedicine = myBag[1]
+	
+
+
+
+
+
+
 
 def startBattle(myInformation,enemyInformation,environmentInformation):
 	myTeam = myInformation[0];myBag = myInformation[1];myPlayer = myInformation[2]
@@ -1096,6 +1113,7 @@ def startBattle(myInformation,enemyInformation,environmentInformation):
 	if myTeamTotalHP == 0:
 		print('You whited out!')
 	if enemyPokemonHP == 0:
+		myPokemon = myPokemonInfo[0];myPokemonName = myPokemonInfo[1];myPokemonLevel = myPokemonInfo[2];myPokemonIV = myPokemonInfo[3];myPokemonEV = myPokemonInfo[4];myPokemonHP = myPokemonInfo[5];myPokemonExperience = myPokemonInfo[6];myPokemonForm = myPokemonInfo[7];myPokemonGender = myPokemonInfo[8];myPokemonAbility = myPokemonInfo[9];myPokemonTypeOne = myPokemonInfo[10];myPokemonTypeTwo = myPokemonInfo[11];myPokemonItem = myPokemonInfo[12];myPokemonMoveSet = myPokemonInfo[13];myPokemonMovePP = myPokemonInfo[14];myPokemonNVStatus = myPokemonInfo[15];myPokemonNVStatusCount = myPokemonInfo[16];myPokemonVStatus = myPokemonInfo[17];myPokemonVStatusCount = myPokemonInfo[18];myPokemonCurrentStatStage = myPokemonInfo[19]
 		print('The wild', enemyPokemon, 'fainted! You win!')
 		expOutcome = getExpOutcome(myPokemon,myPokemonLevel,myPokemonExperience,myPokemonMoveSet,enemyPokemon,enemyPokemonLevel)
 		myPokemonInfo[2] = expOutcome[0]; myPokemonInfo[6] = expOutcome[1]; myPokemonInfo[13] = expOutcome[2]; myPokemonInfo[0] = expOutcome[3]
@@ -1209,12 +1227,13 @@ def chooseGameplay():
 		#myPokemonTwo = 'Bulbasaur'; myPokemonTwoLevel = 13; myPokemonTwoIV = getRandomIV(); myPokemonTwoStatus = 0; myPokemonTwoStatStage = [0,0,0,0,0,0,0]; myPokemonTwoStatusCount = 0; myPokemonTwoHP = gethpStat(myPokemonTwo,myPokemonTwoLevel,myPokemonTwoIV,myPokemonTwoStatStage); myPokemonTwoExp = getExp(myPokemonTwo,myPokemonTwoLevel); myPokemonTwoMoveSet = ['Tackle','Growl','Vine Whip']
 		#myPokemonThree = 'Squirtle'; myPokemonThreeLevel = 13; myPokemonThreeIV = getRandomIV(); myPokemonThreeStatus = 0; myPokemonThreeStatStage = [0,0,0,0,0,0,0]; myPokemonThreeStatusCount = 0; myPokemonThreeHP = gethpStat(myPokemonThree,myPokemonThreeLevel,myPokemonThreeIV,myPokemonThreeStatStage); myPokemonThreeExp = getExp(myPokemonThree,myPokemonThreeLevel); myPokemonThreeMoveSet = ['Tackle','Growl','Bubble']
 
-		enemyPokemonOne = 'Ivysaur'
+		enemyPokemonOne = 'Charmander'
 		enemyPokemonOneName = 'Bulba'
 		enemyPokemonOneLevel = 16
 		enemyPokemonOneIV = [31,31,31,31,31,31]
 		enemyPokemonOneEV = 'xxx'
-		enemyPokemonOneHP = gethpStat(enemyPokemonOne,enemyPokemonOneLevel,enemyPokemonOneIV)
+		enemyPokemonOneHP = 1
+		#enemyPokemonOneHP = gethpStat(enemyPokemonOne,enemyPokemonOneLevel,enemyPokemonOneIV)
 		enemyPokemonOneExperience = 800
 		enemyPokemonOneForm = 'NA'
 		enemyPokemonOneGender = 'Male'
@@ -1236,8 +1255,11 @@ def chooseGameplay():
 
 
 		myTeam = [myPokemonOneList,myPokemonTwoList]
-		myBag = [0,0]; enemyBag = [0,0];
-		myPlayer = [0,0]; enemyPlayer = [0,'opposing']
+		myBalls = [[5,'PokeBall'],[3,'Great Ball'],[1,'Ultra Ball']]
+		myMedicine = [[2,'Potion']]
+
+		myBag = [myBalls,myMedicine]; enemyBag = [0,0];
+		myPlayer = [0,0]; enemyPlayer = ['Brock','opposing']
 		environmentInformation = [0,0]
 		enemyTeam = [enemyPokemonOneList,enemyPokemonTwoList]
 		myTrainerInfo = [1]
