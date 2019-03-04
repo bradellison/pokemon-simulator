@@ -160,7 +160,6 @@ emberNonVolatileStatusChangeInfo = {'Type':1,'Chance':10}
 
 leechSeedVolatileStatusChangeInfo = {'Type':10,'Chance':100}
 
-
 normalEffect = {'Normal':1, 'Fighting':1, 'Flying':1, 'Poison':1, 'Ground':1, 'Rock':0.5, 'Bug':1, 'Ghost':0, 'Steel':0.5, 'Fire':1, 'Water':1, 'Grass':1, 'Electric':1, 'Psychic':1, 'Ice':1, 'Dragon':1, 'Dark':1, 'Fairy':1, 'Null':1}
 fightingEffect = {'Normal':2, 'Fighting':1, 'Flying':0.5, 'Poison':0.5, 'Ground':1, 'Rock':2, 'Bug':0.5, 'Ghost':0, 'Steel':2, 'Fire':1, 'Water':1, 'Grass':1, 'Electric':1, 'Psychic':0.5, 'Ice':2, 'Dragon':1, 'Dark':2, 'Fairy':0.5, 'Null':1}
 flyingEffect = {'Normal':1, 'Fighting':2, 'Flying':1, 'Poison':1, 'Ground':1, 'Rock':0.5, 'Bug':2, 'Ghost':1, 'Steel':0.5, 'Fire':1, 'Water':1, 'Grass':2, 'Electric':0.5, 'Psychic':1, 'Ice':1, 'Dragon':1, 'Dark':1, 'Fairy':1, 'Null':1}
@@ -363,7 +362,7 @@ def getPokemonStatStage(pokemon):
 	pokemonToApplyStatChange = pokemonCurrentStatStages[pokemon]
 	return pokemonToApplyStatChange
 
-def getStatChangeWording(myPokemon,statChange):
+def getStatChangeForWording(myPokemon,statChange):
 	for i in range(7):
 		if i == 0:
 			stat = 'HP'
@@ -379,6 +378,8 @@ def getStatChangeWording(myPokemon,statChange):
 			stat = 'speed'
 		if i == 6:
 			stat = 'accuracy'
+
+def getStatChangeWording(i)
 		changeForStat = statChange[i]
 		if changeForStat == 1:
 			print(myPokemon + '\'s', stat, 'raised!')
@@ -583,7 +584,6 @@ def getPokemonBaseStatDictToList(i):
 	dictToList = pokemonBaseStatDictToList[i]
 	return dictToList
 
-
 def getStatChange(move):
 	statChange=[]
 	for i in range(0,7):
@@ -591,7 +591,6 @@ def getStatChange(move):
 		moveStatChange = getMoveStatChangeInfo(move,stat)
 		statChange.append(moveStatChange)
 	return statChange
-
 
 def getNonVolatileStatusType(i):
 	StatusType = nonVolatileStatusNumberToType[i]
@@ -659,11 +658,6 @@ def getTurnOrder(myPokemon,myPokemonLevel,myPokemonIV,myPokemonStatStage,myPokem
 			return 'myPokemonFirst'
 		if x == 1:
 			return 'enemyPokemonFirst'
-
-def getPokemonMove(move,myPokemon,myPokemonLevel,enemyPokemon,enemyPokemonLevel):
-	moveDamage = getMoveDamage(move,myPokemon,myPokemonLevel,enemyPokemon,enemyPokemonLevel)
-	effectiveness = getEffectiveness(move,enemyPokemon)
-	addedEffect = getMoveExtra(move)
 
 def startMyTurn(move,myInformation,enemyInformation,environmentInformation):
 	myTeam = myInformation[0];myBag = myInformation[1];myPlayer = myInformation[2]
