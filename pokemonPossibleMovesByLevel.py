@@ -32,12 +32,21 @@ nidoqueenPossibleMovesByLevel = {1:'Growl',2:'Tackle',8:'Scratch',14:'Poison Sti
 nidoranFPossibleMovesByLevel = {1:'Leer',2:'Tackle',8:'Horn Attack',14:'Poison Sting',21:'Focus Energy',29:'Fury Attack',36:'Horn Drill',43:'Double Kick'}
 nidorinoPossibleMovesByLevel = {1:'Leer',2:'Tackle',8:'Horn Attack',14:'Poison Sting',23:'Focus Energy',32:'Fury Attack',41:'Horn Drill',50:'Double Kick'}
 nidokingPossibleMovesByLevel = {1:'Leer',2:'Tackle',8:'Horn Attack',14:'Poison Sting',23:'Thrash',32:'Fury Attack',41:'Horn Drill',50:'Double Kick'}
+<<<<<<< HEAD
 clefairyPossibleMovesByLevel = {1:'Pound',2:'Growl',13:'Sing',18:'Double Slap',24:'Minimize',31:'Metronome',39:'Defense Curl',48:'Light Screen'}
 clefablePossibleMovesByLevel = {1:'Pound',2:'Growl',13:'Sing',18:'Double Slap',24:'Minimize',31:'Metronome',39:'Defense Curl',48:'Light Screen'}
 vulpixPossibleMovesByLevel = {1:'Ember',2:'Tail Whip',16:'Quick Attack',21:'Roar',28:'Confuse Ray',35:'Flamethrower',42:'Fire Spin'}
 ninetalesPossibleMovesByLevel = {1:'Ember',2:'Tail Whip',16:'Quick Attack',21:'Roar',28:'Confuse Ray',35:'Flamethrower',42:'Fire Spin'}
 jigglypuffPossibleMovesByLevel = {1:'Sing',9:'Pound',14:'Disable',19:'Defense Curl',24:'Double Slap',29:'Rest',34:'Body Slam',39:'Double-Edge'}
 wigglytuffPossibleMovesByLevel = {1:'Sing',9:'Pound',14:'Disable',19:'Defense Curl',24:'Double Slap',29:'Rest',34:'Body Slam',39:'Double-Edge'}
+=======
+clefairyPossibleMovesByLevel = {1:'Pound',2:'Growl',13:'Sing',18:'Doubleslap',24:'Minimize',31:'Metronome',39:'Defense Curl',48:'Light Screen'}
+clefablePossibleMovesByLevel = {1:'Pound',2:'Growl',13:'Sing',18:'Doubleslap',24:'Minimize',31:'Metronome',39:'Defense Curl',48:'Light Screen'}
+vulpixPossibleMovesByLevel = {1:'Ember',2:'Tail Whip',16:'Quick Attack',21:'Roar',28:'Confuse Ray',35:'Flamethrower',42:'Fire Spin'}
+ninetalesPossibleMovesByLevel = {1:'Ember',2:'Tail Whip',16:'Quick Attack',21:'Roar',28:'Confuse Ray',35:'Flamethrower',42:'Fire Spin'}
+jigglypuffPossibleMovesByLevel = {1:'Sing',9:'Pound',14:'Disable',19:'Defense Curl',24:'Doubleslap',29:'Rest',34:'Body Slam',39:'Double Edge'}
+wigglytuffPossibleMovesByLevel = {1:'Sing',9:'Pound',14:'Disable',19:'Defense Curl',24:'Doubleslap',29:'Rest',34:'Body Slam',39:'Double Edge'}
+>>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 zubatPossibleMovesByLevel = {1:'Leech Life',10:'Supersonic',15:'Bite',21:'Confuse Ray',28:'Wing Attack',36:'Haze'}
 golbatPossibleMovesByLevel = {1:'Leech Life',10:'Supersonic',15:'Bite',21:'Confuse Ray',32:'Wing Attack',43:'Haze'}
 oddishPossibleMovesByLevel = {1:'Absorb',15:'Poison Powder',17:'Stun Spore',19:'Sleep Powder',24:'Acid',33:'Petal Dance',46:'Solar Beam'}
@@ -57,9 +66,15 @@ mankeyPossibleMovesByLevel = {1:'Scratch',2:'Leer',15:'Karate Chop',21:'Fury Att
 primeapePossibleMovesByLevel = {1:'Scratch',2:'Leer',15:'Karate Chop',21:'Fury Attack',27:'Focus Energy',37:'Seismic Toss',46:'Thrash'}
 growlithePossibleMovesByLevel = {1:'Bite',2:'Roar',18:'Ember',23:'Leer',30:'Take Down',39:'Agility',50:'Flamethrower'}
 arcaninePossibleMovesByLevel = {1:'Bite',2:'Roar',18:'Ember',23:'Leer',30:'Take Down',39:'Agility',50:'Flamethrower'}
+<<<<<<< HEAD
 poliwagPossibleMovesByLevel = {1:'Bubble',16:'Hypnosis',19:'Water Gun',25:'Double Slap',31:'Body Slam',38:'Amnesia',45:'Hydro Pump'}
 poliwhirlPossibleMovesByLevel = {1:'Bubble',16:'Hypnosis',19:'Water Gun',26:'Double Slap',33:'Body Slam',41:'Amnesia',49:'Hydro Pump'}
 poliwrathPossibleMovesByLevel = {1:'Bubble',16:'Hypnosis',19:'Water Gun',26:'Double Slap',33:'Body Slam',41:'Amnesia',49:'Hydro Pump'}
+=======
+poliwagPossibleMovesByLevel = {1:'Bubble',16:'Hypnosis',19:'Water Gun',25:'Doubleslap',31:'Body Slam',38:'Amnesia',45:'Hydro Pump'}
+poliwhirlPossibleMovesByLevel = {1:'Bubble',16:'Hypnosis',19:'Water Gun',26:'Doubleslap',33:'Body Slam',41:'Amnesia',49:'Hydro Pump'}
+poliwrathPossibleMovesByLevel = {1:'Bubble',16:'Hypnosis',19:'Water Gun',26:'Doubleslap',33:'Body Slam',41:'Amnesia',49:'Hydro Pump'}
+>>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 abraPossibleMovesByLevel = {1:'Teleport'}
 kadabraPossibleMovesByLevel = {1:'Teleport',2:'Confusion',20:'Disable',27:'Psybeam',31:'Recover',38:'Psychic',42:'Reflect'}
 alakazamPossibleMovesByLevel = {1:'Teleport',2:'Confusion',20:'Disable',27:'Psybeam',31:'Recover',38:'Psychic',42:'Reflect'}
@@ -90,8 +105,13 @@ mukPossibleMovesByLevel = {1:'Pound',2:'Disable',30:'Poison Gas',33:'Minimize',3
 shellderPossibleMovesByLevel = {1:'Tackle',2:'Withdraw',18:'Supersonic',23:'Clamp',30:'Aurora Beam',39:'Leer',50:'Ice Beam'}
 cloysterPossibleMovesByLevel = {1:'Tackle',2:'Withdraw',18:'Supersonic',23:'Clamp',30:'Aurora Beam',39:'Leer',50:'Spike Cannon',51:'Ice Beam'}
 gastlyPossibleMovesByLevel = {1:'Lick',2:'Confuse Ray',3:'Night Shade',27:'Hypnosis',35:'Dream Eater'}
+<<<<<<< HEAD
 haunterPossibleMovesByLevel = {1:'Lick',2:'Confuse Ray',3:'Night Shade',29:'Hypnosis',38:'Dream Eater'}
 gengarPossibleMovesByLevel = {1:'Lick',2:'Confuse Ray',3:'Night Shade',29:'Hypnosis',38:'Dream Eater'}
+=======
+haunterPossibleMovesByLevel = {1:'Lick',2:'Confuse Ray',3:'Night Shade',27:'Hypnosis',29:'Hypnosis',38:'Dream Eater'}
+gengarPossibleMovesByLevel = {1:'Lick',2:'Confuse Ray',3:'Night Shade',27:'Hypnosis',29:'Hypnosis',38:'Dream Eater'}
+>>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 onixPossibleMovesByLevel = {1:'Tackle',2:'Screech',15:'Bind',19:'Rock Throw',25:'Rage',33:'Slam',43:'Harden'}
 drowzeePossibleMovesByLevel = {1:'Pound',2:'Hypnosis',12:'Disable',17:'Confusion',24:'Head Butt',29:'Poison Gas',32:'Psychic',37:'Meditate'}
 hypnoPossibleMovesByLevel = {1:'Pound',2:'Hypnosis',12:'Disable',17:'Confusion',24:'Head Butt',33:'Poison Gas',37:'Psychic',43:'Meditate'}
@@ -110,7 +130,11 @@ koffingPossibleMovesByLevel = {1:'Tackle',2:'Smog',32:'Sludge',37:'Smokescreen',
 weezingPossibleMovesByLevel = {1:'Tackle',2:'Smog',32:'Sludge',39:'Smokescreen',43:'Self-Destruct',49:'Haze',53:'Explosion'}
 rhyhornPossibleMovesByLevel = {1:'Horn Attack',30:'Stomp',35:'Tail Whip',40:'Fury Attack',45:'Horn Drill',50:'Leer',55:'Take Down'}
 rhydonPossibleMovesByLevel = {1:'Horn Attack',30:'Stomp',35:'Tail Whip',40:'Fury Attack',48:'Horn Drill',55:'Leer',64:'Take Down'}
+<<<<<<< HEAD
 chanseyPossibleMovesByLevel = {1:'Pound',2:'Double Slap',24:'Sing',30:'Growl',38:'Minimize',44:'Defense Curl',48:'Light Screen',54:'Double-Edge'}
+=======
+chanseyPossibleMovesByLevel = {1:'Pound',2:'Doubleslap',24:'Sing',30:'Growl',38:'Minimize',44:'Defense Curl',48:'Light Screen',54:'Double Edge'}
+>>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 tangelaPossibleMovesByLevel = {1:'Constrict',2:'Bind',29:'Absorb',32:'Poison Powder',36:'Stun Spore',39:'Sleep Powder',45:'Slam',49:'Growth'}
 kangaskhanPossibleMovesByLevel = {1:'Comet Punch',2:'Rage',26:'Bite',31:'Tail Whip',36:'Mega Punch',41:'Leer',46:'Dizzy Punch'}
 horseaPossibleMovesByLevel = {1:'Bubble',19:'Smokescreen',24:'Leer',30:'Water Gun',37:'Agility',45:'Hydro Pump'}
@@ -119,9 +143,15 @@ goldeenPossibleMovesByLevel = {1:'Peck',2:'Tail Whip',19:'Supersonic',24:'Horn A
 seakingPossibleMovesByLevel = {1:'Peck',2:'Tail Whip',19:'Supersonic',24:'Horn Attack',30:'Fury Attack',39:'Waterfall',48:'Horn Drill',54:'Agility'}
 staryuPossibleMovesByLevel = {1:'Tackle',17:'Water Gun',22:'Harden',27:'Recover',32:'Swift',37:'Minimize',42:'Light Screen',47:'Hydro Pump'}
 starmiePossibleMovesByLevel = {1:'Tackle',17:'Water Gun',22:'Harden',27:'Recover',32:'Swift',37:'Minimize',42:'Light Screen',47:'Hydro Pump'}
+<<<<<<< HEAD
 mrMimePossibleMovesByLevel = {1:'Confusion',2:'Barrier',23:'Light Screen',31:'Double Slap',39:'Meditate',47:'Substitute'}
 scytherPossibleMovesByLevel = {1:'Quick Attack',17:'Leer',20:'Focus Energy',24:'Double Team',29:'Slash',35:'Swords Dance',42:'Agility'}
 jynxPossibleMovesByLevel = {1:'Pound',2:'Lovely Kiss',15:'Sing',23:'Double Slap',31:'Ice Punch',39:'Meditate',47:'Blizzard'}
+=======
+mrMimePossibleMovesByLevel = {1:'Confusion',2:'Barrier',23:'Light Screen',31:'Doubleslap',39:'Meditate',47:'Substitute'}
+scytherPossibleMovesByLevel = {1:'Quick Attack',17:'Leer',20:'Focus Energy',24:'Double Team',29:'Slash',35:'Swords Dance',42:'Agility'}
+jynxPossibleMovesByLevel = {1:'Pound',2:'Lovely Kiss',15:'Sing',23:'Doubleslap',31:'Ice Punch',39:'Meditate',47:'Blizzard'}
+>>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 electabuzzPossibleMovesByLevel = {1:'Quick Attack',2:'Leer',34:'Thundershock',37:'Screech',42:'Thunder Punch',49:'Light Screen',54:'Thunder'}
 magmarPossibleMovesByLevel = {1:'Ember',36:'Leer',39:'Confuse Ray',43:'Fire Punch',48:'Smokescreen',52:'Smog',55:'Flamethrower'}
 pinsirPossibleMovesByLevel = {1:'Vicegrip',25:'Seismic Toss',30:'Guillotine',36:'Focus Energy',43:'Harden',49:'Slash',54:'Swords Dance'}
@@ -140,7 +170,11 @@ omastarPossibleMovesByLevel = {1:'Water Gun',2:'Withdraw',34:'Horn Attack',39:'L
 kabutoPossibleMovesByLevel = {1:'Scratch',2:'Harden',34:'Absorb',39:'Slash',44:'Leer',49:'Hydro Pump'}
 kabutopsPossibleMovesByLevel = {1:'Scratch',2:'Harden',34:'Absorb',39:'Slash',46:'Leer',53:'Hydro Pump'}
 aerodactylPossibleMovesByLevel = {1:'Wing Attack',2:'Agility',33:'Supersonic',38:'Bite',45:'Take Down',54:'Hyper Beam'}
+<<<<<<< HEAD
 snorlaxPossibleMovesByLevel = {1:'Head Butt',2:'Amnesia',2:'Rest',35:'Body Slam',41:'Harden',48:'Double-Edge',56:'Hyper Beam'}
+=======
+snorlaxPossibleMovesByLevel = {1:'Head Butt',2:'Amnesia',2:'Rest',35:'Body Slam',41:'Harden',48:'Double Edge',56:'Hyper Beam'}
+>>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 articunoPossibleMovesByLevel = {1:'Peck',2:'Ice Beam',51:'Blizzard',55:'Agility',60:'Mist'}
 zapdosPossibleMovesByLevel = {1:'Thundershock',2:'Drill Peck',51:'Thunder',55:'Agility',60:'Light Screen'}
 moltresPossibleMovesByLevel = {1:'Peck',2:'Fire Spin',51:'Leer',55:'Agility',60:'Sky Attack'}
@@ -148,4 +182,8 @@ dratiniPossibleMovesByLevel = {1:'Wrap',2:'Leer',10:'Thunder Wave',20:'Agility',
 dragonairPossibleMovesByLevel = {1:'Wrap',2:'Leer',10:'Thunder Wave',20:'Agility',35:'Slam',45:'Dragon Rage',55:'Hyper Beam'}
 dragonitePossibleMovesByLevel = {1:'Wrap',2:'Leer',10:'Thunder Wave',20:'Agility',35:'Slam',45:'Dragon Rage',60:'Hyper Beam'}
 mewtwoPossibleMovesByLevel = {1:'Confusion',2:'Disable',2:'Swift',63:'Barrier',66:'Psychic',70:'Recover',75:'Mist',81:'Amnesia'}
+<<<<<<< HEAD
 mewPossibleMovesByLevel = {1:'Pound',2:'Fly',3:'Mist',10:'Transform',20:'Mega Punch',30:'Metronome',40:'Psychic'}
+=======
+mewPossibleMovesByLevel = {1:'Pound',10:'Transform',20:'Mega Punch',30:'Metronome',40:'Psychic'}
+>>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
