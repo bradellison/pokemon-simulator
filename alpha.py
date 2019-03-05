@@ -23,15 +23,12 @@ class Player(object):
 		self.id = randint(1,65535)
 		self.badges = [0,0,0,0,0,0,0,0]
 		self.expShare = 0
-<<<<<<< HEAD
 		self.lightScreen = 0
 		self.lightScreenCount = 0
 		self.reflect = 0
 		self.reflectCount = 0
 		self.mist = 0
 		self.mistCount = 0
-=======
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 
 class PC(object):
 	def __init__(self):
@@ -60,15 +57,12 @@ class Enemy(object):
 		self.team = team
 		self.prizeMoney = prizeMoney
 		self.text = text
-<<<<<<< HEAD
 		self.lightScreen = 0
 		self.lightScreenCount = 0
 		self.reflect = 0
 		self.reflectCount = 0
 		self.mist = 0
 		self.mistCount = 0
-=======
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 
 class Pokemon(object):
 	def __init__(self, species, level):
@@ -92,20 +86,12 @@ class Pokemon(object):
 		self.movePPCurrent = getMaxPP(self)
 		self.nvStatus = 0
 		self.nvStatusCount = 0 
-<<<<<<< HEAD
-=======
-		self.vStatus = 0
-		self.vStatusCount = 0
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 		self.expGroup = getExpGroup(species)
 		self.BaseExpYield = getExpYieldBase(species)
 		self.exp = getExp(species, level)
 		self.nextLevelExp = getExp(species, level+1)
 		self.move = 0
-<<<<<<< HEAD
 		self.previousMove = 0
-=======
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 		self.inCurrentBattle = 0
 		self.affection = 0
 		self.shouldEvolve = 0
@@ -116,7 +102,6 @@ class Pokemon(object):
 		self.flinch = 0
 		self.confused = 0
 		self.confusedCount = 0
-<<<<<<< HEAD
 		self.bind = 0
 		self.bindCount = 0
 		self.clamp = 0
@@ -127,8 +112,6 @@ class Pokemon(object):
 		self.wrapCount = 0
 		self.leechSeed = 0
 		self.previousDamage = 0
-=======
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 
 class Environment(object):
 	def __init__(self, location, weather):
@@ -368,11 +351,8 @@ def getTypeEffectiveness(id,move):
 	return effectiveness
 
 def getHitOrMiss(atkPokemon,defPokemon,move):
-<<<<<<< HEAD
 	if defPokemon.immune == 1:
 		return 'Miss'
-=======
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 	pokemonAccuracy = getBattleAccStat(atkPokemon)
 	pokemonEvasiveness = getBattleEvasStat(defPokemon)
 	moveAccuracy = move.accuracy
@@ -406,25 +386,17 @@ def getCriticalHit(atkPokemon,move):
 	else:
 		return 1
 
-<<<<<<< HEAD
 def getMoveDamage(atkPerson,atkPokemon,defPerson,defPokemon,move):
-=======
-def getMoveDamage(atkPokemon,defPokemon,move):
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 	stabBonus = getStabBonus(atkPokemon,move)
 	effectiveness = getTypeEffectiveness(defPokemon,move)
 	move.currentEffectiveness = effectiveness
 	critical = getCriticalHit(atkPokemon,move)
-<<<<<<< HEAD
 	wall = 1
-=======
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 	if critical == 2:
 		atkPokemon.criticalMove = 1
 	if move.variety == 'Physical':
 		aStat = getBattleAtkStat(atkPokemon)
 		dStat = getBattleDefStat(defPokemon)
-<<<<<<< HEAD
 		if defPerson != 0:
 			if defPerson.reflect == 1:
 				wall = 2
@@ -435,12 +407,6 @@ def getMoveDamage(atkPokemon,defPokemon,move):
 			if defPerson.lightScreen == 1:
 				wall = 2
 	damage = int((((((2 * atkPokemon.level / 5) + 2) * aStat * move.damage / dStat) / 50) + 2) * stabBonus * effectiveness * critical / wall * float(randint(85,100)/100))
-=======
-	if move.variety == 'Special':
-		aStat = getBattleSpAtkStat(atkPokemon)
-		dStat = getBattleSpDefStat(defPokemon)
-	damage = int((((((2 * atkPokemon.level / 5) + 2) * aStat * move.damage / dStat) / 50) + 2) * stabBonus * effectiveness * critical * float(randint(85,100)/100))
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 	if defPokemon.hp - damage < 0:
 		damage = defPokemon.hp
 	return damage
@@ -503,55 +469,31 @@ def moveChoiceInput():
 	moveSet = player.pokemon.moveSet
 	for i in range(len(moveSet)):
 		print('', i + 1, '-', moveSet[i], '-', str(player.pokemon.movePPCurrent[i]) + '/' + str(player.pokemon.movePPMax[i]), 'PP')
-<<<<<<< HEAD
 	print('', len(moveSet) + 1, '- Back')
 	while True:
 		try:
 			choiceInput = input('-- ')
 			if int(choiceInput) == 1 and len(moveSet) >= 1:
-=======
-	print(' 5 - Back')
-	while True:
-		try:
-			choiceInput = input('-- ')
-			if choiceInput == moveSet[0] or int(choiceInput) == 1:
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 				if player.pokemon.movePPCurrent[0] > 0:
 					player.pokemon.movePPCurrent[0] -= 1
 					return moveSet[0]
 				print('No PP remaining! Please choose another move!')
-<<<<<<< HEAD
 			elif int(choiceInput) == 2 and len(moveSet) >= 2:
-=======
-			if choiceInput == moveSet[1] or int(choiceInput) == 2:
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 				if player.pokemon.movePPCurrent[1] > 0:
 					player.pokemon.movePPCurrent[1] -= 1
 					return moveSet[1]
 				print('No PP remaining! Please choose another move!')
-<<<<<<< HEAD
 			elif int(choiceInput) == 3 and len(moveSet) >= 3:
-=======
-			if choiceInput == moveSet[2] or int(choiceInput) == 3:
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 				if player.pokemon.movePPCurrent[2] > 0:
 					player.pokemon.movePPCurrent[2] -= 1
 					return moveSet[2]
 				print('No PP remaining! Please choose another move!')
-<<<<<<< HEAD
 			elif int(choiceInput) == 4 and len(moveSet) >= 4:
-=======
-			if choiceInput == moveSet[3] or int(choiceInput) == 4:
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 				if player.pokemon.movePPCurrent[3] > 0:
 					player.pokemon.movePPCurrent[3] -= 1
 					return moveSet[3]
 				print('No PP remaining! Please choose another move!')
-<<<<<<< HEAD
 			elif choiceInput == 'Back' or int(choiceInput) == len(moveSet) + 1:
-=======
-			if choiceInput == 'Back' or int(choiceInput) == 5:
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 				return 'Back'
 			print("Please choose a move from the list above!")
 		except ValueError:
@@ -568,11 +510,7 @@ def preTurnNVStatusCheck(person):
 	elif person.pokemon.nvStatus == 3:
 		print(person.pokemon.name, 'is sleeping!')
 		person.pokemon.nvStatusCount -= 1
-<<<<<<< HEAD
 		if person.pokemon.nvStatusCount > 0:
-=======
-		if myPokemonNVStatusCount > 0:
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 			return 1
 		person.pokemon.nvStatus = 0
 		print(person.pokemon.name, 'woke up!')
@@ -718,14 +656,9 @@ def moveDealDamagePlayer():
 	else:
 		numberOfHits = 1
 	actualHits = 0
-<<<<<<< HEAD
 	totalDamage = 0
 	while numberOfHits > 0 and enemy.pokemon.hp > 0:
 		damage = getMoveDamage(player,player.pokemon,enemy,enemy.pokemon,player.pokemon.move)
-=======
-	while numberOfHits > 0 and enemy.pokemon.hp > 0:
-		damage = getMoveDamage(player.pokemon,enemy.pokemon,player.pokemon.move)
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 		enemy.pokemon.hp -= damage
 		effectivenessWording = getEffectivenessWording(player.pokemon.move.currentEffectiveness)
 		print('It did', damage, 'damage' + effectivenessWording, 'The opposing', enemy.pokemon.name, 'has', enemy.pokemon.hp, '/', enemy.pokemon.maxhp, 'HP remaining!')		
@@ -734,17 +667,11 @@ def moveDealDamagePlayer():
 			player.pokemon.criticalMove = 0
 		actualHits += 1
 		numberOfHits -= 1
-<<<<<<< HEAD
 		totalDamage += damage
 		healedAmount = checkHealthSteal(player.pokemon, player.pokemon.move, damage)
 		if healedAmount > 0:
 			print(player.pokemon.name, 'gained', healedAmount, 'HP!')
 	player.pokemon.previousDamage = totalDamage
-=======
-		healedAmount = checkHealthSteal(player.pokemon, player.pokemon.move, damage)
-		if healedAmount > 0:
-			print(player.pokemon.name, 'gained', healedAmount, 'HP!')
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 	if player.pokemon.move.multiAttack == 1:
 		print('It hit the enemy', actualHits, 'times!')
 
@@ -754,14 +681,9 @@ def moveDealDamageEnemy():
 	else:
 		numberOfHits = 1
 	actualHits = 0
-<<<<<<< HEAD
 	totalDamage = 0
 	while numberOfHits > 0 and player.pokemon.hp > 0:
 		damage = getMoveDamage(enemy,enemy.pokemon,player,player.pokemon,enemy.pokemon.move)
-=======
-	while numberOfHits > 0 and player.pokemon.hp > 0:
-		damage = getMoveDamage(enemy.pokemon,player.pokemon,enemy.pokemon.move)
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 		player.pokemon.hp -= damage
 		effectivenessWording = getEffectivenessWording(enemy.pokemon.move.currentEffectiveness)
 		print('It did', damage, 'damage' + effectivenessWording, player.pokemon.name, 'has', player.pokemon.hp, '/', player.pokemon.maxhp, 'HP remaining!')
@@ -770,44 +692,29 @@ def moveDealDamageEnemy():
 			enemy.pokemon.criticalMove = 0
 		actualHits += 1
 		numberOfHits -= 1
-<<<<<<< HEAD
 		totalDamage += damage
 		healedAmount = checkHealthSteal(enemy.pokemon, enemy.pokemon.move, damage)
 		if healedAmount > 0:
 			print('The opposing', player.pokemon.name, 'gained', healedAmount, 'HP!')
 	enemy.pokemon.previousDamage = totalDamage
-=======
-		healedAmount = checkHealthSteal(enemy.pokemon, enemy.pokemon.move, damage)
-		if healedAmount > 0:
-			print('The opposing', player.pokemon.name, 'gained', healedAmount, 'HP!')
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 	if enemy.pokemon.move.multiAttack == 1:
 		print('It hit', player.pokemon.name, actualHits, 'times!')
 
 def moveDamageConfusion(atkPokemon):
 	move = Move('Hit Self')
-<<<<<<< HEAD
 	damage = getMoveDamage(0,atkPokemon,0,atkPokemon,move)
-=======
-	damage = getMoveDamage(atkPokemon,atkPokemon,move)
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 	if damage > atkPokemon.hp:
 		damage = atkPokemon.hp
 	return damage
 
 def moveStatChangePlayer():
 	chance = randint(1,100)
-<<<<<<< HEAD
 	if chance <= player.pokemon.move.statEffectChance:
-=======
-	if chance <= enemy.pokemon.move.statEffectChance:
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 		if player.pokemon.move.target == 'Self':
 			player.pokemon.statStage = list(map(add, player.pokemon.statStage, player.pokemon.move.statEffect))
 			moveStatWordingOnPlayer(player.pokemon.move.statEffect)
 			statStageMaxPlayer(player.pokemon.statStage)
 		if player.pokemon.move.target == 'Enemy':
-<<<<<<< HEAD
 			if enemy.mist == 0:
 				enemy.pokemon.statStage = list(map(add, enemy.pokemon.statStage, player.pokemon.move.statEffect))
 				moveStatWordingOnEnemy(player.pokemon.move.statEffect)
@@ -829,11 +736,6 @@ def moveStatChangeEnemy():
 				statStageMaxPlayer(player.pokemon.statStage)
 			else:
 				print('But it failed!')
-=======
-			enemy.pokemon.statStage = list(map(add, enemy.pokemon.statStage, player.pokemon.move.statEffect))
-			moveStatWordingOnEnemy(player.pokemon.move.statEffect)
-			statStageMaxEnemy(enemy.pokemon.statStage)
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 
 def statStageMaxPlayer(statStage):
 	count = 0
@@ -897,21 +799,6 @@ def moveStatWordingOnEnemy(statList):
 				print('The opposing', enemy.pokemon.name + '\'s', stat, 'fell hugely!')
 		count += 1
 
-<<<<<<< HEAD
-=======
-def moveStatChangeEnemy():
-	chance = randint(1,100)
-	if chance <= enemy.pokemon.move.statEffectChance:
-		if enemy.pokemon.move.target == 'Self':
-			enemy.pokemon.statStage = list(map(add, enemy.pokemon.statStage, enemy.pokemon.move.statEffect))
-			moveStatWordingOnEnemy(enemy.pokemon.move.statEffect)
-			statStageMaxEnemy(enemy.pokemon.statStage)
-		if enemy.pokemon.move.target == 'Enemy':
-			player.pokemon.statStage = list(map(add, player.pokemon.statStage, enemy.pokemon.move.statEffect))
-			moveStatWordingOnPlayer(enemy.pokemon.move.statEffect)
-			statStageMaxPlayer(player.pokemon.statStage)
-
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 def moveNVEffectWording(nvStatus):
 	if nvStatus == 1:
 		return 'burned!'
@@ -925,7 +812,6 @@ def moveNVEffectWording(nvStatus):
 		return 'poisoned!'
 
 def moveNVEffectPlayer():
-<<<<<<< HEAD
 	if player.pokemon.move.nvEffect != 0 and randint(1,100) <= player.pokemon.move.nvEffectChance:
 		if enemy.pokemon.nvStatus == 0:
 			enemy.pokemon.nvStatus = player.pokemon.move.nvEffect
@@ -946,22 +832,6 @@ def moveNVEffectEnemy():
 			print(player.pokemon.name, 'was', wording)
 		else:
 			print('But it failed!')
-=======
-	if randint(1,100) <= player.pokemon.move.nvEffectChance:
-		enemy.pokemon.nvStatus = player.pokemon.move.nvEffect
-		if enemy.pokemon.nvStatus == 3:
-			enemy.pokemon.nvStatusCount = randint(1,3)
-		wording = moveNVEffectWording(enemy.pokemon.nvStatus)
-		print('The opposing', enemy.pokemon.name, 'was', wording)
-
-def moveNVEffectEnemy():
-	if randint(1,100) <= enemy.pokemon.move.nvEffectChance:
-		player.pokemon.nvStatus = enemy.pokemon.move.nvEffect
-		if player.pokemon.nvStatus == 3:
-			player.pokemon.nvStatusCount = randint(1,3)
-		wording = moveNVEffectWording(player.pokemon.nvStatus)
-		print(player.pokemon.name, 'was', wording)
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 
 def getEnemyMove():
 	totalPP = getTotalPP(enemy.pokemon)
@@ -977,7 +847,6 @@ def getEnemyMove():
 			return enemy.pokemon.moveSet[choice - 1]
 
 def getEnemySwitchPokemon():
-<<<<<<< HEAD
 	oldPokemon = enemy.pokemon
 	while True:
 		choice = random.choice(enemy.team)
@@ -992,12 +861,6 @@ def getEnemySwitchPokemonForce():
 		if choice != oldPokemon and choice.hp != 0:
 			enemy.pokemon = choice
 			print('The opposing', oldPokemon.name, 'was forced out!', 'The', enemy.type, enemy.name, 'switched into', choice.name + '!')
-=======
-	oldPokemon = enemy.pokemon.name
-	for i in enemy.team:
-		if i.hp != 0:
-			enemy.pokemon = i
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 			break
 
 def getSwitchPokemon():
@@ -1026,11 +889,8 @@ def getSwitchPokemon():
 					print('Keep going,', player.pokemon.name + '!')
 					return 0
 					# No switch
-<<<<<<< HEAD
 			elif player.pokemon.bind == 1 or player.pokemon.clamp == 1 or player.pokemon.fireSpin == 1 or player.pokemon.wrap == 1:
 				print(player.pokemon.name, 'is unable to escape due to being trapped!')
-=======
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 			else:
 				for j in range(len(player.team)):
 					if choiceInput == player.team[j].name or int(choiceInput) == int(j+1):
@@ -1050,18 +910,11 @@ def getSwitchPokemon():
 		except ValueError:
 			print("Please choose a Pokemon from the list above!")	
 
-<<<<<<< HEAD
-=======
-def checkForMultiTurnMoves(pokemon):
-	if pokemon.lockedInMoveNumber == 0:
-		pokemon.lockedInMoveNumber = pokemon.move.turnsToComplete > 1
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 
 def checkSplash(move):
 	if move == 'Splash':
 		print('But nothing happened!')
 
-<<<<<<< HEAD
 def checkTrapStart(atkPokemon, defPokemon):
 	move = atkPokemon.move.move
 	traplist = ['Bind','Clamp','Fire Spin','Wrap','Leech Seed']
@@ -1413,19 +1266,6 @@ def startPlayerTurn():
 	if player.pokemon.nvStatus != 0:
 		interrupt += preTurnNVStatusCheck(player)
 	if interrupt == 0:
-=======
-def startPlayerTurn():
-	interrupt = 0
-	checkForMultiTurnMoves(player.pokemon)
-	if player.pokemon.flinch == 1:
-		interrupt = 1
-		print(player.pokemon.name, 'flinched!')
-	if player.pokemon.nvStatus != 0:
-		interrupt = preTurnNVStatusCheck(player)
-	if interrupt == 0:
-		if player.pokemon.vStatus != 0:
-			interrupt = 1
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 		if interrupt == 0:
 			if player.pokemon.confused == 1:
 				print(player.pokemon.name, 'is confused!')
@@ -1439,7 +1279,6 @@ def startPlayerTurn():
 					else:
 						print(player.pokemon.name, 'snapped out of confusion!')
 			if interrupt == 0:
-<<<<<<< HEAD
 				interrupt = checkAttackSecondTurnMoves(player.pokemon)
 				if interrupt == 0:				
 					hitOrMiss = getHitOrMiss(player.pokemon,enemy.pokemon,player.pokemon.move)
@@ -1481,33 +1320,6 @@ def startPlayerTurn():
 									if confuse == 1:
 										print('The opposing', enemy.pokemon.name, 'is confused!')
 	player.pokemon.previousMove = player.pokemon.move
-=======
-				hitOrMiss = getHitOrMiss(player.pokemon,enemy.pokemon,player.pokemon.move)
-				if hitOrMiss == 'Miss':
-					print(player.pokemon.name, 'tried to use', player.pokemon.move.move + ', but it missed!')
-					checkMissDamage(player.pokemon)
-					interrupt = 1
-				if interrupt == 0:
-					print(player.pokemon.name, 'used', player.pokemon.move.move, 'against the opposing', enemy.pokemon.name + '.')
-					interrupt = checkFainted(enemy.pokemon)
-					if interrupt == 0:
-						checkFlinch(player.pokemon.move, enemy.pokemon)
-						checkSplash(player.pokemon.move.move)
-						if player.pokemon.move.damage != 0:
-							moveDealDamagePlayer()
-						if enemy.pokemon.hp == 0:
-							print('The opposing', enemy.pokemon.name, 'fainted!')
-						checkKamikaze(player.pokemon.move, player.pokemon)
-						if player.pokemon.hp == 0:
-							if player.pokemon.move.statEffect != 0:
-								moveStatChangePlayer()
-							if player.pokemon.move.nvEffect != 0:
-								moveNVEffectPlayer()
-							if player.pokemon.move.vEffect != 0:
-								confuse = checkConfusion(player.pokemon.move, enemy.pokemon)
-								if confuse == 1:
-									print('The opposing', enemy.pokemon.name, 'is confused!')
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 	if player.pokemon.lockedInMoveNumber > 0:
 		player.pokemon.lockedInMoveNumber -= 1
 	print()	
@@ -1516,7 +1328,6 @@ def startPlayerTurn():
 
 def startEnemyTurn():
 	interrupt = 0
-<<<<<<< HEAD
 	interrupt = checkAttackFirstTurnMoves(enemy.pokemon)
 	if enemy.pokemon.flinch == 1:
 		interrupt += 1
@@ -1524,17 +1335,6 @@ def startEnemyTurn():
 	if enemy.pokemon.nvStatus != 0:
 		interrupt += preTurnNVStatusCheck(enemy)
 	if interrupt == 0:
-=======
-	checkForMultiTurnMoves(enemy.pokemon)
-	if enemy.pokemon.flinch == 1:
-		interrupt = 1
-		print('The opposing', enemy.pokemon.name, 'flinched!')	
-	if enemy.pokemon.nvStatus != 0:
-		interrupt = preTurnNVStatusCheck(enemy)
-	if interrupt == 0:
-		if enemy.pokemon.vStatus != 0:
-			interrupt = 1
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 		if interrupt == 0:
 			if enemy.pokemon.confused == 1:
 				print(enemy.pokemon.name, 'is confused!')				
@@ -1548,7 +1348,6 @@ def startEnemyTurn():
 					else:
 						print('The opposing', enemy.pokemon.name, 'snapped out of confusion!')
 			if interrupt == 0:
-<<<<<<< HEAD
 				checkAttackSecondTurnMoves(enemy.pokemon)
 				if interrupt == 0:
 					hitOrMiss = getHitOrMiss(enemy.pokemon,player.pokemon,enemy.pokemon.move)
@@ -1590,33 +1389,6 @@ def startEnemyTurn():
 									if confuse == 1:
 										print(player.pokemon.name, 'is confused!')
 	enemy.pokemon.previousMove = enemy.pokemon.move
-=======
-				hitOrMiss = getHitOrMiss(enemy.pokemon,player.pokemon,enemy.pokemon.move)
-				if hitOrMiss == 'Miss':
-					print('The opposing', enemy.pokemon.name, 'tried to use', enemy.pokemon.move.move + ', but it missed!')
-					checkMissDamage(enemy.pokemon)
-					interrupt = 1
-				if interrupt == 0:
-					print('The opposing', enemy.pokemon.name, 'used', enemy.pokemon.move.move, 'against', player.pokemon.name + '.')
-					interrupt = checkFainted(player.pokemon)
-					if interrupt == 0:
-						checkSplash(enemy.pokemon.move.move)
-						checkFlinch(enemy.pokemon.move, player.pokemon)
-						if enemy.pokemon.move.damage != 0:
-							moveDealDamageEnemy()
-						if player.pokemon.hp == 0:
-							print(player.pokemon.name, 'fainted!')					
-						checkKamikaze(enemy.pokemon.move, enemy.pokemon)
-						if player.pokemon.hp != 0:
-							if enemy.pokemon.move.statEffect != 0:
-								moveStatChangeEnemy()
-							if enemy.pokemon.move.nvEffect != 0:
-								moveNVEffectEnemy()
-							if enemy.pokemon.move.vEffect != 0:
-								confuse = checkConfusion(enemy.pokemon.move, player.pokemon)
-								if confuse == 1:
-									print(player.pokemon.name, 'is confused!')
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 	if enemy.pokemon.lockedInMoveNumber > 0:
 		enemy.pokemon.lockedInMoveNumber -= 1
 	print()
@@ -1638,10 +1410,6 @@ def checkMissDamage(pokemon):
 			else:
 				print('The opposing', enemy.pokemon.name, 'kept going and took', damage, 'HP damage! It has', str(enemy.pokemon.hp) + '/' + str(enemy.pokemon.maxhp), 'remaining!')
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 def teamTotalHP(person):
 	totalHP = 0
 	for i in person.team:
@@ -1672,7 +1440,6 @@ def startBattle():
 	elif teamTotalHP(enemy) == 0:
 		print('You won!')
 
-<<<<<<< HEAD
 def checkWallCounts():
 	if player.lightScreen == 1:
 		player.lightScreenCount -= 1
@@ -1706,14 +1473,11 @@ def checkWallCounts():
 			print('The opposing team\'s mist wore off!')
 
 
-=======
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 def endRound():
 	for pokemon in player.team:
 		pokemon.flinch = 0
 	for pokemon in enemy.team:
 		pokemon.flinch = 0
-<<<<<<< HEAD
 	checkWallCounts()
 
 
@@ -1763,8 +1527,6 @@ def endBattlePokemonInfo():
 		pokemon.fireSpinCount = 0
 		pokemon.wrap = 0
 		pokemon.wrapCount = 0
-=======
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 
 def checkFlinch(atkMove, defPokemon):
 	if atkMove.flinch == 1:
@@ -1807,12 +1569,8 @@ def getCurrentFight():
 				enemy.pokemon.move = Move(enemyChoice)
 			if battleChoice == 'Fight':
 				player.pokemon.inCurrentBattle = 1
-<<<<<<< HEAD
 				if player.pokemon.lockedInMoveNumber == 0:
 					moveChoice = moveChoiceInput()
-=======
-				moveChoice = moveChoiceInput()
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 				if moveChoice == 'Back':
 					interrupt = 1
 				else:
@@ -1830,11 +1588,8 @@ def getCurrentFight():
 				switch = getSwitchPokemon()
 				if switch == 1:
 					startEnemyTurn()
-<<<<<<< HEAD
 				else:
 					interrupt = 1
-=======
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 			elif battleChoice == 'Bag':
 				choice = openBag()
 				if choice == 1:
@@ -1856,11 +1611,8 @@ def getCurrentFight():
 			if interrupt == 0:
 				if player.pokemon.hp != 0:
 					postTurnNVStatusCheckPlayer()
-<<<<<<< HEAD
 				if player.pokemon.hp != 0:
 					checkTrapEffect(player.pokemon)
-=======
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 				if player.pokemon.hp == 0:
 					if teamTotalHP(player) > 0:
 						player.pokemon.inCurrentBattle = 0
@@ -1869,11 +1621,8 @@ def getCurrentFight():
 							switch = getSwitchPokemon()		
 				if enemy.pokemon.hp != 0:
 					postTurnNVStatusCheckEnemy()
-<<<<<<< HEAD
 				if enemy.pokemon.hp != 0:
 					checkTrapEffect(enemy.pokemon)
-=======
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 				if enemy.pokemon.hp == 0:
 					getExpYield()
 					if teamTotalHP(enemy) > 0:
@@ -2007,7 +1756,6 @@ def getYesOrNo():
 #def wildBattle():
 
 
-<<<<<<< HEAD
 test = Pokemon('Mew', 10)
 #test = Pokemon(random.choice(allPokemonList),100)
 test2 = Pokemon('Butterfree', 100)
@@ -2015,18 +1763,6 @@ test3 = Pokemon('Alakazam', 100)
 test4 = Pokemon('Rattata', 10)
 #test4 = Pokemon(random.choice(allPokemonList),100)
 test5 = Pokemon('Rattata', 10)
-=======
-
-
-
-
-
-test = Pokemon('Hitmonlee', 50)
-test2 = Pokemon('Rhydon', 100)
-test3 = Pokemon('Alakazam', 100)
-test4 = Pokemon('Kakuna', 100)
-test5 = Pokemon('Dugtrio', 100)
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 test6 = Pokemon('Persian', 100)
 test7 = Pokemon('Charmander', 100)
 

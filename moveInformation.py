@@ -8,11 +8,7 @@ auroraBeamInfo = ['Aurora Beam','Ice','Special',65,100,20,'May lower opponent\'s
 barrageInfo = ['Barrage','Normal','Physical',15,85,20,'Hits 2-5 times in one turn.','Enemy',0,1,1,2,5,0,0,0,0,0,0,0,0,0,0,0,0]
 barrierInfo = ['Barrier','Psychic','Status', 0, 10000,20,'Sharply raises user\'s Defense.','Self',0,1,0,0,0,0,0,0,0,[0,0,2,0,0,0,0,0,0],100,0,0,0,0,0,0]
 bideInfo = ['Bide','Normal','Physical', 0, 10000,10,'User takes damage for two turns then strikes back double.','Enemy',0,3,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0]
-<<<<<<< HEAD
 bindInfo = ['Bind','Normal','Physical',15,85,20,'Traps opponent; damaging them for 4-5 turns.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-=======
-bindInfo = ['Bind','Normal','Physical',15,85,20,'Traps opponent, damaging them for 4-5 turns.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 biteInfo = ['Bite','Dark','Physical',60,100,25,'May cause flinching.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,10,0]
 blizzardInfo = ['Blizzard','Ice','Special',110,70,5,'May freeze opponent.','Enemy',0,1,0,0,0,4,10,0,0,0,0,0,0,0,0,0,0]
 bodySlamInfo = ['Body Slam','Normal','Physical',85,100,15,'May paralyze opponent.','Enemy',0,1,0,0,0,2,30,0,0,0,0,0,0,0,0,0,0]
@@ -20,30 +16,17 @@ boneClubInfo = ['Bone Club','Ground','Physical',65,85,20,'May cause flinching.',
 bonemerangInfo = ['Bonemerang','Ground','Physical',50,90,10,'Hits twice in one turn.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 bubbleInfo = ['Bubble','Water','Special',40,100,30,'May lower opponent\'s Speed.','Enemy',0,1,0,0,0,0,0,0,0,[0,0,0,0,0,-1,0,0,0],33,0,0,0,0,0,0]
 bubbleBeamInfo = ['Bubble Beam','Water','Special',65,100,20,'May lower opponent\'s Speed.','Enemy',0,1,0,0,0,0,0,0,0,[0,0,0,0,0,-1,0,0,0],33,0,0,0,0,0,0]
-<<<<<<< HEAD
 clampInfo = ['Clamp','Water','Physical',35,85,10,'Traps opponent; damaging them for 4-5 turns.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-=======
-clampInfo = ['Clamp','Water','Physical',35,85,10,'Traps opponent, damaging them for 4-5 turns.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 cometPunchInfo = ['Comet Punch','Normal','Physical',18,85,15,'Hits 2-5 times in one turn.','Enemy',0,1,1,2,5,0,0,0,0,0,0,0,0,0,0,0,0]
 confuseRayInfo = ['Confuse Ray','Ghost','Status', 0,100,10,'Confuses opponent.','Enemy',0,1,0,0,0,0,0,1,100,0,0,0,0,0,0,0,0]
 confusionInfo = ['Confusion','Psychic','Special',50,100,25,'May confuse opponent.','Enemy',0,1,0,0,0,0,0,1,10,0,0,0,0,0,0,0,0]
 constrictInfo = ['Constrict','Normal','Physical',10,100,35,'May lower opponent\'s Speed by one stage.','Enemy',0,1,0,0,0,0,0,0,0,[0,0,0,0,0,-1,0,0,0],33,0,0,0,0,0,0]
-<<<<<<< HEAD
 conversionInfo = ['Conversion','Normal','Status', 0, 10000,30,'Changes user\'s type to that of its first move.','Self',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 counterInfo = ['Counter','Fighting','Physical', 0,100,20,'When hit by a Physical Attack; user strikes back with 2x power.','Enemy',-1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 crabhammerInfo = ['Crabhammer','Water','Physical',100,90,10,'High critical hit ratio.','Enemy',0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0]
 cutInfo = ['Cut','Normal','Physical',50,95,30,'','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 defenseCurlInfo = ['Defense Curl','Normal','Status',0,10000,40,'Raises user\'s Defense.','Self',0,1,0,0,0,0,0,0,0,[0,0,1,0,0,0,0,0,0],100,0,0,0,0,0,0]
 digInfo = ['Dig','Ground','Physical',80,100,10,'Digs underground on first turn; attacks on second. Can also escape from caves.','Enemy',0,2,0,0,0,0,0,0,0,0,0,0,2,1,0,0,0]
-=======
-conversionInfo = ['Conversion','Normal','Status', 0, 10000,30,'Changes user\'s type to that of its first move.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-counterInfo = ['Counter','Fighting','Physical', 0,100,20,'When hit by a Physical Attack, user strikes back with 2x power.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-crabhammerInfo = ['Crabhammer','Water','Physical',100,90,10,'High critical hit ratio.','Enemy',0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0]
-cutInfo = ['Cut','Normal','Physical',50,95,30,'','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-defenseCurlInfo = ['Defense Curl','Normal','Status', 0, 10000,40,'Raises user\'s Defense.','Self',0,1,0,0,0,0,0,0,0,[0,0,1,0,0,0,0,0,0],100,0,0,0,0,0,0]
-digInfo = ['Dig','Ground','Physical',80,100,10,'Digs underground on first turn, attacks on second. Can also escape from caves.','Enemy',0,2,0,0,0,0,0,0,0,0,0,0,2,1,0,0,0]
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 disableInfo = ['Disable','Normal','Status', 0,100,20,'Opponent can\'t use its last attack for a few turns.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 dizzyPunchInfo = ['Dizzy Punch','Normal','Physical',70,100,10,'May confuse opponent.','Enemy',0,1,0,0,0,0,0,1,20,0,0,0,0,0,0,0,0]
 doubleKickInfo = ['Double Kick','Fighting','Physical',30,100,30,'Hits twice in one turn.','Enemy',0,1,1,2,2,0,0,0,0,0,0,0,0,0,0,0,0]
@@ -59,56 +42,32 @@ emberInfo = ['Ember','Fire','Special',40,100,25,'May burn opponent.','Enemy',0,1
 explosionInfo = ['Explosion','Normal','Physical',250,100,5,'User faints.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 fireBlastInfo = ['Fire Blast','Fire','Special',110,85,5,'May burn opponent.','Enemy',0,1,0,0,0,1,30,0,0,0,0,0,0,0,0,0,0]
 firePunchInfo = ['Fire Punch','Fire','Physical',75,100,15,'May burn opponent.','Enemy',0,1,0,0,0,1,10,0,0,0,0,0,0,0,0,0,0]
-<<<<<<< HEAD
 fireSpinInfo = ['Fire Spin','Fire','Special',35,85,15,'Traps opponent; damaging them for 4-5 turns.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 fissureInfo = ['Fissure','Ground','Physical', 1000000, 30,5,'One-Hit-KO; if it hits.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 flamethrowerInfo = ['Flamethrower','Fire','Special',90,100,15,'May burn opponent.','Enemy',0,1,0,0,0,1,10,0,0,0,0,0,0,0,0,0,0]
 flashInfo = ['Flash','Normal','Status', 0,100,20,'Lowers opponent\'s Accuracy.','Enemy',0,1,0,0,0,0,0,0,0,[0,0,0,0,0,0,-1,0,0],100,0,0,0,0,0,0]
 flyInfo = ['Fly','Flying','Physical',90,95,15,'Flies up on first turn; attacks on second turn.','Enemy',0,2,0,0,0,0,0,0,0,0,0,0,2,1,0,0,0]
-=======
-fireSpinInfo = ['Fire Spin','Fire','Special',35,85,15,'Traps opponent, damaging them for 4-5 turns.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-fissureInfo = ['Fissure','Ground','Physical', 1000000, 30,5,'One-Hit-KO, if it hits.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-flamethrowerInfo = ['Flamethrower','Fire','Special',90,100,15,'May burn opponent.','Enemy',0,1,0,0,0,1,10,0,0,0,0,0,0,0,0,0,0]
-flashInfo = ['Flash','Normal','Status', 0,100,20,'Lowers opponent\'s Accuracy.','Enemy',0,1,0,0,0,0,0,0,0,[0,0,0,0,0,0,-1,0,0],100,0,0,0,0,0,0]
-flyInfo = ['Fly','Flying','Physical',90,95,15,'Flies up on first turn, attacks on second turn.','Enemy',0,2,0,0,0,0,0,0,0,0,0,0,2,1,0,0,0]
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 focusEnergyInfo = ['Focus Energy','Normal','Status', 0, 10000,30,'Increases critical hit ratio.','Self',0,1,0,0,0,0,0,0,0,[0,0,0,0,0,0,0,0,1],100,0,0,0,0,0,0]
 furyAttackInfo = ['Fury Attack','Normal','Physical',15,85,20,'Hits 2-5 times in one turn.','Enemy',0,1,1,2,5,0,0,0,0,0,0,0,0,0,0,0,0]
 furySwipesInfo = ['Fury Swipes','Normal','Physical',18,80,15,'Hits 2-5 times in one turn.','Enemy',0,1,1,2,5,0,0,0,0,0,0,0,0,0,0,0,0]
 glareInfo = ['Glare','Normal','Status', 0,100,30,'Paralyzes opponent.','Enemy',0,1,0,0,0,2,100,0,0,0,0,0,0,0,0,0,0]
 growlInfo = ['Growl','Normal','Status', 0,100,40,'Lowers opponent\'s Attack.','Enemy',0,1,0,0,0,0,0,0,0,[0,-1,0,0,0,0,0,0,0],100,0,0,0,0,0,0]
 growthInfo = ['Growth','Normal','Status', 0, 10000,40,'Raises user\'s Attack and Special Attack.','Self',0,1,0,0,0,0,0,0,0,[0,1,0,1,0,0,0,0,0],100,0,0,0,0,0,0]
-<<<<<<< HEAD
 guillotineInfo = ['Guillotine','Normal','Physical', 1000000, 30,5,'One-Hit-KO; if it hits.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-=======
-guillotineInfo = ['Guillotine','Normal','Physical', 1000000, 30,5,'One-Hit-KO, if it hits.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 gustInfo = ['Gust','Flying','Special',40,100,35,'Hits Pokémon using Fly/Bounce with double power.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 hardenInfo = ['Harden','Normal','Status', 0, 10000,30,'Raises user\'s Defense.','Self',0,1,0,0,0,0,0,0,0,[0,0,1,0,0,0,0,0,0],100,0,0,0,0,0,0]
 hazeInfo = ['Haze','Ice','Status', 0, 10000,30,'Resets all stat changes.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 headbuttInfo = ['Headbutt','Normal','Physical',70,100,15,'May cause flinching.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,10,0]
-<<<<<<< HEAD
 highJumpKickInfo = ['High Jump Kick','Fighting','Physical',130,90,10,'If it misses; the user loses half their HP.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 hornAttackInfo = ['Horn Attack','Normal','Physical',65,100,25,'','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 hornDrillInfo = ['Horn Drill','Normal','Physical', 1000000, 30,5,'One-Hit-KO; if it hits.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 hydroPumpInfo = ['Hydro Pump','Water','Special',110,80,5,'','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 hyperBeamInfo = ['Hyper Beam','Normal','Special',150,90,5,'User must recharge next turn.','Enemy',0,2,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0]
-=======
-highJumpKickInfo = ['High Jump Kick','Fighting','Physical',130,90,10,'If it misses, the user loses half their HP.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-hornAttackInfo = ['Horn Attack','Normal','Physical',65,100,25,'','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-hornDrillInfo = ['Horn Drill','Normal','Physical', 1000000, 30,5,'One-Hit-KO, if it hits.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-hydroPumpInfo = ['Hydro Pump','Water','Special',110,80,5,'','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-hyperBeamInfo = ['Hyper Beam','Normal','Special',150,90,5,'User must recharge next turn.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0]
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 hyperFangInfo = ['Hyper Fang','Normal','Physical',80,90,15,'May cause flinching.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,10,0]
 hypnosisInfo = ['Hypnosis','Psychic','Status', 0,60,20,'Puts opponent to sleep.','Enemy',0,1,0,0,0,3,100,0,0,0,0,0,0,0,0,0,0]
 iceBeamInfo = ['Ice Beam','Ice','Special',90,100,10,'May freeze opponent.','Enemy',0,1,0,0,0,4,10,0,0,0,0,0,0,0,0,0,0]
 icePunchInfo = ['Ice Punch','Ice','Physical',75,100,15,'May freeze opponent.','Enemy',0,1,0,0,0,4,10,0,0,0,0,0,0,0,0,0,0]
-<<<<<<< HEAD
 jumpKickInfo = ['Jump Kick','Fighting','Physical',100,95,10,'If it misses; the user loses half their HP.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-=======
-jumpKickInfo = ['Jump Kick','Fighting','Physical',100,95,10,'If it misses, the user loses half their HP.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 karateChopInfo = ['Karate Chop','Fighting','Physical',50,100,25,'High critical hit ratio.','Enemy',0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0]
 kinesisInfo = ['Kinesis','Psychic','Status', 0,80,15,'Lowers opponent\'s Accuracy.','Enemy',0,1,0,0,0,0,0,0,0,[0,-1,0,0,0,0,0,0,0],100,0,0,0,0,0,0]
 leechLifeInfo = ['Leech Life','Bug','Physical',80,100,10,'User recovers half the HP inflicted on opponent.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]
@@ -117,11 +76,7 @@ leerInfo = ['Leer','Normal','Status', 0,100,30,'Lowers opponent\'s Defense.','En
 lickInfo = ['Lick','Ghost','Physical',30,100,30,'May paralyze opponent.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 lightScreenInfo = ['Light Screen','Psychic','Status', 0, 10000,30,'Halves damage from Special attacks for 5 turns.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 lovelyKissInfo = ['Lovely Kiss','Normal','Status', 0,75,10,'Puts opponent to sleep.','Enemy',0,1,0,0,0,3,100,0,0,0,0,0,0,0,0,0,0]
-<<<<<<< HEAD
 lowKickInfo = ['Low Kick','Fighting','Physical', 50,90,20,'Chance to flinch.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,30,0]
-=======
-lowKickInfo = ['Low Kick','Fighting','Physical', 0,100,20,'The heavier the opponent, the stronger the attack.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 meditateInfo = ['Meditate','Psychic','Status', 0, 10000,40,'Raises user\'s Attack.','Self',0,1,0,0,0,0,0,0,0,[0,1,0,0,0,0,0,0,0],100,0,0,0,0,0,0]
 megaDrainInfo = ['Mega Drain','Grass','Special',40,100,15,'User recovers half the HP inflicted on opponent.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]
 megaKickInfo = ['Mega Kick','Normal','Physical',120,75,5,'','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
@@ -146,19 +101,11 @@ psywaveInfo = ['Psywave','Psychic','Special', 0,80,15,'Inflicts damage 50-150% o
 quickAttackInfo = ['Quick Attack','Normal','Physical',40,100,30,'User attacks first.','Enemy',1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 rageInfo = ['Rage','Normal','Physical',20,100,20,'Raises user\'s Attack when hit.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 razorLeafInfo = ['Razor Leaf','Grass','Physical',55,95,25,'High critical hit ratio.','Enemy',0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0]
-<<<<<<< HEAD
 razorWindInfo = ['Razor Wind','Normal','Special',80,100,10,'Charges on first turn; attacks on second. High critical hit ratio.','Enemy',0,2,0,0,0,0,0,0,0,0,0,1,2,0,0,0,0]
 recoverInfo = ['Recover','Normal','Status', 0, 10000,10,'User recovers half its max HP.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 reflectInfo = ['Reflect','Psychic','Status', 0, 10000,20,'Halves damage from Physical attacks for 5 turns.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 restInfo = ['Rest','Psychic','Status', 0, 10000,10,'User sleeps for 2 turns; but user is fully healed.','Self',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 roarInfo = ['Roar','Normal','Status', 0, 10000,20,'In battles; the opponent switches. In the wild; the Pokémon runs.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-=======
-razorWindInfo = ['Razor Wind','Normal','Special',80,100,10,'Charges on first turn, attacks on second. High critical hit ratio.','Enemy',0,2,0,0,0,0,0,0,0,0,0,1,2,0,0,0,0]
-recoverInfo = ['Recover','Normal','Status', 0, 10000,10,'User recovers half its max HP.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-reflectInfo = ['Reflect','Psychic','Status', 0, 10000,20,'Halves damage from Physical attacks for 5 turns.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-restInfo = ['Rest','Psychic','Status', 0, 10000,10,'User sleeps for 2 turns, but user is fully healed.','Self',0,1,0,0,0,3,100,0,0,0,0,0,0,0,0,0,0]
-roarInfo = ['Roar','Normal','Status', 0, 10000,20,'In battles, the opponent switches. In the wild, the Pokémon runs.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 rockSlideInfo = ['Rock Slide','Rock','Physical',75,90,10,'May cause flinching.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,10,0]
 rockThrowInfo = ['Rock Throw','Rock','Physical',50,90,15,'','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 rollingKickInfo = ['Rolling Kick','Fighting','Physical',60,85,15,'May cause flinching.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,10,0]
@@ -168,7 +115,6 @@ screechInfo = ['Screech','Normal','Status', 0,85,40,'Sharply lowers opponent\'s 
 seismicTossInfo = ['Seismic Toss','Fighting','Physical', 0,100,20,'Inflicts damage equal to user\'s level.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 selfDestructInfo = ['Self-Destruct','Normal','Physical',200,100,5,'User faints.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 sharpenInfo = ['Sharpen','Normal','Status', 0, 10000,30,'Raises user\'s Attack.','Self',0,1,0,0,0,0,0,0,0,[0,1,0,0,0,0,0,0,0],100,0,0,0,0,0,0]
-<<<<<<< HEAD
 singInfo = ['Sing','Normal','Status', 0,55,15,'Puts opponent to sleep.','Enemy',0,1,0,0,0,3,100,0,0,0,0,0,0,0,0,0,0]
 skullBashInfo = ['Skull Bash','Normal','Physical',130,100,10,'Raises Defense on first turn; attacks on second.','Enemy',0,2,0,0,0,0,0,0,0,[0,0,1,0,0,0,0,0,0],100,0,2,0,0,0,0]
 skyAttackInfo = ['Sky Attack','Flying','Physical',140,90,5,'Charges on first turn; attacks on second. May cause flinching.','Enemy',0,2,0,0,0,0,0,0,0,0,0,0,2,0,1,10,0]
@@ -180,19 +126,6 @@ smogInfo = ['Smog','Poison','Special',30,70,20,'May poison opponent.','Enemy',0,
 smokescreenInfo = ['Smokescreen','Normal','Status', 0,100,20,'Lowers opponent\'s Accuracy.','Enemy',0,1,0,0,0,0,0,0,0,[0,0,0,0,0,0,-1,0,0],100,0,0,0,0,0,0]
 softBoiledInfo = ['Soft-Boiled','Normal','Status', 0, 10000,10,'User recovers half its max HP.','Self',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 solarBeamInfo = ['Solar Beam','Grass','Special',120,100,10,'Charges on first turn; attacks on second.','Enemy',0,2,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0]
-=======
-singInfo = ['Sing','Normal','Status', 0,55,15,'Puts opponent to sleep.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-skullBashInfo = ['Skull Bash','Normal','Physical',130,100,10,'Raises Defense on first turn, attacks on second.','Enemy',0,2,0,0,0,0,0,0,0,[0,0,1,0,0,0,0,0,0],100,0,2,0,0,0,0]
-skyAttackInfo = ['Sky Attack','Flying','Physical',140,90,5,'Charges on first turn, attacks on second. May cause flinching.','Enemy',0,2,0,0,0,0,0,0,0,0,0,0,2,0,1,10,0]
-slamInfo = ['Slam','Normal','Physical',80,75,20,'','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-slashInfo = ['Slash','Normal','Physical',70,100,20,'High critical hit ratio.','Enemy',0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0]
-sleepPowderInfo = ['Sleep Powder','Grass','Status', 0,75,15,'Puts opponent to sleep.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-sludgeInfo = ['Sludge','Poison','Special',65,100,20,'May poison opponent.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-smogInfo = ['Smog','Poison','Special',30,70,20,'May poison opponent.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-smokescreenInfo = ['Smokescreen','Normal','Status', 0,100,20,'Lowers opponent\'s Accuracy.','Enemy',0,1,0,0,0,0,0,0,0,[0,0,0,0,0,0,-1,0,0],100,0,0,0,0,0,0]
-softBoiledInfo = ['Soft-Boiled','Normal','Status', 0, 10000,10,'User recovers half its max HP.','Self',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-solarBeamInfo = ['Solar Beam','Grass','Special',120,100,10,'Charges on first turn, attacks on second.','Enemy',0,2,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0]
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
 sonicBoomInfo = ['Sonic Boom','Normal','Special', 0,90,20,'Always inflicts 20 HP.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 spikeCannonInfo = ['Spike Cannon','Normal','Physical',20,100,15,'Hits 2-5 times in one turn.','Enemy',0,1,1,2,5,0,0,0,0,0,0,0,0,0,0,0,0]
 splashInfo = ['Splash','Normal','Status', 0, 10000,40,'Doesn\'t do ANYTHING.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
@@ -227,7 +160,6 @@ viceGripInfo = ['Vice Grip','Normal','Physical',55,100,30,'','Enemy',0,1,0,0,0,0
 vineWhipInfo = ['Vine Whip','Grass','Physical',45,100,25,'','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 waterGunInfo = ['Water Gun','Water','Special',40,100,25,'','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 waterfallInfo = ['Waterfall','Water','Physical',80,100,15,'May cause flinching.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,10,0]
-<<<<<<< HEAD
 whirlwindInfo = ['Whirlwind','Normal','Status', 0, 100,20,'In battles; the opponent switches. In the wild; the Pokémon runs.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 wingAttackInfo = ['Wing Attack','Flying','Physical',60,100,35,'','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 withdrawInfo = ['Withdraw','Water','Status', 0, 10000,40,'Raises user\'s Defense.','Enemy',0,1,0,0,0,0,0,0,0,[0,0,1,0,0,0,0,0,0],100,0,0,0,0,0,0]
@@ -257,10 +189,3 @@ hitSelfConfusionInfo =  ['Hit Self','Typeless','Physical',40,10000,10000,'Hit se
 #Thrash
 #Transform
 #Whirlwind
-=======
-whirlwindInfo = ['Whirlwind','Normal','Status', 0, 100,20,'In battles, the opponent switches. In the wild, the Pokémon runs.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-wingAttackInfo = ['Wing Attack','Flying','Physical',60,100,35,'','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-withdrawInfo = ['Withdraw','Water','Status', 0, 10000,40,'Raises user\'s Defense.','Enemy',0,1,0,0,0,0,0,0,0,[0,0,1,0,0,0,0,0,0],100,0,0,0,0,0,0]
-wrapInfo = ['Wrap','Normal','Physical',15,90,20,'Traps opponent, damaging them for 4-5 turns.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-hitSelfConfusionInfo =  ['Hit Self','Typeless','Physical',40,10000,10000,'Hit self in confusion.','Self',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
->>>>>>> 102fce82972e14ec021687b6eeec1ed3b0bc48f0
