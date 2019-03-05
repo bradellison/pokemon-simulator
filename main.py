@@ -863,6 +863,15 @@ def getEnemySwitchPokemonForce():
 			print('The opposing', oldPokemon.name, 'was forced out!', 'The', enemy.type, enemy.name, 'switched into', choice.name + '!')
 			break
 
+def getPlayerSwitchPokemonForce():
+	oldPokemon = player.pokemon
+	while True:
+		choice = random.choice(player.team)
+		if choice != oldPokemon and choice.hp != 0:
+			player.pokemon = choice
+			print(oldPokemon.name, 'was forced out and replaced with', choice.name + '!')
+			break
+
 def getSwitchPokemon():
 	count = 1
 	print('Which Pokemon would you like to switch to?')
@@ -889,8 +898,9 @@ def getSwitchPokemon():
 					print('Keep going,', player.pokemon.name + '!')
 					return 0
 					# No switch
-			elif player.pokemon.bind == 1 or player.pokemon.clamp == 1 or player.pokemon.fireSpin == 1 or player.pokemon.wrap == 1:
-				print(player.pokemon.name, 'is unable to escape due to being trapped!')
+			elif player.pokemon.hp != 0: 
+				if player.pokemon.bind == 1 or player.pokemon.clamp == 1 or player.pokemon.fireSpin == 1 or player.pokemon.wrap == 1:
+					print(player.pokemon.name, 'is unable to escape due to being trapped!')
 			else:
 				for j in range(len(player.team)):
 					if choiceInput == player.team[j].name or int(choiceInput) == int(j+1):
@@ -1348,7 +1358,7 @@ def startEnemyTurn():
 					else:
 						print('The opposing', enemy.pokemon.name, 'snapped out of confusion!')
 			if interrupt == 0:
-				checkAttackSecondTurnMoves(enemy.pokemon)
+				interrupt = checkAttackSecondTurnMoves(enemy.pokemon)
 				if interrupt == 0:
 					hitOrMiss = getHitOrMiss(enemy.pokemon,player.pokemon,enemy.pokemon.move)
 					if hitOrMiss == 'Miss':
@@ -1765,6 +1775,14 @@ test4 = Pokemon('Rattata', 10)
 test5 = Pokemon('Rattata', 10)
 test6 = Pokemon('Persian', 100)
 test7 = Pokemon('Charmander', 100)
+
+
+test = Pokemon(random.choice(allPokemonList),100)
+test2 = Pokemon(random.choice(allPokemonList),100)
+test3 = Pokemon(random.choice(allPokemonList),100)
+test4 = Pokemon(random.choice(allPokemonList),100)
+test5 = Pokemon(random.choice(allPokemonList),100)
+test6 = Pokemon(random.choice(allPokemonList),100)
 
 balls = Ball('PokeBall')
 balls2 = Ball('Ultra Ball')
