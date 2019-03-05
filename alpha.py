@@ -2,7 +2,7 @@ import operator
 import time
 import random
 import math
-import pygame
+#import pygame
 import os
 
 from random import randint
