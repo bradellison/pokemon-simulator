@@ -883,6 +883,7 @@ def getSwitchPokemon():
 		try:
 			x = 0
 			choiceInput = input('-- ')
+			trapped = player.pokemon.bind + player.pokemon.clamp + player.pokemon.fireSpin + player.pokemon.wrap
 			if int(choiceInput) == 1:
 				if player.pokemon.hp == 0:
 					print(player.pokemon.name, 'has fainted! Please choose another Pokemon!')
@@ -898,9 +899,8 @@ def getSwitchPokemon():
 					print('Keep going,', player.pokemon.name + '!')
 					return 0
 					# No switch
-			elif player.pokemon.hp != 0: 
-				if player.pokemon.bind == 1 or player.pokemon.clamp == 1 or player.pokemon.fireSpin == 1 or player.pokemon.wrap == 1:
-					print(player.pokemon.name, 'is unable to escape due to being trapped!')
+			elif player.pokemon.hp != 0 and trapped != 0:
+				print(player.pokemon.name, 'is unable to escape due to being trapped!')
 			else:
 				for j in range(len(player.team)):
 					if choiceInput == player.team[j].name or int(choiceInput) == int(j+1):
@@ -913,6 +913,7 @@ def getSwitchPokemon():
 							player.pokemon = player.team[0]
 	
 							print('You switched from', oldPokemon, 'into', player.pokemon.name + '!')
+							print()
 							player.pokemon.inCurrentBattle = 1
 							return 1
 			if x == 0:
@@ -937,6 +938,7 @@ def checkTrapStart(atkPokemon, defPokemon):
 					print('The opposing', enemy.pokemon.name, 'is caught in a bind!')
 				else:
 					print(player.pokemon.name, 'is caught in a bind!')
+				print()
 		elif move == traplist[1]:
 			if defPokemon.clamp == 0:
 				defPokemon.clamp = 1
@@ -945,6 +947,8 @@ def checkTrapStart(atkPokemon, defPokemon):
 					print('The opposing', enemy.pokemon.name, 'is clamped down!')
 				else:
 					print(player.pokemon.name, 'is clamped down!')
+				print()
+
 		elif move == traplist[2]:
 			if defPokemon.fireSpin == 0:
 				defPokemon.fireSpin = 1
@@ -953,6 +957,8 @@ def checkTrapStart(atkPokemon, defPokemon):
 					print('The opposing', enemy.pokemon.name, 'is caught in a firey vortex!')
 				else:
 					print(player.pokemon.name, 'is caught in a firey vortex!')
+				print()
+
 		elif move == traplist[3]:
 			if defPokemon.wrap == 0:
 				defPokemon.wrap = 1
@@ -961,6 +967,8 @@ def checkTrapStart(atkPokemon, defPokemon):
 					print('The opposing', enemy.pokemon.name, 'is wrapped up!')
 				else:
 					print(player.pokemon.name, 'is caught in a bind!')
+				print()
+
 		elif move == traplist[4]:
 			if defPokemon.leechSeed == 0:
 				defPokemon.leechSeed = 1
@@ -970,6 +978,7 @@ def checkTrapStart(atkPokemon, defPokemon):
 					print('The opposing', enemy.pokemon.name, 'planted it\'s seed on', player.pokemon.name + '!')
 			else:
 				print('But it failed!')
+				print()
 
 def checkTrapEffect(pokemon):
 	if pokemon.bind == 1:
@@ -1436,19 +1445,6 @@ def getRun():
 			print('You couldn\'t get away!')
 			return 0
 
-def startBattle():
-	player.team = player.defaultTeam
-	player.pokemon = player.team[0]
-	enemy.pokemon = enemy.team[0]
-	battleStartPhrasing()
-	while teamTotalHP(player) > 0 and teamTotalHP(enemy) > 0:
-		game = getCurrentFight()
-		if game == 'End':
-			return
-	if teamTotalHP(player) == 0:
-		print('You lost!')
-	elif teamTotalHP(enemy) == 0:
-		print('You won!')
 
 def checkWallCounts():
 	if player.lightScreen == 1:
@@ -1710,6 +1706,7 @@ def getBallPocket():
 			return 1
 		else:
 			return catch
+	print()
 
 def getBallChoice():
 	options = len(bag.balls)
@@ -1763,7 +1760,52 @@ def getYesOrNo():
 		except ValueError:
 			print('Please choose an option!')	
 
-#def wildBattle():
+def battleTypeChoice():
+	print('Who do you want to battle?')
+	print(' 1 - Trainer\n 2 - Wild Pokemon')
+	while True:
+		try:
+			choiceInput = int(input('-- '))
+			if choiceInput == 1 or choiceInput == 2:
+				return choiceInput
+			else:
+				print('Please choose an option!')
+		except ValueError:
+			print('Please choose an option!')
+
+def startBattle():
+	player.team = player.defaultTeam
+	player.pokemon = player.team[0]
+	enemy.pokemon = enemy.team[0]
+	battleStartPhrasing()
+	while teamTotalHP(player) > 0 and teamTotalHP(enemy) > 0:
+		game = getCurrentFight()
+		if game == 'End':
+			return
+	if teamTotalHP(player) == 0:
+		print('You lost!')
+	elif teamTotalHP(enemy) == 0:
+		print('You won!')
+
+def startGame():
+	player = Player()
+	player.defaultTeam.append(test)
+	player.defaultTeam.append(test2)
+	player.defaultTeam.append(test3)
+	player.team = player.defaultTeam
+	while teamTotalHP(player) > 0:
+		choice = battleTypeChoice()
+		if choice == 1:
+			enemyTeam = [Pokemon(random.choice(allPokemonList),100), Pokemon(random.choice(allPokemonList),100), Pokemon(random.choice(allPokemonList),100)]
+			enemy = Enemy('Gym Leader', 'Brock', enemyTeam, 100, 'Damn!')
+			startBattle(enemy)
+		if choice == 2:
+			wildTeam = random.choice(allPokemonList),100
+			enemy = Enemy('Wild', 'Wild', wildTeam, 0, 'Damn!')
+			startBattle(enemy)
+
+#def createRandomTeam(n):
+#	for
 
 
 test = Pokemon('Mew', 10)
@@ -1784,6 +1826,8 @@ test4 = Pokemon(random.choice(allPokemonList),100)
 test5 = Pokemon(random.choice(allPokemonList),100)
 test6 = Pokemon(random.choice(allPokemonList),100)
 
+test7 = Pokemon(random.choice(allPokemonList),100)
+
 balls = Ball('PokeBall')
 balls2 = Ball('Ultra Ball')
  
@@ -1798,13 +1842,16 @@ player.defaultTeam.append(test)
 player.defaultTeam.append(test2)
 player.defaultTeam.append(test3)
 
-wildTeam = [test7]
-enemyTeam = [test4, test5, test6]
+#wildTeam = [test7]
+#enemyTeam = [Pokemon(random.choice(allPokemonList),100), Pokemon(random.choice(allPokemonList),100), Pokemon(random.choice(allPokemonList),100)]
+#
+##enemy = Enemy('Gym Leader', 'Brock', enemyTeam, 100, 'Damn!')
+#enemy = Enemy('Wild', 'Wild', wildTeam, 0, 'Damn!')
+enemyTeam = [Pokemon(random.choice(allPokemonList),100), Pokemon(random.choice(allPokemonList),100), Pokemon(random.choice(allPokemonList),100)]
 
 enemy = Enemy('Gym Leader', 'Brock', enemyTeam, 100, 'Damn!')
-#enemy = Enemy('Wild', 'Wild', wildTeam, 0, 'Damn!')
-
 print()
+
 x = startBattle()
 
 
