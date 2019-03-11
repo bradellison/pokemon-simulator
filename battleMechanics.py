@@ -40,16 +40,15 @@ class Bag(object):
 		self.medicine = []
 
 class Medicine(object):
-	def __init__(self, name, quantity):
+	def __init__(self, name):
 		self.name = name
-		self.heal = getMedicineHeal(name)
-		self.quantity = quantity
+		self.heal = getMedicineHeal()
 
 class Ball(object):
-	def __init__(self, name, quantity):
+	def __init__(self, name):
 		self.name = name
 		self.modifier = getBallModifier(name)
-		self.quantity = quantity
+		self.quantity = 5
 
 class Enemy(object):
 	def __init__(self, type, name, team, prizeMoney, text):
@@ -331,16 +330,11 @@ def getPokemonEvolutionDetails(pokemon):
 ballCatchModifiers = {'PokeBall':1,'Great Ball':2,'Ultra Ball':3,'Master Ball':'Master'}
 statusCatchModifiers = {0:1,1:1.5,2:1.5,3:2,4:2,5:1.5,6:1.5}
 
-medicineHealAmount = {'Potion':20,'Super Potion':50,'Hyper Potion':100,'Max Potion':10000,'Full Restore':10000}
-
 def getBallModifier(ball):
 	return ballCatchModifiers[ball]
 
 def getStatusCatchModifiers():
 	return statusCatchModifiers[enemy.pokemon.nvStatus]
-
-def getMedicineHeal(medicine):
-	return medicineHealAmount[medicine]
 
 ####### BATTLE FUNCTIONS #######
 
@@ -1679,7 +1673,7 @@ def openBag():
 		if choice == 'Balls':
 			x = getBallPocket()
 		elif choice == 'Medicine':
-			x = getMedicinePocket()
+			x = getMedicineChoice()
 		else:
 			x = 1
 			return 1
@@ -1714,8 +1708,6 @@ def getCatch(ball):
 			print('')
 			return 'No catch'
 
-
-
 def getCaughtPokemon():
 	if len(player.team) < 6:
 		player.team.append(enemy.pokemon)
@@ -1729,8 +1721,6 @@ def getBallPocket():
 	if ball == 0:
 		return 0
 	ball.quantity -= 1
-	if ball.quantity == 0:
-		bag.balls.remove(ball)
 	print('You throw the', ball.name, 'at the opposing', enemy.pokemon.name + '!')
 	if enemy.type != 'Wild':
 		print('The', enemy.type, enemy.name, 'swatted the ball away! You can\'t use that here!')
@@ -1743,81 +1733,8 @@ def getBallPocket():
 			return catch
 	print()
 
-def getMedicinePocket():
-	medicine = getMedicineChoice()
-	if medicine == 0:
-		return 0
-	choice = getPokemonHealChoice(medicine)
-	if choice == 0:
-		return 0
-	medicine.quantity -= 1
-	if medicine.quantity == 0:
-		bag.medicine.remove(medicine)
-
-def getHealFunction(medicine):
-	if medicine in 
-
-def getPokemonHealChoice(medicine):
-	count = 1
-	print('Which Pokemon would you like to use this on?')
-	for i in player.team:
-		print('', count, '-', i.name, '- Level', str(i.level), '-', str(i.hp) + '/' + str(i.maxhp) + 'HP')
-		count += 1
-	print('', count, '- Back')
-	while True:
-		try:
-			x = 0
-			choiceInput = input('-- ')
-			if int(choiceInput) == int(count):
-				return 0
-			for j in range(len(player.team)):
-				if choiceInput == player.team[j].name or int(choiceInput) == int(j+1):
-					if player.team[j].hp == 0:
-						print(player.team[j].name, 'has fainted! This would have no effect! Choose another!')
-						x = 1
-					elif player.team[j].hp == player.team[j].maxhp:
-						print(player.team[j].name, 'is at full health! This would have no effect! Choose another!')
-						x = 1
-					else:
-						heal = medicine.heal
-						if player.team[j].maxhp - player.team[j].hp < heal:
-							heal = player.team[j].maxhp - player.team[j].hp
-						player.team[j].hp += heal
-						print(player.team[j].name, 'has been healed by', heal, 'HP! It has', str(player.pokemon.hp) + '/' + str(player.pokemon.maxhp), 'remaining!')
-						return 1
-			if x == 0:
-				print("Please choose a Pokemon from the list above!")
-		except ValueError:
-			print("Please choose a Pokemon from the list above!")	
-
-
-def getMedicineChoice():
-	options = len(bag.medicine)
-	if options == 0:
-		print('You have no medicine remaining!')
-		return 0
-	for i in range(options):
-		print('', i+1, '-', bag.medicine[i].name, '-', bag.medicine[i].quantity, 'remaining.')
-		i += 1
-	i += 1
-	print('', i, '- Back')
-	while True:
-		try:
-			choiceInput = input('-- ')
-			if int(choiceInput) < i and int(choiceInput) > 0:
-				medicine = bag.medicine[int(choiceInput) - 1]
-				return medicine
-			elif int(choiceInput) == i:
-				return 0
-			print("Please choose an item from the list above!")
-		except ValueError:
-			print("Please choose an item from the list above!")	
-
 def getBallChoice():
 	options = len(bag.balls)
-	if options == 0:
-		print('You have no balls remaining!')
-		return 0
 	for i in range(options):
 		print('', i+1, '-', bag.balls[i].name, '-', bag.balls[i].quantity, 'remaining.')
 		i += 1
@@ -1904,11 +1821,11 @@ def winBattle():
 				evolvePokemon(i)
 	endBattlePokemonInfo()
 
-def startGame():
+def startGame(player,enemy):
 	player = Player()
-	player.defaultTeam.append(test)
-	player.defaultTeam.append(test2)
-	player.defaultTeam.append(test3)
+	player.defaultTeam.append(Pokemon(random.choice(allPokemonList),100))
+	player.defaultTeam.append(Pokemon(random.choice(allPokemonList),100))
+	player.defaultTeam.append(Pokemon(random.choice(allPokemonList),100))
 	player.team = player.defaultTeam
 	while teamTotalHP(player) > 0:
 		choice = battleTypeChoice()
@@ -1918,7 +1835,7 @@ def startGame():
 			startBattle()
 		if choice == 2:
 			#wildTeam = [Pokemon(random.choice(allPokemonList),100)]
-			wildTeam = [Pokemon('Sandslash',50)]
+			wildTeam = [Pokemon('Kakuna',100)]
 			createEnemy('Wild', 'Wild', wildTeam, 0, 'Damn!')
 			startBattle()
 
@@ -1931,63 +1848,3 @@ def createEnemy(typex, name, team, prizeMoney, text):
 	enemy.pokemon = enemy.team[0]
 
 
-
-#def createRandomTeam(n):
-#	for
-
-
-test = Pokemon('Ditto', 100)
-#test = Pokemon(random.choice(allPokemonList),100)
-test2 = Pokemon('Butterfree', 100)
-test3 = Pokemon('Alakazam', 100)
-test4 = Pokemon('Rattata', 10)
-#test4 = Pokemon(random.choice(allPokemonList),100)
-test5 = Pokemon('Rattata', 10)
-test6 = Pokemon('Persian', 100)
-test7 = Pokemon('Charmander', 100)
-
-
-#test = Pokemon(random.choice(allPokemonList),100)
-test2 = Pokemon(random.choice(allPokemonList),100)
-test3 = Pokemon(random.choice(allPokemonList),100)
-test4 = Pokemon(random.choice(allPokemonList),100)
-test5 = Pokemon(random.choice(allPokemonList),100)
-test6 = Pokemon(random.choice(allPokemonList),100)
-
-test7 = Pokemon(random.choice(allPokemonList),100)
-
-balls = Ball('PokeBall',2)
-#balls2 = Ball('Ultra Ball')
-
-medicinex = Medicine('Potion',2)
-mediciney = Medicine('Super Potion',1)
-
-PC = PC()
-bag = Bag()
-
-bag.balls.append(balls)
-#bag.balls.append(balls2)
-
-bag.medicine.append(medicinex)
-bag.medicine.append(mediciney)
-
-player = Player()
-player.defaultTeam.append(test)
-player.defaultTeam.append(test2)
-player.defaultTeam.append(test3)
-
-#wildTeam = [test7]
-#enemyTeam = [Pokemon(random.choice(allPokemonList),100), Pokemon(random.choice(allPokemonList),100), Pokemon(random.choice(allPokemonList),100)]
-#
-##enemy = Enemy('Gym Leader', 'Brock', enemyTeam, 100, 'Damn!')
-#enemy = Enemy('Wild', 'Wild', wildTeam, 0, 'Damn!')
-enemyTeam = [Pokemon(random.choice(allPokemonList),100), Pokemon(random.choice(allPokemonList),100), Pokemon(random.choice(allPokemonList),100)]
-
-enemy = Enemy('Gym Leader', 'Block', enemyTeam, 100, 'Damn!')
-print()
-
-
-x = startGame()
-
-
-## SOLVED - 
