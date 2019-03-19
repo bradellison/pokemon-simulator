@@ -32,7 +32,11 @@ class Player(object):
 
 class PC(object):
 	def __init__(self):
-		self.box1 = []
+		self.boxes = []
+
+class Box(object):
+	def __init__(self):
+		self.inventory = []
 
 class Bag(object):
 	def __init__(self):
@@ -77,9 +81,10 @@ class Pokemon(object):
 		self.statStage = [0,0,0,0,0,0,0,0,0]
 		self.maxhp = self.stats[0]
 		self.hp = self.stats[0]
+		self.nature = 'None'
 #		self.form = 
 		self.gender = getGender(species)
-#		self.ability =  
+		self.ability = 'None'
 		self.type = getPokemonType(self)
 		self.item = 'None'
 		self.moveSet = getMoveSet(self)
@@ -884,6 +889,7 @@ def getEnemySwitchPokemon():
 	while True:
 		choice = random.choice(enemy.team)
 		if choice != oldPokemon and choice.hp != 0:
+			resetOnSwitch(oldPokemon)
 			enemy.pokemon = choice
 			break
 
@@ -892,6 +898,7 @@ def getEnemySwitchPokemonForce():
 	while True:
 		choice = random.choice(enemy.team)
 		if choice != oldPokemon and choice.hp != 0:
+			resetOnSwitch(oldPokemon)
 			enemy.pokemon = choice
 			print('The opposing', oldPokemon.name, 'was forced out!', 'The', enemy.type, enemy.name, 'switched into', choice.name + '!')
 			break
@@ -901,6 +908,7 @@ def getPlayerSwitchPokemonForce():
 	while True:
 		choice = random.choice(player.team)
 		if choice != oldPokemon and choice.hp != 0:
+			resetOnSwitch(oldPokemon)
 			player.pokemon = choice
 			print(oldPokemon.name, 'was forced out and replaced with', choice.name + '!')
 			break
@@ -911,6 +919,8 @@ def getSwitchPokemon():
 	for i in player.team:
 		print('', count, '-', i.name, '- Level', str(i.level), '-', str(i.hp) + '/' + str(i.maxhp) + 'HP')
 		count += 1
+	print('', count, '- View more information')
+	count += 1
 	print('', count, '- Back')
 	while True:
 		try:
@@ -931,7 +941,20 @@ def getSwitchPokemon():
 				else:
 					print('Keep going,', player.pokemon.name + '!')
 					return 0
+
 					# No switch
+			elif int(choiceInput) == int(count) - 1:
+				getPokemonInfoViewChoiceTeam()
+				print('')
+				print('Which Pokemon would you like to switch to?')
+				count = 1
+				for i in player.team:
+					print('', count, '-', i.name, '- Level', str(i.level), '-', str(i.hp) + '/' + str(i.maxhp) + 'HP')
+					count += 1
+				print('', count, '- View more information')
+				count += 1
+				print('', count, '- Back')
+				x = 1
 			elif player.pokemon.hp != 0 and trapped != 0:
 				print(player.pokemon.name, 'is unable to escape due to being trapped!')
 			else:
@@ -941,11 +964,11 @@ def getSwitchPokemon():
 							print(player.team[j].name, 'has fainted! Please choose another Pokemon!')
 							x = 1
 						else:
-							oldPokemon = player.pokemon.name
+							oldPokemon = player.pokemon
 							player.team[j], player.team[0] = player.team[0], player.team[j]
 							player.pokemon = player.team[0]
-	
-							print('You switched from', oldPokemon, 'into', player.pokemon.name + '!')
+							resetOnSwitch(oldPokemon)
+							print('You switched from', oldPokemon.name, 'into', player.pokemon.name + '!')
 							print()
 							player.pokemon.inCurrentBattle = 1
 							return 1
@@ -1511,6 +1534,18 @@ def checkWallCounts():
 			enemy.mist = 0
 			print('The opposing team\'s mist wore off!')
 
+def resetOnSwitch(pokemon):
+	pokemon.statStage = [0,0,0,0,0,0,0,0,0]
+	pokemon.move = 0
+	pokemon.previousMove = 0
+	pokemon.criticalMove = 0
+	pokemon.lockedInMoveNumber = 0
+	pokemon.immune = 0
+	pokemon.flinch = 0
+	pokemon.confused = 0
+	pokemon.confusedCount = 0
+	pokemon.type = getPokemonType(pokemon)
+	pokemon.leechSeed = 0
 
 def endRound():
 	for pokemon in player.team:
@@ -1542,6 +1577,7 @@ def endBattlePokemonInfo():
 		pokemon.fireSpinCount = 0
 		pokemon.wrap = 0
 		pokemon.wrapCount = 0
+		pokemon.leechSeed = 0
 	for pokemon in enemy.team:
 		pokemon.statStage = [0,0,0,0,0,0,0,0,0]
 #		pokemon.ability =  
@@ -1564,6 +1600,7 @@ def endBattlePokemonInfo():
 		pokemon.fireSpinCount = 0
 		pokemon.wrap = 0
 		pokemon.wrapCount = 0
+		pokemon.leechSeed = 0
 
 def checkFlinch(atkMove, defPokemon):
 	if atkMove.flinch == 1:
@@ -1638,6 +1675,7 @@ def getCurrentFight():
 			elif battleChoice == 'Run':
 				if enemy.type == 'Wild':
 					run = getRun()
+					print()
 					if run == 0:
 						startEnemyTurn()
 					else:
@@ -1688,7 +1726,8 @@ def openBag():
 def getCatch(ball):
 	ballModifier = ball.modifier
 	if ballModifier == 'Master':
-		print('Catch')
+		print('You caught the opposing', enemy.pokemon.name + '!')
+		getCaughtPokemon()
 		return 'Catch'
 	statusModifier = getStatusCatchModifiers()
 	catchValue = int(((( 3 * enemy.pokemon.maxhp - 2 * enemy.pokemon.hp) * enemy.pokemon.catchRate * ballModifier) / ( 3 * enemy.pokemon.maxhp) ) * statusModifier)
@@ -1714,15 +1753,25 @@ def getCatch(ball):
 			print('')
 			return 'No catch'
 
-
-
 def getCaughtPokemon():
 	if len(player.team) < 6:
+		getNamePokemon(enemy.pokemon)
 		player.team.append(enemy.pokemon)
-		print('You added the', enemy.pokemon.name, 'to your team!')
+
+		print('You added the', enemy.pokemon.name, 'to your team!\n')
 	else:
-		PC.box1.append(enemy.pokemon)
-		print('You sent the', enemy.pokemon.name, 'to the PC!')
+		getNamePokemon(enemy.pokemon)
+		PC.boxes[0].inventory.append(enemy.pokemon)
+
+		print('You sent the', enemy.pokemon.name, 'to the PC!\n')
+
+def getNamePokemon(pokemon):
+	print('\nWould you like to name the', pokemon.name + '?')
+	choice = getYesOrNo()
+	if choice == 1:
+		print('\nWhat would you like to name it?')
+		choiceInput = input('-- ')
+		pokemon.name = choiceInput
 
 def getBallPocket():
 	ball = getBallChoice()
@@ -1754,8 +1803,8 @@ def getMedicinePocket():
 	if medicine.quantity == 0:
 		bag.medicine.remove(medicine)
 
-def getHealFunction(medicine):
-	if medicine in 
+#def getHealFunction(medicine):
+#	if medicine in 
 
 def getPokemonHealChoice(medicine):
 	count = 1
@@ -1869,12 +1918,12 @@ def getYesOrNo():
 			print('Please choose an option!')	
 
 def battleTypeChoice():
-	print('Who do you want to battle?')
-	print(' 1 - Trainer\n 2 - Wild Pokemon')
+	print('What would you like to do?')
+	print(' 1 - Battle Trainer\n 2 - Battle Wild Pokemon\n 3 - Go To Pokemon Center')
 	while True:
 		try:
 			choiceInput = int(input('-- '))
-			if choiceInput == 1 or choiceInput == 2:
+			if choiceInput == 1 or choiceInput == 2 or choiceInput == 3:
 				return choiceInput
 			else:
 				print('Please choose an option!')
@@ -1912,15 +1961,18 @@ def startGame():
 	player.team = player.defaultTeam
 	while teamTotalHP(player) > 0:
 		choice = battleTypeChoice()
+		print('')
 		if choice == 1:
 			enemyTeam = [Pokemon(random.choice(allPokemonList),100), Pokemon(random.choice(allPokemonList),100), Pokemon(random.choice(allPokemonList),100)]
 			createEnemy('Gym Leader', 'Brock', enemyTeam, 100, 'Damn!')
 			startBattle()
-		if choice == 2:
+		elif choice == 2:
 			#wildTeam = [Pokemon(random.choice(allPokemonList),100)]
-			wildTeam = [Pokemon('Sandslash',50)]
+			wildTeam = [Pokemon(random.choice(allPokemonList),10)]
 			createEnemy('Wild', 'Wild', wildTeam, 0, 'Damn!')
 			startBattle()
+		elif choice == 3:
+			pokemonCenter()
 
 def createEnemy(typex, name, team, prizeMoney, text):
 	enemy.type = typex
@@ -1930,10 +1982,241 @@ def createEnemy(typex, name, team, prizeMoney, text):
 	enemy.text = text
 	enemy.pokemon = enemy.team[0]
 
+def getPokemonCenterChoice():
+	print(' 1 - Heal Team\n 2 - Use PC\n 3 - Shop\n 4 - Leave')
+	while True:
+		try:
+			choiceInput = int(input('-- '))
+			if choiceInput == 1 or choiceInput == 2 or choiceInput == 3 or choiceInput == 4:
+				return choiceInput
+			else:
+				print('Please choose an option!')
+		except ValueError:
+			print('Please choose an option!')
 
+def pokemonCenter():
+	print('Hello, welcome to the Pokemon Center. What would you like to do here today?')
+	leave = 0
+	while leave == 0:
+		choice = getPokemonCenterChoice()
+		if choice == 1:
+			healAllPokemon()
+		elif choice == 2:
+			usePC()
+		elif choice == 3:
+			print('The shop is currently closed, please come again later!\n')
+		elif choice == 4:
+			leave = 1
+			print('Thank you for coming, we hope to see you again!\n')
+			return
+		print('Anything else we can do for you today?')
 
-#def createRandomTeam(n):
-#	for
+def healAllPokemon():
+	print('Of course, please let me take your pokemon for a few moments!')
+	for pokemon in player.team:
+		pokemon.hp = pokemon.maxhp
+		pokemon.nvStatus = 0
+		pokemon.nvStatusCount = 0
+		pokemon.movePPCurrent = pokemon.movePPMax
+		print('Healed', pokemon.name + '!')
+		time.sleep(1)
+	print('Your team is now at full health!\n')
+
+def getPCChoice():
+	print(' 1 - Withdraw\n 2 - Deposit\n 3 - Move\n 4 - Quit')
+	while True:
+		try:
+			choiceInput = int(input('-- '))
+			if choiceInput == 1 or choiceInput == 2 or choiceInput == 3 or choiceInput == 4:
+				return choiceInput
+			else:
+				print('Please choose an option!')
+		except ValueError:
+			print('Please choose an option!')
+
+def usePC():
+	leave = False
+	while leave == False:
+		print('\nWhat would you like to do?')
+		choice = getPCChoice()
+		if choice == 1:
+			withdrawPokemonChoice()
+		elif choice == 2:
+			depositPokemonChoice()
+		elif choice == 3:
+			print('This functionality is currently unavailable!')
+#			movePokemonChoice()
+		elif choice == 4:
+			leave = True
+			print()
+			return
+
+def withdrawPokemonChoice():
+	y = 0
+	while y == 0:
+		count = 1
+		print('\nWhich Pokemon would you like to view?')
+		for j in range(len(PC.boxes[0].inventory)):
+			i = PC.boxes[0].inventory[j]
+			if i == 'Empty':
+				print('', count, '- Empty')
+			else:
+				print('', count, '-', i.name, '- Level', str(i.level), '-', str(i.hp) + '/' + str(i.maxhp) + 'HP')
+			count += 1
+		print('', count, '- Back')
+		while True:
+			try:
+				x = 0
+				choiceInput = input('-- ')
+				if int(choiceInput) == int(count):
+					return True
+				for j in range(len(PC.boxes[0].inventory)):
+					if int(choiceInput) == int(j+1):
+						choice = PC.boxes[0].inventory[int(choiceInput) - 1]
+						option = getOptionOneOrTwo('Withdraw', 'View more information')
+						if option == 1:
+							if len(player.team) < 6:
+								player.team.append(choice)
+								PC.boxes[0].inventory.remove(choice)
+								print('You added', choice.name, 'to your party!')
+							else:
+								print('You have no room in your party for that right now!')
+						else:
+							getPokemonInfoViewTeam(choice)
+						x = 1
+						return 0
+				if x == 0:
+					print("Please choose a Pokemon from the list above!")
+			except ValueError:
+				print("Please choose a Pokemon from the list above!")	
+
+def depositPokemonChoice():
+	y = 0
+	while y == 0:
+		count = 1
+		print('Which Pokemon would you like to view?')
+		for i in player.team:
+			print('', count, '-', i.name, '- Level', str(i.level), '-', str(i.hp) + '/' + str(i.maxhp) + 'HP')
+			count += 1
+		print('', count, '- Back')
+		while True:
+			try:
+				x = 0
+				choiceInput = input('-- ')
+				if int(choiceInput) == int(count):
+					return 0
+				for j in range(len(player.team)):
+					if choiceInput == player.team[j].name or int(choiceInput) == int(j+1):
+						choice = player.team[int(choiceInput) - 1]
+						option = getOptionOneOrTwo('Deposit', 'View more information')
+						if option == 1:
+							if len(player.team) > 1:
+								player.team.remove(choice)
+								PC.boxes[0].inventory.append(choice)
+								print('You deposited', choice.name, 'into your PC!')
+							else:
+								print('You cannot deposit your only Pokemon!')
+						else:
+							getPokemonInfoViewTeam(choice)
+						x = 1
+						return 0
+				if x == 0:
+					print("Please choose a Pokemon from the list above!")
+			except ValueError:
+				print("Please choose a Pokemon from the list above!")	
+
+def getOptionOneOrTwo(option1, option2):
+	print('What would you like to do with this pokemon?')
+	print(' 1 -', option1, '\n 2 -', option2)
+	while True:
+		try:
+			choiceInput = int(input('-- '))
+			if choiceInput == 1 or choiceInput == 2:
+				return choiceInput
+			else:
+				print('Please choose an option!')
+		except ValueError:
+			print('Please choose an option!')
+
+def getOptionOneOrTwoOrThree(option1, option2, option3):
+	print('What would you like to do with this pokemon?')
+	print(' 1 -', option1, '\n 2 -', option2, '\n 3 -', option3)
+	while True:
+		try:
+			choiceInput = int(input('-- '))
+			if choiceInput == 1 or choiceInput == 2 or choiceInput == 3:
+				return choiceInput
+			else:
+				print('Please choose an option!')
+		except ValueError:
+			print('Please choose an option!')
+
+def getPokemonInfoViewChoiceTeam():
+	y = 0
+	while y == 0:
+		count = 1
+		print('Which Pokemon would you like to view?')
+		for i in player.team:
+			print('', count, '-', i.name, '- Level', str(i.level), '-', str(i.hp) + '/' + str(i.maxhp) + 'HP')
+			count += 1
+		print('', count, '- Back')
+		while True:
+			try:
+				x = 0
+				choiceInput = input('-- ')
+				if int(choiceInput) == int(count):
+					return 0
+				for j in range(len(player.team)):
+					if choiceInput == player.team[j].name or int(choiceInput) == int(j+1):
+						choice = player.team[int(choiceInput) - 1]
+						getPokemonInfoViewTeam(choice)
+						x = 1
+						return 0
+				if x == 0:
+					print("Please choose a Pokemon from the list above!")
+			except ValueError:
+				print("Please choose a Pokemon from the list above!")	
+
+def getPokemonInfoViewTeam(pokemon):
+	print('')
+	print(pokemon.name, '- Level', pokemon.level, pokemon.species)
+	if len(pokemon.type) == 1:
+		print(pokemon.type[0], 'Type')
+	else:
+		print(pokemon.type[0], '/', pokemon.type[1], 'Type')
+	print('\nHealth')
+	print(' ', str(pokemon.hp) + '/' + str(pokemon.maxhp) + 'HP')
+	if pokemon.hp == 0:
+		print(' ', 'Fainted')
+	elif pokemon.nvStatus != 0:
+		print(' ',nonVolatileStatusNumberToType[pokemon.nvStatus])
+	else:
+		print(' ', 'Healthy')
+	print('\nMoves')
+	count = 0
+	for move in pokemon.moveSet:
+		print(' ', move, '-', str(pokemon.movePPCurrent[count]) + '/' + str(pokemon.movePPMax[count]) + 'PP')
+		count += 1
+	print('\nWould you like to see more info about this Pokemon?')
+	choice = getYesOrNo()
+	if choice == 1:
+		print('\nStats')
+		statList = ['HP   ', 'Atk  ', 'Def  ', 'SpAtk', 'SpDef','Spd  ']
+		for i in range(6):
+			print(' ', statList[i], '-', pokemon.stats[i])
+		print('\nNature')
+		print(' ', pokemon.nature)
+		print('\nAbility')
+		print(' ', pokemon.ability)
+		print('\nBack to first page?')
+		choice = getYesOrNo()
+		if choice == 1:
+			getPokemonInfoViewTeam(pokemon)
+		else:
+			return
+	else:
+		return
+
 
 
 test = Pokemon('Ditto', 100)
@@ -1947,7 +2230,7 @@ test6 = Pokemon('Persian', 100)
 test7 = Pokemon('Charmander', 100)
 
 
-#test = Pokemon(random.choice(allPokemonList),100)
+test = Pokemon(random.choice(allPokemonList),100)
 test2 = Pokemon(random.choice(allPokemonList),100)
 test3 = Pokemon(random.choice(allPokemonList),100)
 test4 = Pokemon(random.choice(allPokemonList),100)
@@ -1957,16 +2240,26 @@ test6 = Pokemon(random.choice(allPokemonList),100)
 test7 = Pokemon(random.choice(allPokemonList),100)
 
 balls = Ball('PokeBall',2)
+balls2 = Ball('Master Ball',50)
 #balls2 = Ball('Ultra Ball')
 
 medicinex = Medicine('Potion',2)
 mediciney = Medicine('Super Potion',1)
 
 PC = PC()
+PC.boxes.append(Box())
+
 bag = Bag()
 
+PC.boxes[0].inventory.append(Pokemon(random.choice(allPokemonList),100))
+PC.boxes[0].inventory.append(Pokemon(random.choice(allPokemonList),100))
+PC.boxes[0].inventory.append(Pokemon(random.choice(allPokemonList),100))
+PC.boxes[0].inventory.append(Pokemon(random.choice(allPokemonList),100))
+PC.boxes[0].inventory.append(Pokemon(random.choice(allPokemonList),100))
+PC.boxes[0].inventory.append(Pokemon(random.choice(allPokemonList),100))
+
 bag.balls.append(balls)
-#bag.balls.append(balls2)
+bag.balls.append(balls2)
 
 bag.medicine.append(medicinex)
 bag.medicine.append(mediciney)
@@ -1975,6 +2268,7 @@ player = Player()
 player.defaultTeam.append(test)
 player.defaultTeam.append(test2)
 player.defaultTeam.append(test3)
+player.team = player.defaultTeam
 
 #wildTeam = [test7]
 #enemyTeam = [Pokemon(random.choice(allPokemonList),100), Pokemon(random.choice(allPokemonList),100), Pokemon(random.choice(allPokemonList),100)]
@@ -1983,9 +2277,8 @@ player.defaultTeam.append(test3)
 #enemy = Enemy('Wild', 'Wild', wildTeam, 0, 'Damn!')
 enemyTeam = [Pokemon(random.choice(allPokemonList),100), Pokemon(random.choice(allPokemonList),100), Pokemon(random.choice(allPokemonList),100)]
 
-enemy = Enemy('Gym Leader', 'Block', enemyTeam, 100, 'Damn!')
+enemy = Enemy(0, 0, 0, 0, 0)
 print()
-
 
 x = startGame()
 

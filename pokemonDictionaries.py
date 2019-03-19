@@ -14,7 +14,7 @@ statDict = {0:'HP',1:'attack',2:'defence',3:'special attack',4:'special defence'
 
 effectivenessScale = {0:' and it didn\'t have any effect!',0.25:' and it was not very effective!',0.5:' and it was not very effective!',1:'!',2:' and it was super-effective!',4:' and it was super-effective!'}
 
-nonVolatileStatusNumberToType = {0:'Nothing',1:'Burned',2:'Paralyzed',3:'Sleep',4:'Frozen',5:'Poisoned',6:'Toxic',7:'Tri Attack'}
+nonVolatileStatusNumberToType = {0:'Nothing',1:'Burned',2:'Paralyzed',3:'Sleep',4:'Frozen',5:'Poisoned',6:'Toxic'}
 volatileStatusNumberToType = {0:'Nothing',1:'Confused'}
 
 #pokemonCatchRate = {'Bulbasaur':45,'Ivysaur':45,'Venusaur':45,'Charmander':45,'Charmeleon':45,'Charizard':45,'Squirtle':45,'Wartortle':45,'Blastoise':45}
