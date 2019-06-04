@@ -75,24 +75,28 @@ class Enemy(object):
 		self.mistCount = 0
 
 class Pokemon(object):
-	def __init__(self, species, level):
+	def __init__(self, species, level, moveSet):
 		self.species = species
 		self.name = species
 		self.level = level
+		self.nature = getNature(species)
 		self.iv = getRandomIV()
 		self.ev = [0,0,0,0,0,0]
+		self.personalityValue = getRandomPersonalityValue()
 		self.baseStats = getBaseStats(species)
 		self.stats = getStats(self)
 		self.statStage = [0,0,0,0,0,0,0,0,0]
 		self.maxhp = self.stats[0]
 		self.hp = self.stats[0]
-		self.nature = 'None'
-#		self.form = 
 		self.gender = getGender(species)
-		self.ability = 'None'
+		self.ability = getAbility(species)
 		self.type = getPokemonType(self)
 		self.item = 'None'
-		self.moveSet = getMoveSet(self)
+		if moveSet == 'Random':
+			self.moveSet = getMoveSet(self)
+		else:
+			self.moveSet = moveSet
+#		self.moveSet = moveSet
 		self.movePPMax = getMaxPP(self)
 		self.movePPCurrent = getMaxPP(self)
 		self.nvStatus = 0
@@ -133,6 +137,7 @@ class Pokemon(object):
 		self.disabledMove = 0
 		self.disabledCount = 0
 		self.transform = 0
+		self.flashFireMult = 1
 
 class Environment(object):
 	def __init__(self, location, weather):
@@ -172,6 +177,8 @@ class Move(object):
 		self.healthSteal = moveList[24]
 		self.currentEffectiveness = 1
 
+
+
 ####### GET VARIABLE FUNCTIONS #######
 
 def getRandomIV():
@@ -186,28 +193,42 @@ def getBaseStats(species):
 	return stats
 
 def gethpStat(id):
-	species = id.species; level = id.level; iv = id.iv; baseStats = id.baseStats	
+	species = id.species; level = id.level; iv = id.iv; baseStats = id.baseStats
 	return int(((2 * baseStats[0] + iv[0])* level / 100 ) + level + 10)
 
 def getAtkStat(id):
 	species = id.species; level = id.level; iv = id.iv; baseStats = id.baseStats
-	return int(((2 * baseStats[1] + iv[1]) * level / 100) + 5)
+	natureBonus = getNatureChange(id, 1)
+	return int((((2 * baseStats[1] + iv[1]) * level / 100) + 5) * natureBonus)
 
 def getDefStat(id):
 	species = id.species; level = id.level; iv = id.iv; baseStats = id.baseStats
-	return int(((2 * baseStats[2] + iv[2]) * level / 100) + 5)
+	natureBonus = getNatureChange(id, 2)
+	return int((((2 * baseStats[2] + iv[2]) * level / 100) + 5) * natureBonus)
 
 def getSpAtkStat(id):
 	species = id.species; level = id.level; iv = id.iv; baseStats = id.baseStats
-	return int(((2 * baseStats[3] + iv[3]) * level / 100) + 5)
+	natureBonus = getNatureChange(id, 3)
+	return int((((2 * baseStats[3] + iv[3]) * level / 100) + 5) * natureBonus)
 
 def getSpDefStat(id):
 	species = id.species; level = id.level; iv = id.iv; baseStats = id.baseStats
-	return int(((2 * baseStats[4] + iv[4]) * level / 100) + 5)
+	natureBonus = getNatureChange(id, 4)
+	return int((((2 * baseStats[4] + iv[4]) * level / 100) + 5) * natureBonus)
 
 def getSpdStat(id):
 	species = id.species; level = id.level; iv = id.iv; baseStats = id.baseStats
-	return int(((2 * baseStats[5] + iv[5]) * level / 100) + 5)
+	natureBonus = getNatureChange(id, 5)
+	return int((((2 * baseStats[5] + iv[5]) * level / 100) + 5) * natureBonus)
+
+def getNatureChange(id, stat):
+	natureChangeList = natureDictionary[id.nature]
+	if stat == natureChangeList[0]:
+		return 1.1
+	elif stat == natureChangeList[1]:
+		return 0.9
+	else:
+		return 1
 
 def getStats(id):
 	return [gethpStat(id),getAtkStat(id),getDefStat(id),getSpAtkStat(id),getSpDefStat(id),getSpdStat(id)]
@@ -240,7 +261,13 @@ def getBattleSpDefStat(id):
 def getBattleSpdStat(id):
 	stat = id.stats[5]; statStage = id.statStage[5]
 	mult = pokemonStatStageToMult[statStage]
+	mult *= getSpdAbilityMult(id)
 	return int(mult * stat)
+
+def getSpdAbilityMult(id):
+	if id.ability == 'Chlorophyll' and environment.weather == 'Sunshine':
+		return 2
+	return 1
 
 def getBattleAccStat(id):
 	stat = 1; statStage = id.statStage[6]
@@ -264,6 +291,13 @@ def getPokemonType(id):
 	if fromDict['Type Two'] != 'Null':
 		pokemonType.append(fromDict['Type Two'])
 	return pokemonType
+
+def getRandomPersonalityValue():
+	personalityValueString = ''
+	for i in range(32):
+		digit = str(randint(0,1))
+		personalityValueString += digit
+	return int(personalityValueString)
 
 def getPokemonCatchRate(id):
 	return pokemonCatchRates[id]
@@ -307,11 +341,32 @@ def getExp(pokemon,level):
 	return int(exp)
 
 def getGender(pokemon):
-	num = randint(1,100)
-	if num > 50:
+	genderRatio = pokemonGenderRatio[pokemon]
+	if genderRatio[0] == 0:
+		if genderRatio[1] == 0:
+			return 'Genderless'
+		else:
+			return 'Female'
+	elif genderRatio[1] == 0:
 		return 'Male'
 	else:
-		return 'Female'
+		totalParts = genderRatio[0] + genderRatio[1]
+		random = randint(1,totalParts)
+		if random <= genderRatio[0]:
+			return 'Male'
+		else:
+			return 'Female'
+
+def getNature(pokemon):
+	return random.sample(allNaturesList,1)[0]
+
+def getAbility(pokemon):
+	abilityList = pokemonAbilities[pokemon]
+	if abilityList[1] == 'None':
+		return abilityList[0]
+	else:
+		random = randint(0,1)
+		return abilityList[random]
 
 def getMoveSet(id):
 	allMoves = []
@@ -379,7 +434,14 @@ def getTypeEffectiveness(id,move):
 	effectiveness = 1
 	for i in pokemonType:
 		effectiveness *= effectiveDict[i]
+	effectiveness = checkTintedLens(effectiveness)
 	return effectiveness
+
+def checkTintedLens(effectiveness):
+	if effectiveness < 1:
+		return 1
+	else:
+		return effectiveness
 
 def getHitOrMiss(atkPokemon,defPokemon,move):
 	if defPokemon.immune == 1:
@@ -387,12 +449,37 @@ def getHitOrMiss(atkPokemon,defPokemon,move):
 	pokemonAccuracy = getBattleAccStat(atkPokemon)
 	pokemonEvasiveness = getBattleEvasStat(defPokemon)
 	moveAccuracy = move.accuracy
+	abilityMult = getAccuracyAbilityMult(atkPokemon,defPokemon,move)
 	chance = int(pokemonAccuracy * moveAccuracy / pokemonEvasiveness)
 	randomOf100 = randint(1,100)
 	if chance >= randomOf100:
 		return 'Hit'
 	else:
 		return 'Miss'
+
+def getAccuracyAbilityMult(atkPokemon, defPokemon, move):
+	mult = 1
+	mult *= checkCompoundEyes(atkPokemon)
+	mult *= checkTangledFeet(defPokemon)
+	mult *= checkSandVeil(defPokemon)
+
+def checkCompoundEyes(pokemon):
+	if pokemon.ability == 'Compound Eyes':
+		return 1.3
+	else:
+		return 1
+
+def checkTangledFeet(pokemon):
+	if pokemon.ability == 'Tangled Feet' and pokemon.confused == 1:
+		return 0.8
+	else:
+		return 1
+
+def checkSandVeil(pokemon):
+	if pokemon.ability == 'Sand Veil' and environment.weather == 'Sandstorm':
+		return 0.8
+	else:
+		return 1
 
 def getHitOrConfused(atkPokemon):
 	confused = 0
@@ -437,10 +524,42 @@ def getMoveDamage(atkPerson,atkPokemon,defPerson,defPokemon,move):
 		if defPerson != 0:
 			if defPerson.lightScreen == 1:
 				wall = 2
-	damage = int((((((2 * atkPokemon.level / 5) + 2) * aStat * move.damage / dStat) / 50) + 2) * stabBonus * effectiveness * critical / wall * float(randint(85,100)/100))
+	abilityMult = getAbilityMultDamage(atkPerson,atkPokemon,defPerson,defPokemon,move)
+#	print(abilityMult)
+	damage = int((((((2 * atkPokemon.level / 5) + 2) * aStat * move.damage / dStat) / 50) + 2) * stabBonus * effectiveness * critical * abilityMult / wall * float(randint(85,100)/100))
 	if defPokemon.hp - damage < 0:
 		damage = defPokemon.hp
 	return damage
+
+def getAbilityMultDamage(atkPerson,atkPokemon,defPerson,defPokemon,move):
+	mult = 1
+	mult *= checkPinch(atkPokemon,move)
+	mult *= checkRivalry(atkPokemon, defPokemon)
+	mult *= checkAbsorbedAbility(atkPokemon)
+	return mult
+
+def checkAbsorbedAbility(atkPokemon):
+	abilityList = ['Flash Fire']
+	abilityTypeDict = {'Flash Fire':'Fire'}
+	if atkPokemon.ability in abilityList:
+		if atkPokemon.move.type == abilityTypeDict[atkPokemon.ability]:
+			return atkPokemon.flashFireMult
+	return 1
+
+def checkPinch(pokemon,move):
+	pinchList = ['Blaze','Overgrow','Torrent','Swarm']
+	pinchDict = {'Blaze':'Fire','Overgrow':'Grass','Torrent':'Water','Swarm':'Bug'}
+	if pokemon.ability in pinchList:
+		if pokemon.hp < pokemon.maxhp / 3:
+			if move.type == pinchDict[pokemon.ability]:
+				return 1.3
+	return 1
+
+def checkRivalry(atkPokemon, defPokemon):
+	if atkPokemon.ability == 'Rivalry' and atkPokemon.gender == defPokemon.gender:
+		return 1.2
+	else:
+		return 1
 
 def getTurnOrder(myPokemon,enemyPokemon,myMove,enemyMove):
 	if myMove.priority == enemyMove.priority:
@@ -461,8 +580,8 @@ def getTurnOrder(myPokemon,enemyPokemon,myMove,enemyMove):
 def battleStartPhrasing():
 	if enemy.type == 'Wild':
 		print('A wild', enemy.pokemon.name, 'appeared! Go,', player.pokemon.name + '!')
-	if enemy.type == 'Trainer' or enemy.type == 'Gym Leader':
-		print('The', enemy.type, enemy.name, 'sent out a', enemy.pokemon.name + '.', 'Go,', player.pokemon.name + '!')
+	else:
+		print(enemy.type, enemy.name, 'sent out a', enemy.pokemon.name + '.', 'Go,', player.pokemon.name + '!')
 
 def battleEnd():
 	if enemy.type == 'Wild':
@@ -804,11 +923,15 @@ def moveStatChangePlayer():
 		if player.pokemon.move.target == 'Self':
 			player.pokemon.statStage = list(map(add, player.pokemon.statStage, player.pokemon.move.statEffect))
 			moveStatWordingOnPlayer(player.pokemon.move.statEffect)
+			checkCompetitive(player.pokemon, player.pokemon.move.statEffect)
 			statStageMax(player.pokemon)
 		if player.pokemon.move.target == 'Enemy':
 			if enemy.mist == 0 and enemy.pokemon.substitute == 0:
+				if player.pokemon.move.statEffect[6] < 0 and checkKeenEye(enemy.pokemon) == 1:
+					return
 				enemy.pokemon.statStage = list(map(add, enemy.pokemon.statStage, player.pokemon.move.statEffect))
 				moveStatWordingOnEnemy(player.pokemon.move.statEffect)
+				checkCompetitive(enemy.pokemon, player.pokemon.move.statEffect)
 				statStageMax(enemy.pokemon)
 			else:
 				print('But it failed!')
@@ -819,14 +942,43 @@ def moveStatChangeEnemy():
 		if enemy.pokemon.move.target == 'Self':
 			enemy.pokemon.statStage = list(map(add, enemy.pokemon.statStage, enemy.pokemon.move.statEffect))
 			moveStatWordingOnEnemy(enemy.pokemon.move.statEffect)
+			checkCompetitive(enemy.pokemon, enemy.pokemon.move.statEffect)
 			statStageMax(enemy.pokemon)
 		if enemy.pokemon.move.target == 'Enemy':
 			if player.mist == 0 and player.pokemon.substitute == 0:
+				if enemy.pokemon.move.statEffect[6] < 0 and checkKeenEye(player.pokemon) == 1:
+					return
 				player.pokemon.statStage = list(map(add, player.pokemon.statStage, enemy.pokemon.move.statEffect))
 				moveStatWordingOnPlayer(enemy.pokemon.move.statEffect)
+				checkCompetitive(player.pokemon, enemy.pokemon.move.statEffect)
 				statStageMax(player.pokemon)
 			else:
 				print('But it failed!')
+
+def checkCompetitive(pokemon, statEffect):
+	if pokemon.ability == 'Competitive':
+		negative = False
+		for i in statEffect:
+			if i < 0:
+				negative = True
+		if negative == True:
+			competitiveEffect = [0,0,0,0,2,0,0,0,0]
+			pokemon.statStage = list(map(add, pokemon.statStage, competitiveEffect))
+			if pokemon == player.pokemon:
+				moveStatWordingOnPlayer(competitiveEffect)
+			else:
+				moveStatWordingOnEnemy(competitiveEffect)
+
+def checkKeenEye(pokemon):
+	if pokemon.ability == 'Keen Eye':
+		print('check')
+		if pokemon == player.pokemon:
+			print(player.pokemon.name + '\'s keen eye prevented it\'s accuracy from falling!')
+		else:
+			print('The opposing', enemy.pokemon.name + '\'s keen eye prevented it\'s accuracy from falling!')
+		return 1
+	else:
+		return 0
 
 def statStageMax(pokemon):
 	statStage = pokemon.statStage
@@ -860,13 +1012,13 @@ def moveStatWordingOnPlayer(statList):
 			if changeForStat == 1:
 				print(player.pokemon.name + '\'s', stat, 'raised!')
 			if changeForStat == 2:
-				print(player.pokemon.name + '\'s', stat, 'raised greatly!')
+				print(player.pokemon.name + '\'s', stat, 'raised sharply!')
 			if changeForStat >= 3:
 				print(player.pokemon.name + '\'s', stat, 'raised hugely!')
 			if changeForStat == -1:
 				print(player.pokemon.name + '\'s', stat, 'fell!')
 			if changeForStat == -2:
-				print(player.pokemon.name + '\'s', stat, 'fell greatly!')
+				print(player.pokemon.name + '\'s', stat, 'fell sharply!')
 			if changeForStat <= -3:
 				print(player.pokemon.name + '\'s', stat, 'fell hugely!')
 		count += 1
@@ -880,13 +1032,13 @@ def moveStatWordingOnEnemy(statList):
 			if changeForStat == 1:
 				print('The opposing', enemy.pokemon.name + '\'s', stat, 'raised!')
 			if changeForStat == 2:
-				print('The opposing', enemy.pokemon.name + '\'s', stat, 'raised greatly!')
+				print('The opposing', enemy.pokemon.name + '\'s', stat, 'raised sharply!')
 			if changeForStat >= 3:
 				print('The opposing', enemy.pokemon.name + '\'s', stat, 'raised hugely!')
 			if changeForStat == -1:
 				print('The opposing', enemy.pokemon.name + '\'s', stat, 'fell!')
 			if changeForStat == -2:
-				print('The opposing', enemy.pokemon.name + '\'s', stat, 'fell greatly!')
+				print('The opposing', enemy.pokemon.name + '\'s', stat, 'fell sharply!')
 			if changeForStat <= -3:
 				print('The opposing', enemy.pokemon.name + '\'s', stat, 'fell hugely!')
 		count += 1
@@ -919,7 +1071,7 @@ def moveNVEffectEnemy():
 		if player.pokemon.nvStatus == 0 and player.pokemon.substitute == 0:
 			player.pokemon.nvStatus = enemy.pokemon.move.nvEffect
 			if player.pokemon.nvStatus == 3:
-				player.pokemon.nvStatusCount = randint(1,3)
+				player.pokemon.nvStatusCount = randint(2,4)
 			wording = moveNVEffectWording(player.pokemon.nvStatus)
 			print(player.pokemon.name, 'was', wording)
 		else:
@@ -957,6 +1109,7 @@ def getEnemySwitchPokemonForce():
 			resetOnSwitch(oldPokemon)
 			enemy.pokemon = choice
 			print('The opposing', oldPokemon.name, 'was forced out!', 'The', enemy.type, enemy.name, 'switched into', choice.name + '!')
+			checkIntimidateOnSwitch(enemy, player)
 			break
 
 def getPlayerSwitchPokemonForce():
@@ -967,6 +1120,7 @@ def getPlayerSwitchPokemonForce():
 			resetOnSwitch(oldPokemon)
 			player.pokemon = choice
 			print(oldPokemon.name, 'was forced out and replaced with', choice.name + '!')
+			checkIntimidateOnSwitch(player, enemy)
 			break
 
 def getSwitchPokemon():
@@ -1025,6 +1179,7 @@ def getSwitchPokemon():
 							player.pokemon = player.team[0]
 							resetOnSwitch(oldPokemon)
 							print('You switched from', oldPokemon.name, 'into', player.pokemon.name + '!')
+							checkIntimidateOnSwitch(player, enemy)
 							print()
 							player.pokemon.inCurrentBattle = 1
 							return 1
@@ -1587,9 +1742,11 @@ def startPlayerTurn():
 							checkStartSubstitute(player.pokemon)
 							checkDisable(player.pokemon, enemy.pokemon)
 							checkTransform(player.pokemon, enemy.pokemon)
-							if player.pokemon.move.damage != 0:
-								moveDealDamagePlayer()
-								checkRecoil(player.pokemon)
+							if checkFlashFireOrSimilar(player.pokemon, enemy.pokemon) == 0:
+								if player.pokemon.move.damage != 0:
+									moveDealDamagePlayer()
+									checkRecoil(player.pokemon)
+									checkContactAbilities(player.pokemon, enemy.pokemon)
 							checkThrashOrPetal(player.pokemon)
 							if enemy.pokemon.hp == 0:
 								print('The opposing', enemy.pokemon.name, 'fainted!')
@@ -1661,10 +1818,11 @@ def startEnemyTurn():
 							checkStartSubstitute(enemy.pokemon)
 							checkDisable(enemy.pokemon, player.pokemon)
 							checkTransform(enemy.pokemon, player.pokemon)
-
-							if enemy.pokemon.move.damage != 0:
-								moveDealDamageEnemy()
-								checkRecoil(enemy.pokemon)
+							if checkFlashFireOrSimilar(enemy.pokemon, player.pokemon) == 0:
+								if enemy.pokemon.move.damage != 0:
+									moveDealDamageEnemy()
+									checkRecoil(enemy.pokemon)
+									checkContactAbilities(enemy.pokemon, player.pokemon)
 							checkThrashOrPetal(enemy.pokemon)
 							if player.pokemon.hp == 0:
 								print(player.pokemon.name, 'fainted!')					
@@ -1683,6 +1841,51 @@ def startEnemyTurn():
 #	if enemy.pokemon.lockedInMoveNumber > 0:
 #		enemy.pokemon.lockedInMoveNumber -= 1
 	print()
+
+def checkFlashFireOrSimilar(atkPokemon, defPokemon):
+	abilityList = ['Flash Fire']
+	abilityTypeDict = {'Flash Fire':'Fire'}
+	if defPokemon.ability in abilityList:
+		if abilityTypeDict[defPokemon.ability] == atkPokemon.move.type:
+			if defPokemon == player.pokemon:
+				print(player.pokemon.name, 'absorbed the attack with it\'s', player.pokemon.ability + '!')
+			else:
+				print('The opposing', enemy.pokemon.name, 'absorbed the attack with it\'s', enemy.pokemon.ability + '!')
+			defPokemon.flashFireMult += 0.1
+			return 1
+	return 0
+
+def checkContactAbilities(atkPokemon, defPokemon):
+	checkStatic(atkPokemon, defPokemon)
+	checkPoisonPoint(atkPokemon, defPokemon)
+	checkEffectSpore(atkPokemon, defPokemon)
+
+def checkEffectSpore(atkPokemon, defPokemon):
+	if defPokemon.ability == 'Effect Spore' and atkPokemon.move.variety == 'Physical' and randint(1,5) == 1 and atkPokemon.nvStatus == 0:
+		possibleStatusList = [2,3,5]
+		atkPokemon.nvStatus = random.choice(possibleStatusList)
+		statusToWordDictEffectSpore = {2:'became paralyzed',3:'was put to sleep',5:'became poisoned'}
+		wording = statusToWordDictEffectSpore[atkPokemon.nvStatus]
+		if atkPokemon == player.pokemon:
+			print(player.pokemon.name, wording, 'by coming into contact with the opposing', enemy.pokemon.name + '!')
+		else:
+			print('The opposing', enemy.pokemon.name, wording, 'by coming into contact with', player.pokemon.name + '!')
+
+def checkStatic(atkPokemon, defPokemon):
+	if defPokemon.ability == 'Static' and atkPokemon.move.variety == 'Physical' and randint(1,5) == 1 and atkPokemon.nvStatus == 0:
+		atkPokemon.nvStatus = 2
+		if atkPokemon == player.pokemon:
+			print(player.pokemon.name, 'became paralyzed by coming into contact with the opposing', enemy.pokemon.name + '!')
+		else:
+			print('The opposing', enemy.pokemon.name, 'became paralyzed by coming into contact with', player.pokemon.name + '!')
+
+def checkPoisonPoint(atkPokemon, defPokemon):
+	if defPokemon.ability == 'Poison Point' and atkPokemon.move.variety == 'Physical' and randint(1,5) == 1 and atkPokemon.nvStatus == 0:
+		atkPokemon.nvStatus = 5
+		if atkPokemon == player.pokemon:
+			print(player.pokemon.name, 'became poisoned by coming into contact with the opposing', enemy.pokemon.name + '!')
+		else:
+			print('The opposing', enemy.pokemon.name, 'became poisoned by coming into contact with', player.pokemon.name + '!')
 
 def checkMissDamage(pokemon):
 	if pokemon.move.move == 'High Jump Kick' or pokemon.move.move == 'Jump Kick':
@@ -1710,13 +1913,12 @@ def teamTotalHP(person):
 def getRun():
 	if enemy.type == 'Wild':
 		chance = randint(1,2)
-		if chance == 1:
+		if chance == 1 or player.pokemon.ability == 'Run Away':
 			print('You got away!')
 			return 1
 		else:
 			print('You couldn\'t get away!')
 			return 0
-
 
 def checkWallCounts():
 	if player.lightScreen == 1:
@@ -1776,6 +1978,7 @@ def resetOnSwitch(pokemon):
 	pokemon.confusedCount = 0
 	pokemon.type = getPokemonType(pokemon)
 	pokemon.leechSeed = 0
+	pokemon.flashFireMult = 1
 
 def endRound():
 	for pokemon in player.team:
@@ -1809,6 +2012,7 @@ def endBattlePokemonInfo():
 		pokemon.wrap = 0
 		pokemon.wrapCount = 0
 		pokemon.leechSeed = 0
+		pokemon.flashFireMult = 1
 	for pokemon in enemy.team:
 		pokemon.statStage = [0,0,0,0,0,0,0,0,0]
 #		pokemon.ability =  
@@ -1832,9 +2036,10 @@ def endBattlePokemonInfo():
 		pokemon.wrap = 0
 		pokemon.wrapCount = 0
 		pokemon.leechSeed = 0
+		pokemon.flashFireMult = 1
 
 def checkFlinch(atkMove, defPokemon):
-	if atkMove.flinch == 1:
+	if atkMove.flinch == 1 and defPokemon.ability != 'Inner Focus':
 		if randint(1,100) <= atkMove.flinchChance:
 			defPokemon.flinch = 1
 
@@ -1894,6 +2099,9 @@ def getCurrentFight():
 			elif battleChoice == 'Pokemon':
 				switch = getSwitchPokemon()
 				if switch == 1:
+					if enemy.pokemon.lockedInMoveNumber == 0:
+						enemyChoice = getEnemyMove()
+						enemy.pokemon.move = Move(enemyChoice)					
 					startEnemyTurn()
 				else:
 					interrupt = 1
@@ -1904,12 +2112,18 @@ def getCurrentFight():
 				elif choice == 'Catch':
 					return 'End'
 				else:
+					if enemy.pokemon.lockedInMoveNumber == 0:
+						enemyChoice = getEnemyMove()
+						enemy.pokemon.move = Move(enemyChoice)					
 					startEnemyTurn()
 			elif battleChoice == 'Run':
 				if enemy.type == 'Wild':
 					run = getRun()
 					print()
 					if run == 0:
+						if enemy.pokemon.lockedInMoveNumber == 0:
+							enemyChoice = getEnemyMove()
+							enemy.pokemon.move = Move(enemyChoice)
 						startEnemyTurn()
 					else:
 						return 'End'
@@ -1946,6 +2160,9 @@ def getCurrentFight():
 						choice = getYesOrNo()
 						if choice == 1:
 							getSwitchPokemon()
+							checkStartBattleIntimidate()
+						else:
+							checkIntimidateOnSwitch(enemy,player)
 			endRound()
 
 def openBag():
@@ -2158,11 +2375,11 @@ def getYesOrNo():
 
 def battleTypeChoice():
 	print('What would you like to do?')
-	print(' 1 - Battle Trainer\n 2 - Battle Wild Pokemon\n 3 - Go To Pokemon Center')
+	print(' 1 - Battle Trainer\n 2 - Battle Wild Pokemon\n 3 - Go To Pokemon Center\n 4 - Elite Four Attempt')
 	while True:
 		try:
 			choiceInput = int(input('-- '))
-			if choiceInput == 1 or choiceInput == 2 or choiceInput == 3:
+			if choiceInput == 1 or choiceInput == 2 or choiceInput == 3 or choiceInput == 4:
 				return choiceInput
 			else:
 				print('Please choose an option!')
@@ -2174,6 +2391,7 @@ def startBattle():
 	player.pokemon = player.team[0]
 	enemy.pokemon = enemy.team[0]
 	battleStartPhrasing()
+	getPreBattleEffects()
 	while teamTotalHP(player) > 0 and teamTotalHP(enemy) > 0 and environment.battleEnd == 0:
 		game = getCurrentFight()
 		if game == 'End':
@@ -2184,6 +2402,26 @@ def startBattle():
 		winBattle()
 	elif environment.battleEnd == 1:
 		environment.battleEnd = 0
+
+def getPreBattleEffects():
+	checkStartBattleIntimidate()
+
+def checkStartBattleIntimidate():
+	if player.pokemon.ability == 'Intimidate':
+		enemy.pokemon.statStage = list(map(add, enemy.pokemon.statStage, [0,-1,0,0,0,0,0,0,0]))
+		print(player.pokemon.name, 'intimidated the opposing', enemy.pokemon.name + '!')
+	if enemy.pokemon.ability == 'Intimidate':
+		player.pokemon.statStage = list(map(add, player.pokemon.statStage, [0,-1,0,0,0,0,0,0,0]))
+		print('The opposing', enemy.pokemon.name, 'intimidated', player.pokemon.name + '!')
+
+def checkIntimidateOnSwitch(atkPlayer, defPlayer):
+	if atkPlayer.pokemon.ability == 'Intimidate':
+		if defPlayer.mist == 0 and defPlayer.pokemon.substitute == 0:
+			defPlayer.pokemon.statStage = list(map(add, defPlayer.pokemon.statStage, [0,-1,0,0,0,0,0,0,0]))
+			if atkPlayer.pokemon == player.pokemon:
+				print(player.pokemon.name, 'intimidated the opposing', enemy.pokemon.name + '!')
+			else:
+				print('The opposing', enemy.pokemon.name, 'intimidated', player.pokemon.name + '!')
 
 def winBattle():
 	if enemy.type != 'Wild':
@@ -2523,6 +2761,23 @@ def loadGame():
 
 	player = pickle.loads(raw_data)
 
+def eliteFour():
+	elite4LorelaiTeam = [Pokemon('Dewgong',53,['Growl','Aurora Beam','Rest','Take Down']),Pokemon('Cloyster',53,['Supersonic','Clamp','Aurora Beam','Spike Cannon']),Pokemon('Slowbro',54,['Water Gun','Growl','Withdraw','Amnesia']),Pokemon('Jynx',56,['Double Slap','Ice Punch','Body Slam','Thrash']),Pokemon('Lapras',56,['Body Slam','Confuse Ray','Hydro Pump','Blizzard'])]
+	elite4BrunoTeam = [Pokemon('Onix',53,['Rock Throw','Rage','Slam','Harden']),Pokemon('Hitmonchan',55,['Ice Punch','Fire Punch','Thunder Punch','Counter']),Pokemon('Hitmonlee',55,['Jump Kick','Focus Energy','High Jump Kick','Mega Kick']),Pokemon('Onix',56,['Rock Throw','Rage','Slam','Harden']),Pokemon('Machamp',58,['Leer','Focus Energy','Fissure','Submission'])]
+	elite4AgathaTeam = [Pokemon('Gengar',56,['Confuse Ray','Night Shade','Hypnosis','Dream Eater']),Pokemon('Golbat',56,['Supersonic','Confuse Ray','Wing Attack','Haze']),Pokemon('Haunter',55,['Confuse Ray','Night Shade','Hypnosis','Dream Eater']),Pokemon('Arbok',58,['Bite','Glare','Screech','Acid']),Pokemon('Gengar',60,['Confuse Ray','Night Shade','Toxic','Dream Eater'])]
+	elite4LanceTeam = [Pokemon('Gyarados',58,['Hydro Pump','Dragon Rage','Leer','Hyper Beam']),Pokemon('Dragonair',56,['Agility','Slam','Dragon Rage','Hyper Beam']),Pokemon('Dragonair',56,['Agility','Slam','Dragon Rage','Hyper Beam']),Pokemon('Aerodactyl',60,['Supersonic','Take Down','Bite','Hyper Beam']),Pokemon('Dragonite',62,['Agility','Slam','Barrier','Hyper Beam'])]
+	elite4BlueTeam = [Pokemon('Pidgeot',61,['Wing Attack','Mirror Move','Sky Attack','Whirlwind']),Pokemon('Alakazam',59,['Psybeam','Psychic','Reflect','Recover']),Pokemon('Rhydon',61,['Leer','Tail Whip','Fury Attack','Horn Drill']),Pokemon('Exeggutor',63,['Hypnosis','Barrage','Stomp']),Pokemon('Arcanine',61,['Roar','Leer','Ember','Take Down']),Pokemon('Blastoise',65,['Hydro Pump','Blizzard','Bite','Withdraw'])]
+	createEnemy('Elite Four member', 'Lorelai', elite4LorelaiTeam, 1000, 'Ice cold!')
+	startBattle()
+	createEnemy('Elite Four member', 'Bruno', elite4BrunoTeam, 1000, 'You fought hard!')
+	startBattle()
+	createEnemy('Elite Four member', 'Agatha', elite4AgathaTeam, 1000, 'Spooky stuff!')
+	startBattle()
+	createEnemy('Elite Four member', 'Lance', elite4LanceTeam, 1000, 'You beat me! But someone beat me first!')
+	startBattle()
+	createEnemy('Elite Four champion', 'Blue', elite4BlueTeam, 1000, 'No! You\'re the new champion!')
+	startBattle()
+
 def startGame():
 	player = Player()
 	player.defaultTeam.append(test)
@@ -2533,39 +2788,47 @@ def startGame():
 		choice = battleTypeChoice()
 		print('')
 		if choice == 1:
-#			enemyTeam = [Pokemon(random.choice(allPokemonList),100), Pokemon(random.choice(allPokemonList),100), Pokemon(random.choice(allPokemonList),100)]
-			enemyTeam = [Pokemon(random.choice(allPokemonList),70),Pokemon(random.choice(allPokemonList),70)]
+			enemyTeam = [Pokemon(random.choice(allPokemonList),100, 'Random'), Pokemon(random.choice(allPokemonList),100, 'Random'), Pokemon(random.choice(allPokemonList),100, 'Random')]
+#			enemyTeam = [Pokemon(random.choice(allPokemonList),70),Pokemon(random.choice(allPokemonList),70)]
+#			enemyTeam = [Pokemon('Arbok',70),Pokemon('Arbok',70)]
+
 #			enemyTeam = [Pokemon(random.choice(allPokemonList),70)]
 			createEnemy('Gym Leader', 'Brock', enemyTeam, 100, 'Damn! You beat me fair and square!')
+#			createEnemy('Florist', 'Dandy', [Pokemon('Charizard',100, 'Random')] ,50000,'Eat this!')
+#			createEnemy('Elite Four member', 'Lorelai', elite4LorelaiTeam, 1000, 'Ice cold!')
 			startBattle()
 		elif choice == 2:
-			wildTeam = [Pokemon('Kakuna',30)]
-			#wildTeam = [Pokemon(random.choice(allPokemonList),50)]
+#			wildTeam = [Pokemon('Paras',10)]
+			wildTeam = [Pokemon(random.choice(allPokemonList),50, 'Random')]
 			createEnemy('Wild', 'Wild', wildTeam, 0, 'Damn!')
 			startBattle()
 		elif choice == 3:
 			pokemonCenter()
+		elif choice == 4:
+			eliteFour()
+
 
 
 savefile = "/Users/bradellison/Documents/GitHub/pokemon-simulator/savefile.txt"
 
-test = Pokemon('Ditto', 100)
-#test = Pokemon(random.choice(allPokemonList),100)
-test3 = Pokemon('Alakazam', 100)
-test4 = Pokemon('Rattata', 10)
+
+#test = Pokemon('Venusaur', 100, 'Random')
+test2 = Pokemon('Alakazam',100, 'Random')
+test3 = Pokemon('Machamp', 100, 'Random')
+test4 = Pokemon('Exeggutor', 10, 'Random')
 #test4 = Pokemon(random.choice(allPokemonList),100)
-test5 = Pokemon('Rattata', 10)
-test6 = Pokemon('Persian', 100)
-test7 = Pokemon('Charmander', 100)
+test5 = Pokemon('Rattata', 10, 'Random')
+test6 = Pokemon('Persian', 100, 'Random')
+test7 = Pokemon('Charmander', 100, 'Random')
 
-test = Pokemon(random.choice(allPokemonList),100)
-test2 = Pokemon(random.choice(allPokemonList),100)
-test3 = Pokemon(random.choice(allPokemonList),100)
-test4 = Pokemon(random.choice(allPokemonList),100)
-test5 = Pokemon(random.choice(allPokemonList),100)
-test6 = Pokemon(random.choice(allPokemonList),100)
+test = Pokemon(random.choice(allPokemonList),100, 'Random')
+test2 = Pokemon(random.choice(allPokemonList),100, 'Random')
+test3 = Pokemon(random.choice(allPokemonList),100, 'Random')
+test4 = Pokemon(random.choice(allPokemonList),100, 'Random')
+test5 = Pokemon(random.choice(allPokemonList),100, 'Random')
+test6 = Pokemon(random.choice(allPokemonList),100, 'Random')
 
-test7 = Pokemon(random.choice(allPokemonList),100)
+test7 = Pokemon(random.choice(allPokemonList),100, 'Random')
 
 balls = Ball('PokeBall',2)
 balls2 = Ball('Master Ball',50)
@@ -2580,12 +2843,12 @@ PC.boxes.append(Box())
 
 bag = Bag()
 
-PC.boxes[0].inventory.append(Pokemon(random.choice(allPokemonList),100))
-PC.boxes[0].inventory.append(Pokemon(random.choice(allPokemonList),100))
-PC.boxes[0].inventory.append(Pokemon(random.choice(allPokemonList),100))
-PC.boxes[0].inventory.append(Pokemon(random.choice(allPokemonList),100))
-PC.boxes[0].inventory.append(Pokemon(random.choice(allPokemonList),100))
-PC.boxes[0].inventory.append(Pokemon(random.choice(allPokemonList),100))
+PC.boxes[0].inventory.append(Pokemon(random.choice(allPokemonList),100, 'Random'))
+PC.boxes[0].inventory.append(Pokemon(random.choice(allPokemonList),100, 'Random'))
+PC.boxes[0].inventory.append(Pokemon(random.choice(allPokemonList),100, 'Random'))
+PC.boxes[0].inventory.append(Pokemon(random.choice(allPokemonList),100, 'Random'))
+PC.boxes[0].inventory.append(Pokemon(random.choice(allPokemonList),100, 'Random'))
+PC.boxes[0].inventory.append(Pokemon(random.choice(allPokemonList),100, 'Random'))
 
 bag.balls.append(balls)
 bag.balls.append(balls2)
@@ -2605,10 +2868,20 @@ player.livingPokemon = len(player.team)
 #
 ##enemy = Enemy('Gym Leader', 'Brock', enemyTeam, 100, 'Damn!')
 #enemy = Enemy('Wild', 'Wild', wildTeam, 0, 'Damn!')
-enemyTeam = [Pokemon(random.choice(allPokemonList),100), Pokemon(random.choice(allPokemonList),100), Pokemon(random.choice(allPokemonList),100)]
+enemyTeam = [Pokemon(random.choice(allPokemonList),100, 'Random'), Pokemon(random.choice(allPokemonList),100, 'Random'), Pokemon(random.choice(allPokemonList),100, 'Random')]
 
 enemy = Enemy(0, 0, 0, 0, 0)
 print()
+
+#for i in range(5):
+#	pokemon = Pokemon('Pidgeot',100)
+#	print(pokemon.name, ',', pokemon.gender, ',', pokemon.ability, ',', pokemon.nature)
+#	for j in range(6):
+#		print(pokemon.stats[j], pokemon.iv[j])
+#	print(pokemon.name, pokemon.gender, pokemon.ability)
+
+#for i in player.team:
+#	print(i.name, i.gender, i.ability, i.nature)
 
 x = startGame()
 

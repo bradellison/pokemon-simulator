@@ -141,7 +141,7 @@ superFangInfo = ['Super Fang','Normal','Physical', 0,90,10,'Always takes off hal
 supersonicInfo = ['Supersonic','Normal','Status', 0,55,20,'Confuses opponent.','Enemy',0,1,0,0,0,0,0,1,100,0,0,0,0,0,0,0,0]
 surfInfo = ['Surf','Water','Special',90,100,15,'Hits all adjacent Pokémon.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 swiftInfo = ['Swift','Normal','Special',60,10000,20,'Ignores Accuracy and Evasiveness.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-swordsDanceInfo = ['Swords Dance','Normal','Status', 0, 10000,20,'Sharply raises user\'s Attack.','Enemy',0,1,0,0,0,0,0,0,0,[0,2,0,0,0,0,0,0,0],100,0,0,0,0,0,0]
+swordsDanceInfo = ['Swords Dance','Normal','Status', 0, 10000,20,'Sharply raises user\'s Attack.','Self',0,1,0,0,0,0,0,0,0,[0,2,0,0,0,0,0,0,0],100,0,0,0,0,0,0]
 tackleInfo = ['Tackle','Normal','Physical',40,100,35,'','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 tailWhipInfo = ['Tail Whip','Normal','Status', 0,100,30,'Lowers opponent\'s Defense.','Enemy',0,1,0,0,0,0,0,0,0,[0,0,-1,0,0,0,0,0,0],100,0,0,0,0,0,0]
 takeDownInfo = ['Take Down','Normal','Physical',90,85,20,'User receives recoil damage.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
@@ -162,7 +162,7 @@ waterGunInfo = ['Water Gun','Water','Special',40,100,25,'','Enemy',0,1,0,0,0,0,0
 waterfallInfo = ['Waterfall','Water','Physical',80,100,15,'May cause flinching.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,10,0]
 whirlwindInfo = ['Whirlwind','Normal','Status', 0, 100,20,'In battles; the opponent switches. In the wild; the Pokémon runs.','Enemy',-6,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 wingAttackInfo = ['Wing Attack','Flying','Physical',60,100,35,'','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-withdrawInfo = ['Withdraw','Water','Status', 0, 10000,40,'Raises user\'s Defense.','Enemy',0,1,0,0,0,0,0,0,0,[0,0,1,0,0,0,0,0,0],100,0,0,0,0,0,0]
+withdrawInfo = ['Withdraw','Water','Status', 0, 10000,40,'Raises user\'s Defense.','Self',0,1,0,0,0,0,0,0,0,[0,0,1,0,0,0,0,0,0],100,0,0,0,0,0,0]
 wrapInfo = ['Wrap','Normal','Physical',15,90,20,'Traps opponent; damaging them for 4-5 turns.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
 noneInfo = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
