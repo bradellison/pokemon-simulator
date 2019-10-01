@@ -1,8 +1,125 @@
 # Done
-# Overgrow, Blaze, Torrent, Compound Eyes, Swarm, Keen Eye, Tangled Feet, Run Away, Intimidate, Static, Sand Veil, Poison Point, Rivalry, Competitive, Inner Focus, Chlorophyll, Effect Spore, Tilted Lens
-
+# Overgrow, Blaze, Torrent, Compound Eyes, Swarm, Keen Eye, Tangled Feet, Run Away, Intimidate
+# Static, Sand Veil, Poison Point, Rivalry, Competitive, Inner Focus, Chlorophyll, Effect Spore, Tilted Lens, Dry Skin
+# Shield Dust, Shed Skin
 # To do
-# Shield Dust, Shed Skin, Cute Charm, Magic Guard, Dry Skin
+# Cute Charm, Magic Guard
+
+# Overgrow --
+# Chlorophyll 
+# Blaze --
+# Solar Power 
+# Torrent --
+# Rain Dish 
+# Shield Dust
+# Run Away
+# Shed Skin
+# Compound Eyes
+# Tinted Lens
+# Swarm
+# Sniper
+# Keen Eye
+# Tangled Feet
+# Big Pecks
+# Guts
+# Hustle
+# Intimidate
+# Unnerve
+# Static
+# Lightning Rod
+# Sand Veil
+# Sand Rush
+# Poison Point
+# Rivalry
+# Sheer Force
+# Cute Charm
+# Magic Guard
+# Friend Guard
+# Unaware
+# Flash Fire
+# Drought
+# Competitive
+# Frisk
+# Inner Focus
+# Infiltrator
+# Stench
+# Effect Spore
+# Dry Skin
+# Damp
+# Wonder Skin
+# Arena Trap
+# Sand Force
+# Pickup
+# Technician
+# Limber
+# Cloud Nine
+# Swift Swim
+# Vital Spirit
+# Anger Point
+# Defiant
+# Justified
+# Water Absorb
+# Synchronize
+# No Guard
+# Steadfast
+# Gluttony
+# Clear Body
+# Liquid Ooze
+# Rock Head
+# Sturdy
+# Flame Body
+# Oblivious
+# Own Tempo
+# Regenerator
+# Magnet Pull
+# Analytic
+# Early Bird
+# Thick Fat
+# Hydration
+# Ice Body
+# Sticky Hold
+# Poison Touch
+# Shell Armor
+# Skill Link
+# Overcoat
+# Levitate
+# Cursed Body
+# Weak Armor
+# Insomnia
+# Forewarn
+# Hyper Cutter
+# Soundproof
+# Aftermath
+# Harvest
+# Battle Armor
+# Reckless
+# Unburden
+# Iron Fist
+# Natural Cure
+# Serene Grace
+# Healer
+# Leaf Guard
+# Scrappy
+# Water Veil
+# Illuminate
+# mrSoundproof
+# Filter
+# Mold Breaker
+# Moxie
+# Rattled
+# Imposter
+# Adaptability
+# Anticipation
+# Volt Absorb
+# Quick Feet
+# Trace
+# Download
+# Pressure
+# Immunity
+# Snow Cloak
+# Marvel Scale
+# Multiscale
+
 
 bulbasaurAbilities = ['Overgrow','None','Chlorophyll']
 ivysaurAbilities = ['Overgrow','None','Chlorophyll']
