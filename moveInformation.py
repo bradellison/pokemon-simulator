@@ -171,23 +171,3 @@ allMoveList = ['Absorb','Acid','Acid Armor','Agility','Amnesia','Aurora Beam','B
 
 hitSelfConfusionInfo =  ['Hit Self','Typeless','Physical',40,10000,10000,'Hit self in confusion.','Self',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
-#Remaining To Code
-#Bide
-#Dig
-#Disable
-#Fly
-#Hyper Beam
-#Mist
-#Pay Day
-#Petal Dance
-#Rage
-#Razor Wind
-#Roar
-#Skull Bash
-#Sky attack
-#Solar Beam
-#Substitute
-#Teleport
-#Thrash
-#Transform
-#Whirlwind

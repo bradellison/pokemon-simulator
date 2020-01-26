@@ -3,7 +3,7 @@
 # 2 Def
 # 3 SpAtk
 # 4 SpDef
-# Spd
+# 5 Spd
 # First is boosted +10%, second is reduced -10%
 
 

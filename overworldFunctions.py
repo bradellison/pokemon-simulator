@@ -1,46 +1,42 @@
 
-def mainGame(player):
-    oakSpeech(player)
+from battleFunctions import startBattle
+from choicesFunctions import getOptionOneOrTwoOrThree
+from pokemonLocationsDictionaries import getWildPokemon
+from choicesFunctions import getOptionOneOrTwo, getOptionOneOrTwoOrThree, getOptionOneOrTwoOrThreeOrFour, getOptionOneOrTwoOrThreeOrFourOrFive, getOptionsXnumber
+from gameMaps import overworldMap, mapCodeToLocationDict, locationToMapCodeDict
 
-def oakSpeech(player):
-    text('Oak','Hello and welcome to the wonderful world of Pokemon!')
-    text('Oak','My name is Professor Oak! What\'s your name?')
-    chooseName(player.name)
-    text('Oak',('Ah yes, lovely to meet you. My grandson lives closeby too, any idea what his name is?'))
-    chooseName(player.rival)
-    text('Oak','Of course, now I remember! Now let\'s get down to business.')
-    text('Oak','I\'d like you to take one of these Pokemon here and see how you get on in the world on Pokemon!')
-    string = 'Now', player.name + ',', player.rival, 'I\'d like to give you each a Pokemon!'
-    text('Oak',string)
-    pokemonChoice = getOptionOneOrTwoOrThree('Bulbasaur - the grass-type Pokemon.','Charmander - the fire-type Pokemon.','Squirtle - the water-type Pokemon.')
+def showLinkingLocations(data):
+    mapCode = locationToMapCodeDict[data.environment.location]
+    count = 0
+    for row in overworldMap:
+        if mapCode in row:
+            x = row.index(mapCode)
+            y = count
+        count += 1
+    west = mapCodeToLocationDict[overworldMap[y][x-1]]
+    east = mapCodeToLocationDict[overworldMap[y][x+1]]
+    north = mapCodeToLocationDict[overworldMap[y-1][x]]
+    south = mapCodeToLocationDict[overworldMap[y+1][x]]
+    print('You are currently in', data.environment.location + '. Which way would you like to go?')
+    northD = 'North: ' + north
+    eastD  = 'East: ' + east
+    southD = 'South: ' + south
+    westD  = 'West: ' + west
+    current = 'Current: ' + data.environment.location
+    allDirections = [northD, eastD, southD, westD]
+    allLocations = [north, east, south, west]
+    count = 0
+    availableDirectionsD = [current]
+    availableDirections = [data.environment.location]
+    for direction in allDirections:
+        if 'Nothing' not in direction:
+            availableDirectionsD.append(direction)
+            availableDirections.append(allLocations[count])
+        count += 1
+    choice = getOptionsXnumber(availableDirectionsD)
+    return availableDirections[choice - 1]
 
+def directionChoice(data):
+    data.environment.location = showLinkingLocations(data)
 
-def getOptionOneOrTwoOrThree(option1, option2, option3):
-	print(' 1 -', option1, '\n 2 -', option2, '\n 3 -', option3)
-	while True:
-		try:
-			choiceInput = int(input('-- '))
-			if choiceInput == 1 or choiceInput == 2 or choiceInput == 3:
-				return choiceInput
-			else:
-				print('Please choose an option!')
-		except ValueError:
-			print('Please choose an option!')
-
-def chooseName(person):
-    while True:
-        try:
-            choiceInput = input('-- ')
-            if choiceInput != '':
-                person = choiceInput
-                return
-            text('Oak','Sorry, I missed that. Say again?')
-        except ValueError:
-            text('Oak','Sorry, I missed that. Say again?')
-
-
-
-def text(name, text):
-    print(name + ':', text)
-    input()
 
