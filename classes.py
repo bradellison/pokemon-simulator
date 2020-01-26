@@ -2,6 +2,7 @@ from random import randint
 from getVariableFunctions import getNature, getRandomIV, getRandomPersonalityValue, getBaseStats, getStats, getGender, getAbility, getPokemonType, getExpGroup, getExpYieldBase, getExp, getPokemonCatchRate, getMoveSet, getMaxPP
 from moveDictionaries import moveInfo
 from bagFunctions import getMedicineHeal, getBallModifier
+from gameMaps import locationInformationDict
 from screen import BattleScreen
 
 
@@ -10,10 +11,11 @@ class Data(object):
 		self.player = Player()
 		self.enemy = Enemy(1, 'Default', [], 0, 'Default Text')
 		self.rival = Enemy(1, 'Default', [], 0, 'Smell ya later!')
-		self.environment = Environment('Viridian City','None')
+		self.environment = Environment('Pallet Town','None')
 		self.pc = PC()
 		self.bag = Bag()
 		self.bscreen = BattleScreen()
+		self.expMult = 500
 
 class Player(object):
 	def __init__(self):
@@ -142,7 +144,7 @@ class Pokemon(object):
 
 class Environment(object):
 	def __init__(self, location, weather):
-		self.location = location
+		self.location = Location(location)
 		self.weather = weather
 		self.weathercount = 0
 		self.payDayExtra = 0
@@ -177,3 +179,10 @@ class Move(object):
 		self.flinchChance = moveList[23]
 		self.healthSteal = moveList[24]
 		self.currentEffectiveness = 1
+
+class Location(object):
+	def __init__(self, name):
+		self.name = name
+		self.grass = locationInformationDict[name]['Grass']
+		self.water = locationInformationDict[name]['Water']
+		self.centre = locationInformationDict[name]['Centre']

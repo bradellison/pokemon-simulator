@@ -9,7 +9,6 @@ def getOptionsXnumber(listOfOptions):
 	if len(listOfOptions) == 5:
 		return getOptionOneOrTwoOrThreeOrFourOrFive(listOfOptions[0],listOfOptions[1],listOfOptions[2],listOfOptions[3],listOfOptions[4])
 
-
 def getOptionOneOrTwo(option1, option2):
 	print(' 1 -', option1, '\n 2 -', option2)
 	while True:

@@ -27,6 +27,7 @@ class Warp(object):
         self.position = position
 
 overworldMap = [
+['xxx','xxx','ptc','xxx','xxx'],
 ['xxx','xxx','vrf','xxx','xxx'],
 ['xxx','xxx','rt2','xxx','xxx'],
 ['xxx','r22','vrc','xxx','xxx'],
@@ -35,8 +36,18 @@ overworldMap = [
 ['xxx','xxx','xxx','xxx','xxx'] 
 ]
 
-locationToMapCodeDict = {'Pallet Town': 'plt', 'Route 1': 'rt1', 'Route 2': 'rt2', 'Viridian City': 'vrc', 'Viridian Forest': 'vrf', 'Route 22': 'r22'}
-mapCodeToLocationDict = {'xxx': 'Nothing', 'plt': 'Pallet Town', 'rt1': 'Route 1', 'rt2': 'Route 2', 'vrc': 'Viridian City', 'vrf': 'Viridian Forest', 'r22': 'Route 22'}
+palletTownDict = {'Grass': False, 'Water': False, 'Centre': True}
+routeOneDict = {'Grass': True, 'Water': False, 'Centre': False}
+viridianCityDict = {'Grass': False, 'Water': False, 'Centre': True}
+routeTwoDict = {'Grass': True, 'Water': False, 'Centre': False}
+routeTwentyTwoDict = {'Grass': True, 'Water': False, 'Centre': False}
+viridianForestDict = {'Grass': True, 'Water': False, 'Centre': False}
+pewterCityDict = {'Grass': False, 'Water': False, 'Centre': True}
+
+
+locationToMapCodeDict = {'Pallet Town': 'plt', 'Route 1': 'rt1', 'Route 2': 'rt2', 'Viridian City': 'vrc', 'Viridian Forest': 'vrf', 'Route 22': 'r22', 'Pewter City': 'ptc'}
+mapCodeToLocationDict = {'xxx': 'Nothing', 'plt': 'Pallet Town', 'rt1': 'Route 1', 'rt2': 'Route 2', 'vrc': 'Viridian City', 'vrf': 'Viridian Forest', 'r22': 'Route 22', 'ptc': 'Pewter City'}
+locationInformationDict = {'Pallet Town': palletTownDict, 'Route 1': routeOneDict, 'Route 2': routeTwoDict, 'Viridian City': viridianCityDict, 'Viridian Forest': viridianForestDict, 'Route 22': routeTwentyTwoDict, 'Pewter City': pewterCityDict}
 
 
 T = 'Tree'

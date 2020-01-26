@@ -2,6 +2,7 @@ import time
 
 from pcFunctions import usePC
 from saveDataFunctions import saveGame, loadGame, saveOrLoad
+from getVariableFunctions import getMaxPP
 from choicesFunctions import getOptionOneOrTwo
 
 
@@ -46,7 +47,7 @@ def healAllPokemon(data):
 		pokemon.hp = pokemon.maxhp
 		pokemon.nvStatus = 0
 		pokemon.nvStatusCount = 0
-		pokemon.movePPCurrent = pokemon.movePPMax
+		pokemon.movePPCurrent = getMaxPP(pokemon)
 		print('Healed', pokemon.name + '!')
 		time.sleep(1)
 	print('Your team is now at full health!\n')

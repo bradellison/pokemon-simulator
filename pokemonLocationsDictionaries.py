@@ -11,13 +11,5 @@ locationToDict = {'Route 1': route1Dict,'Route 2': route2Dict, 'Route 3': route3
 allLocationsDicts = [route1Dict, route2Dict, route3Dict, viridianForestDict, route22Dict]
 
 
-def getWildPokemon(location):
-    number = randint(1,100)
-    locationDict = locationToDict[location]
-    while True:
-        if number in locationDict:
-            pokemon = locationDict[number]
-            return pokemon     
-        else:
-            number += 1
+
 

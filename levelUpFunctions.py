@@ -1,5 +1,5 @@
 from pokemonDictionaries import pokemonLevelUpMoves, pokemonEvolutionDetails
-from getVariableFunctions import getExp, getBaseStats, getPokemonType, getOneMaxPP
+from getVariableFunctions import getExp, getBaseStats, getPokemonType, getOneMaxPP, gethpStat
 
 def getPokemonLevelUpMoves(pokemon):
 	movesByLevel = pokemonLevelUpMoves[pokemon]
@@ -12,7 +12,7 @@ def getPokemonEvolutionDetails(pokemon):
 def getExpYield(data):
 	for i in data.player.team:
 		if i.level != 100:
-			a = 1; e = 1; f = 1; p = 1; s = 1; t = 1; v = 1
+			a = 1; e = 1; f = 1; p = 1; s = 1; t = 1; v = 1; x = 500#x = data.expMult
 			if data.enemy.type != 'Wild':
 				a = 1.5
 			b = data.enemy.pokemon.BaseExpYield
@@ -28,7 +28,7 @@ def getExpYield(data):
 				return
 			#t is for traded pokemon, not implemented
 			#v is for pokemon that could have evolved already, not implemented
-			expYield = int((a * b * e * f * l * p * t * v) / (7 * s))
+			expYield = int((a * b * e * f * l * p * t * v * x) / (7 * s))
 			i.exp += expYield
 			print(i.name, 'gained', expYield, 'exp!')
 			while i.exp > i.nextLevelExp and i.level < 100:
@@ -41,6 +41,10 @@ def getExpYield(data):
 					if evolutionDetails['Type'] == 'Level':
 						if i.level >= evolutionDetails['Detail']:
 							i.shouldEvolve = 1
+				oldMaxHealth = i.maxhp
+				i.maxhp = gethpStat(i)
+				increase = i.maxhp - oldMaxHealth
+				i.hp += increase
 			print('')
 
 def evolvePokemon(pokemon):
@@ -53,6 +57,10 @@ def evolvePokemon(pokemon):
 	print(pokemon.species)
 	pokemon.baseStats = getBaseStats(pokemon.species)
 	pokemon.type = getPokemonType(pokemon)
+	oldMaxHealth = pokemon.maxhp
+	pokemon.maxhp = gethpStat(pokemon)
+	increase = pokemon.maxhp - oldMaxHealth
+	pokemon.hp += increase
 	getMoveLearn(pokemon)
 
 def getMoveLearn(i):
