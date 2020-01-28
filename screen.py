@@ -86,13 +86,13 @@ def getBattleScreenValues(data):
 #    print('\\---------------------------------------------------------------------------/')
 
 def liteBattleScreen(data):
-    print('/----------------------------------------------------\\')
-    print('|                             |>  ' + data.bscreen.nameBarEnemy  + ' <|')
-    print('|----------------------\\      |(' + data.bscreen.healthBarEnemy + ')|')
-    print('|> ' + data.bscreen.nameBarPlayer + '  <|      \\----------------------|')
-    print('|(' + data.bscreen.healthBarPlayer + ')|                             |')
-    print('|        ' + data.bscreen.extraSpaceHealthPlayer + str(data.player.pokemon.hp) + '/' + str(data.player.pokemon.maxhp) + 'HP |                             |')
-    print('\\----------------------------------------------------/')
+    print('/------------------------------------------------------\\')
+    print('|                               |>  ' + data.bscreen.nameBarEnemy  + ' <|')
+    print('|----------------------\\        |(' + data.bscreen.healthBarEnemy + ')|')
+    print('|> ' + data.bscreen.nameBarPlayer + '  <|        \\----------------------|')
+    print('|(' + data.bscreen.healthBarPlayer + ')|                               |')
+    print('|        ' + data.bscreen.extraSpaceHealthPlayer + str(data.player.pokemon.hp) + '/' + str(data.player.pokemon.maxhp) + 'HP |                               |')
+    print('|------------------------------------------------------|')
 
 def drawScreen(data):
     getBattleScreenValues(data)

@@ -12,6 +12,7 @@ from bagFunctions import openBag
 from typeInfo import allType
 from levelUpFunctions import getExpYield, evolvePokemon
 from pcFunctions import getPokemonInfoViewChoiceTeam
+from text import text
 from screen import drawScreen
 
 def getStabBonus(id,move):
@@ -309,7 +310,7 @@ def moveDealDamagePlayer(data):
 			damage = 0
 		data.enemy.pokemon.hp -= damage	
 		effectivenessWording = getEffectivenessWording(data.player.pokemon.move.currentEffectiveness)
-		print('It did', damage, 'damage' + effectivenessWording, 'The opposing', data.enemy.pokemon.name, 'has', data.enemy.pokemon.hp, '/', data.enemy.pokemon.maxhp, 'HP remaining!')		
+		text(data, 'It did', damage, 'damage' + effectivenessWording, 'The opposing', data.enemy.pokemon.name, 'has', data.enemy.pokemon.hp, '/', data.enemy.pokemon.maxhp, 'HP remaining!')		
 		if data.player.pokemon.criticalMove == 1:
 			print('It was a critical hit!')
 			data.player.pokemon.criticalMove = 0
@@ -339,7 +340,7 @@ def moveDealDamageEnemy(data):
 			damage = 0
 		data.player.pokemon.hp -= damage
 		effectivenessWording = getEffectivenessWording(data.enemy.pokemon.move.currentEffectiveness)
-		print('It did', damage, 'damage' + effectivenessWording, data.player.pokemon.name, 'has', data.player.pokemon.hp, '/', data.player.pokemon.maxhp, 'HP remaining!')
+		text(data, 'It did', damage, 'damage' + effectivenessWording, data.player.pokemon.name, 'has', data.player.pokemon.hp, '/', data.player.pokemon.maxhp, 'HP remaining!')
 		if data.enemy.pokemon.criticalMove == 1:
 			print('It was a critical hit!')
 			data.enemy.pokemon.criticalMove = 0
@@ -1154,7 +1155,7 @@ def startPlayerTurn(data):
 						checkMissDamage(data, data.player.pokemon)
 						interrupt = 1
 					if interrupt == 0:
-						print(data.player.pokemon.name, 'used', data.player.pokemon.move.move, 'against the opposing', data.enemy.pokemon.name + '.')
+						text(data, data.player.pokemon.name, 'used', data.player.pokemon.move.move, 'against the opposing', data.enemy.pokemon.name + '.')
 						interrupt = checkFainted(data.enemy.pokemon)
 						interrupt += checkDreamEater(data.player.pokemon, data.enemy.pokemon)
 						if interrupt == 0:
@@ -1230,7 +1231,7 @@ def startEnemyTurn(data):
 						checkMissDamage(data, data.enemy.pokemon)
 						interrupt = 1
 					if interrupt == 0:
-						print('The opposing', data.enemy.pokemon.name, 'used', data.enemy.pokemon.move.move, 'against', data.player.pokemon.name + '.')
+						text(data, 'The opposing', data.enemy.pokemon.name, 'used', data.enemy.pokemon.move.move, 'against', data.player.pokemon.name + '.')
 						interrupt = checkFainted(data.player.pokemon)
 						interrupt += checkDreamEater(data.enemy.pokemon, data.player.pokemon)
 						if interrupt == 0:
