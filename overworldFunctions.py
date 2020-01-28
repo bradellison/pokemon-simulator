@@ -8,7 +8,6 @@ from battleFunctions import createEnemy
 from classes import Pokemon
 from pokemonLocationsDictionaries import locationToDict
 
-
 def chooseDirection(data):
     mapCode = locationToMapCodeDict[data.environment.location.name]
     count = 0

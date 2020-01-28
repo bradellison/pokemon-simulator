@@ -99,7 +99,7 @@ def checkCompetitive(data, pokemon, statEffect):
 				negative = True
 		if negative == True:
 			competitiveEffect = [0,0,0,0,2,0,0,0,0]
-			pokemon.statStage = list(map(add, data.pokemon.statStage, competitiveEffect))
+			pokemon.statStage = list(map(add, pokemon.statStage, competitiveEffect))
 			if pokemon == data.player.pokemon:
 				moveStatWordingOnPlayer(data, competitiveEffect)
 			else:
