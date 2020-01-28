@@ -98,3 +98,25 @@ def drawScreen(data):
     getBattleScreenValues(data)
     liteBattleScreen(data)
 
+def battleChoiceScreen():
+    print('| What would you like to do?                           |')
+    print('|      1 - Fight                  2 - Pokemon          |')
+    print('|      3 - Bag                    4 - Run              |')
+    print('\\------------------------------------------------------/')
+
+def getExtraSpaceAttackChoice(a,b,c,d,e,f,g):
+    length = len(str(a)+str(b)+str(c)+str(d)+str(e)+str(f)+str(g))
+    space = ''
+    spareSpaces = 50 - length
+    for _ in range(spareSpaces):
+        space += ' '
+    return space
+
+def attackChoiceScreen(data):
+    drawScreen(data)
+    moveSet = data.player.pokemon.moveSet
+    for i in range(len(moveSet)):
+        extraSpace = getExtraSpaceAttackChoice('| ', i + 1, '-', moveSet[i], '-', str(data.player.pokemon.movePPCurrent[i]) + '/' + str(data.player.pokemon.movePPMax[i]), 'PP')
+        print('|', i + 1, '|', moveSet[i], '-', str(data.player.pokemon.movePPCurrent[i]) + '/' + str(data.player.pokemon.movePPMax[i]), 'PP' + extraSpace + '|')
+    print('|', len(moveSet) + 1, '| Back                                             |')
+    print('\\------------------------------------------------------/')

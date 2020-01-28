@@ -13,7 +13,7 @@ from typeInfo import allType
 from levelUpFunctions import getExpYield, evolvePokemon
 from pcFunctions import getPokemonInfoViewChoiceTeam
 from text import text
-from screen import drawScreen
+from screen import drawScreen, battleChoiceScreen, attackChoiceScreen
 
 def getStabBonus(id,move):
 	pokemonType = id.type; moveType = move.type
@@ -112,18 +112,19 @@ def getTurnOrder(data, myPokemon,enemyPokemon,myMove,enemyMove):
 
 def battleStartPhrasing(data):
 	if data.enemy.type == 'Wild':
-		print('A wild', data.enemy.pokemon.name, 'appeared! Go,', data.player.pokemon.name + '!')
+		text(data, 'A wild', data.enemy.pokemon.name, 'appeared! Go,', data.player.pokemon.name + '!')
 	else:
-		print(data.enemy.type, data.enemy.name, 'sent out a', data.enemy.pokemon.name + '.', 'Go,', data.player.pokemon.name + '!')
+		text(data, data.enemy.type, data.enemy.name, 'sent out a', data.enemy.pokemon.name + '.', 'Go,', data.player.pokemon.name + '!')
 
 def battleEnd(data):
 	if data.enemy.type == 'Wild':
-		print('You defeated the wild', data.enemy.pokemon.name)
+		text(data, 'You defeated the wild', data.enemy.pokemon.name)
 	if data.enemy.type == 'Trainer' or data.enemy.type == 'Gym Leader':
-		print('You defeated', data.enemy.type, data.enemy.name + '.', 'You received', data.enemy.prizeMoney, 'for winning!')
+		text(data, 'You defeated', data.enemy.type, data.enemy.name + '.', 'You received', data.enemy.prizeMoney, 'for winning!')
 
 def battleChoiceInput():
-	print('What would you like to do? \n 1 - Fight \n 2 - Pokemon \n 3 - Bag \n 4 - Run')
+	#print('What would you like to do? \n 1 - Fight \n 2 - Pokemon \n 3 - Bag \n 4 - Run')
+	battleChoiceScreen()
 	while True:
 		try:
 			choiceInput = input('-- ')
@@ -149,10 +150,11 @@ def moveChoiceInput(data):
 	totalPP = getTotalPP(data.player.pokemon)
 	if totalPP == 0:
 		return 'Struggle'
+	attackChoiceScreen(data)
 	moveSet = data.player.pokemon.moveSet
-	for i in range(len(moveSet)):
-		print('', i + 1, '-', moveSet[i], '-', str(data.player.pokemon.movePPCurrent[i]) + '/' + str(data.player.pokemon.movePPMax[i]), 'PP')
-	print('', len(moveSet) + 1, '- Back')
+#	for i in range(len(moveSet)):
+#		print('', i + 1, '-', moveSet[i], '-', str(data.player.pokemon.movePPCurrent[i]) + '/' + str(data.player.pokemon.movePPMax[i]), 'PP')
+#	print('', len(moveSet) + 1, '- Back')
 	while True:
 		try:
 			choiceInput = input('-- ')
@@ -194,30 +196,30 @@ def moveChoiceInput(data):
 		except ValueError:
 			print("Please choose a move from the list above!")	
 
-def preTurnNVStatusCheck(person):
+def preTurnNVStatusCheck(data, person):
 	if person.pokemon.nvStatus == 2:
-		print(person.pokemon.name, 'is paralyzed and may not be able to move!')
+		text(data, person.pokemon.name, 'is paralyzed and may not be able to move!')
 		i = randint(1,4)
 		if i == 1:
-			print(person.pokemon.name, 'couldn\'t move!')
+			text(data, person.pokemon.name, 'couldn\'t move!')
 			return 1
 		return 0
 	elif person.pokemon.nvStatus == 3:
-		print(person.pokemon.name, 'is sleeping!')
+		text(data, person.pokemon.name, 'is sleeping!')
 		person.pokemon.nvStatusCount -= 1
 		if person.pokemon.nvStatusCount > 0:
 			return 1
 		person.pokemon.nvStatus = 0
-		print(person.pokemon.name, 'woke up!')
+		text(data, person.pokemon.name, 'woke up!')
 		return 0
 	elif person.pokemon.nvStatus == 4:
 		i = randint(1,5)
 		if i == 1:
 			person.pokemon.nvStatus = 0
-			print(person.pokemon.name, 'thawed out!')
+			text(data, person.pokemon.name, 'thawed out!')
 			return 0
 		else:
-			print(person.pokemon.name, 'is frozen and couldn\'t move!')
+			text(data, person.pokemon.name, 'is frozen and couldn\'t move!')
 			return 1
 	else:
 		return 0
@@ -229,20 +231,20 @@ def postTurnNVStatusCheckPlayer(data, player):
 			if damage > player.pokemon.hp:
 				damage = player.pokemon.hp
 			player.pokemon.hp -= damage
-			print(player.pokemon.name, 'took', damage, 'HP damage due to it\'s burn! It has', player.pokemon.hp, '/', player.pokemon.maxhp, 'HP remaining!')
+			text(data, player.pokemon.name, 'took', damage, 'HP damage due to it\'s burn! It has', player.pokemon.hp, '/', player.pokemon.maxhp, 'HP remaining!')
 		elif player.pokemon.nvStatus == 5:
 			damage = int(player.pokemon.maxhp / 8)
 			if damage > player.pokemon.hp:
 				damage = player.pokemon.hp
 			player.pokemon.hp -= damage
-			print(player.pokemon.name, 'took', damage, 'HP damage due to being poisoned! It has', player.pokemon.hp, '/', player.pokemon.maxhp, 'HP remaining!')
+			text(data, player.pokemon.name, 'took', damage, 'HP damage due to being poisoned! It has', player.pokemon.hp, '/', player.pokemon.maxhp, 'HP remaining!')
 		elif player.pokemon.nvStatus == 6:
 			player.pokemon.nvStatusCount += 1
 			damage = int(player.pokemon.maxhp * player.pokemon.nvStatusCount / 16)
 			if damage > player.pokemon.hp:
 				damage = player.pokemon.hp
 			player.pokemon.hp -= damage
-			print(player.pokemon.name, 'took', damage, 'HP damage due to being poisoned! It has', player.pokemon.hp, '/', player.pokemon.maxhp, 'HP remaining!')
+			text(data, player.pokemon.name, 'took', damage, 'HP damage due to being poisoned! It has', player.pokemon.hp, '/', player.pokemon.maxhp, 'HP remaining!')
 
 def postTurnNVStatusCheckEnemy(data, enemy):
 	if checkShedSkin(data, enemy.pokemon) == False:
@@ -251,20 +253,20 @@ def postTurnNVStatusCheckEnemy(data, enemy):
 			if damage > enemy.pokemon.hp:
 				damage = enemy.pokemon.hp
 			enemy.pokemon.hp -= damage
-			print('The opposing', enemy.pokemon.name, 'took', damage, 'HP damage due to it\'s burn! It has', enemy.pokemon.hp, '/', enemy.pokemon.maxhp, 'HP remaining!')
+			text(data, 'The opposing', enemy.pokemon.name, 'took', damage, 'HP damage due to it\'s burn! It has', enemy.pokemon.hp, '/', enemy.pokemon.maxhp, 'HP remaining!')
 		elif enemy.pokemon.nvStatus == 5:
 			damage = int(enemy.pokemon.maxhp / 8)
 			if damage > enemy.pokemon.hp:
 				damage = enemy.pokemon.hp
 			enemy.pokemon.hp -= damage
-			print('The opposing', enemy.pokemon.name, 'took', damage, 'HP damage due to being poisoned! It has', enemy.pokemon.hp, '/', enemy.pokemon.maxhp, 'HP remaining!')
+			text(data, 'The opposing', enemy.pokemon.name, 'took', damage, 'HP damage due to being poisoned! It has', enemy.pokemon.hp, '/', enemy.pokemon.maxhp, 'HP remaining!')
 		elif enemy.pokemon.nvStatus == 6:
 			enemy.pokemon.nvStatusCount += 1
 			damage = int(enemy.pokemon.maxhp * enemy.pokemon.nvStatusCount / 16)
 			if damage > enemy.pokemon.hp:
 				damage = enemy.pokemon.hp
 			enemy.pokemon.hp -= damage
-			print('The opposing', enemy.pokemon.name, 'took', damage, 'HP damage due to being poisoned! It has', enemy.pokemon.hp, '/', enemy.pokemon.maxhp, 'HP remaining!')
+			text(data, 'The opposing', enemy.pokemon.name, 'took', damage, 'HP damage due to being poisoned! It has', enemy.pokemon.hp, '/', enemy.pokemon.maxhp, 'HP remaining!')
 
 
 def getEffectivenessWording(i):
@@ -283,14 +285,14 @@ def checkHealthSteal(atkPokemon, atkMove, damage):
 		atkPokemon.hp += healAmount
 	return healAmount
 
-def checkHitSubstitute(atkPokemon,defPokemon,damage):
+def checkHitSubstitute(data, atkPokemon,defPokemon,damage):
 	if defPokemon.substitute == 1:
-		print('The substitute protected', defPokemon.name, 'from the attack!')
+		text(data, 'The substitute protected', defPokemon.name, 'from the attack!')
 		if defPokemon.substituteHealth < damage:
 			damage = defPokemon.substituteHealth
 		defPokemon.substituteHealth -= damage
 		if defPokemon.substituteHealth == 0:
-			print('The substitute was destroyed!')
+			text(data, 'The substitute was destroyed!')
 			defPokemon.substitute = 0
 		return 1
 	else:
@@ -305,14 +307,14 @@ def moveDealDamagePlayer(data):
 	totalDamage = 0
 	while numberOfHits > 0 and data.enemy.pokemon.hp > 0:
 		damage = getMoveDamage(data, data.player, data.player.pokemon, data.enemy, data.enemy.pokemon, data.player.pokemon.move)
-		substitute = checkHitSubstitute(data.player.pokemon, data.enemy.pokemon, damage)
+		substitute = checkHitSubstitute(data, data.player.pokemon, data.enemy.pokemon, damage)
 		if substitute == 1:
 			damage = 0
 		data.enemy.pokemon.hp -= damage	
 		effectivenessWording = getEffectivenessWording(data.player.pokemon.move.currentEffectiveness)
 		text(data, 'It did', damage, 'damage' + effectivenessWording, 'The opposing', data.enemy.pokemon.name, 'has', data.enemy.pokemon.hp, '/', data.enemy.pokemon.maxhp, 'HP remaining!')		
 		if data.player.pokemon.criticalMove == 1:
-			print('It was a critical hit!')
+			text(data, 'It was a critical hit!')
 			data.player.pokemon.criticalMove = 0
 		actualHits += 1
 		numberOfHits -= 1
@@ -321,10 +323,10 @@ def moveDealDamagePlayer(data):
 		checkAddBideDamage(data.enemy.pokemon, damage)
 		checkRageBonus(data, data.enemy.pokemon)
 		if healedAmount > 0:
-			print(data.player.pokemon.name, 'gained', healedAmount, 'HP!')
+			text(data, data.player.pokemon.name, 'gained', healedAmount, 'HP!')
 	data.player.pokemon.previousDamage = totalDamage
 	if data.player.pokemon.move.multiAttack == 1:
-		print('It hit the enemy', actualHits, 'times!')
+		text(data, 'It hit the enemy', actualHits, 'times!')
 
 def moveDealDamageEnemy(data):
 	if data.enemy.pokemon.move.multiAttack == 1:
@@ -335,14 +337,14 @@ def moveDealDamageEnemy(data):
 	totalDamage = 0
 	while numberOfHits > 0 and data.player.pokemon.hp > 0:
 		damage = getMoveDamage(data, data.enemy, data.enemy.pokemon, data.player, data.player.pokemon, data.enemy.pokemon.move)
-		substitute = checkHitSubstitute(data.enemy.pokemon, data.player.pokemon, damage)
+		substitute = checkHitSubstitute(data, data.enemy.pokemon, data.player.pokemon, damage)
 		if substitute == 1:
 			damage = 0
 		data.player.pokemon.hp -= damage
 		effectivenessWording = getEffectivenessWording(data.enemy.pokemon.move.currentEffectiveness)
 		text(data, 'It did', damage, 'damage' + effectivenessWording, data.player.pokemon.name, 'has', data.player.pokemon.hp, '/', data.player.pokemon.maxhp, 'HP remaining!')
 		if data.enemy.pokemon.criticalMove == 1:
-			print('It was a critical hit!')
+			text(data, 'It was a critical hit!')
 			data.enemy.pokemon.criticalMove = 0
 		actualHits += 1
 		numberOfHits -= 1
@@ -351,10 +353,10 @@ def moveDealDamageEnemy(data):
 		checkAddBideDamage(data.player.pokemon, damage)
 		checkRageBonus(data, data.player.pokemon)
 		if healedAmount > 0:
-			print('The opposing', data.player.pokemon.name, 'gained', healedAmount, 'HP!')
+			text(data, 'The opposing', data.player.pokemon.name, 'gained', healedAmount, 'HP!')
 	data.enemy.pokemon.previousDamage = totalDamage
 	if data.enemy.pokemon.move.multiAttack == 1:
-		print('It hit', data.player.pokemon.name, actualHits, 'times!')
+		text(data, 'It hit', data.player.pokemon.name, actualHits, 'times!')
 
 def moveDamageConfusion(data, atkPokemon):
 	move = Move('Hit Self')
@@ -380,7 +382,7 @@ def moveStatChangePlayer(data):
 				checkCompetitive(data, data.enemy.pokemon, data.player.pokemon.move.statEffect)
 				statStageMax(data, data.enemy.pokemon)
 			else:
-				print('But it failed!')
+				text(data, 'But it failed!')
 
 def moveStatChangeEnemy(data):
 	chance = randint(1,100)
@@ -399,7 +401,7 @@ def moveStatChangeEnemy(data):
 				checkCompetitive(data, data.player.pokemon, data.enemy.pokemon.move.statEffect)
 				statStageMax(data, data.player.pokemon)
 			else:
-				print('But it failed!')
+				text(data, 'But it failed!')
 
 def statStageMax(data, pokemon):
 	statStage = pokemon.statStage
@@ -431,17 +433,17 @@ def moveStatWordingOnPlayer(data, statList):
 			stat = statDict[count]
 			changeForStat = statList[count]
 			if changeForStat == 1:
-				print(data.player.pokemon.name + '\'s', stat, 'raised!')
+				text(data, data.player.pokemon.name + '\'s', stat, 'raised!')
 			if changeForStat == 2:
-				print(data.player.pokemon.name + '\'s', stat, 'raised sharply!')
+				text(data, data.player.pokemon.name + '\'s', stat, 'raised sharply!')
 			if changeForStat >= 3:
-				print(data.player.pokemon.name + '\'s', stat, 'raised hugely!')
+				text(data, data.player.pokemon.name + '\'s', stat, 'raised hugely!')
 			if changeForStat == -1:
-				print(data.player.pokemon.name + '\'s', stat, 'fell!')
+				text(data, data.player.pokemon.name + '\'s', stat, 'fell!')
 			if changeForStat == -2:
-				print(data.player.pokemon.name + '\'s', stat, 'fell sharply!')
+				text(data, data.player.pokemon.name + '\'s', stat, 'fell sharply!')
 			if changeForStat <= -3:
-				print(data.player.pokemon.name + '\'s', stat, 'fell hugely!')
+				text(data, data.player.pokemon.name + '\'s', stat, 'fell hugely!')
 		count += 1
 
 def moveStatWordingOnEnemy(data, statList):
@@ -451,17 +453,17 @@ def moveStatWordingOnEnemy(data, statList):
 			stat = statDict[count]
 			changeForStat = statList[count]
 			if changeForStat == 1:
-				print('The opposing', data.enemy.pokemon.name + '\'s', stat, 'raised!')
+				text(data, 'The opposing', data.enemy.pokemon.name + '\'s', stat, 'raised!')
 			if changeForStat == 2:
-				print('The opposing', data.enemy.pokemon.name + '\'s', stat, 'raised sharply!')
+				text(data, 'The opposing', data.enemy.pokemon.name + '\'s', stat, 'raised sharply!')
 			if changeForStat >= 3:
-				print('The opposing', data.enemy.pokemon.name + '\'s', stat, 'raised hugely!')
+				text(data, 'The opposing', data.enemy.pokemon.name + '\'s', stat, 'raised hugely!')
 			if changeForStat == -1:
-				print('The opposing', data.enemy.pokemon.name + '\'s', stat, 'fell!')
+				text(data, 'The opposing', data.enemy.pokemon.name + '\'s', stat, 'fell!')
 			if changeForStat == -2:
-				print('The opposing', data.enemy.pokemon.name + '\'s', stat, 'fell sharply!')
+				text(data, 'The opposing', data.enemy.pokemon.name + '\'s', stat, 'fell sharply!')
 			if changeForStat <= -3:
-				print('The opposing', data.enemy.pokemon.name + '\'s', stat, 'fell hugely!')
+				text(data, 'The opposing', data.enemy.pokemon.name + '\'s', stat, 'fell hugely!')
 		count += 1
 
 def moveNVEffectWording(nvStatus):
@@ -484,9 +486,9 @@ def moveNVEffectPlayer(data):
 				if data.enemy.pokemon.nvStatus == 3:
 					data.enemy.pokemon.nvStatusCount = randint(2,4)
 				wording = moveNVEffectWording(data.enemy.pokemon.nvStatus)
-				print('The opposing', data.enemy.pokemon.name, 'was', wording)
+				text(data, 'The opposing', data.enemy.pokemon.name, 'was', wording)
 		else:
-			print('But it failed!')
+			text(data, 'But it failed!')
 
 def moveNVEffectEnemy(data):
 	if data.enemy.pokemon.move.nvEffect != 0 and randint(1,100) <= data.enemy.pokemon.move.nvEffectChance:
@@ -496,9 +498,9 @@ def moveNVEffectEnemy(data):
 				if data.player.pokemon.nvStatus == 3:
 					data.player.pokemon.nvStatusCount = randint(2,4)
 				wording = moveNVEffectWording(data.player.pokemon.nvStatus)
-				print(data.player.pokemon.name, 'was', wording)
+				text(data, data.player.pokemon.name, 'was', wording)
 		else:
-			print('But it failed!')
+			text(data, 'But it failed!')
 
 def getEnemyMove(data):
 	totalPP = getTotalPP(data.enemy.pokemon)
@@ -531,7 +533,7 @@ def getEnemySwitchPokemonForce(data):
 		if choice != oldPokemon and choice.hp != 0:
 			resetOnSwitch(oldPokemon)
 			data.enemy.pokemon = choice
-			print('The opposing', oldPokemon.name, 'was forced out!', 'The', data.enemy.type, data.enemy.name, 'switched into', choice.name + '!')
+			text(data, 'The opposing', oldPokemon.name, 'was forced out!', 'The', data.enemy.type, data.enemy.name, 'switched into', choice.name + '!')
 			checkIntimidateOnSwitch(data, data.enemy, data.player)
 			break
 
@@ -542,7 +544,7 @@ def getPlayerSwitchPokemonForce(data):
 		if choice != oldPokemon and choice.hp != 0:
 			resetOnSwitch(oldPokemon)
 			data.player.pokemon = choice
-			print(oldPokemon.name, 'was forced out and replaced with', choice.name + '!')
+			text(data, oldPokemon.name, 'was forced out and replaced with', choice.name + '!')
 			checkIntimidateOnSwitch(data, data.player, data.enemy)
 			break
 
@@ -572,7 +574,7 @@ def getSwitchPokemon(data):
 					print(data.player.pokemon.name, 'has fainted! Please choose another Pokemon!')
 					x = 1
 				else:
-					print('Keep going,', data.player.pokemon.name + '!')
+					text(data, 'Keep going,', data.player.pokemon.name + '!')
 					return 0
 
 					# No switch
@@ -612,9 +614,9 @@ def getSwitchPokemon(data):
 			print("Please choose a Pokemon from the list above!")	
 
 
-def checkSplash(move):
+def checkSplash(data, move):
 	if move == 'Splash':
-		print('But nothing happened!')
+		text(data, 'But nothing happened!')
 
 def checkTrapStart(data, atkPokemon, defPokemon):
 	move = atkPokemon.move.move
@@ -625,54 +627,54 @@ def checkTrapStart(data, atkPokemon, defPokemon):
 				defPokemon.bind = 1
 				defPokemon.bindCount = randint(4,5)
 				if atkPokemon == data.player.pokemon:
-					print('The opposing', data.enemy.pokemon.name, 'is caught in a bind!')
+					text(data, 'The opposing', data.enemy.pokemon.name, 'is caught in a bind!')
 				else:
-					print(data.player.pokemon.name, 'is caught in a bind!')
+					text(data, data.player.pokemon.name, 'is caught in a bind!')
 				print()
 			else:
-				print('But it failed!\n')
+				text(data, 'But it failed!\n')
 		elif move == traplist[1]:
 			if defPokemon.clamp == 0 and defPokemon.substitute == 0:
 				defPokemon.clamp = 1
 				defPokemon.clampCount = randint(4,5)
 				if atkPokemon == data.player.pokemon:
-					print('The opposing', data.enemy.pokemon.name, 'is clamped down!')
+					text(data, 'The opposing', data.enemy.pokemon.name, 'is clamped down!')
 				else:
-					print(data.player.pokemon.name, 'is clamped down!')
+					text(data, data.player.pokemon.name, 'is clamped down!')
 				print()
 			else:
-				print('But it failed!\n')
+				text(data, 'But it failed!\n')
 		elif move == traplist[2]:
 			if defPokemon.fireSpin == 0 and defPokemon.substitute == 0:
 				defPokemon.fireSpin = 1
 				defPokemon.fireSpinCount = randint(4,5)
 				if atkPokemon == data.player.pokemon:
-					print('The opposing', data.enemy.pokemon.name, 'is caught in a firey vortex!')
+					text(data, 'The opposing', data.enemy.pokemon.name, 'is caught in a firey vortex!')
 				else:
-					print(data.player.pokemon.name, 'is caught in a firey vortex!')
+					text(data, data.player.pokemon.name, 'is caught in a firey vortex!')
 				print()
 			else:
-				print('But it failed!\n')
+				text(data, 'But it failed!\n')
 		elif move == traplist[3]:
 			if defPokemon.wrap == 0 and defPokemon.substitute == 0:
 				defPokemon.wrap = 1
 				defPokemon.wrapCount = randint(4,5)
 				if atkPokemon == data.player.pokemon:
-					print('The opposing', data.enemy.pokemon.name, 'is wrapped up!')
+					text(data, 'The opposing', data.enemy.pokemon.name, 'is wrapped up!')
 				else:
-					print(data.player.pokemon.name, 'is caught in a bind!')
+					text(data, data.player.pokemon.name, 'is caught in a bind!')
 				print()
 			else:
-				print('But it failed!\n')
+				text(data, 'But it failed!\n')
 		elif move == traplist[4]:
 			if defPokemon.leechSeed == 0 and defPokemon.substitute == 0:
 				defPokemon.leechSeed = 1
 				if atkPokemon == data.player.pokemon:
-					print(data.player.pokemon.name, 'planted it\'s seed on the opposing', data.enemy.pokemon.name + '!')
+					text(data, data.player.pokemon.name, 'planted it\'s seed on the opposing', data.enemy.pokemon.name + '!')
 				else:
-					print('The opposing', data.enemy.pokemon.name, 'planted it\'s seed on', data.player.pokemon.name + '!')
+					text(data, 'The opposing', data.enemy.pokemon.name, 'planted it\'s seed on', data.player.pokemon.name + '!')
 			else:
-				print('But it failed!\n')
+				text(data, 'But it failed!\n')
 
 def checkTrapEffect(data, pokemon):
 	if pokemon.bind == 1:
@@ -681,77 +683,77 @@ def checkTrapEffect(data, pokemon):
 			damage = pokemon.hp
 		pokemon.hp -= damage
 		if pokemon == data.player.pokemon:
-			print(data.player.pokemon.name, 'took', damage, 'HP damage due to it\'s bind! It has', data.player.pokemon.hp, '/', data.player.pokemon.maxhp, 'HP remaining!' )
+			text(data, data.player.pokemon.name, 'took', damage, 'HP damage due to it\'s bind! It has', data.player.pokemon.hp, '/', data.player.pokemon.maxhp, 'HP remaining!' )
 		else:
-			print('The opposing', data.enemy.pokemon.name, 'took', damage, 'HP damage due to it\'s bind! It has', data.enemy.pokemon.hp, '/', data.enemy.pokemon.maxhp, 'HP remaining!' )			
+			text(data, 'The opposing', data.enemy.pokemon.name, 'took', damage, 'HP damage due to it\'s bind! It has', data.enemy.pokemon.hp, '/', data.enemy.pokemon.maxhp, 'HP remaining!' )			
 		if pokemon.hp > 0:
 			pokemon.bindCount -= 1
 			if pokemon.bindCount == 0:
 				pokemon.bind = 0
 				if pokemon == data.player.pokemon:
-					print(data.player.pokemon.name, 'escaped from it\'s bind!')
+					text(data, data.player.pokemon.name, 'escaped from it\'s bind!')
 				else:
-					print('The opposing', data.enemy.pokemon.name, 'escaped from it\'s bind!' )
+					text(data, 'The opposing', data.enemy.pokemon.name, 'escaped from it\'s bind!' )
 	if pokemon.clamp == 1:
 		damage = int(pokemon.maxhp / 16)
 		if damage > pokemon.hp:
 			damage = pokemon.hp
 		pokemon.hp -= damage
 		if pokemon == data.player.pokemon:
-			print(data.player.pokemon.name, 'took', damage, 'HP damage due to it\'s clamp! It has', data.player.pokemon.hp, '/', data.player.pokemon.maxhp, 'HP remaining!' )
+			text(data, data.player.pokemon.name, 'took', damage, 'HP damage due to it\'s clamp! It has', data.player.pokemon.hp, '/', data.player.pokemon.maxhp, 'HP remaining!' )
 		else:
-			print('The opposing', data.enemy.pokemon.name, 'took', damage, 'HP damage due to it\'s clamp! It has', data.enemy.pokemon.hp, '/', data.enemy.pokemon.maxhp, 'HP remaining!' )			
+			text(data, 'The opposing', data.enemy.pokemon.name, 'took', damage, 'HP damage due to it\'s clamp! It has', data.enemy.pokemon.hp, '/', data.enemy.pokemon.maxhp, 'HP remaining!' )			
 		if pokemon.hp > 0:
 			pokemon.clampCount -= 1
 			if pokemon.clampCount == 0:
 				pokemon.clamp = 0
 				if pokemon == data.player.pokemon:
-					print(data.player.pokemon.name, 'escaped from it\'s clamp!')
+					text(data, data.player.pokemon.name, 'escaped from it\'s clamp!')
 				else:
-					print('The opposing', data.enemy.pokemon.name, 'escaped from it\'s clamp!' )
+					text(data, 'The opposing', data.enemy.pokemon.name, 'escaped from it\'s clamp!' )
 	if pokemon.fireSpin == 1:
 		damage = int(pokemon.maxhp / 16)
 		if damage > pokemon.hp:
 			damage = pokemon.hp
 		pokemon.hp -= damage
 		if pokemon == data.player.pokemon:
-			print(data.player.pokemon.name, 'took', damage, 'HP damage due to the firey vortex! It has', data.player.pokemon.hp, '/', data.player.pokemon.maxhp, 'HP remaining!' )
+			text(data, data.player.pokemon.name, 'took', damage, 'HP damage due to the firey vortex! It has', data.player.pokemon.hp, '/', data.player.pokemon.maxhp, 'HP remaining!' )
 		else:
-			print('The opposing', data.enemy.pokemon.name, 'took', damage, 'HP damage due to the firey vortex! It has', data.enemy.pokemon.hp, '/', data.enemy.pokemon.maxhp, 'HP remaining!' )			
+			text(data, 'The opposing', data.enemy.pokemon.name, 'took', damage, 'HP damage due to the firey vortex! It has', data.enemy.pokemon.hp, '/', data.enemy.pokemon.maxhp, 'HP remaining!' )			
 		if pokemon.hp > 0:
 			pokemon.fireSpinCount -= 1
 			if pokemon.fireSpinCount == 0:
 				pokemon.fireSpin = 0
 				if pokemon == data.player.pokemon:
-					print(data.player.pokemon.name, 'escaped from the firey vortex!')
+					text(data, data.player.pokemon.name, 'escaped from the firey vortex!')
 				else:
-					print('The opposing', data.enemy.pokemon.name, 'escaped from the firey vortex!' )
+					text(data, 'The opposing', data.enemy.pokemon.name, 'escaped from the firey vortex!' )
 	if pokemon.wrap == 1:
 		damage = int(pokemon.maxhp / 16)
 		if damage > pokemon.hp:
 			damage = pokemon.hp
 		pokemon.hp -= damage
 		if pokemon == data.player.pokemon:
-			print(data.player.pokemon.name, 'took', damage, 'HP damage due to it\'s wrap! It has', data.player.pokemon.hp, '/', data.player.pokemon.maxhp, 'HP remaining!' )
+			text(data, data.player.pokemon.name, 'took', damage, 'HP damage due to it\'s wrap! It has', data.player.pokemon.hp, '/', data.player.pokemon.maxhp, 'HP remaining!' )
 		else:
-			print('The opposing', data.enemy.pokemon.name, 'took', damage, 'HP damage due to it\'s wrap! It has', data.enemy.pokemon.hp, '/', data.enemy.pokemon.maxhp, 'HP remaining!' )			
+			text(data, 'The opposing', data.enemy.pokemon.name, 'took', damage, 'HP damage due to it\'s wrap! It has', data.enemy.pokemon.hp, '/', data.enemy.pokemon.maxhp, 'HP remaining!' )			
 		if pokemon.hp > 0:
 			pokemon.wrapCount -= 1
 			if pokemon.wrapCount == 0:
 				pokemon.wrap = 0
 				if pokemon == data.player.pokemon:
-					print(data.player.pokemon.name, 'escaped from it\'s wrap!')
+					text(data, data.player.pokemon.name, 'escaped from it\'s wrap!')
 				else:
-					print('The opposing', data.enemy.pokemon.name, 'escaped from it\'s wrap!' )
+					text(data, 'The opposing', data.enemy.pokemon.name, 'escaped from it\'s wrap!' )
 	if pokemon.leechSeed == 1:
 		damage = int(pokemon.maxhp / 16)
 		if damage > pokemon.hp:
 			damage = pokemon.hp
 		pokemon.hp -= damage
 		if pokemon == data.player.pokemon:
-			print(data.player.pokemon.name, 'took', damage, 'HP damage due to it\'s leeching! It has', data.player.pokemon.hp, '/', data.player.pokemon.maxhp, 'HP remaining!' )
+			text(data, data.player.pokemon.name, 'took', damage, 'HP damage due to it\'s leeching! It has', data.player.pokemon.hp, '/', data.player.pokemon.maxhp, 'HP remaining!' )
 		else:
-			print('The opposing', data.enemy.pokemon.name, 'took', damage, 'HP damage due to it\'s leeching! It has', data.enemy.pokemon.hp, '/', data.enemy.pokemon.maxhp, 'HP remaining!' )			
+			text(data, 'The opposing', data.enemy.pokemon.name, 'took', damage, 'HP damage due to it\'s leeching! It has', data.enemy.pokemon.hp, '/', data.enemy.pokemon.maxhp, 'HP remaining!' )			
 
 	
 def checkMetronome(data, pokemon):
@@ -759,18 +761,18 @@ def checkMetronome(data, pokemon):
 		randomMove = (random.choice(allMoveList))
 		data.player.pokemon.move = Move(randomMove)
 		if pokemon == data.player.pokemon:
-			print(data.player.pokemon.name, 'used', randomMove + '!')
+			text(data, data.player.pokemon.name, 'used', randomMove + '!')
 		else:
-			print('The opposing', data.enemy.pokemon.name, 'used', randomMove + '!')
+			text(data, 'The opposing', data.enemy.pokemon.name, 'used', randomMove + '!')
 
 def checkConversion(data, pokemon):
 	if pokemon.move.move == 'Conversion':
 		if pokemon == data.player.pokemon:
 			data.player.pokemon.type = data.enemy.pokemon.type
-			print(data.player.pokemon.name, 'copied the type of the opposing', data.enemy.pokemon.name + '!')
+			text(data, data.player.pokemon.name, 'copied the type of the opposing', data.enemy.pokemon.name + '!')
 		else:
 			data.enemy.pokemon.type = data.player.pokemon.type
-			print('The opposing', data.enemy.pokemon.name, 'copied the type of', data.player.pokemon.name + '!')
+			text(data, 'The opposing', data.enemy.pokemon.name, 'copied the type of', data.player.pokemon.name + '!')
 
 def checkCounter(data, atkPokemon, defPokemon):
 	if atkPokemon.move.move == 'Counter':
@@ -780,12 +782,12 @@ def checkCounter(data, atkPokemon, defPokemon):
 				damage = defPokemon.hp
 			defPokemon.hp -= damage
 			if atkPokemon == data.player.pokemon:
-				print('It did', damage, 'damage! The opposing', data.enemy.pokemon.name, 'has', data.enemy.pokemon.hp, '/', data.enemy.pokemon.maxhp, 'HP remaining!')
+				text(data, 'It did', damage, 'damage! The opposing', data.enemy.pokemon.name, 'has', data.enemy.pokemon.hp, '/', data.enemy.pokemon.maxhp, 'HP remaining!')
 			else:
-				print('It did', damage, 'damage!', data.player.pokemon.name, 'has', data.player.pokemon.hp, '/', data.player.pokemon.maxhp, 'HP remaining!')
+				text(data, 'It did', damage, 'damage!', data.player.pokemon.name, 'has', data.player.pokemon.hp, '/', data.player.pokemon.maxhp, 'HP remaining!')
 			checkRageBonus(data, defPokemon)
 		else:
-			print('But it failed!')		
+			text(data, 'But it failed!')		
 
 def checkRecoil(data, atkPokemon):
 	recoilList = ['Struggle','Double-Edge','Submission','Take Down']
@@ -798,9 +800,9 @@ def checkRecoil(data, atkPokemon):
 			damage = atkPokemon.hp
 		atkPokemon.hp -= damage
 		if atkPokemon == data.player.pokemon:
-			print('It took', damage, 'HP recoil damage!', data.player.pokemon.name, 'has', data.player.pokemon.hp, '/', data.player.pokemon.maxhp, 'HP remaining!')
+			text(data, 'It took', damage, 'HP recoil damage!', data.player.pokemon.name, 'has', data.player.pokemon.hp, '/', data.player.pokemon.maxhp, 'HP remaining!')
 		else:
-			print('It took', damage, 'HP recoil damage! The opposing', data.enemy.pokemon.name, 'has', data.enemy.pokemon.hp, '/', data.enemy.pokemon.maxhp, 'HP remaining!' )
+			text(data, 'It took', damage, 'HP recoil damage! The opposing', data.enemy.pokemon.name, 'has', data.enemy.pokemon.hp, '/', data.enemy.pokemon.maxhp, 'HP remaining!' )
 
 def checkSetDamage(data, atkPokemon, defPokemon):
 	setDamageList = ['Dragon Rage','Night Shade','Psywave','Seismic Toss','Sonic Boom','Super Fang']
@@ -823,9 +825,9 @@ def checkSetDamage(data, atkPokemon, defPokemon):
 			damage = defPokemon.hp
 		defPokemon.hp -= damage
 		if atkPokemon == data.player.pokemon:
-			print('It did', damage, 'damage! The opposing', data.enemy.pokemon.name, 'has', data.enemy.pokemon.hp, '/', data.enemy.pokemon.maxhp, 'HP remaining!')
+			text(data, 'It did', damage, 'damage! The opposing', data.enemy.pokemon.name, 'has', data.enemy.pokemon.hp, '/', data.enemy.pokemon.maxhp, 'HP remaining!')
 		else:
-			print('It did', damage, 'damage!', data.player.pokemon.name, 'has', data.player.pokemon.hp, '/', data.player.pokemon.maxhp, 'HP remaining!')
+			text(data, 'It did', damage, 'damage!', data.player.pokemon.name, 'has', data.player.pokemon.hp, '/', data.player.pokemon.maxhp, 'HP remaining!')
 		checkRageBonus(data, defPokemon)
 
 def checkRest(data, pokemon):
@@ -835,25 +837,25 @@ def checkRest(data, pokemon):
 		healAmount = pokemon.maxhp - pokemon.hp
 		pokemon.hp = pokemon.maxhp
 		if pokemon == data.player.pokemon:
-			print(data.player.pokemon.name, 'went to sleep to regain health, gaining', healAmount, 'HP. It has', (data.player.pokemon.hp), '/', (data.player.pokemon.maxhp), 'HP remaining!')
+			text(data, data.player.pokemon.name, 'went to sleep to regain health, gaining', healAmount, 'HP. It has', (data.player.pokemon.hp), '/', (data.player.pokemon.maxhp), 'HP remaining!')
 		else:
-			print('The opposing', data.enemy.pokemon.name, 'went to sleep to regain health, gaining', healAmount, 'HP. It has', (data.enemy.pokemon.hp), '/', (data.enemy.pokemon.maxhp), 'HP remaining!')
+			text(data, 'The opposing', data.enemy.pokemon.name, 'went to sleep to regain health, gaining', healAmount, 'HP. It has', (data.enemy.pokemon.hp), '/', (data.enemy.pokemon.maxhp), 'HP remaining!')
 
 def checkRegainHealth(data, pokemon):
 	regainHealthList = ['Recover','Soft-Boiled']
 	move = pokemon.move.move
 	if move in regainHealthList:
 		if pokemon.hp == pokemon.maxhp:
-			print('But it failed!')
+			text(data, 'But it failed!')
 			return
 		healAmount = int(pokemon.maxhp / 2)
 		if healAmount > pokemon.maxhp - pokemon.hp:
 			healAmount = pokemon.maxhp - pokemon.hp
 		pokemon.hp += healAmount
 		if pokemon == data.player.pokemon:
-			print(data.player.pokemon.name, 'regained', healAmount, 'HP. It has', (data.player.pokemon.hp), '/', (data.player.pokemon.maxhp), 'HP remaining!')
+			text(data, data.player.pokemon.name, 'regained', healAmount, 'HP. It has', (data.player.pokemon.hp), '/', (data.player.pokemon.maxhp), 'HP remaining!')
 		else:
-			print('The opposing', data.enemy.pokemon.name, 'regained', healAmount, 'HP. It has', (data.enemy.pokemon.hp), '/', (data.enemy.pokemon.maxhp), 'HP remaining!')
+			text(data, 'The opposing', data.enemy.pokemon.name, 'regained', healAmount, 'HP. It has', (data.enemy.pokemon.hp), '/', (data.enemy.pokemon.maxhp), 'HP remaining!')
 
 def gainHealth(data, pokemon, typeOfHeal, value):
 	if typeOfHeal == 'constant':
@@ -864,13 +866,13 @@ def gainHealth(data, pokemon, typeOfHeal, value):
 		healAmount = pokemon.maxhp - pokemon.hp
 	pokemon.hp += healAmount
 	if pokemon == data.player.pokemon:
-		print(data.player.pokemon.name, 'regained', healAmount, 'HP. It has', (data.player.pokemon.hp), '/', (data.player.pokemon.maxhp), 'HP remaining!')
+		text(data, data.player.pokemon.name, 'regained', healAmount, 'HP. It has', (data.player.pokemon.hp), '/', (data.player.pokemon.maxhp), 'HP remaining!')
 	else:
-		print('The opposing', data.enemy.pokemon.name, 'regained', healAmount, 'HP. It has', (data.enemy.pokemon.hp), '/', (data.enemy.pokemon.maxhp), 'HP remaining!')
+		text(data, 'The opposing', data.enemy.pokemon.name, 'regained', healAmount, 'HP. It has', (data.enemy.pokemon.hp), '/', (data.enemy.pokemon.maxhp), 'HP remaining!')
 
-def checkHaze(atkPokemon, defPokemon):
+def checkHaze(data, atkPokemon, defPokemon):
 	if atkPokemon.move.move  == 'Haze':
-		print('All stat changes have been reset!')
+		text(data, 'All stat changes have been reset!')
 		atkPokemon.statStage = [0,0,0,0,0,0,0,0,0]
 		defPokemon.statStage = [0,0,0,0,0,0,0,0,0]
 
@@ -882,18 +884,18 @@ def checkForceSwitch(data, atkPokemon):
 				if data.enemy.livingPokemon > 1:
 					getEnemySwitchPokemonForce(data)
 				else:
-					print('But it failed!')
+					text(data, 'But it failed!')
 			else:
-				print(data.player.pokemon.name, 'blew the opposing', data.enemy.pokemon.name, 'away! The battle is over!')
+				text(data, data.player.pokemon.name, 'blew the opposing', data.enemy.pokemon.name, 'away! The battle is over!')
 				data.environment.battleEnd = 1
 		else:
 			if data.enemy.type != 'Wild':
 				if data.player.livingPokemon > 1:
 					getPlayerSwitchPokemonForce(data)
 				else:
-					print('But it failed!')
+					text(data, 'But it failed!')
 			else:
-				print('The opposing', data.enemy.pokemon.name, 'blew', data.enemy.pokemon.name, 'away! The battle is over!')
+				text(data, 'The opposing', data.enemy.pokemon.name, 'blew', data.enemy.pokemon.name, 'away! The battle is over!')
 				data.environment.battleEnd = 1
 
 def checkCopyMove(data, atkPokemon,defPokemon):
@@ -902,18 +904,18 @@ def checkCopyMove(data, atkPokemon,defPokemon):
 		if defPokemon.previousMove != 0:
 			atkPokemon.move = defPokemon.previousMove
 			if atkPokemon == data.player.pokemon:
-				print(data.player.pokemon.name, 'copied', atkPokemon.move.move + '!')
+				text(data, data.player.pokemon.name, 'copied', atkPokemon.move.move + '!')
 			else:
-				print('The opposing', data.enemy.pokemon.name, 'copied', atkPokemon.move.move + '!')	
+				text(data, 'The opposing', data.enemy.pokemon.name, 'copied', atkPokemon.move.move + '!')	
 		else:
-			print('But it failed!')	
+			text(data, 'But it failed!')	
 
-def checkDreamEater(atkPokemon,defPokemon):
+def checkDreamEater(data, atkPokemon,defPokemon):
 	if atkPokemon.move.move == 'Dream Eater':
 		if defPokemon.nvStatus == 3:
 			return 0
 		else:
-			print('But it failed!')
+			text(data, 'But it failed!')
 			return 1
 	return 0
 
@@ -926,31 +928,31 @@ def checkDefensiveWall(data, person):
 				person.lightScreen = 1
 				person.lightScreenCount = 6
 				if person == data.player:
-					print('Light Screen raised your team\'s Sp. Def!')
+					text(data, 'Light Screen raised your team\'s Sp. Def!')
 				else:
-					print('Light Screen raised the opposing team\'s Sp. Def!')
+					text(data, 'Light Screen raised the opposing team\'s Sp. Def!')
 			else:
-				print('But it failed!')
+				text(data, 'But it failed!')
 		if move == 'Reflect':
 			if person.reflect == 0:
 				person.reflect = 1
 				person.reflectCount = 6
 				if person == data.player:
-					print('Reflect raised your team\'s Def!')
+					text(data, 'Reflect raised your team\'s Def!')
 				else:
-					print('Reflect raised the opposing team\'s Def!')
+					text(data, 'Reflect raised the opposing team\'s Def!')
 			else:
-				print('But it failed!')
+				text(data, 'But it failed!')
 		if move == 'Mist':
 			if person.mist == 0:
 				person.mist = 1
 				person.mistCount = 6
 				if person == data.player:
-					print('Your team has been protected from stat changes!')
+					text(data, 'Your team has been protected from stat changes!')
 				else:
-					print('Your opponent\'s team has been protected from stat changes')
+					text(data, 'Your opponent\'s team has been protected from stat changes')
 			else:
-				print('But it failed!')
+				text(data, 'But it failed!')
 
 
 def checkAttackSecondTurnMoves(data, pokemon):
@@ -973,9 +975,9 @@ def checkAttackSecondTurnMoves(data, pokemon):
 			elif pokemon.move.move == 'Sky Attack':
 				wording = 'began charging up!'
 			if pokemon == data.player.pokemon:
-				print(data.player.pokemon.name, wording)
+				text(data, data.player.pokemon.name, wording)
 			else:
-				print('The opposing', data.enemy.pokemon.name, wording)	
+				text(data, 'The opposing', data.enemy.pokemon.name, wording)	
 			return 1		
 		else:
 			pokemon.lockedInMoveNumber -= 1
@@ -995,9 +997,9 @@ def checkAttackFirstTurnMoves(data, pokemon):
 			pokemon.lockedInMoveNumber -= 1
 			if pokemon.lockedInMoveNumber == 0:
 				if pokemon == data.player.pokemon:
-					print(data.player.pokemon.name, 'has to recharge!')
+					text(data, data.player.pokemon.name, 'has to recharge!')
 				else:
-					print('The opposing', data.enemy.pokemon.name, 'has to recharge')
+					text(data, 'The opposing', data.enemy.pokemon.name, 'has to recharge')
 				return 1
 	else:
 		return 0
@@ -1008,9 +1010,9 @@ def checkBide(data, pokemon, defPokemon):
 			pokemon.bide = 1
 			pokemon.lockedInMoveNumber = 2
 			if pokemon == data.player.pokemon:
-				print(data.player.pokemon.name, 'began storing energy!')
+				text(data, data.player.pokemon.name, 'began storing energy!')
 			else:
-				print('The opposing', data.enemy.pokemon.name, 'began storing energy!')	
+				text(data, 'The opposing', data.enemy.pokemon.name, 'began storing energy!')	
 			return 0	
 		else:
 			pokemon.lockedInMoveNumber -= 1
@@ -1020,17 +1022,17 @@ def checkBide(data, pokemon, defPokemon):
 					damage = defPokemon.hp
 				defPokemon.hp -= damage
 				if pokemon == data.player.pokemon:
-					print(data.player.pokemon.name, 'released it\'s energy! It did', damage, 'against the opposing', data.enemy.pokemon.name + '! It has', str(data.enemy.pokemon.hp) + '/' + str(data.enemy.pokemon.maxhp), 'remaining!')
+					text(data, data.player.pokemon.name, 'released it\'s energy! It did', damage, 'against the opposing', data.enemy.pokemon.name + '! It has', str(data.enemy.pokemon.hp) + '/' + str(data.enemy.pokemon.maxhp), 'remaining!')
 				else:
-					print('The opposing', data.enemy.pokemon.name, 'released it\'s energy! It did', damage, 'against', data.player.pokemon.name + '! It has', str(data.player.pokemon.hp) + '/' + str(data.player.pokemon.maxhp), 'remaining!')				
+					text(data, 'The opposing', data.enemy.pokemon.name, 'released it\'s energy! It did', damage, 'against', data.player.pokemon.name + '! It has', str(data.player.pokemon.hp) + '/' + str(data.player.pokemon.maxhp), 'remaining!')				
 				checkRageBonus(data, defPokemon)
 				pokemon.bideDamage = 0
 				pokemon.bide = 0
 			else:
 				if pokemon == data.player.pokemon:
-					print(data.player.pokemon.name, 'is still storing energy!')
+					text(data, data.player.pokemon.name, 'is still storing energy!')
 				else:
-					print('The opposing', data.enemy.pokemon.name, 'is still storing energy!')					
+					text(data, 'The opposing', data.enemy.pokemon.name, 'is still storing energy!')					
 	else:
 		return 0
 
@@ -1046,9 +1048,9 @@ def checkThrashOrPetal(data, pokemon):
 				pokemon.confused = 1
 				pokemon.confusedCount = randint(3,5)
 				if pokemon == data.player.pokemon:
-					print(data.player.pokemon.name, 'has become confused!')
+					text(data, data.player.pokemon.name, 'has become confused!')
 				else:
-					print('The opposing', data.enemy.pokemon.name, 'has become confused!')					
+					text(data, 'The opposing', data.enemy.pokemon.name, 'has become confused!')					
 				return 0
 			else:
 				return 0		
@@ -1090,18 +1092,17 @@ def checkTeleport(data, player, enemy):
 def checkStartSubstitute(data, pokemon):
 	if pokemon.move.move == 'Substitute':
 		if pokemon.substitute == 1:
-			print('But it failed!')
+			text(data, 'But it failed!')
 		elif pokemon.hp > int(pokemon.maxhp / 4) + 1:
 			pokemon.substitute = 1
 			pokemon.substituteHealth = int(pokemon.maxhp / 4)
 			pokemon.hp -= pokemon.substituteHealth
-			print(pokemon.substitute, 'yy')
 			if pokemon == data.player.pokemon:
-				print(data.player.pokemon.name, 'has placed a substitute and lost', pokemon.substituteHealth, 'HP! It has', data.player.pokemon.hp, '/', data.player.pokemon.maxhp, 'HP remaining!')
+				text(data, data.player.pokemon.name, 'has placed a substitute and lost', pokemon.substituteHealth, 'HP! It has', data.player.pokemon.hp, '/', data.player.pokemon.maxhp, 'HP remaining!')
 			else:
-				print('The opposing', data.enemy.pokemon.name, 'has placed a substitute and lost', pokemon.substituteHealth, 'HP! It has', data.enemy.pokemon.hp, '/', data.enemy.pokemon.maxhp, 'HP remaining!')	
+				text(data, 'The opposing', data.enemy.pokemon.name, 'has placed a substitute and lost', pokemon.substituteHealth, 'HP! It has', data.enemy.pokemon.hp, '/', data.enemy.pokemon.maxhp, 'HP remaining!')	
 		else:
-			print('But it failed!')
+			text(data, 'But it failed!')
 
 def checkDisable(data, atkPokemon, defPokemon):
 	if atkPokemon.move.move == 'Disable':
@@ -1110,65 +1111,65 @@ def checkDisable(data, atkPokemon, defPokemon):
 			defPokemon.disabledCount = randint(3,6)
 			defPokemon.disabledMove = defPokemon.previousMove.move
 			if atkPokemon == data.player.pokemon:
-				print('The opposing', data.enemy.pokemon.name, 'can no longer use', data.enemy.pokemon.disabledMove + '!')
+				text(data, 'The opposing', data.enemy.pokemon.name, 'can no longer use', data.enemy.pokemon.disabledMove + '!')
 			else:
-				print(data.player.pokemon.name, 'can no longer use', data.player.pokemon.disabledMove + '!')	
+				text(data, data.player.pokemon.name, 'can no longer use', data.player.pokemon.disabledMove + '!')	
 		else:
-			print('But it failed!')
+			text(data, 'But it failed!')
 
 def checkTransform(data, atkPokemon, defPokemon):
 	if atkPokemon.move.move == 'Transform':
 		atkPokemon.moveSet = defPokemon.moveSet
 		atkPokemon.movePPCurrent = defPokemon.movePPMax
 		if atkPokemon == data.enemy.pokemon:
-			print('The opposing', data.enemy.pokemon.name, 'transformed into', data.player.pokemon.name + '!')
+			text(data, 'The opposing', data.enemy.pokemon.name, 'transformed into', data.player.pokemon.name + '!')
 		else:
-			print(data.player.pokemon.name, 'transformed into', data.enemy.pokemon.name + '!')	
+			text(data, data.player.pokemon.name, 'transformed into', data.enemy.pokemon.name + '!')	
 
 def startPlayerTurn(data):
 	interrupt = 0
 	interrupt = checkAttackFirstTurnMoves(data, data.player.pokemon)
 	if data.player.pokemon.flinch == 1:
 		interrupt += 1
-		print(data.player.pokemon.name, 'flinched!')
+		text(data, data.player.pokemon.name, 'flinched!')
 	if data.player.pokemon.nvStatus != 0:
-		interrupt += preTurnNVStatusCheck(data.player)
+		interrupt += preTurnNVStatusCheck(data, data.player)
 	if interrupt == 0:
 		if interrupt == 0:
 			if data.player.pokemon.confused == 1:
-				print(data.player.pokemon.name, 'is confused!')
+				text(data, data.player.pokemon.name, 'is confused!')
 				hitOrConfused = getHitOrConfused(data.player.pokemon)
 				if hitOrConfused > 0:
 					if hitOrConfused == 1:
 						damage = moveDamageConfusion(data, data.player.pokemon)
 						data.player.pokemon.hp -= damage
-						print(data.player.pokemon.name, 'hit itself in confusion and did', damage, 'HP damage. It has', str(data.player.pokemon.hp) + '/' + str(data.player.pokemon.maxhp), 'remaining!')
+						text(data, data.player.pokemon.name, 'hit itself in confusion and did', damage, 'HP damage. It has', str(data.player.pokemon.hp) + '/' + str(data.player.pokemon.maxhp), 'remaining!')
 						interrupt = 1
 					else:
-						print(data.player.pokemon.name, 'snapped out of confusion!')
+						text(data, data.player.pokemon.name, 'snapped out of confusion!')
 			if interrupt == 0:
 				interrupt = checkAttackSecondTurnMoves(data, data.player.pokemon)
 				if interrupt == 0:				
 					hitOrMiss = getHitOrMiss(data, data.player.pokemon,data.enemy.pokemon,data.player.pokemon.move)
 					if hitOrMiss == 'Miss':
-						print(data.player.pokemon.name, 'tried to use', data.player.pokemon.move.move + ', but it missed!')
+						text(data, data.player.pokemon.name, 'tried to use', data.player.pokemon.move.move + ', but it missed!')
 						checkMissDamage(data, data.player.pokemon)
 						interrupt = 1
 					if interrupt == 0:
 						text(data, data.player.pokemon.name, 'used', data.player.pokemon.move.move, 'against the opposing', data.enemy.pokemon.name + '.')
-						interrupt = checkFainted(data.enemy.pokemon)
-						interrupt += checkDreamEater(data.player.pokemon, data.enemy.pokemon)
+						interrupt = checkFainted(data, data.enemy.pokemon)
+						interrupt += checkDreamEater(data, data.player.pokemon, data.enemy.pokemon)
 						if interrupt == 0:
 							checkCopyMove(data, data.player.pokemon, data.enemy.pokemon)
 							checkMetronome(data, data.player.pokemon)
 							checkConversion(data, data.player.pokemon)
 							checkCounter(data, data.player.pokemon, data.enemy.pokemon)
 							checkFlinch(data.player.pokemon.move, data.enemy.pokemon)
-							checkSplash(data.player.pokemon.move.move)
+							checkSplash(data, data.player.pokemon.move.move)
 							checkSetDamage(data, data.player.pokemon, data.enemy.pokemon)
 							checkRest(data, data.player.pokemon)
 							checkRegainHealth(data, data.player.pokemon)
-							checkHaze(data.player.pokemon, data.enemy.pokemon)
+							checkHaze(data, data.player.pokemon, data.enemy.pokemon)
 							checkForceSwitch(data, data.player.pokemon)
 							checkDefensiveWall(data, data.player)
 							checkBide(data, data.player.pokemon, data.enemy.pokemon)
@@ -1184,7 +1185,7 @@ def startPlayerTurn(data):
 									checkContactAbilities(data, data.player.pokemon, data.enemy.pokemon)
 							checkThrashOrPetal(data, data.player.pokemon)
 							if data.enemy.pokemon.hp == 0:
-								print('The opposing', data.enemy.pokemon.name, 'fainted!')
+								text(data, 'The opposing', data.enemy.pokemon.name, 'fainted!')
 							checkTrapStart(data, data.player.pokemon, data.enemy.pokemon)
 							checkKamikaze(data, data.player.pokemon.move, data.player.pokemon)
 							if data.enemy.pokemon.hp != 0:
@@ -1195,7 +1196,7 @@ def startPlayerTurn(data):
 								if data.player.pokemon.move.vEffect != 0:
 									confuse = checkConfusion(data.player.pokemon.move, data.enemy.pokemon)
 									if confuse == 1:
-										print('The opposing', data.enemy.pokemon.name, 'is confused!')
+										text(data, 'The opposing', data.enemy.pokemon.name, 'is confused!')
 	data.player.pokemon.previousMove = data.player.pokemon.move
 #	if player.pokemon.lockedInMoveNumber > 0:
 #		player.pokemon.lockedInMoveNumber -= 1
@@ -1206,45 +1207,45 @@ def startEnemyTurn(data):
 	interrupt = checkAttackFirstTurnMoves(data, data.enemy.pokemon)
 	if data.enemy.pokemon.flinch == 1:
 		interrupt += 1
-		print('The opposing', data.enemy.pokemon.name, 'flinched!')	
+		text(data, 'The opposing', data.enemy.pokemon.name, 'flinched!')	
 	if data.enemy.pokemon.nvStatus != 0:
-		interrupt += preTurnNVStatusCheck(data.enemy)
+		interrupt += preTurnNVStatusCheck(data, data.enemy)
 	if interrupt == 0:
 		if interrupt == 0:
 			if data.enemy.pokemon.confused == 1:
-				print(data.enemy.pokemon.name, 'is confused!')				
+				text(data, data.enemy.pokemon.name, 'is confused!')				
 				hitOrConfused = getHitOrConfused(data.enemy.pokemon)		
 				if hitOrConfused > 0:
 					if hitOrConfused == 1:
 						damage = moveDamageConfusion(data, data.enemy.pokemon)
 						data.enemy.pokemon.hp -= damage
-						print('The opposing', data.enemy.pokemon.name, 'hit itself in confusion and did', damage, 'HP damage. It has', str(data.enemy.pokemon.hp) + '/' + str(data.enemy.pokemon.maxhp), 'remaining!')
+						text(data, 'The opposing', data.enemy.pokemon.name, 'hit itself in confusion and did', damage, 'HP damage. It has', str(data.enemy.pokemon.hp) + '/' + str(data.enemy.pokemon.maxhp), 'remaining!')
 						interrupt = 1
 					else:
-						print('The opposing', data.enemy.pokemon.name, 'snapped out of confusion!')
+						text(data, 'The opposing', data.enemy.pokemon.name, 'snapped out of confusion!')
 			if interrupt == 0:
 				interrupt = checkAttackSecondTurnMoves(data, data.enemy.pokemon)
 				if interrupt == 0:
 					hitOrMiss = getHitOrMiss(data, data.enemy.pokemon,data.player.pokemon,data.enemy.pokemon.move)
 					if hitOrMiss == 'Miss':
-						print('The opposing', data.enemy.pokemon.name, 'tried to use', data.enemy.pokemon.move.move + ', but it missed!')
+						text(data, 'The opposing', data.enemy.pokemon.name, 'tried to use', data.enemy.pokemon.move.move + ', but it missed!')
 						checkMissDamage(data, data.enemy.pokemon)
 						interrupt = 1
 					if interrupt == 0:
 						text(data, 'The opposing', data.enemy.pokemon.name, 'used', data.enemy.pokemon.move.move, 'against', data.player.pokemon.name + '.')
-						interrupt = checkFainted(data.player.pokemon)
-						interrupt += checkDreamEater(data.enemy.pokemon, data.player.pokemon)
+						interrupt = checkFainted(data, data.player.pokemon)
+						interrupt += checkDreamEater(data, data.enemy.pokemon, data.player.pokemon)
 						if interrupt == 0:
 							checkCopyMove(data, data.enemy.pokemon, data.player.pokemon)
 							checkMetronome(data, data.enemy.pokemon)
 							checkConversion(data, data.enemy.pokemon)
 							checkCounter(data, data.enemy.pokemon, data.player.pokemon)
-							checkSplash(data.enemy.pokemon.move.move)
+							checkSplash(data, data.enemy.pokemon.move.move)
 							checkFlinch(data.enemy.pokemon.move, data.player.pokemon)
 							checkSetDamage(data, data.enemy.pokemon, data.player.pokemon)
 							checkRest(data, data.enemy.pokemon)
 							checkRegainHealth(data, data.enemy.pokemon)
-							checkHaze(data.enemy.pokemon, data.player.pokemon)
+							checkHaze(data, data.enemy.pokemon, data.player.pokemon)
 							checkForceSwitch(data, data.enemy.pokemon)
 							checkDefensiveWall(data, data.enemy)
 							checkBide(data, data.enemy.pokemon, data.player.pokemon)
@@ -1260,7 +1261,7 @@ def startEnemyTurn(data):
 									checkContactAbilities(data, data.enemy.pokemon, data.player.pokemon)
 							checkThrashOrPetal(data, data.enemy.pokemon)
 							if data.player.pokemon.hp == 0:
-								print(data.player.pokemon.name, 'fainted!')					
+								text(data, data.player.pokemon.name, 'fainted!')					
 							checkTrapStart(data, data.enemy.pokemon, data.player.pokemon)
 							checkKamikaze(data, data.enemy.pokemon.move, data.enemy.pokemon)
 							if data.player.pokemon.hp != 0:
@@ -1271,7 +1272,7 @@ def startEnemyTurn(data):
 								if data.enemy.pokemon.move.vEffect != 0:
 									confuse = checkConfusion(data.enemy.pokemon.move, data.player.pokemon)
 									if confuse == 1:
-										print(data.player.pokemon.name, 'is confused!')
+										text(data, data.player.pokemon.name, 'is confused!')
 	data.enemy.pokemon.previousMove = data.enemy.pokemon.move
 #	if enemy.pokemon.lockedInMoveNumber > 0:
 #		enemy.pokemon.lockedInMoveNumber -= 1
@@ -1285,14 +1286,14 @@ def checkMissDamage(data,pokemon):
 		pokemon.hp -= damage
 		if pokemon.hp == 0:
 			if pokemon == data.player.pokemon:
-				print(data.player.pokemon.name, 'kept going and took', damage, 'HP damage and fainted!')
+				text(data, data.player.pokemon.name, 'kept going and took', damage, 'HP damage and fainted!')
 			else:
-				print('The opposing', data.enemy.pokemon.name, 'kept going and took', damage, 'HP damage and fainted!')
+				text(data, 'The opposing', data.enemy.pokemon.name, 'kept going and took', damage, 'HP damage and fainted!')
 		else:
 			if pokemon == data.player.pokemon:
-				print(data.player.pokemon.name, 'kept going and took', damage, 'HP damage! It has', str(data.player.pokemon.hp) + '/' + str(data.player.pokemon.maxhp), 'remaining!')
+				text(data, data.player.pokemon.name, 'kept going and took', damage, 'HP damage! It has', str(data.player.pokemon.hp) + '/' + str(data.player.pokemon.maxhp), 'remaining!')
 			else:
-				print('The opposing', data.enemy.pokemon.name, 'kept going and took', damage, 'HP damage! It has', str(data.enemy.pokemon.hp) + '/' + str(data.enemy.pokemon.maxhp), 'remaining!')
+				text(data, 'The opposing', data.enemy.pokemon.name, 'kept going and took', damage, 'HP damage! It has', str(data.enemy.pokemon.hp) + '/' + str(data.enemy.pokemon.maxhp), 'remaining!')
 
 def teamTotalHP(person):
 	totalHP = 0
@@ -1304,10 +1305,10 @@ def getRun(data):
 	if data.enemy.type == 'Wild':
 		chance = randint(1,2)
 		if chance == 1 or data.player.pokemon.ability == 'Run Away':
-			print('You got away!')
+			text(data, 'You got away!')
 			return 1
 		else:
-			print('You couldn\'t get away!')
+			text(data, 'You couldn\'t get away!')
 			return 0
 
 def checkWallCounts(data):
@@ -1315,45 +1316,45 @@ def checkWallCounts(data):
 		data.player.lightScreenCount -= 1
 		if data.player.lightScreenCount == 0:
 			data.player.lightScreen = 0
-			print('Your team\'s light screen wore off!')
+			text(data, 'Your team\'s light screen wore off!')
 	if data.player.reflect == 1:
 		data.player.reflectCount -= 1
 		if data.player.reflectCount == 0:
 			data.player.reflect = 0
-			print('Your team\'s reflect wore off!')
+			text(data, 'Your team\'s reflect wore off!')
 	if data.player.mist == 1:
 		data.player.mistCount -= 1
 		if data.player.mistCount == 0:
 			data.player.mist = 0
-			print('Your team\'s mist wore off!')
+			text(data, 'Your team\'s mist wore off!')
 	if data.enemy.lightScreen == 1:
 		data.enemy.lightScreenCount -= 1
 		if data.enemy.lightScreenCount == 0:
 			data.enemy.lightScreen = 0
-			print('The opposing team\'s light screen wore off!')
+			text(data, 'The opposing team\'s light screen wore off!')
 	if data.enemy.reflect == 1:
 		data.enemy.reflectCount -= 1
 		if data.enemy.reflectCount == 0:
 			data.enemy.reflect = 0
-			print('The opposing team\'s reflect wore off!')
+			text(data, 'The opposing team\'s reflect wore off!')
 	if data.enemy.mist == 1:
 		data.enemy.mistCount -= 1
 		if data.enemy.mistCount == 0:
 			data.enemy.mist = 0
-			print('The opposing team\'s mist wore off!')
+			text(data, 'The opposing team\'s mist wore off!')
 
 def checkDisableCounts(data):
 	if data.player.pokemon.disabledCount == 1:
 		data.player.pokemon.disabledCount -= 1
 		if data.player.pokemon.disabledCount == 0:
 			data.player.pokemon.disabled = 0
-			print(data.player.pokemon.name, 'is now able to use', data.player.pokemon.disabledMove, 'again!')
+			text(data, data.player.pokemon.name, 'is now able to use', data.player.pokemon.disabledMove, 'again!')
 			data.player.pokemon.disabledMove = 0
 	if data.enemy.pokemon.disabled == 1:
 		data.enemy.pokemon.disabledCount -= 1
 		if data.enemy.pokemon.disabledCount == 0:
 			data.enemy.pokemon.disabled = 0
-			print(data.enemy.pokemon.name, 'is now able to use', data.enemy.pokemon.disabledMove, 'again!')
+			text(data, data.enemy.pokemon.name, 'is now able to use', data.enemy.pokemon.disabledMove, 'again!')
 			data.enemy.pokemon.disabledMove = 0
 
 def resetOnSwitch(pokemon):
@@ -1438,14 +1439,14 @@ def checkKamikaze(data, atkMove, atkPokemon):
 		damage = atkPokemon.hp
 		atkPokemon.hp -= atkPokemon.hp
 		if atkPokemon == data.player.pokemon:
-			print(data.player.pokemon.name, 'took', damage, 'HP damage and fainted!')
+			text(data, data.player.pokemon.name, 'took', damage, 'HP damage and fainted!')
 		else:
-			print('The opposing', data.enemy.pokemon.name, 'took', damage, 'HP damage and fainted!')
+			text(data, 'The opposing', data.enemy.pokemon.name, 'took', damage, 'HP damage and fainted!')
 
-def checkFainted(defPokemon):
+def checkFainted(data, defPokemon):
 	fainted = 0
 	if defPokemon.hp == 0:
-		print('But it failed!')
+		text(data, 'But it failed!')
 		fainted = 1
 	return fainted
 
@@ -1518,11 +1519,11 @@ def getCurrentFight(data):
 					else:
 						return 'End'
 				else:
-					print('You can\'t run away from this battle!')
+					text(data, 'You can\'t run away from this battle!')
 					interrupt = 1
 			teleport = checkTeleport(data, data.player, data.enemy)
 			if teleport == 1:
-				print('The battle ended!')
+				text(data, 'The battle ended!')
 				return 'End'
 			if interrupt == 0:
 				if data.player.pokemon.hp != 0:
@@ -1546,7 +1547,7 @@ def getCurrentFight(data):
 						data.enemy.livingPokemon -= 1
 						getResetInBattle(data)
 						getEnemySwitchPokemon(data)
-						print('The', data.enemy.type, data.enemy.name, 'is about to send out a', data.enemy.pokemon.name + '.', 'Would you like to switch?')
+						text(data, 'The', data.enemy.type, data.enemy.name, 'is about to send out a', data.enemy.pokemon.name + '.', 'Would you like to switch?')
 						choice = getYesOrNo()
 						if choice == 1:
 							getSwitchPokemon(data)
@@ -1570,7 +1571,7 @@ def startBattle(data):
 		if game == 'End':
 			return 'Win'
 	if teamTotalHP(data.player) == 0:
-		print('You lost!')
+		text(data, 'You lost!')
 		return 'Lose'
 	elif teamTotalHP(data.enemy) == 0:
 		winBattle(data)
@@ -1584,11 +1585,11 @@ def getPreBattleEffects(data):
 
 def winBattle(data):
 	if data.enemy.type != 'Wild':
-		print(data.enemy.text)
+		text(data, data.enemy.text)
 		cash = randint(200,500)
 		cash += data.environment.payDayExtra
 		data.player.money += cash
-		print('You earned $' + str(cash), 'for winning!\n')
+		text(data, 'You earned $' + str(cash), 'for winning!\n')
 	for i in data.player.team:
 		if i.shouldEvolve == 1:
 			print('Something is happening to', i.name + '! Let it continue?')

@@ -107,7 +107,6 @@ def checkCompetitive(data, pokemon, statEffect):
 
 def checkKeenEye(data, pokemon):
 	if pokemon.ability == 'Keen Eye':
-		print('check')
 		if pokemon == data.player.pokemon:
 			print(data.player.pokemon.name + '\'s keen eye prevented it\'s accuracy from falling!')
 		else:
