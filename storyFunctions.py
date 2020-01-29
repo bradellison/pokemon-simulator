@@ -19,7 +19,8 @@ def mainGame(data, newOrContinue):
             print('Would you like to go to the Pokemon Centre?')
             choice = getYesOrNo()
             if choice == 1:
-                pokemonCenter(data)            
+                pokemonCenter(data, False)
+                data.player.lastCentre = data.environment.location.name           
 
 def oakSpeech(data):
     print('Oak: Hello and welcome to the wonderful world of Pokemon!'); time.sleep(1)

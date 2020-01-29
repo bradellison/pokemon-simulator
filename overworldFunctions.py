@@ -4,6 +4,7 @@ from battleFunctions import startBattle
 from choicesFunctions import getOptionOneOrTwoOrThree
 from choicesFunctions import getOptionOneOrTwo, getOptionOneOrTwoOrThree, getOptionOneOrTwoOrThreeOrFour, getOptionOneOrTwoOrThreeOrFourOrFive, getOptionsXnumber
 from gameMaps import overworldMap, mapCodeToLocationDict, locationToMapCodeDict, locationInformationDict
+from pokemonCentreFunctions import pokemonCenter
 from battleFunctions import createEnemy
 from classes import Pokemon
 from pokemonLocationsDictionaries import locationToDict
@@ -60,7 +61,13 @@ def getWildPokemon(location):
         else:
             number += 1
 
+def whitedOut(data):
+    print('You whited out! You rushed to get your Pokemon healed at', data.player.lastCentre + '!')
+    addLocationInformation(data, data.player.lastCentre)
+    pokemonCenter(data, True)
+
 def wildBattle(data, pokemon, level):
-	wildTeam = [Pokemon(pokemon, level, 'Random')]
-	createEnemy(data,'Wild', 'Wild', wildTeam, 0, 'Damn!')
-	startBattle(data)
+    wildTeam = [Pokemon(pokemon, level, 'Random')]
+    createEnemy(data,'Wild', 'Wild', wildTeam, 0, 'Damn!')
+    if startBattle(data) != 'Win':
+        whitedOut(data)

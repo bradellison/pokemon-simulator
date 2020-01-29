@@ -81,8 +81,13 @@ def getNamePokemon(pokemon):
 	choice = getYesOrNo()
 	if choice == 1:
 		print('\nWhat would you like to name it?')
-		choiceInput = input('-- ')
-		pokemon.name = choiceInput
+		while True:
+			choiceInput = input('-- ')
+			if len(choiceInput) <= 10:
+				pokemon.name = choiceInput
+				return
+			else:
+				print('That name is too long! 10 characters max!s')
 
 def getBallPocket(data):
 	ball = getBallChoice(data)

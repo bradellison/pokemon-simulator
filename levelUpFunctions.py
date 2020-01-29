@@ -12,7 +12,7 @@ def getPokemonEvolutionDetails(pokemon):
 def getExpYield(data):
 	for i in data.player.team:
 		if i.level != 100:
-			a = 1; e = 1; f = 1; p = 1; s = 1; t = 1; v = 1; x = 500#x = data.expMult
+			a = 1; e = 1; f = 1; p = 1; s = 1; t = 1; v = 1; x = data.expMult
 			if data.enemy.type != 'Wild':
 				a = 1.5
 			b = data.enemy.pokemon.BaseExpYield

@@ -15,7 +15,7 @@ class Data(object):
 		self.pc = PC()
 		self.bag = Bag()
 		self.bscreen = BattleScreen()
-		self.expMult = 500
+		self.expMult = 1
 
 class Player(object):
 	def __init__(self):
@@ -36,6 +36,7 @@ class Player(object):
 		self.reflectCount = 0
 		self.mist = 0
 		self.mistCount = 0
+		self.lastCentre = 'Pallet Town'
 
 class PC(object):
 	def __init__(self):

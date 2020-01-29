@@ -19,8 +19,11 @@ def getPokemonCenterChoice():
 		except ValueError:
 			print('Please choose an option!')
 
-def pokemonCenter(data):
-	print('Hello, welcome to the Pokemon Center. What would you like to do here today?')
+def pokemonCenter(data, whitedOut):
+	if whitedOut == True:
+		healAllPokemon(data)
+	else:
+		print('Hello, welcome to the Pokemon Center. What would you like to do here today?')
 	leave = 0
 	while leave == 0:
 		choice = getPokemonCenterChoice()

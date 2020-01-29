@@ -9,6 +9,8 @@ class BattleScreen(object):
         self.extraSpaceHealthPlayer = ''
         self.nameBarPlayer = ''
         self.nameBarEnemy = ''
+        self.playerStatus = '   '
+        self.enemyStatus = '   '
 
 def drawNameBarPlayer(name, level):
     nameLength = len(name)
@@ -21,7 +23,7 @@ def drawNameBarPlayer(name, level):
     extraSpaceLevel = ''
     for _  in range (spaceRequiredLevel):
         extraSpaceLevel += ' '
-    return (name + ' - L' + str(level) + extraSpaceName + extraSpaceLevel)
+    return (name + ' - Lv' + str(level) + extraSpaceName + extraSpaceLevel)
 
 def drawNameBarEnemy(name, level):
     nameLength = len(name)
@@ -34,7 +36,7 @@ def drawNameBarEnemy(name, level):
     extraSpaceLevel = ''
     for _  in range (spaceRequiredLevel):
         extraSpaceLevel += ' '
-    return (extraSpaceName + extraSpaceLevel + name + ' - L' + str(level))
+    return (extraSpaceName + extraSpaceLevel + name + ' - Lv' + str(level))
 
 def drawHealthBar(health, maxHealth):
     healthPerSpace = (maxHealth / 20)
@@ -53,6 +55,10 @@ def drawHealthBar(health, maxHealth):
         extraSpace += ' '
     return [healthBar, extraSpace]
 
+def getStatusBar(pokemon):
+    statusDict = {0:'   ',1:'BRN',2:'PAR',3:'SLP',4:'FRZ',5:'PSN',6:'PSN'}
+    return statusDict[pokemon.nvStatus]
+
 def getBattleScreenValues(data):
     playerOutcomes = (drawHealthBar(data.player.pokemon.hp, data.player.pokemon.maxhp))
     data.bscreen.healthBarPlayer = playerOutcomes[0]
@@ -62,6 +68,9 @@ def getBattleScreenValues(data):
     data.bscreen.healthBarEnemy = enemyOutcomes[0]
     data.bscreen.extraSpaceHealthEnemy = enemyOutcomes[1]
     data.bscreen.nameBarEnemy = drawNameBarEnemy(data.enemy.pokemon.name, data.enemy.pokemon.level)
+    data.bscreen.playerStatus = getStatusBar(data.player.pokemon)
+    data.bscreen.enemyStatus = getStatusBar(data.enemy.pokemon)
+
 
 #def fullBattleScreen(bscreen, playerMaxHealth, playerCurrentHealth):
 #    print('/---------------------------------------------------------------------------\\')
@@ -87,11 +96,11 @@ def getBattleScreenValues(data):
 
 def liteBattleScreen(data):
     print('/------------------------------------------------------\\')
-    print('|                               |>  ' + data.bscreen.nameBarEnemy  + ' <|')
+    print('|                               |> ' + data.bscreen.nameBarEnemy  + ' <|')
     print('|----------------------\\        |(' + data.bscreen.healthBarEnemy + ')|')
-    print('|> ' + data.bscreen.nameBarPlayer + '  <|        \\----------------------|')
-    print('|(' + data.bscreen.healthBarPlayer + ')|                               |')
-    print('|        ' + data.bscreen.extraSpaceHealthPlayer + str(data.player.pokemon.hp) + '/' + str(data.player.pokemon.maxhp) + 'HP |                               |')
+    print('|> ' + data.bscreen.nameBarPlayer + ' <|        \\----------------\ ' + data.bscreen.enemyStatus + ' |')
+    print('|(' + data.bscreen.healthBarPlayer + ')|                          \----|')
+    print('| ' + data.bscreen.playerStatus + '    ' + data.bscreen.extraSpaceHealthPlayer + str(data.player.pokemon.hp) + '/' + str(data.player.pokemon.maxhp) + 'HP |                               |')
     print('|------------------------------------------------------|')
 
 def drawScreen(data):

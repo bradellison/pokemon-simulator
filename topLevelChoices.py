@@ -135,7 +135,7 @@ def startGame():
 		elif choice == 2:
 			wildBattleTopLevel(data)
 		elif choice == 3:
-			pokemonCenter(data)
+			pokemonCenter(data, False)
 		elif choice == 4:
 			eliteFour(data)
 		elif choice == 5:
