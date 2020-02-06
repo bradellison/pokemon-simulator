@@ -1,5 +1,6 @@
 from pokemonDictionaries import pokemonLevelUpMoves, pokemonEvolutionDetails
-from getVariableFunctions import getExp, getBaseStats, getPokemonType, getOneMaxPP, gethpStat
+from getVariableFunctions import getExp, getBaseStats, getPokemonType, getOneMaxPP, gethpStat, getStats
+
 
 def getPokemonLevelUpMoves(pokemon):
 	movesByLevel = pokemonLevelUpMoves[pokemon]
@@ -32,7 +33,7 @@ def getExpYield(data):
 			i.exp += expYield
 			print(i.name, 'gained', expYield, 'exp!')
 			while i.exp > i.nextLevelExp and i.level < 100:
-				i.level += 1
+				levelUpPokemon(data, i)
 				print(i.name, 'went up one level and is now level', str(i.level) + '!')
 				i.nextLevelExp = getExp(i.species, i.level + 1)
 				getMoveLearn(i)
@@ -41,11 +42,16 @@ def getExpYield(data):
 					if evolutionDetails['Type'] == 'Level':
 						if i.level >= evolutionDetails['Detail']:
 							i.shouldEvolve = 1
-				oldMaxHealth = i.maxhp
-				i.maxhp = gethpStat(i)
-				increase = i.maxhp - oldMaxHealth
-				i.hp += increase
 			print('')
+
+def levelUpPokemon(data, pokemon):
+	pokemon.level += 1
+	oldMaxHealth = pokemon.maxhp
+	pokemon.stats = getStats(pokemon)
+	pokemon.maxhp = pokemon.stats[0]
+	healthIncrease = pokemon.maxhp - oldMaxHealth
+	pokemon.hp += healthIncrease
+
 
 def evolvePokemon(pokemon):
 	evolutionDetails = getPokemonEvolutionDetails(pokemon.species)
