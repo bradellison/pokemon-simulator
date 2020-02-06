@@ -3,6 +3,8 @@ import math
 from random import randint
 
 from choicesFunctions import getYesOrNo
+from text import text
+
 
 
 ####### BAG FUNCTIONS ########
@@ -23,7 +25,7 @@ def getMedicineHeal(medicine):
 
 
 def openBag(data):
-	print('You opened your bag! What pocket would you like to go into?')
+	text(data, 'You opened your bag! What pocket would you like to go into?')
 	x = 0
 	while x == 0:
 		choice = getPocketChoice()
@@ -39,7 +41,7 @@ def openBag(data):
 def getCatch(data, ball):
 	ballModifier = ball.modifier
 	if ballModifier == 'Master':
-		print('You caught the opposing', data.enemy.pokemon.name + '!')
+		text(data, 'You caught the opposing', data.enemy.pokemon.name + '!')
 		getCaughtPokemon(data)
 		return 'Catch'
 	statusModifier = getStatusCatchModifiers(data)
@@ -49,21 +51,20 @@ def getCatch(data, ball):
 	for _ in range(3):
 		random = randint(1,65535)
 		count = count + 1
-		print('Shook', count, 'times!')
+		text(data, 'Shook', count, 'times!')
 		time.sleep(1)
 		if catch > random:		
 			if count == 3:
-				print('You caught the opposing', data.enemy.pokemon.name + '!')
+				text(data, 'You caught the opposing', data.enemy.pokemon.name + '!')
 				getCaughtPokemon(data)
 				return 'Catch'
 		else:
 			if count == 1:
-				print('Not even close!')
+				text(data, 'Not even close!')
 			if count == 2:
-				print('Oh, nearly had it!')
+				text(data, 'Oh, nearly had it!')
 			if count == 3:
-				print('So so close!')
-			print('')
+				text(data, 'So so close!')
 			return 'No catch'
 
 def getCaughtPokemon(data):
@@ -96,9 +97,9 @@ def getBallPocket(data):
 	ball.quantity -= 1
 	if ball.quantity == 0:
 		data.bag.balls.remove(ball)
-	print('You throw the', ball.name, 'at the opposing', data.enemy.pokemon.name + '!')
+	text(data, 'You throw the', ball.name, 'at the opposing', data.enemy.pokemon.name + '!')
 	if data.enemy.type != 'Wild':
-		print('The', data.enemy.type, data.enemy.name, 'swatted the ball away! You can\'t use that here!')
+		text(data, 'The', data.enemy.type, data.enemy.name, 'swatted the ball away! You can\'t use that here!')
 		return 'No Catch'
 	else:
 		catch = getCatch(data, ball)
@@ -106,7 +107,6 @@ def getBallPocket(data):
 			return 1
 		else:
 			return catch
-	print()
 
 def getMedicinePocket(data):
 	medicine = getMedicineChoice(data)
