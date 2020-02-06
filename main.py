@@ -1,4 +1,9 @@
 from topLevelChoices import startGame, testFunction
 
-startGame()
+
+
+#startGame()
 #testFunction()
+import curses
+import os
+
