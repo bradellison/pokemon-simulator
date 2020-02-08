@@ -353,7 +353,7 @@ def moveDealDamageEnemy(data):
 		checkAddBideDamage(data.player.pokemon, damage)
 		checkRageBonus(data, data.player.pokemon)
 		if healedAmount > 0:
-			text(data, 'The opposing', data.player.pokemon.name, 'gained', healedAmount, 'HP!')
+			text(data, 'The opposing', data.enemy.pokemon.name, 'gained', healedAmount, 'HP!')
 	data.enemy.pokemon.previousDamage = totalDamage
 	if data.enemy.pokemon.move.multiAttack == 1:
 		text(data, 'It hit', data.player.pokemon.name, actualHits, 'times!')
@@ -478,10 +478,30 @@ def moveNVEffectWording(nvStatus):
 	else:
 		return 'poisoned!'
 
+def getNVEffectImmunities(data, nvEffect, defPokemon):
+	burnImmunities = ['Fire']
+	poisonImmunities = ['Steel','Poison']
+	frozenImmunities = ['Ice']
+	paralyzeImmunities = ['Electric']
+	if nvEffect == 1 and defPokemon.type in burnImmunities:
+		return True
+	if nvEffect == 2 and defPokemon.type in paralyzeImmunities:
+		return True
+	if nvEffect == 4 and defPokemon.type in frozenImmunities:
+		return True
+	if (nvEffect == 5 or nvEffect == 6) and (defPokemon.type in poisonImmunities):
+		return True
+	else:
+		return 'Continue'
+
+
 def moveNVEffectPlayer(data):
 	if data.player.pokemon.move.nvEffect != 0 and randint(1,100) <= data.player.pokemon.move.nvEffectChance:
 		if data.enemy.pokemon.nvStatus == 0 and data.enemy.pokemon.substitute == 0:
 			if checkShieldDust(data.enemy.pokemon, data.player.pokemon) == False:
+				if getNVEffectImmunities(data, data.player.pokemon.move.nvEffect, data.enemy.pokemon):
+					text(data, 'But it failed!')
+					return
 				data.enemy.pokemon.nvStatus = data.player.pokemon.move.nvEffect
 				if data.enemy.pokemon.nvStatus == 3:
 					data.enemy.pokemon.nvStatusCount = randint(2,4)
@@ -494,6 +514,9 @@ def moveNVEffectEnemy(data):
 	if data.enemy.pokemon.move.nvEffect != 0 and randint(1,100) <= data.enemy.pokemon.move.nvEffectChance:
 		if data.player.pokemon.nvStatus == 0 and data.player.pokemon.substitute == 0:
 			if checkShieldDust(data.player.pokemon, data.enemy.pokemon) == False:
+				if getNVEffectImmunities(data, data.enemy.pokemon.move.nvEffect, data.player.pokemon):
+					text(data, 'But it failed!')
+					return
 				data.player.pokemon.nvStatus = data.enemy.pokemon.move.nvEffect
 				if data.player.pokemon.nvStatus == 3:
 					data.player.pokemon.nvStatusCount = randint(2,4)
@@ -523,6 +546,7 @@ def getEnemySwitchPokemon(data):
 		choice = random.choice(data.enemy.team)
 		if choice != oldPokemon and choice.hp != 0:
 			resetOnSwitch(oldPokemon)
+			text(data, 'The', data.enemy.type, data.enemy.name, 'is about to send out', choice.name + '.', 'Would you like to switch?')
 			data.enemy.pokemon = choice
 			break
 
@@ -603,7 +627,7 @@ def getSwitchPokemon(data):
 							data.player.team[j], data.player.team[0] = data.player.team[0], data.player.team[j]
 							data.player.pokemon = data.player.team[0]
 							resetOnSwitch(oldPokemon)
-							print('You switched from', oldPokemon.name, 'into', data.player.pokemon.name + '!')
+							text(data, 'You switched from', oldPokemon.name, 'into', data.player.pokemon.name + '!')
 							checkIntimidateOnSwitch(data, data.player, data.enemy)
 							print()
 							data.player.pokemon.inCurrentBattle = 1
@@ -956,7 +980,7 @@ def checkDefensiveWall(data, person):
 
 
 def checkAttackSecondTurnMoves(data, pokemon):
-	secondTurnMoves = ['Dig', 'Fly', 'Razor Wind', 'Skull Bash', 'Sky Attack']
+	secondTurnMoves = ['Dig', 'Fly', 'Razor Wind', 'Skull Bash', 'Sky Attack', 'Solar Beam']
 	if pokemon.move.move in secondTurnMoves:
 		if pokemon.lockedInMoveNumber == 0:
 			pokemon.lockedInMoveNumber = 1
@@ -974,6 +998,8 @@ def checkAttackSecondTurnMoves(data, pokemon):
 				statStageMax(data, pokemon)		
 			elif pokemon.move.move == 'Sky Attack':
 				wording = 'began charging up!'
+			elif pokemon.move.move == 'Solar Beam':
+				wording = 'began storing sunlight!'
 			if pokemon == data.player.pokemon:
 				text(data, data.player.pokemon.name, wording)
 			else:
@@ -988,7 +1014,7 @@ def checkAttackSecondTurnMoves(data, pokemon):
 		return 0
 
 def checkAttackFirstTurnMoves(data, pokemon):
-	firstTurnMoves = ['Hyper Beam', 'Solar Beam']
+	firstTurnMoves = ['Hyper Beam']
 	if pokemon.move.move in firstTurnMoves:
 		if pokemon.lockedInMoveNumber == 0:
 			pokemon.lockedInMoveNumber = 1
@@ -1082,12 +1108,12 @@ def checkRageBonus(data, pokemon):
 		statStageMax(data, pokemon)
 		pokemon.rageCount += 1
 
-def checkTeleport(data, player, enemy):
-	if data.player.pokemon.move.move == 'Teleport':
+def checkTeleport(data):
+	if data.player.pokemon.move.move == 'Teleport' or data.enemy.pokemon.move.move == 'Teleport':
 		if data.enemy.type == 'Wild':
 			return 1
-	if data.enemy.pokemon.move.move == 'Teleport':
-		return 1
+		else:
+			text(data, "But it failed!")
 
 def checkStartSubstitute(data, pokemon):
 	if pokemon.move.move == 'Substitute':
@@ -1521,7 +1547,7 @@ def getCurrentFight(data):
 				else:
 					text(data, 'You can\'t run away from this battle!')
 					interrupt = 1
-			teleport = checkTeleport(data, data.player, data.enemy)
+			teleport = checkTeleport(data)
 			if teleport == 1:
 				text(data, 'The battle ended!')
 				return 'End'
@@ -1547,7 +1573,6 @@ def getCurrentFight(data):
 						data.enemy.livingPokemon -= 1
 						getResetInBattle(data)
 						getEnemySwitchPokemon(data)
-						text(data, 'The', data.enemy.type, data.enemy.name, 'is about to send out a', data.enemy.pokemon.name + '.', 'Would you like to switch?')
 						choice = getYesOrNo()
 						if choice == 1:
 							getSwitchPokemon(data)
