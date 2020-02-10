@@ -45,9 +45,12 @@ viridianForestDict = {'Grass': True, 'Water': False, 'Centre': False}
 pewterCityDict = {'Grass': False, 'Water': False, 'Centre': True}
 
 
+
+
 locationToMapCodeDict = {'Pallet Town': 'plt', 'Route 1': 'rt1', 'Route 2': 'rt2', 'Viridian City': 'vrc', 'Viridian Forest': 'vrf', 'Route 22': 'r22', 'Pewter City': 'ptc'}
 mapCodeToLocationDict = {'xxx': 'Nothing', 'plt': 'Pallet Town', 'rt1': 'Route 1', 'rt2': 'Route 2', 'vrc': 'Viridian City', 'vrf': 'Viridian Forest', 'r22': 'Route 22', 'ptc': 'Pewter City'}
 locationInformationDict = {'Pallet Town': palletTownDict, 'Route 1': routeOneDict, 'Route 2': routeTwoDict, 'Viridian City': viridianCityDict, 'Viridian Forest': viridianForestDict, 'Route 22': routeTwentyTwoDict, 'Pewter City': pewterCityDict}
+locationMapDict = {'Pallet Town': palletTownMap, 'Route 1': routeOneMap, 'Route 2': routeTwoMap, 'Viridian City': viridianCityMap, 'Viridian Forest': viridianForestMap, 'Route 22': routeTwentyTwoMap, 'Pewter City': pewterCityMap}
 
 
 
@@ -103,20 +106,23 @@ routeOneMap = [
 
 palletTownMap = [
 '@@@@@@@@@@@@@@@@@@@@@@@@@@@@',
+'@@@@@@@@@@@@@@@@@@@@@@@@@@@@',
+'@@@@@@@@@@@@@@@@@@@@@@@@@@@@',
+'@@@@@@@@@@@@@@!!@@@@@@@@@@@@',
 '@@@@@@@@@@@@@@%%@@@@@@@@@@@@',
 '@@@@@@@@@@@@@@%%@@@@@@@@@@@@',
 '@@@@@@@@@@@@@@%%@@@@@@@@@@@@',
 '@@@@@                  @@@@@',
-'@@@@@   RRRR    RRRR   @@@@@',
-'@@@@@   [KK]    [KK]   @@@@@',
-'@@@@@   [DK]    [DK]   @@@@@',
+'@@@@@   {__}    {__}   @@@@@',
+'@@@@@ gg[KK]  gg[KK]   @@@@@',
+'@@@@@ gS[DK]  gS[DK]   @@@@@',
 '@@@@@                  @@@@@',
 '@@@@@                  @@@@@',
-'@@@@@         RRRRRR   @@@@@',
-'@@@@@         [KKKK]   @@@@@',
+'@@@@@   gggg  {____}   @@@@@',
+'@@@@@   bbbS  [KKKK]   @@@@@',
 '@@@@@         [KDKK]   @@@@@',
-'@@@@@                  @@@@@',
-'@@@@@   ~~~~           @@@@@',
+'@@@@@         gggggggg @@@@@',
+'@@@@@   ~~~~  bbbSbbgg @@@@@',
 '@@@@@   ~~~~           @@@@@',
 '@@@@@   ~~~~           @@@@@',
 '@@@@@   ~~~~           @@@@@',
