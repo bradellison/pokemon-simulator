@@ -1,11 +1,5 @@
 from screen import drawScreen
-
-x = 'ieaieha'
-y = 'faovao'
-
-string = 'vwoiwi', x + y + 'owijwp', 618
-string2 = 'Twas brillig and the slithy tothes did gire and gimble in the wabe, all mimsy were the borogroves and the momeraths outgabe!'
-string3 = 'Please include the code that produced the message. Please include the smallest sample of code that actually produces this error message'
+from time import sleep
 
 def splitIntoLines(string):
     output = []
@@ -52,10 +46,6 @@ def turnIntoOneString(therest):
             totalString += str(string)
     return (totalString[:-1])
 
-    
-    
-
-
 def text(data, *therest):
     drawScreen(data)
     newString = turnIntoOneString(therest)
@@ -67,6 +57,6 @@ def text(data, *therest):
     print ('\\------------------------------------------------------/')
     input()
 
-#text(string)
-
-(('vwoiwi ', 'ieaiehafaovaoowijwp', 618),)
+loading = 'LOADING...'
+for i in range(len(loading)):
+    print(loading[i], sep=' ', end=' ', flush=True); sleep(0.05)

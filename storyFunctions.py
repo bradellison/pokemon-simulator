@@ -5,22 +5,25 @@ from battleFunctions import startBattle
 from choicesFunctions import getOptionOneOrTwoOrThree, getYesOrNo
 from overworldFunctions import directionChoice, getWildPokemon, wildBattle
 from pokemonCentreFunctions import pokemonCenter
+from mapDrawing import overworldMovement
 import time
 
 def mainGame(data, newOrContinue):
     if newOrContinue == 1:
         oakSpeech(data)
     while True:
-        directionChoice(data)
-        if data.environment.location.grass == True:
-            wildPokemon = getWildPokemon(data.environment.location.name)
-            wildBattle(data, wildPokemon[0], wildPokemon[1])
-        if data.environment.location.centre == True:
-            print('Would you like to go to the Pokemon Centre?')
-            choice = getYesOrNo()
-            if choice == 1:
-                pokemonCenter(data, False)
-                data.player.lastCentre = data.environment.location.name           
+        overworldMovement(data)
+#        directionChoice(data)
+#        if data.environment.location.grass == True:
+#            wildPokemon = getWildPokemon(data.environment.location.name)
+#            wildBattle(data, wildPokemon[0], wildPokemon[1])
+
+#        if data.environment.location.centre == True:
+#            print('Would you like to go to the Pokemon Centre?')
+#            choice = getYesOrNo()
+#            if choice == 1:
+#                pokemonCenter(data, False)
+#                data.player.lastCentre = data.environment.location.name           
 
 def oakSpeech(data):
     print('Oak: Hello and welcome to the wonderful world of Pokemon!'); time.sleep(1)

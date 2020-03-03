@@ -6,7 +6,6 @@ from getVariableFunctions import getMaxPP
 from choicesFunctions import getOptionOneOrTwo
 
 
-
 def getPokemonCenterChoice():
 	print(' 1 - Heal Team\n 2 - Use PC\n 3 - Shop\n 4 - Save or Load \n 5 - Leave')
 	while True:

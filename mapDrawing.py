@@ -1,33 +1,32 @@
 import time
 import colorama
+from random import randint
 from gameMaps import routeOneMap, palletTownMap
-from enviromentSprites import screenTop, screenBot, spriteDict, you
-
-x = 10
-y = 7
-playerLocation = [x,y]
+from environmentSprites import screenTop, screenBot, spriteDict, you
+from overworldFunctions import addLocationInformation, wildBattle
+from pokemonCentreFunctions import pokemonCenter
 
 def drawOverworld(x, y, location):
-    print(screenTop)
+    screenDraw = screenTop + '\n'
     yAxis = 0
     for line in location:
         if yAxis > y-4 and yAxis < y+4:
             xAxis = 0
             for location in range(3):
-                currentLineDraw = '|'
+                screenDraw += '|'
                 for sprite in line:
                     if xAxis > x-5 and xAxis < x+5:
                         if [x, y] == [xAxis, yAxis]:
-                            currentLineDraw += you[location]
+                            screenDraw += you[location]
                         else:
-                            currentLineDraw += (spriteDict[sprite][location])
+                            screenDraw += (spriteDict[sprite][location])
                     xAxis += 1
-                currentLineDraw += '|'
+                screenDraw += '|\n'
                 xAxis = 0
-                print(currentLineDraw)
             location += 1
         yAxis += 1
-    print(screenBot)
+    screenDraw += screenBot
+    print(screenDraw)
 
 def directionChoice(data,x,y,location):
     newx = x
@@ -44,16 +43,16 @@ def directionChoice(data,x,y,location):
             elif choiceInput == 'd':
                 newx += 1
             if checkWall(newx, newy, location):
-                data.xCo = newx
-                data.yCo = newy
                 return
             else:
+                data.player.xCo = newx
+                data.player.yCo = newy
                 return
         except ValueError:
             print('Please choose an option!')
 
 def checkWall(x,y,location):
-    walls = ['@', '~', 'K', '[', ']', 'D', 'R']
+    walls = ['@', '~', 'K', '[', ']', 'D', '{', '}', '_', 'b']
     yAxis = 0
     for line in location:
         xAxis = 0
@@ -76,15 +75,35 @@ def checkNewSprite(x,y,location):
             xAxis += 1
         yAxis += 1   
 
-def checkAction(x, y, location):
+def checkAction(data, x, y, location):
     newSprite = checkNewSprite(x, y, location)
     if newSprite == '%':
-        print('WILD BATTLE')
+        wildBattleChance(data)
     if newSprite == '!':
-        print('WARP')
+        warpZone(data)
+        return True
+    if newSprite == 'S':
+        pokemonCenter(data, False)
+        addLocationInformation(data, data.environment.location.name)
+        return True
+
+def wildBattleChance(data):
+    if randint(1,20) == 1:
+        wildBattle(data)
+
+def warpZone(data):
+    for zone in data.environment.location.warpZones:
+        if [data.player.xCo, data.player.yCo] == zone.warpSourceGrid:
+            [data.player.xCo, data.player.yCo] = zone.warpTargetGrid
+            addLocationInformation(data, zone.warpTargetLocation)
+
+
 
 def overworldMovement(data):
-    drawOverworld(data.player.xCo, data.player.yCo, data.environment.map)
-    checkAction(data.player.xCo, data.player.yCo, data.environment.map)
-    directionChoice(data, x, y, palletTownMap)
+    drawOverworld(data.player.xCo, data.player.yCo, data.environment.location.map)
+    if checkAction(data, data.player.xCo, data.player.yCo, data.environment.location.map):
+        drawOverworld(data.player.xCo, data.player.yCo, data.environment.location.map)
+    print(data.player.xCo, data.player.yCo, data.environment.location.name)
+    directionChoice(data, data.player.xCo, data.player.yCo, data.environment.location.map)
+
 

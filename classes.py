@@ -4,7 +4,7 @@ from moveDictionaries import moveInfo
 from bagFunctions import getMedicineHeal, getBallModifier
 from gameMaps import locationInformationDict, locationMapDict
 from screen import BattleScreen
-
+from warpData import getWarpZones
 
 class Data(object):
 	def __init__(self):
@@ -37,6 +37,8 @@ class Player(object):
 		self.mist = 0
 		self.mistCount = 0
 		self.lastCentre = 'Pallet Town'
+		self.xCo = 14
+		self.yCo = 4
 
 class PC(object):
 	def __init__(self):
@@ -188,3 +190,6 @@ class Location(object):
 		self.water = locationInformationDict[name]['Water']
 		self.centre = locationInformationDict[name]['Centre']
 		self.map = locationMapDict[name]
+		self.warpZones = getWarpZones(name)
+
+

@@ -3,10 +3,10 @@ from random import randint
 from battleFunctions import startBattle
 from choicesFunctions import getOptionOneOrTwoOrThree
 from choicesFunctions import getOptionOneOrTwo, getOptionOneOrTwoOrThree, getOptionOneOrTwoOrThreeOrFour, getOptionOneOrTwoOrThreeOrFourOrFive, getOptionsXnumber
-from gameMaps import overworldMap, mapCodeToLocationDict, locationToMapCodeDict, locationInformationDict
+from gameMaps import overworldMap, mapCodeToLocationDict, locationToMapCodeDict, locationInformationDict, locationMapDict
 from pokemonCentreFunctions import pokemonCenter
 from battleFunctions import createEnemy
-from classes import Pokemon
+from classes import Pokemon, Location
 from pokemonLocationsDictionaries import locationToDict
 
 def chooseDirection(data):
@@ -41,10 +41,13 @@ def chooseDirection(data):
     return availableDirections[choice - 1]
 
 def addLocationInformation(data, newLocation):
-    data.environment.location.name = newLocation
-    data.environment.location.grass = locationInformationDict[newLocation]['Grass']
-    data.environment.location.water = locationInformationDict[newLocation]['Water']
-    data.environment.location.centre = locationInformationDict[newLocation]['Centre']
+#    data.environment.location.name = newLocation
+#    data.environment.location.grass = locationInformationDict[newLocation]['Grass']
+#    data.environment.location.water = locationInformationDict[newLocation]['Water']
+#    data.environment.location.centre = locationInformationDict[newLocation]['Centre']
+#    data.environment.location.map = locationMapDict[newLocation]
+#    data.environment.location.warpZones = 
+    data.environment.location = Location(newLocation)
 
 def directionChoice(data):
     newLocation = chooseDirection(data)
@@ -66,7 +69,10 @@ def whitedOut(data):
     addLocationInformation(data, data.player.lastCentre)
     pokemonCenter(data, True)
 
-def wildBattle(data, pokemon, level):
+def wildBattle(data):
+    wildPokemon = getWildPokemon(data.environment.location.name)
+    pokemon = wildPokemon[0]
+    level = wildPokemon[1]
     wildTeam = [Pokemon(pokemon, level, 'Random')]
     createEnemy(data,'Wild', 'Wild', wildTeam, 0, 'Damn!')
     if startBattle(data) != 'Win':
