@@ -5,41 +5,41 @@ init()
 screenTop = '/------------------------------------------------------\\'
 screenBot = '\\------------------------------------------------------/'
 
-#tree = [
-#' ' + Fore.GREEN + '@@@@' + Style.RESET_ALL + ' ',
-#Fore.GREEN + '@@@@@@' + Style.RESET_ALL,
-#'  ||  '
-#]
-#
-#water = [
-#Fore.BLUE + Style.BRIGHT + '~~~~~~' + Style.RESET_ALL,
-#Fore.BLUE + Style.BRIGHT + '~~~~~~' + Style.RESET_ALL,
-#Fore.BLUE + Style.BRIGHT + '~~~~~~' + Style.RESET_ALL
-#]
-#
-#grass = [
-#Fore.GREEN + '^/^/^/' + Style.RESET_ALL,
-#Fore.GREEN + '/^/^/^' + Style.RESET_ALL,
-#Fore.GREEN + '^/^/^/' + Style.RESET_ALL
-#]
-#
-#shortGrass = [
-#Fore.GREEN + ' `  ` ' + Style.RESET_ALL,
-#Fore.GREEN + '   ` `' + Style.RESET_ALL,
-#Fore.GREEN + '` `   ' + Style.RESET_ALL
-#]
-
 tree = [
-' @@@@ ',
-'@@@@@@',
+' ' + Fore.GREEN + '@@@@' + Style.RESET_ALL + ' ',
+Fore.GREEN + '@@@@@@' + Style.RESET_ALL,
 '  ||  '
 ]
 
 water = [
-'~~~~~~',
-'~~~~~~',
-'~~~~~~'
+Fore.BLUE + Style.BRIGHT + '~~~~~~' + Style.RESET_ALL,
+Fore.BLUE + Style.BRIGHT + '~~~~~~' + Style.RESET_ALL,
+Fore.BLUE + Style.BRIGHT + '~~~~~~' + Style.RESET_ALL
 ]
+
+grass = [
+Fore.GREEN + '^/^/^/' + Style.RESET_ALL,
+Fore.GREEN + '/^/^/^' + Style.RESET_ALL,
+Fore.GREEN + '^/^/^/' + Style.RESET_ALL
+]
+
+shortGrass = [
+Fore.GREEN + ' `  ` ' + Style.RESET_ALL,
+Fore.GREEN + '   ` `' + Style.RESET_ALL,
+Fore.GREEN + '` `   ' + Style.RESET_ALL
+]
+
+#tree = [
+#' @@@@ ',
+#'@@@@@@',
+#'  ||  '
+#]
+
+#water = [
+#'~~~~~~',
+#'~~~~~~',
+#'~~~~~~'
+#]
 
 grass = [
 '^/^/^/',
@@ -47,11 +47,11 @@ grass = [
 '^/^/^/'
 ]
 
-shortGrass = [
-' `  ` ',
-'   ` `',
-'` `   '
-]
+#shortGrass = [
+#' `  ` ',
+#'   ` `',
+#'` `   '
+#]
 
 sign = [
 ',----,',
@@ -72,9 +72,9 @@ empty = [
 ]
 
 you = [
-'  o~  ',
-' (//) ',
-'  ||  '
+'o~',
+'(//)',
+'||'
 ]
 
 warp = [

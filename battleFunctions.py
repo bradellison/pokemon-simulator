@@ -492,7 +492,7 @@ def getNVEffectImmunities(data, nvEffect, defPokemon):
 	if (nvEffect == 5 or nvEffect == 6) and (defPokemon.type in poisonImmunities):
 		return True
 	else:
-		return 'Continue'
+		return False
 
 
 def moveNVEffectPlayer(data):
@@ -1614,12 +1614,12 @@ def winBattle(data):
 		cash = randint(200,500)
 		cash += data.environment.payDayExtra
 		data.player.money += cash
-		text(data, 'You earned $' + str(cash), 'for winning!\n')
+		text(data, 'You earned $' + str(cash), 'for winning!')
 	for i in data.player.team:
 		if i.shouldEvolve == 1:
 			print('Something is happening to', i.name + '! Let it continue?')
 			if getYesOrNo() == 1:
-				evolvePokemon(i)
+				evolvePokemon(data, i)
 	endBattlePokemonInfo(data)
 
 

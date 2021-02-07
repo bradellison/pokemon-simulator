@@ -17,6 +17,8 @@ def drawOverworld(x, y, location):
                 for sprite in line:
                     if xAxis > x-5 and xAxis < x+5:
                         if [x, y] == [xAxis, yAxis]:
+                            #youTile = overlayCharacterSprite(you[location], spriteDict[sprite][location], location)
+                            #screenDraw += youTile
                             screenDraw += you[location]
                         else:
                             screenDraw += (spriteDict[sprite][location])
@@ -27,6 +29,14 @@ def drawOverworld(x, y, location):
         yAxis += 1
     screenDraw += screenBot
     print(screenDraw)
+
+def overlayCharacterSprite(you, sprite, location):
+    if location == 1:
+        youTile = sprite[:1] + you + sprite[-1:]
+    else:
+        youTile = sprite[:2] + you + sprite[-2:]
+    return youTile
+
 
 def directionChoice(data,x,y,location):
     newx = x
@@ -103,7 +113,7 @@ def overworldMovement(data):
     drawOverworld(data.player.xCo, data.player.yCo, data.environment.location.map)
     if checkAction(data, data.player.xCo, data.player.yCo, data.environment.location.map):
         drawOverworld(data.player.xCo, data.player.yCo, data.environment.location.map)
-    print(data.player.xCo, data.player.yCo, data.environment.location.name)
+    print('X:', data.player.xCo, '- Y:', data.player.yCo, ' Region:', data.environment.location.name)
     directionChoice(data, data.player.xCo, data.player.yCo, data.environment.location.map)
 
 

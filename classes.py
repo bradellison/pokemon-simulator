@@ -37,8 +37,8 @@ class Player(object):
 		self.mist = 0
 		self.mistCount = 0
 		self.lastCentre = 'Pallet Town'
-		self.xCo = 14
-		self.yCo = 4
+		self.xCo = 16 #Outside Oak's door default
+		self.yCo = 16 #Outside Oak's door default
 
 class PC(object):
 	def __init__(self):

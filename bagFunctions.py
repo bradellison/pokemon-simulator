@@ -71,11 +71,11 @@ def getCaughtPokemon(data):
 	if len(data.player.team) < 6:
 		getNamePokemon(data.enemy.pokemon)
 		data.player.team.append(data.enemy.pokemon)
-		print('You added the', data.enemy.pokemon.name, 'to your team!\n')
+		text(data, 'You added the', data.enemy.pokemon.name, 'to your team!\n')
 	else:
 		getNamePokemon(data.enemy.pokemon)
 		data.pc.boxes[0].inventory.append(data.enemy.pokemon)
-		print('You sent the', data.enemy.pokemon.name, 'to the PC!\n')
+		text(data, 'You sent the', data.enemy.pokemon.name, 'to the PC!\n')
 
 def getNamePokemon(pokemon):
 	print('\nWould you like to name the', pokemon.name + '?')
