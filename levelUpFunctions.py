@@ -12,9 +12,13 @@ def getPokemonEvolutionDetails(pokemon):
 	return evolutionDetails
 
 def getExpYield(data):
+	inBattleCount = 0
+	for j in data.player.team:
+		if j.inCurrentBattle == 1:
+			inBattleCount += 1
 	for i in data.player.team:
 		if i.level != 100:
-			a = 1; e = 1; f = 1; p = 1; s = 1; t = 1; v = 1; x = data.expMult
+			a = 1; e = 1; f = 1; p = 1; s = 1; t = 1; v = 1; x = data.expMult; z = inBattleCount
 			if data.enemy.type != 'Wild':
 				a = 1.5
 			b = data.enemy.pokemon.BaseExpYield
@@ -26,23 +30,22 @@ def getExpYield(data):
 			#p is for exp point power, not yet implemented
 			if data.player.expShare == 1 and i.inCurrentBattle == 0:
 				s = 2
-			if data.player.expShare == 0 and i.inCurrentBattle == 0:
-				return
-			#t is for traded pokemon, not implemented
-			#v is for pokemon that could have evolved already, not implemented
-			expYield = int((a * b * e * f * l * p * t * v * x) / (7 * s))
-			i.exp += expYield
-			text(data, i.name, 'gained', expYield, 'exp!')
-			while i.exp > i.nextLevelExp and i.level < 100:
-				levelUpPokemon(data, i)
-				text(data, i.name, 'went up one level and is now level', str(i.level) + '!')
-				i.nextLevelExp = getExp(i.species, i.level + 1)
-				getMoveLearn(i)
-				evolutionDetails = getPokemonEvolutionDetails(i.species)
-				if evolutionDetails['Evolve'] == 'Yes':
-					if evolutionDetails['Type'] == 'Level':
-						if i.level >= evolutionDetails['Detail']:
-							i.shouldEvolve = 1
+			if data.player.expShare != 0 or i.inCurrentBattle != 0:
+				#t is for traded pokemon, not implemented
+				#v is for pokemon that could have evolved already, not implemented
+				expYield = int((a * b * e * f * l * p * t * v * x) / (7 * s * z))
+				i.exp += expYield
+				text(data, i.name, 'gained', expYield, 'exp!')
+				while i.exp > i.nextLevelExp and i.level < 100:
+					levelUpPokemon(data, i)
+					text(data, i.name, 'went up one level and is now level', str(i.level) + '!')
+					i.nextLevelExp = getExp(i.species, i.level + 1)
+					getMoveLearn(i)
+					evolutionDetails = getPokemonEvolutionDetails(i.species)
+					if evolutionDetails['Evolve'] == 'Yes':
+						if evolutionDetails['Type'] == 'Level':
+							if i.level >= evolutionDetails['Detail']:
+								i.shouldEvolve = 1
 
 def levelUpPokemon(data, pokemon):
 	pokemon.level += 1

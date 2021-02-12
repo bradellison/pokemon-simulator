@@ -1430,30 +1430,22 @@ def endBattlePokemonInfo(data):
 		pokemon.wrapCount = 0
 		pokemon.leechSeed = 0
 		pokemon.flashFireMult = 1
-	for pokemon in data.enemy.team:
-		pokemon.statStage = [0,0,0,0,0,0,0,0,0]
-#		pokemon.ability =  
-		pokemon.type = getPokemonType(pokemon)
-		pokemon.move = Move('None')
-		pokemon.previousMove = 0
-		pokemon.inCurrentBattle = 0
-		pokemon.shouldEvolve = 0
-		pokemon.criticalMove = 0
-		pokemon.lockedInMoveNumber = 0
-		pokemon.immune = 0
-		pokemon.flinch = 0
-		pokemon.confused = 0
-		pokemon.confusedCount = 0
-		pokemon.bind = 0
-		pokemon.bindCount = 0
-		pokemon.clamp = 0
-		pokemon.clampCount = 0
-		pokemon.fireSpin = 0
-		pokemon.fireSpinCount = 0
-		pokemon.wrap = 0
-		pokemon.wrapCount = 0
-		pokemon.leechSeed = 0
-		pokemon.flashFireMult = 1
+		pokemon.bide = 0
+		pokemon.bideDamage = 0
+		pokemon.rage = 0
+		pokemon.rageCount = 0
+		pokemon.substitute = 0
+		pokemon.substituteHealth = 0
+		pokemon.disabled = 0
+		pokemon.disabledMove = 0
+		pokemon.disabledCount = 0
+		pokemon.transform = 0
+	data.player.mist = 0
+	data.player.mistCount = 0
+	data.player.reflect = 0
+	data.player.reflectCount = 0
+	data.player.lightScreen = 0
+	data.player.lightScreenCount = 0
 
 def checkFlinch(atkMove, defPokemon):
 	if atkMove.flinch == 1 and defPokemon.ability != 'Inner Focus':
