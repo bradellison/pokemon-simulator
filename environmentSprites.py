@@ -2,6 +2,8 @@ from colorama import Fore, Back, Style, init
 
 init()
 
+overscore = chr(175)
+
 screenTop = '/------------------------------------------------------\\'
 screenBot = '\\------------------------------------------------------/'
 
@@ -71,9 +73,27 @@ empty = [
 '      '
 ]
 
+emptyStorySpot = [
+'      ',
+'      ',
+'      '
+]
+
 you = [
 '  o~  ',
 ' (//) ',
+'  ||  '
+]
+
+rival = [
+'  o~  ',
+' <{}> ',
+'  ||  '
+]
+
+oak = [
+'  0~  ',
+' ({}\ ',
 '  ||  '
 ]
 
@@ -149,4 +169,90 @@ boulderSide = [
 '(_)(_)'
 ]
 
-spriteDict = {'@': tree, '~': water, '%': grass, '=': ledge, ' ': empty, 'Y': you, '!': warp, '[': houseLeft, ']': houseRight, 'D':houseDoor, 'K': houseMiddle, 'g': shortGrass, 'S': sign, 'b': bollard, '{': roofLeft, '_': roofMid, '}': roofRight, 'B': boulder, 'L': boulderSide}
+insideWallTop = [
+'------',
+'______',
+'======'
+]
+
+insideWallBottom = [
+'______',
+'      ',
+'      '
+]
+
+insideVerticalWallRight = [
+'|     ',
+'|     ',
+'|     '
+]
+
+insideVerticalWallLeft = [
+'     |',
+'     |',
+'     |'
+]
+
+bookcase = [
+'[____]',
+'[____]',
+'[====]'
+]
+ 
+ballOnGround = [
+'  __  ',
+' (-o) ',
+'  ' + overscore + overscore + '  '
+]
+
+ballOnTableLeft = [
+'|' + overscore + '__' + overscore + overscore,
+'|(-o) ',
+'|_' + overscore + overscore + '__'
+]
+
+ballOnTableMiddle = [
+overscore + overscore + '__' + overscore + overscore,
+' (-o) ',
+'__' + overscore + overscore + '__'
+]
+
+ballOnTableRight = [
+overscore + overscore + '__' + overscore + '|',
+' (-o)|',
+'__' + overscore + overscore + '_|'
+]
+
+
+spriteDict = {
+'?': emptyStorySpot,
+'@': tree,
+'~': water,
+'%': grass,
+'=': ledge, 
+' ': empty, 
+'Y': you, 
+'^': rival,
+'0': oak,
+'!': warp, 
+'[': houseLeft, 
+']': houseRight, 
+'D': houseDoor, 
+'K': houseMiddle, 
+'g': shortGrass, 
+'S': sign, 
+'b': bollard, 
+'{': roofLeft, 
+'_': roofMid, 
+'}': roofRight, 
+'B': boulder, 
+'L': boulderSide,
+'w': insideWallTop,
+'W': insideWallBottom,
+'m': insideVerticalWallLeft,
+'M': insideVerticalWallRight,
+'o': ballOnGround,
+'q': ballOnTableMiddle,
+'O': ballOnTableLeft,
+'Q': ballOnTableRight,
+'c': bookcase}

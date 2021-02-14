@@ -11,7 +11,8 @@ class Data(object):
 		self.player = Player()
 		self.enemy = Enemy(1, 'Default', [], 0, 'Default Text')
 		self.rival = Enemy(1, 'Default', [], 0, 'Smell ya later!')
-		self.environment = Environment('Pallet Town','None')
+		self.environment = Environment('Oak Lab','None')
+		self.story = Story()
 		self.pc = PC()
 		self.bag = Bag()
 		self.bscreen = BattleScreen()
@@ -37,8 +38,16 @@ class Player(object):
 		self.mist = 0
 		self.mistCount = 0
 		self.lastCentre = 'Pallet Town'
-		self.xCo = 16 #Outside Oak's door default
-		self.yCo = 16 #Outside Oak's door default
+		self.xCo = 10
+		self.yCo = 10
+		#self.xCo = 16 #Outside Oak's door default
+		#self.yCo = 16 #Outside Oak's door default
+
+class Story(object):
+	def __init__(self):
+		self.oakSpeechCompleted = False
+		self.startPokemonChosen = False
+		self.starterRivalFightCompleted = False
 
 class PC(object):
 	def __init__(self):

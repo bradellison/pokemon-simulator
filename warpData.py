@@ -5,8 +5,12 @@ class WarpZone(object):
 		self.warpTargetGrid = targetGrid
 		self.warpTargetLocation = targetLocation
 
+oakLabWarpOne = [9, 14, 'Oak Lab', 16, 16, 'Pallet Town']
+oakLapWarpTwo = [10, 14, 'Oak Lab', 16, 16, 'Pallet Town']
+
 palletTownWarpOne = [14, 3, 'Pallet Town', 11, 41, 'Route 1']
 palletTownWarpTwo = [15, 3, 'Pallet Town', 12, 41, 'Route 1']
+palletTownWarpThree = [16, 15, 'Pallet Town', 9, 13, 'Oak Lab']
 
 routeOneWarpOne = [11, 41, 'Route 1', 14, 3, 'Pallet Town']
 routeOneWarpTwo = [12, 41, 'Route 1', 15, 3, 'Pallet Town']
@@ -21,12 +25,13 @@ viridianCityWarpFour = [22, 4, 'Viridian City', 12, 30, 'Route 2']
 routeTwoWarpOne = [11, 30, 'Route 2', 21, 4, 'Viridian City']
 routeTwoWarpTwo = [12, 30, 'Route 2', 22, 4, 'Viridian City']
 
-palletTownWarps = [palletTownWarpOne, palletTownWarpTwo]
+oakLabWarps = [oakLabWarpOne, oakLapWarpTwo]
+palletTownWarps = [palletTownWarpOne, palletTownWarpTwo, palletTownWarpThree]
 routeOneWarps = [routeOneWarpOne, routeOneWarpTwo, routeOneWarpThree, routeOneWarpFour]
 viridianCityWarps = [viridianCityWarpOne, viridianCityWarpTwo, viridianCityWarpThree, viridianCityWarpFour]
 routeTwoWarps = [routeTwoWarpOne, routeTwoWarpTwo]
 
-locationToWarpListDict = {'Pallet Town': palletTownWarps, 'Route 1': routeOneWarps, 'Viridian City': viridianCityWarps, 'Route 2': routeTwoWarps}
+locationToWarpListDict = {'Oak Lab': oakLabWarps, 'Pallet Town': palletTownWarps, 'Route 1': routeOneWarps, 'Viridian City': viridianCityWarps, 'Route 2': routeTwoWarps}
 
 def getWarpZones(location):
     warpZones = []

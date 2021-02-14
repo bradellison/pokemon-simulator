@@ -5,6 +5,8 @@ from gameMaps import routeOneMap, palletTownMap
 from environmentSprites import screenTop, screenBot, spriteDict, you
 from overworldFunctions import addLocationInformation, wildBattle
 from pokemonCentreFunctions import pokemonCenter
+from text import worldText
+from storyInteractionFunctions import talkGary, talkOak, starterBall, talkStarterRivalFight
 
 def drawOverworld(x, y, location):
     screenDraw = screenTop + '\n'
@@ -30,6 +32,9 @@ def drawOverworld(x, y, location):
     screenDraw += screenBot
     print(screenDraw)
 
+
+
+
 def overlayCharacterSprite(you, sprite, location):
     if location == 1:
         youTile = sprite[:1] + you + sprite[-1:]
@@ -52,7 +57,9 @@ def directionChoice(data,x,y,location):
                 newy += 1
             elif choiceInput == 'd':
                 newx += 1
-            if checkWall(newx, newy, location):
+            if checkWall(newx, newy, location, choiceInput):
+                return
+            if checkInteraction(data, newx, newy, location):
                 return
             else:
                 data.player.xCo = newx
@@ -61,19 +68,72 @@ def directionChoice(data,x,y,location):
         except ValueError:
             print('Please choose an option!')
 
-def checkWall(x,y,location):
-    walls = ['@', '~', 'K', '[', ']', 'D', '{', '}', '_', 'b']
+def checkWall(x,y,location,direction):
+    walls = ['@', '~', 'K', '[', ']', '{', '}', '_', 'b', 'w', 'W', 'm', 'M', 'c', '=']
     yAxis = 0
     for line in location:
         xAxis = 0
         for sprite in line:
             if [xAxis, yAxis] == [x,y]:
                 if sprite in walls:
+                    if sprite == '=' and direction == 'd':
+                        return False
                     return True
                 else:
                     return False
             xAxis += 1
         yAxis += 1
+
+def checkInteraction(data,x,y,location):
+    interactions = ['^', '0', 'q', 'O', 'Q', 'o', '?']
+    yAxis = 0
+    for line in location:
+        xAxis = 0
+        for sprite in line:
+            if [xAxis, yAxis] == [x,y]:
+                if sprite in interactions:
+                    if sprite != '?':
+                        runInteraction(data, sprite, x, y, location)
+                        return True
+                    else:
+                        return checkStoryInteraction(data,x,y)
+                else:
+                    return False
+            xAxis += 1
+        yAxis += 1
+
+def checkStoryInteraction(data,x,y):
+    print(data.environment.location)
+    if data.environment.location.name == 'Pallet Town':
+        if data.story.startPokemonChosen == False:
+            worldText(data, 'You shouldn\'t go into tall grass without a Pokemon!')
+            return True
+        else:
+            return False
+    elif data.environment.location.name == 'Oak Lab':
+        if data.story.startPokemonChosen == True:
+            talkStarterRivalFight(data)
+            return False
+        else:
+            return False
+    else:
+        return False
+
+def runInteraction(data, sprite, x, y, location):
+    if sprite == '^':
+        talkGary(data)
+    elif sprite == '0':
+        talkOak(data)
+    elif sprite == 'O':
+        starterBall(data, 'Bulbasaur')
+    elif sprite == 'q':
+        starterBall(data, 'Charmander')
+    elif sprite == 'Q':
+        starterBall(data, 'Squirtle')
+
+
+
+
 
 def checkNewSprite(x,y,location):
     yAxis = 0
@@ -92,6 +152,9 @@ def checkAction(data, x, y, location):
     if newSprite == '!':
         warpZone(data)
         return True
+    if newSprite == 'D':
+        warpZone(data)
+        return True       
     if newSprite == 'S':
         pokemonCenter(data, False)
         addLocationInformation(data, data.environment.location.name)
@@ -106,7 +169,6 @@ def warpZone(data):
         if [data.player.xCo, data.player.yCo] == zone.warpSourceGrid:
             [data.player.xCo, data.player.yCo] = zone.warpTargetGrid
             addLocationInformation(data, zone.warpTargetLocation)
-
 
 
 def overworldMovement(data):

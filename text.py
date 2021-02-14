@@ -1,4 +1,5 @@
 from screen import drawScreen
+from environmentSprites import screenTop, screenBot, spriteDict, you
 from time import sleep
 
 def splitIntoLines(string):
@@ -50,7 +51,16 @@ def text(data, *therest):
     drawScreen(data)
     newString = turnIntoOneString(therest)
     lines = splitIntoLines(newString)
-#    print ('/------------------------------------------------------\\')
+    for line in lines:
+        extraSpace = getExtraSpace(line)
+        print('| ' + line + extraSpace + ' |')
+    print ('\\------------------------------------------------------/')
+    input()
+
+def worldText(data, *therest):
+    drawOverworldText(data.player.xCo, data.player.yCo, data.environment.location.map)
+    newString = turnIntoOneString(therest)
+    lines = splitIntoLines(newString)
     for line in lines:
         extraSpace = getExtraSpace(line)
         print('| ' + line + extraSpace + ' |')
@@ -60,3 +70,28 @@ def text(data, *therest):
 loading = 'LOADING...'
 for i in range(len(loading)):
     print(loading[i], sep=' ', end=' ', flush=True); sleep(0.05)
+
+def drawOverworldText(x, y, location):
+    screenDraw = screenTop + '\n'
+    yAxis = 0
+    for line in location:
+        if yAxis > y-4 and yAxis < y+4:
+            xAxis = 0
+            for location in range(3):
+                screenDraw += '|'
+                for sprite in line:
+                    if xAxis > x-5 and xAxis < x+5:
+                        if [x, y] == [xAxis, yAxis]:
+                            #youTile = overlayCharacterSprite(you[location], spriteDict[sprite][location], location)
+                            #screenDraw += youTile
+                            screenDraw += you[location]
+                        else:
+                            screenDraw += (spriteDict[sprite][location])
+                    xAxis += 1
+                screenDraw += '|\n'
+                xAxis = 0
+            location += 1
+        yAxis += 1
+        if yAxis == 18:
+            screenDraw += '|------------------------------------------------------|'
+            print(screenDraw)

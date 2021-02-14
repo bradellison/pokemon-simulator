@@ -1,0 +1,47 @@
+Player
+  o~
+ (//)
+  ||
+
+Rival
+  o~
+ <{}>
+  ||
+
+Oak
+  0~
+ ({}\
+  ||
+
+Mom
+  O~
+ (YY)
+  ||
+
+Extra
+  o~
+ (::)
+  ||
+
+¯
+
+
+Looking Left
+  ~0
+ ([])
+  ]]
+
+Looking right
+  0~
+ ([])
+  [[
+
+Looking Down
+  0~
+ ([])
+  ||
+
+Looking Up
+  ~0
+ ([])
+  ||
