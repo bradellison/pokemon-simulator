@@ -1592,9 +1592,19 @@ def getResetInBattle(data):
 	for i in data.player.team:
 		i.inCurrentBattle = 0
 
+def getFirstPokemonForFight(data):
+	if data.player.team[0].hp == 0:
+		for pokemon in data.player.team:
+			if pokemon.hp != 0:
+				j = pokemon.team.index(pokemon)
+				data.player.team[j], data.player.team[0] = data.player.team[0], data.player.team[j]
+				break
+	else:
+		data.player.pokemon = data.player.team[0]
+
 def startBattle(data):
 	data.player.team = data.player.defaultTeam.copy()
-	data.player.pokemon = data.player.team[0]
+	getFirstPokemonForFight(data)
 	data.enemy.pokemon = data.enemy.team[0]
 	battleStartPhrasing(data)
 	getPreBattleEffects(data)

@@ -1,7 +1,7 @@
 import time
 import colorama
 from gameMaps import routeOneMap, palletTownMap
-from enviromentSprites import screenTop, screenBot, spriteDict, you
+from environmentSprites import screenTop, screenBot, spriteDict, you
 
 x = 10
 y = 7
@@ -73,22 +73,4 @@ def checkNewSprite(x,y,location):
                 return sprite
             xAxis += 1
         yAxis += 1   
-
-def checkAction(x, y, location):
-    newSprite = checkNewSprite(x, y, location)
-    if newSprite == '%':
-        print('WILD BATTLE')
-    if newSprite == '!':
-        print('WARP')
-
-
-
-while True:
-    drawOverworld(x, y, palletTownMap)
-    if checkAction(x, y, palletTownMap):
-        print('WILD BATTLE')
-    xy = directionChoice(x, y, palletTownMap)
-    x = xy[0]
-    y = xy[1]
-
 

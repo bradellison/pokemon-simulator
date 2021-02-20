@@ -51,7 +51,7 @@ palletTownWarps = [palletTownWarpOne, palletTownWarpTwo, palletTownWarpThree]
 routeOneWarps = [routeOneWarpOne, routeOneWarpTwo, routeOneWarpThree, routeOneWarpFour]
 viridianCityWarps = [viridianCityWarpOne, viridianCityWarpTwo, viridianCityWarpThree, viridianCityWarpFour, viridianCityWarpFive]
 viridianCenterWarps = [viridianCenterWarpOne, viridianCenterWarpTwo]
-routeTwoWarps = [routeTwoWarpOne, routeTwoWarpTwo]
+routeTwoWarps = [routeTwoWarpOne, routeTwoWarpTwo, routeTwoWarpThree]
 viridianForestEntranceWarps = [viridianForestEntranceWarpOne, viridianForestEntranceWarpTwo, viridianForestEntranceWarpThree, viridianForestEntranceWarpFour]
 viridianForestWarps = [viridianForestWarpOne, viridianForestWarpTwo, viridianForestWarpThree, viridianForestWarpFour]
 viridianForestExitWarps = [viridianForestExitWarpOne, viridianForestExitWarpTwo, viridianForestExitWarpThree, viridianForestExitWarpFour]
@@ -63,8 +63,8 @@ locationToWarpListDict = {
 'Viridian City': viridianCityWarps, 
 'Viridian Center': viridianCenterWarps, 
 'Route 2': routeTwoWarps,
-'Viridian Forest Entrace': viridianForestEntranceWarps,
-'Viridian Forst': viridianForestWarps,
+'Viridian Forest Entrance': viridianForestEntranceWarps,
+'Viridian Forest': viridianForestWarps,
 'Viridian Forest Exit': viridianForestExitWarps
 }
 
