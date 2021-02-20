@@ -9,8 +9,8 @@ from warpData import getWarpZones
 class Data(object):
 	def __init__(self):
 		self.player = Player()
-		self.enemy = Enemy(1, 'Default', [], 0, 'Default Text')
-		self.rival = Enemy(1, 'Default', [], 0, 'Smell ya later!')
+		self.enemy = Enemy('Trainer', 'Default', [], 0, 'Default Text')
+		self.rival = Enemy('Rival', 'Default', [], 420, 'Smell ya later!')
 		self.environment = Environment('Oak Lab','None')
 		self.story = Story()
 		self.pc = PC()
@@ -38,6 +38,9 @@ class Player(object):
 		self.mist = 0
 		self.mistCount = 0
 		self.lastCentre = 'Pallet Town'
+		self.lastDirection = None
+		self.lastBattleChoice = 1
+		self.lastAttackChoice = 1
 		self.xCo = 10
 		self.yCo = 10
 		#self.xCo = 16 #Outside Oak's door default
@@ -95,6 +98,7 @@ class Pokemon(object):
 		self.name = species
 		self.level = level
 		self.nature = getNature(species)
+		self.lastAttackChoice = 1
 		self.iv = getRandomIV()
 		self.ev = [0,0,0,0,0,0]
 		self.personalityValue = getRandomPersonalityValue()

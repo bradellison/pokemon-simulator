@@ -52,7 +52,6 @@ def getCatch(data, ball):
 		random = randint(1,65535)
 		count = count + 1
 		text(data, 'Shook', count, 'times!')
-		time.sleep(1)
 		if catch > random:		
 			if count == 3:
 				text(data, 'You caught the opposing', data.enemy.pokemon.name + '!')
@@ -71,11 +70,11 @@ def getCaughtPokemon(data):
 	if len(data.player.team) < 6:
 		getNamePokemon(data.enemy.pokemon)
 		data.player.team.append(data.enemy.pokemon)
-		text(data, 'You added the', data.enemy.pokemon.name, 'to your team!\n')
+		text(data, 'You added the', data.enemy.pokemon.name, 'to your team!')
 	else:
 		getNamePokemon(data.enemy.pokemon)
 		data.pc.boxes[0].inventory.append(data.enemy.pokemon)
-		text(data, 'You sent the', data.enemy.pokemon.name, 'to the PC!\n')
+		text(data, 'You sent the', data.enemy.pokemon.name, 'to the PC!')
 
 def getNamePokemon(pokemon):
 	print('\nWould you like to name the', pokemon.name + '?')
@@ -117,7 +116,7 @@ def getMedicinePocket(data):
 		return 0
 	medicine.quantity -= 1
 	if medicine.quantity == 0:
-		data.bag.medicine.remove(data, medicine)
+		data.bag.medicine.remove(medicine)
 
 #def getHealFunction(medicine):
 #	if medicine in 
@@ -148,7 +147,7 @@ def getPokemonHealChoice(data, medicine):
 						if data.player.team[j].maxhp - data.player.team[j].hp < heal:
 							heal = data.player.team[j].maxhp - data.player.team[j].hp
 						data.player.team[j].hp += heal
-						print(data.player.team[j].name, 'has been healed by', heal, 'HP! It has', str(data.player.pokemon.hp) + '/' + str(data.player.pokemon.maxhp), 'remaining!')
+						text(data, data.player.team[j].name, 'has been healed by', heal, 'HP! It has', str(data.player.pokemon.hp) + '/' + str(data.player.pokemon.maxhp), 'remaining!')
 						return 1
 			if x == 0:
 				print("Please choose a Pokemon from the list above!")

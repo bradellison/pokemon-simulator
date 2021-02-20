@@ -93,7 +93,13 @@ rival = [
 
 oak = [
 '  0~  ',
-' ({}\ ',
+' ({}\\ ',
+'  ||  '
+]
+
+nurseJoy = [
+'  o~  ',
+' (::) ',
 '  ||  '
 ]
 
@@ -178,7 +184,7 @@ insideWallTop = [
 insideWallBottom = [
 '______',
 '      ',
-'      '
+'______'
 ]
 
 insideVerticalWallRight = [
@@ -198,7 +204,13 @@ bookcase = [
 '[____]',
 '[====]'
 ]
- 
+
+doormat = [
+'      ',
+'======',
+'======'
+]
+
 ballOnGround = [
 '  __  ',
 ' (-o) ',
@@ -223,6 +235,96 @@ overscore + overscore + '__' + overscore + '|',
 '__' + overscore + overscore + '_|'
 ]
 
+plantPot = [
+'__||__',
+'| || |',
+' \\__/ '
+]
+
+plantTop = [
+Fore.GREEN + '@@' + Style.RESET_ALL + '  ' + Fore.GREEN +  '@@' + Style.RESET_ALL,
+' ' + Fore.GREEN + '@@@@' + Style.RESET_ALL + ' ',
+Fore.GREEN + '@@' + Style.RESET_ALL + '||' + Fore.GREEN +  '@@' + Style.RESET_ALL,
+]
+
+tableLeft = [
+'|' + overscore + overscore + overscore + overscore + overscore,
+'|_____',
+'||    '
+]
+
+tableMiddle = [
+overscore + overscore + overscore + overscore + overscore + overscore,
+'______',
+'      '
+]
+
+TableRight = [
+overscore + overscore + overscore + overscore + overscore + '|',
+'_____|',
+'    ||'
+]
+
+TableRightAction = [
+overscore + overscore + overscore + overscore + overscore + '|',
+'_____|',
+'    ||'
+]
+
+treetrunk = [
+'  __  ',
+' |  | ',
+'/____\\'
+]
+
+bigTreeBottomLeft = [
+'@@@@@@',
+' @@@@@',
+'   /__'
+]
+
+bigTreeBottomRight = [
+'@@@@@@',
+'@@@@@ ',
+'__\\   '
+]
+
+bigTreeTopLeft = [
+'   @@@',
+' @@@@@',
+'@@@@@@',
+]
+
+bigTreeTopRight = [
+'@@@   ',
+'@@@@@ ',
+'@@@@@@'
+]
+
+healMachineBottomLeft = [
+' _|   ',
+'/_|   ',
+'/ |___'
+]
+
+healMachineBottomRight = [
+'   |_ ',
+'   |_\\',
+'___| \\'
+]
+
+healMachineTopLeft = [
+'   ___',
+'   |  ',
+'  /|__',
+]
+
+healMachineTopRight = [
+'___   ',
+'  |   ',
+'__|\\  '
+]
+
 
 spriteDict = {
 '?': emptyStorySpot,
@@ -238,7 +340,10 @@ spriteDict = {
 '[': houseLeft, 
 ']': houseRight, 
 'D': houseDoor, 
-'K': houseMiddle, 
+'d': doormat,
+'p': plantPot,
+'P': plantTop,
+'-': houseMiddle, 
 'g': shortGrass, 
 'S': sign, 
 'b': bollard, 
@@ -255,4 +360,19 @@ spriteDict = {
 'q': ballOnTableMiddle,
 'O': ballOnTableLeft,
 'Q': ballOnTableRight,
-'c': bookcase}
+'c': bookcase,
+'r': tableLeft,
+'t': tableMiddle,
+'y': TableRight,
+'R': TableRightAction,
+'T': treetrunk,
+'u': bigTreeTopLeft,
+'i': bigTreeTopRight,
+'j': bigTreeBottomLeft,
+'k': bigTreeBottomRight,
+'+': nurseJoy,
+'U': healMachineTopLeft,
+'I': healMachineTopRight,
+'J': healMachineBottomLeft,
+'K': healMachineBottomRight
+}

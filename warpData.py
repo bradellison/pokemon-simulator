@@ -21,6 +21,10 @@ viridianCityWarpOne = [25, 37, 'Viridian City', 12, 4, 'Route 1']
 viridianCityWarpTwo = [24, 37, 'Viridian City', 11, 4, 'Route 1']
 viridianCityWarpThree = [21, 4, 'Viridian City', 11, 30, 'Route 2']
 viridianCityWarpFour = [22, 4, 'Viridian City', 12, 30, 'Route 2']
+viridianCityWarpFive = [27, 28, 'Viridian City', 9, 10, 'Viridian Center']
+
+viridianCenterWarpOne = [10, 11, 'Viridian Center', 27, 29, 'Viridian City']
+viridianCenterWarpTwo = [9, 11, 'Viridian Center', 27, 29, 'Viridian City']
 
 routeTwoWarpOne = [11, 30, 'Route 2', 21, 4, 'Viridian City']
 routeTwoWarpTwo = [12, 30, 'Route 2', 22, 4, 'Viridian City']
@@ -28,10 +32,11 @@ routeTwoWarpTwo = [12, 30, 'Route 2', 22, 4, 'Viridian City']
 oakLabWarps = [oakLabWarpOne, oakLapWarpTwo]
 palletTownWarps = [palletTownWarpOne, palletTownWarpTwo, palletTownWarpThree]
 routeOneWarps = [routeOneWarpOne, routeOneWarpTwo, routeOneWarpThree, routeOneWarpFour]
-viridianCityWarps = [viridianCityWarpOne, viridianCityWarpTwo, viridianCityWarpThree, viridianCityWarpFour]
+viridianCityWarps = [viridianCityWarpOne, viridianCityWarpTwo, viridianCityWarpThree, viridianCityWarpFour, viridianCityWarpFive]
+viridianCenterWarps = [viridianCenterWarpOne, viridianCenterWarpTwo]
 routeTwoWarps = [routeTwoWarpOne, routeTwoWarpTwo]
 
-locationToWarpListDict = {'Oak Lab': oakLabWarps, 'Pallet Town': palletTownWarps, 'Route 1': routeOneWarps, 'Viridian City': viridianCityWarps, 'Route 2': routeTwoWarps}
+locationToWarpListDict = {'Oak Lab': oakLabWarps, 'Pallet Town': palletTownWarps, 'Route 1': routeOneWarps, 'Viridian City': viridianCityWarps, 'Viridian Center': viridianCenterWarps, 'Route 2': routeTwoWarps}
 
 def getWarpZones(location):
     warpZones = []

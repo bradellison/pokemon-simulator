@@ -122,19 +122,25 @@ def battleEnd(data):
 	if data.enemy.type == 'Trainer' or data.enemy.type == 'Gym Leader':
 		text(data, 'You defeated', data.enemy.type, data.enemy.name + '.', 'You received', data.enemy.prizeMoney, 'for winning!')
 
-def battleChoiceInput():
+def battleChoiceInput(data):
 	#print('What would you like to do? \n 1 - Fight \n 2 - Pokemon \n 3 - Bag \n 4 - Run')
-	battleChoiceScreen()
+	battleChoiceScreen(data.player.lastBattleChoice)
 	while True:
 		try:
 			choiceInput = input('-- ')
+			if choiceInput == '':
+				choiceInput = data.player.lastBattleChoice
 			if choiceInput == 'Fight' or int(choiceInput) == 1:
+				data.player.lastBattleChoice = 1
 				return 'Fight'
 			if choiceInput == 'Pokemon' or int(choiceInput) == 2:
+				data.player.lastBattleChoice = 2
 				return 'Pokemon'
 			if choiceInput == 'Bag' or int(choiceInput) == 3:
+				data.player.lastBattleChoice = 3
 				return 'Bag'
 			if choiceInput == 'Run' or int(choiceInput) == 4:
+				data.player.lastBattleChoice = 4
 				return 'Run'
 			print("Please choose an option from the list above!")
 		except ValueError:
@@ -158,7 +164,10 @@ def moveChoiceInput(data):
 	while True:
 		try:
 			choiceInput = input('-- ')
+			if choiceInput == '':
+				choiceInput = data.player.pokemon.lastAttackChoice
 			if int(choiceInput) == 1 and len(moveSet) >= 1:
+				data.player.pokemon.lastAttackChoice = int(choiceInput)
 				if data.player.pokemon.movePPCurrent[0] > 0:
 					if data.player.pokemon.moveSet[0] != data.player.pokemon.disabledMove:
 						data.player.pokemon.movePPCurrent[0] -= 1
@@ -167,6 +176,7 @@ def moveChoiceInput(data):
 				else:
 					print('No PP remaining! Please choose another move!')
 			elif int(choiceInput) == 2 and len(moveSet) >= 2:
+				data.player.pokemon.lastAttackChoice = int(choiceInput)
 				if data.player.pokemon.movePPCurrent[1] > 0:
 					if data.player.pokemon.moveSet[1] != data.player.pokemon.disabledMove:
 						data.player.pokemon.movePPCurrent[1] -= 1
@@ -175,6 +185,7 @@ def moveChoiceInput(data):
 				else:
 					print('No PP remaining! Please choose another move!')
 			elif int(choiceInput) == 3 and len(moveSet) >= 3:
+				data.player.pokemon.lastAttackChoice = int(choiceInput)
 				if data.player.pokemon.movePPCurrent[2] > 0:
 					if data.player.pokemon.moveSet[2] != data.player.pokemon.disabledMove:
 						data.player.pokemon.movePPCurrent[2] -= 1
@@ -183,6 +194,7 @@ def moveChoiceInput(data):
 				else:
 					print('No PP remaining! Please choose another move!')
 			elif int(choiceInput) == 4 and len(moveSet) >= 4:
+				data.player.pokemon.lastAttackChoice = int(choiceInput)
 				if data.player.pokemon.movePPCurrent[3] > 0:
 					if data.player.pokemon.moveSet[3] != data.player.pokemon.disabledMove:
 						data.player.pokemon.movePPCurrent[3] -= 1
@@ -631,6 +643,7 @@ def getSwitchPokemon(data):
 							checkIntimidateOnSwitch(data, data.player, data.enemy)
 							print()
 							data.player.pokemon.inCurrentBattle = 1
+							data.player.pokemon.lastAttackChoice = 1
 							return 1
 			if x == 0:
 				print("Please choose a Pokemon from the list above!")
@@ -1384,6 +1397,7 @@ def checkDisableCounts(data):
 			data.enemy.pokemon.disabledMove = 0
 
 def resetOnSwitch(pokemon):
+	pokemon.lastAttackChoice = 1
 	pokemon.statStage = [0,0,0,0,0,0,0,0,0]
 	pokemon.move = Move('None')
 	pokemon.previousMove = 0
@@ -1407,6 +1421,7 @@ def endRound(data):
 
 def endBattlePokemonInfo(data):
 	for pokemon in data.player.team:
+		pokemon.lastAttackChoice = 1
 		pokemon.statStage = [0,0,0,0,0,0,0,0,0]
 #		pokemon.ability =  
 		pokemon.type = getPokemonType(pokemon)
@@ -1483,7 +1498,7 @@ def getCurrentFight(data):
 			data.player.pokemon.inCurrentBattle = 1
 			interrupt = 0
 			if data.player.pokemon.lockedInMoveNumber == 0:
-				battleChoice = battleChoiceInput()
+				battleChoice = battleChoiceInput(data)
 			if battleChoice == 'Fight':
 				data.player.pokemon.inCurrentBattle = 1
 				if data.player.pokemon.lockedInMoveNumber == 0:
@@ -1583,6 +1598,8 @@ def startBattle(data):
 	data.enemy.pokemon = data.enemy.team[0]
 	battleStartPhrasing(data)
 	getPreBattleEffects(data)
+	data.player.lastBattleChoice = 1
+	data.player.lastAttackChoice = 1
 	while teamTotalHP(data.player) > 0 and teamTotalHP(data.enemy) > 0 and data.environment.battleEnd == 0:
 		game = getCurrentFight(data)
 		if game == 'End':

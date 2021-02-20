@@ -1,6 +1,6 @@
 import random
 
-from classes import Pokemon, Data, Player
+from classes import Pokemon, Data, Player, Medicine
 from pokemonDictionaries import allPokemonList
 from storyFunctions import mainGame
 from choicesFunctions import getOptionOneOrTwoOrThree, getOptionOneOrTwo
@@ -144,6 +144,11 @@ def startGame():
 	while teamTotalHP(data.player) > 0:
 		choice = battleTypeChoice()
 		if choice == 1:
+			data.bag.medicine.append(Medicine('Potion', 5))
+			data.bag.medicine.append(Medicine('Super Potion', 5))
+			data.bag.medicine.append(Medicine('Hyper Potion', 5))
+			data.bag.medicine.append(Medicine('Max Potion', 5))
+			data.bag.medicine.append(Medicine('Full Restore', 5))
 			battleTrainer(data)
 		elif choice == 2:
 			wildBattleTopLevel(data)

@@ -84,8 +84,7 @@ def oakOpeningMonologue(data):
     data.rival.name = chooseCharacterName(data)
     worldText(data, data.rival.name + ': Grandpa! Did you forget my name again?!')
     worldText(data, 'Oak: Ahem, no, of course not! I was just joking around. Now let\'s get down to business.')
-    worldText(data, 'Oak: I\'d like you to take one of these Pokemon here and see how you get on in the world on Pokemon!')
-    worldText(data, 'Oak: Now', data.player.name + ',', data.rival.name + ', I\'d like to give you each a Pokemon, and see how you get on in the world of Pokemon!')
+    worldText(data, 'Oak: Now', data.player.name + ',', data.rival.name + ', I\'d like to give you each a Pokemon, and see how you get on in the world!')
     worldText(data, data.rival.name + ': Yeah! Thanks Grandpa!')
     worldText(data, 'Oak: Hold on', data.rival.name + ', we should let', data.player.name, 'choose first. Go ahead and choose one from the table there.')
     data.story.oakSpeechCompleted = True

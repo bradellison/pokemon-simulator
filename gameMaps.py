@@ -40,6 +40,7 @@ oakLabDict = {'Grass': False, 'Water': False, 'Centre': False}
 palletTownDict = {'Grass': False, 'Water': False, 'Centre': True}
 routeOneDict = {'Grass': True, 'Water': False, 'Centre': False}
 viridianCityDict = {'Grass': False, 'Water': False, 'Centre': True}
+viridianCenterDict = {'Grass': False, 'Water': False, 'Centre': True}
 routeTwoDict = {'Grass': True, 'Water': False, 'Centre': False}
 routeTwentyTwoDict = {'Grass': True, 'Water': False, 'Centre': False}
 viridianForestDict = {'Grass': True, 'Water': False, 'Centre': False}
@@ -50,8 +51,27 @@ pewterCityDict = {'Grass': False, 'Water': False, 'Centre': True}
 
 locationToMapCodeDict = {'Pallet Town': 'plt', 'Route 1': 'rt1', 'Route 2': 'rt2', 'Viridian City': 'vrc', 'Viridian Forest': 'vrf', 'Route 22': 'r22', 'Pewter City': 'ptc'}
 mapCodeToLocationDict = {'xxx': 'Nothing', 'plt': 'Pallet Town', 'rt1': 'Route 1', 'rt2': 'Route 2', 'vrc': 'Viridian City', 'vrf': 'Viridian Forest', 'r22': 'Route 22', 'ptc': 'Pewter City'}
-locationInformationDict = {'Oak Lab': oakLabDict, 'Pallet Town': palletTownDict, 'Route 1': routeOneDict, 'Route 2': routeTwoDict, 'Viridian City': viridianCityDict, 'Viridian Forest': viridianForestDict, 'Route 22': routeTwentyTwoDict, 'Pewter City': pewterCityDict}
+locationInformationDict = {'Oak Lab': oakLabDict, 'Pallet Town': palletTownDict, 'Route 1': routeOneDict, 'Route 2': routeTwoDict, 'Viridian City': viridianCityDict, 'Viridian Center': viridianCenterDict, 'Viridian Forest': viridianForestDict, 'Route 22': routeTwentyTwoDict, 'Pewter City': pewterCityDict}
 
+
+viridianCentreMap = [
+'                    ',
+'                    ',
+'                    ',
+'                    ',
+'     mMUIwwwwmM     ',
+'     mMJK+   mM     ',
+'     mrttRrttyM     ',
+'     m        M     ',
+'     m        M     ',
+'     mPP    PPM     ',
+'     mpp    ppM     ',
+'     mWWWddWWWM     ',
+'                    ',
+'                    ',
+'                    ',
+'                    '
+]
 
 oakLabMap = [
 '                    ',
@@ -59,16 +79,16 @@ oakLabMap = [
 '                    ',
 '                    ',
 '    mwwwwwwwwwwM    ',
-'    m      ccccM    ',
+'    mryry  ccccM    ',
 '    m     0    M    ',
-'    m    ^ OqQ M    ',
-'    m          M    ',
+'    mUI  ^ OqQ M    ',
+'    mJK        M    ',
 '    m          M    ',
 '    mcccc??ccccM    ',
 '    m          M    ',
 '    m          M    ',
 '    m          M    ',
-'    mWWWWDDWWWWM    ',
+'    mWWWWddWWWWM    ',
 '                    ',
 '                    ',
 '                    ',
@@ -139,13 +159,13 @@ palletTownMap = [
 '@@@@@@@@@@@@@@%%@@@@@@@@@@@@',
 '@@@@@         ??       @@@@@',
 '@@@@@   {__}    {__}   @@@@@',
-'@@@@@ gg[KK]  gg[KK]   @@@@@',
-'@@@@@ gS[DK]  gS[DK]   @@@@@',
+'@@@@@ gg[--]  gg[--]   @@@@@',
+'@@@@@ gS[D-]  gS[D-]   @@@@@',
 '@@@@@                  @@@@@',
 '@@@@@                  @@@@@',
 '@@@@@   gggg  {____}   @@@@@',
-'@@@@@   bbbS  [KKKK]   @@@@@',
-'@@@@@         [KDKK]   @@@@@',
+'@@@@@   bbbS  [----]   @@@@@',
+'@@@@@         [-D--]   @@@@@',
 '@@@@@         gggggggg @@@@@',
 '@@@@@   ~~~~  bbbSbbgg @@@@@',
 '@@@@@   ~~~~           @@@@@',
@@ -167,26 +187,26 @@ viridianCityMap = [
 'BBBBBBBBBL@@@@@@@@@@b  S@@@@            @@@@@',
 'BBBBBBBBBL@@@@@@@@@@b   @@@@            @@@@@',
 'BBBBBBBBBL                      {____}  @@@@@',
-'BBBBBBBBBL  bbbbbb@@            [KKKK]  @@@@@',
-'BBBBBBBBBL b@@@@@@@@b   b       [KKKK]  @@@@@',
-'BBBBBBBBBL b@@@@@@@@b   b      S[KDKK]  @@@@@',
+'BBBBBBBBBL  bbbbbb@@            [----]  @@@@@',
+'BBBBBBBBBL b@@@@@@@@b   b       [----]  @@@@@',
+'BBBBBBBBBL b@@@@@@@@b   b      S[-D--]  @@@@@',
 'BBBBBBBBBL b@@@@@@@@b   {__}============@@@@@',
-'BBBBBBBBBL b@@@@@@@@b   [DK]            @@@@@',
+'BBBBBBBBBL b@@@@@@@@b   [D-]            @@@@@',
 'BBBBBBBBBL b@@@@@@@@b                   @@@@@',
 'BBBBBBBBBL b@@@@@@@@b                   @@@@@',
 'LLLLLLLLLL b@@@@@@@@b   bbbbbbbbbbbbbbbb@@@@@',
 '    L      b@@@@@@@@b   {__}            @@@@@',
-'    !      b@@@@@@@@b   [DK]            @@@@@',
+'    !      b@@@@@@@@b   [D-]            @@@@@',
 '    !       @@@@@@@@            {__}    @@@@@',
-'    L                S  bbbb    [KK]    @@@@@',
-'LLLLLLLL                        [KK]    @@@@@',
-'BBBBBBBL                        [DK]    @@@@@',
+'    L                S  bbbb    [--]    @@@@@',
+'LLLLLLLL                        [--]    @@@@@',
+'BBBBBBBL                        [D-]    @@@@@',
 'BBBBBBBL                                @@@@@',
 'BBBBBBBL@@@@                            @@@@@',
 'BBBBBBBL                  {__}          @@@@@',
-'BBBBBBBL    @@            [KK]          @@@@@',
-'BBBBBBBL    ~~~~~~        [KK]          @@@@@',
-'BBBBBBBL    ~~~~~~        [DK]          @@@@@',
+'BBBBBBBL    @@            [--]          @@@@@',
+'BBBBBBBL    ~~~~~~        [--]          @@@@@',
+'BBBBBBBL    ~~~~~~        [D-]          @@@@@',
 'BBBBBBBL    ~~~~~~                      @@@@@',
 'LLLLLLLL====~~~~~~= === ================@@@@@',
 '       b                                @@@@@',
@@ -206,8 +226,8 @@ viridianCityMap = [
 routeTwoMap = [
 '@@@@  @ @     @@@@  ',
 '@@@@  {__}    @@@@  ',
-'@@@@  [KK]    @@@@  ',
-'@@@@bb[DK]bbbb@@@@@=',
+'@@@@  [--]    @@@@  ',
+'@@@@bb[D-]bbbb@@@@@=',
 '@@@@           @    ',
 '@@@@           @    ',
 '@@@@           @    ',
@@ -241,7 +261,14 @@ routeTwoMap = [
 '@@@@@@@@@@b  @@@@@@@'
 ]
 
+viridianForestMap = [
 
-locationMapDict = {'Oak Lab': oakLabMap, 'Pallet Town': palletTownMap, 'Route 1': routeOneMap, 'Viridian City': viridianCityMap, 'Route 2': routeTwoMap}
+
+]
+
+
+
+
+locationMapDict = {'Oak Lab': oakLabMap, 'Pallet Town': palletTownMap, 'Route 1': routeOneMap, 'Viridian City': viridianCityMap, 'Viridian Center': viridianCentreMap, 'Route 2': routeTwoMap, 'ViridianForest': viridianForestMap}
 
 #locationMapDict = {'Pallet Town': palletTownMap, 'Route 1': routeOneMap, 'Route 2': routeTwoMap, 'Viridian City': viridianCityMap, 'Viridian Forest': viridianForestMap, 'Route 22': routeTwentyTwoMap, 'Pewter City': pewterCityMap}

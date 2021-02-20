@@ -49,34 +49,36 @@ def directionChoice(data,x,y,location):
     while True:
         try:
             choiceInput = (input('-- '))
-            if choiceInput == 'w':
-                newy -= 1
-            elif choiceInput == 'a':
-                newx -= 1
-            elif choiceInput == 's':
-                newy += 1
-            elif choiceInput == 'd':
-                newx += 1
-            if checkWall(newx, newy, location, choiceInput):
-                return
-            if checkInteraction(data, newx, newy, location):
-                return
-            else:
-                data.player.xCo = newx
-                data.player.yCo = newy
-                return
+            if choiceInput == '':
+                choiceInput = data.player.lastDirection
+            if choiceInput in ['w', 'a', 's', 'd']:
+                data.player.lastDirection = choiceInput
+                if choiceInput == 'w':
+                    newy -= 1
+                elif choiceInput == 'a':
+                    newx -= 1
+                elif choiceInput == 's':
+                    newy += 1
+                elif choiceInput == 'd':
+                    newx += 1
+                if checkWall(newx, newy, location, choiceInput) or checkInteraction(data, newx, newy, location):
+                    return
+                else:
+                    data.player.xCo = newx
+                    data.player.yCo = newy
+                    return
         except ValueError:
             print('Please choose an option!')
 
 def checkWall(x,y,location,direction):
-    walls = ['@', '~', 'K', '[', ']', '{', '}', '_', 'b', 'w', 'W', 'm', 'M', 'c', '=']
+    walls = ['@', '~', 'K', '[', ']', '{', '}', '_', 'b', 'w', 'W', 'm', 'M', 'c', '=', 'r', 't', 'y', 'u', 'i', 'j', 'k', 'U', 'I', 'J', 'K', 'T']
     yAxis = 0
     for line in location:
         xAxis = 0
         for sprite in line:
             if [xAxis, yAxis] == [x,y]:
                 if sprite in walls:
-                    if sprite == '=' and direction == 'd':
+                    if sprite == '=' and direction == 's':
                         return False
                     return True
                 else:
@@ -85,7 +87,7 @@ def checkWall(x,y,location,direction):
         yAxis += 1
 
 def checkInteraction(data,x,y,location):
-    interactions = ['^', '0', 'q', 'O', 'Q', 'o', '?']
+    interactions = ['^', '0', 'q', 'O', 'Q', 'o', '?', 'R']
     yAxis = 0
     for line in location:
         xAxis = 0
@@ -111,7 +113,7 @@ def checkStoryInteraction(data,x,y):
         else:
             return False
     elif data.environment.location.name == 'Oak Lab':
-        if data.story.startPokemonChosen == True:
+        if data.story.startPokemonChosen == True and data.story.starterRivalFightCompleted == False:
             talkStarterRivalFight(data)
             return False
         else:
@@ -130,10 +132,8 @@ def runInteraction(data, sprite, x, y, location):
         starterBall(data, 'Charmander')
     elif sprite == 'Q':
         starterBall(data, 'Squirtle')
-
-
-
-
+    elif sprite == 'R':
+        pokemonCenter(data, False)
 
 def checkNewSprite(x,y,location):
     yAxis = 0
@@ -149,12 +149,10 @@ def checkAction(data, x, y, location):
     newSprite = checkNewSprite(x, y, location)
     if newSprite == '%':
         wildBattleChance(data)
-    if newSprite == '!':
+    warpSprites = ['!', 'D', 'd']
+    if newSprite in warpSprites:
         warpZone(data)
-        return True
-    if newSprite == 'D':
-        warpZone(data)
-        return True       
+        return True      
     if newSprite == 'S':
         pokemonCenter(data, False)
         addLocationInformation(data, data.environment.location.name)
