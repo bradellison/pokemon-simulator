@@ -60,8 +60,8 @@ def withdrawPokemonChoice(data):
 						print('What would you like to do with this pokemon?')
 						option = getOptionOneOrTwo('Withdraw', 'View more information')
 						if option == 1:
-							if len(data.player.team) < 6:
-								data.player.team.append(choice)
+							if len(data.player.defaultTeam) < 6:
+								data.player.defaultTeam.append(choice)
 								data.pc.boxes[0].inventory.remove(choice)
 								print('You added', choice.name, 'to your party!')
 							else:
@@ -80,7 +80,7 @@ def depositPokemonChoice(data):
 	while y == 0:
 		count = 1
 		print('\nWhich Pokemon would you like to deposit?')
-		for i in data.player.team:
+		for i in data.player.defaultTeam:
 			print('', count, '-', i.name, '- Level', str(i.level), '-', str(i.hp) + '/' + str(i.maxhp) + 'HP')
 			count += 1
 		print('', count, '- Back')
@@ -90,14 +90,14 @@ def depositPokemonChoice(data):
 				choiceInput = input('-- ')
 				if int(choiceInput) == int(count):
 					return 0
-				for j in range(len(data.player.team)):
-					if choiceInput == data.player.team[j].name or int(choiceInput) == int(j+1):
-						choice = data.player.team[int(choiceInput) - 1]
+				for j in range(len(data.player.defaultTeam)):
+					if choiceInput == data.player.defaultTeam[j].name or int(choiceInput) == int(j+1):
+						choice = data.player.defaultTeam[int(choiceInput) - 1]
 						print('What would you like to do with this pokemon?')
 						option = getOptionOneOrTwo('Deposit', 'View more information')
 						if option == 1:
-							if len(data.player.team) > 1:
-								data.player.team.remove(choice)
+							if len(data.player.defaultTeam) > 1:
+								data.player.defaultTeam.remove(choice)
 								data.pc.boxes[0].inventory.append(choice)
 								print('You deposited', choice.name, 'into your PC!')
 							else:
@@ -111,12 +111,12 @@ def depositPokemonChoice(data):
 			except ValueError:
 				print("Please choose a Pokemon from the list above!")	
 
-def getPokemonInfoViewChoiceTeam(data):
+def getPokemonInfoViewChoiceTeam(data, team):
 	y = 0
 	while y == 0:
 		count = 1
 		print('Which Pokemon would you like to view?')
-		for i in data.player.team:
+		for i in team:
 			print('', count, '-', i.name, '- Level', str(i.level), '-', str(i.hp) + '/' + str(i.maxhp) + 'HP')
 			count += 1
 		print('', count, '- Back')
@@ -126,10 +126,10 @@ def getPokemonInfoViewChoiceTeam(data):
 				choiceInput = input('-- ')
 				if int(choiceInput) == int(count):
 					return 0
-				for j in range(len(data.player.team)):
-					if choiceInput == data.player.team[j].name or int(choiceInput) == int(j+1):
-						choice = data.player.team[int(choiceInput) - 1]
-						getPokemonInfoViewTeam(data, choice)
+				for j in range(len(team)):
+					if choiceInput == team[j].name or int(choiceInput) == int(j+1):
+						choice = team[int(choiceInput) - 1]
+						getPokemonInfoViewTeam(data, team, choice)
 						x = 1
 						return 0
 				if x == 0:
@@ -137,7 +137,7 @@ def getPokemonInfoViewChoiceTeam(data):
 			except ValueError:
 				print("Please choose a Pokemon from the list above!")	
 
-def getPokemonInfoViewTeam(data, pokemon):
+def getPokemonInfoViewTeam(data, team, pokemon):
 	print('')
 	print(pokemon.name, '- Level', pokemon.level, pokemon.species)
 	if len(pokemon.type) == 1:
@@ -171,7 +171,7 @@ def getPokemonInfoViewTeam(data, pokemon):
 		print('\nBack to first page?')
 		choice = getYesOrNo()
 		if choice == 1:
-			getPokemonInfoViewTeam(data, pokemon)
+			getPokemonInfoViewTeam(data, team, pokemon)
 		else:
 			return
 	else:

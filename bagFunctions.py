@@ -67,9 +67,9 @@ def getCatch(data, ball):
 			return 'No catch'
 
 def getCaughtPokemon(data):
-	if len(data.player.team) < 6:
+	if len(data.player.defaultTeam) < 6:
 		getNamePokemon(data.enemy.pokemon)
-		data.player.team.append(data.enemy.pokemon)
+		data.player.defaultTeam.append(data.enemy.pokemon)
 		text(data, 'You added the', data.enemy.pokemon.name, 'to your team!')
 	else:
 		getNamePokemon(data.enemy.pokemon)
@@ -87,7 +87,7 @@ def getNamePokemon(pokemon):
 				pokemon.name = choiceInput
 				return
 			else:
-				print('That name is too long! 10 characters max!s')
+				print('That name is too long! 10 characters max!')
 
 def getBallPocket(data):
 	ball = getBallChoice(data)

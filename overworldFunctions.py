@@ -3,7 +3,7 @@ from random import randint
 from battleFunctions import startBattle
 from choicesFunctions import getOptionOneOrTwoOrThree
 from choicesFunctions import getOptionOneOrTwo, getOptionOneOrTwoOrThree, getOptionOneOrTwoOrThreeOrFour, getOptionOneOrTwoOrThreeOrFourOrFive, getOptionsXnumber
-from gameMaps import overworldMap, mapCodeToLocationDict, locationToMapCodeDict, locationInformationDict, locationMapDict
+from gameMaps import locationMapDict
 from pokemonCentreFunctions import pokemonCenter
 from battleFunctions import createEnemy
 from classes import Pokemon, Location

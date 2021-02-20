@@ -2,6 +2,7 @@ from text import text, worldText
 from choicesFunctions import getOptionOneOrTwoOrThree, getYesOrNo
 from classes import Pokemon, Ball
 from battleFunctions import startBattle
+from bagFunctions import getNamePokemon
 
 
 def talkGary(data):
@@ -26,6 +27,7 @@ def chooseStarter(data, starter):
     if(getYesOrNo() == 1):
         getStarter(data, starter)
         worldText(data, '> Congratulations, you got a', data.player.team[0].name + '! <')
+        getNamePokemon(data.player.team[0])
         worldText(data, data.rival.name + ': Alright then, I\'ll take the', data.rival.team[0].name + '!')
     
 def getStarter(data, starter):

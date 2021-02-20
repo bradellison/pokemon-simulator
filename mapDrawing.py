@@ -66,6 +66,7 @@ def directionChoice(data,x,y,location):
                 else:
                     data.player.xCo = newx
                     data.player.yCo = newy
+                    warpZone(data)
                     return
         except ValueError:
             print('Please choose an option!')
@@ -105,7 +106,6 @@ def checkInteraction(data,x,y,location):
         yAxis += 1
 
 def checkStoryInteraction(data,x,y):
-    print(data.environment.location)
     if data.environment.location.name == 'Pallet Town':
         if data.story.startPokemonChosen == False:
             worldText(data, 'You shouldn\'t go into tall grass without a Pokemon!')
@@ -150,10 +150,10 @@ def checkAction(data, x, y, location):
     if newSprite == '%':
         if wildBattleChance(data):
             return True
-    warpSprites = ['!', 'D', 'd']
-    if newSprite in warpSprites:
-        warpZone(data)
-        return True      
+#    warpSprites = ['!', 'D', 'd']
+#    if newSprite in warpSprites:
+#        warpZone(data)
+#        return True      
     if newSprite == 'S':
         pokemonCenter(data, False)
         addLocationInformation(data, data.environment.location.name)

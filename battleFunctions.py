@@ -615,7 +615,7 @@ def getSwitchPokemon(data):
 
 					# No switch
 			elif int(choiceInput) == int(count) - 1:
-				getPokemonInfoViewChoiceTeam(data)
+				getPokemonInfoViewChoiceTeam(data, data.player.team)
 				print('')
 				print('Which Pokemon would you like to switch to?')
 				count = 1

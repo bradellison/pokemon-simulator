@@ -2,7 +2,7 @@ from random import randint
 from getVariableFunctions import getNature, getRandomIV, getRandomPersonalityValue, getBaseStats, getStats, getGender, getAbility, getPokemonType, getExpGroup, getExpYieldBase, getExp, getPokemonCatchRate, getMoveSet, getMaxPP
 from moveDictionaries import moveInfo
 from bagFunctions import getMedicineHeal, getBallModifier
-from gameMaps import locationInformationDict, locationMapDict
+from gameMaps import locationMapDict
 from screen import BattleScreen
 from warpData import getWarpZones
 
@@ -199,9 +199,6 @@ class Move(object):
 class Location(object):
 	def __init__(self, name):
 		self.name = name
-		self.grass = locationInformationDict[name]['Grass']
-		self.water = locationInformationDict[name]['Water']
-		self.centre = locationInformationDict[name]['Centre']
 		self.map = locationMapDict[name]
 		self.warpZones = getWarpZones(name)
 
