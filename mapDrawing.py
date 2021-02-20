@@ -148,7 +148,8 @@ def checkNewSprite(x,y,location):
 def checkAction(data, x, y, location):
     newSprite = checkNewSprite(x, y, location)
     if newSprite == '%':
-        wildBattleChance(data)
+        if wildBattleChance(data):
+            return True
     warpSprites = ['!', 'D', 'd']
     if newSprite in warpSprites:
         warpZone(data)
@@ -161,6 +162,7 @@ def checkAction(data, x, y, location):
 def wildBattleChance(data):
     if randint(1,20) == 1:
         wildBattle(data)
+        return True
 
 def warpZone(data):
     for zone in data.environment.location.warpZones:

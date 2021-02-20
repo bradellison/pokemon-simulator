@@ -1593,7 +1593,7 @@ def getResetInBattle(data):
 		i.inCurrentBattle = 0
 
 def startBattle(data):
-	data.player.team = data.player.defaultTeam
+	data.player.team = data.player.defaultTeam.copy()
 	data.player.pokemon = data.player.team[0]
 	data.enemy.pokemon = data.enemy.team[0]
 	battleStartPhrasing(data)
