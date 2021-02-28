@@ -61,18 +61,19 @@ def directionChoice(data,x,y,location):
                     newy += 1
                 elif choiceInput == 'd':
                     newx += 1
-                if checkWall(newx, newy, location, choiceInput) or checkInteraction(data, newx, newy, location):
+                if warpZone(data, newx, newy):
+                    return
+                elif checkWall(newx, newy, location, choiceInput) or checkInteraction(data, newx, newy, location):
                     return
                 else:
                     data.player.xCo = newx
                     data.player.yCo = newy
-                    warpZone(data)
                     return
         except ValueError:
             print('Please choose an option!')
 
 def checkWall(x,y,location,direction):
-    walls = ['@', '~', 'K', '[', ']', '{', '}', '_', 'b', 'w', 'W', 'm', 'M', 'c', '=', 'r', 't', 'y', 'u', 'i', 'j', 'k', 'U', 'I', 'J', 'K', 'T']
+    walls = ['@', '~', 'K', '[', ']', 'D', '{', '}', '_', 'b', 'w', 'W', 'm', 'M', 'c', '=', 'r', 't', 'y', 'u', 'i', 'j', 'k', 'U', 'I', 'J', 'K', 'T']
     yAxis = 0
     for line in location:
         xAxis = 0
@@ -164,11 +165,12 @@ def wildBattleChance(data):
         wildBattle(data)
         return True
 
-def warpZone(data):
+def warpZone(data, newx, newy):
     for zone in data.environment.location.warpZones:
-        if [data.player.xCo, data.player.yCo] == zone.warpSourceGrid:
+        if [newx, newy] == zone.warpSourceGrid:
             [data.player.xCo, data.player.yCo] = zone.warpTargetGrid
             addLocationInformation(data, zone.warpTargetLocation)
+            return True
 
 
 def overworldMovement(data):

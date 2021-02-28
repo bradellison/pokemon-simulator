@@ -19,19 +19,20 @@ routeOneWarpFour = [12, 3, 'Route 1', 25, 36, 'Viridian City']
 
 viridianCityWarpOne = [24, 37, 'Viridian City', 11, 4, 'Route 1']
 viridianCityWarpTwo = [25, 37, 'Viridian City', 12, 4, 'Route 1']
-viridianCityWarpThree = [21, 4, 'Viridian City', 11, 32, 'Route 2']
-viridianCityWarpFour = [22, 4, 'Viridian City', 12, 32, 'Route 2']
+viridianCityWarpThree = [21, 4, 'Viridian City', 11, 72, 'Route 2']
+viridianCityWarpFour = [22, 4, 'Viridian City', 12, 72, 'Route 2']
 viridianCityWarpFive = [27, 28, 'Viridian City', 9, 10, 'Viridian Center']
 
 viridianCenterWarpOne = [10, 11, 'Viridian Center', 27, 29, 'Viridian City']
 viridianCenterWarpTwo = [9, 11, 'Viridian Center', 27, 29, 'Viridian City']
 
-routeTwoWarpOne = [11, 33, 'Route 2', 21, 5, 'Viridian City']
-routeTwoWarpTwo = [12, 33, 'Route 2', 22, 5, 'Viridian City']
-routeTwoWarpThree = [7, 3, 'Route 2', 9, 11, 'Viridian Forest Entrance']
+routeTwoWarpOne = [11, 73, 'Route 2', 21, 5, 'Viridian City']
+routeTwoWarpTwo = [12, 73, 'Route 2', 22, 5, 'Viridian City']
+routeTwoWarpThree = [7, 43, 'Route 2', 9, 11, 'Viridian Forest Entrance']
+routeTwoWarpFour = [7, 14, 'Route 2', 9, 5, 'Viridian Forest Exit']
 
-viridianForestEntranceWarpOne = [9, 12, 'Viridian Forest Entrance', 7, 4, 'Route 2']
-viridianForestEntranceWarpTwo = [10, 12, 'Viridian Forest Entrance', 7, 4, 'Route 2']
+viridianForestEntranceWarpOne = [9, 12, 'Viridian Forest Entrance', 7, 44, 'Route 2']
+viridianForestEntranceWarpTwo = [10, 12, 'Viridian Forest Entrance', 7, 44, 'Route 2']
 viridianForestEntranceWarpThree = [9, 4, 'Viridian Forest Entrance', 20, 51, 'Viridian Forest']
 viridianForestEntranceWarpFour = [10, 4, 'Viridian Forest Entrance', 21, 51, 'Viridian Forest']
 
@@ -40,10 +41,10 @@ viridianForestWarpTwo = [21, 52, 'Viridian Forest', 10, 5, 'Viridian Forest Entr
 viridianForestWarpThree = [5, 3, 'Viridian Forest', 9, 11, 'Viridian Forest Exit']
 viridianForestWarpFour = [6, 3, 'Viridian Forest', 10, 11, 'Viridian Forest Exit']
 
-viridianForestExitWarpOne = [9, 12, 'Viridian Forest Exit', 7, 4, 'Route 3']
-viridianForestExitWarpTwo = [10, 12, 'Viridian Forest Exit', 7, 4, 'Route 3']
-viridianForestExitWarpThree = [9, 4, 'Viridian Forest Exit', 20, 51, 'Viridian Forest']
-viridianForestExitWarpFour = [10, 4, 'Viridian Forest Exit', 21, 51, 'Viridian Forest']
+viridianForestExitWarpOne = [9, 4, 'Viridian Forest Exit', 7, 13, 'Route 2']
+viridianForestExitWarpTwo = [10, 4, 'Viridian Forest Exit', 7, 13, 'Route 2']
+viridianForestExitWarpThree = [9, 12, 'Viridian Forest Exit', 20, 51, 'Viridian Forest']
+viridianForestExitWarpFour = [10, 12, 'Viridian Forest Exit', 21, 51, 'Viridian Forest']
 
 
 oakLabWarps = [oakLabWarpOne, oakLapWarpTwo]
@@ -51,10 +52,12 @@ palletTownWarps = [palletTownWarpOne, palletTownWarpTwo, palletTownWarpThree]
 routeOneWarps = [routeOneWarpOne, routeOneWarpTwo, routeOneWarpThree, routeOneWarpFour]
 viridianCityWarps = [viridianCityWarpOne, viridianCityWarpTwo, viridianCityWarpThree, viridianCityWarpFour, viridianCityWarpFive]
 viridianCenterWarps = [viridianCenterWarpOne, viridianCenterWarpTwo]
-routeTwoWarps = [routeTwoWarpOne, routeTwoWarpTwo, routeTwoWarpThree]
+routeTwoWarps = [routeTwoWarpOne, routeTwoWarpTwo, routeTwoWarpThree, routeTwoWarpFour]
 viridianForestEntranceWarps = [viridianForestEntranceWarpOne, viridianForestEntranceWarpTwo, viridianForestEntranceWarpThree, viridianForestEntranceWarpFour]
 viridianForestWarps = [viridianForestWarpOne, viridianForestWarpTwo, viridianForestWarpThree, viridianForestWarpFour]
 viridianForestExitWarps = [viridianForestExitWarpOne, viridianForestExitWarpTwo, viridianForestExitWarpThree, viridianForestExitWarpFour]
+pewterCityWarps = []
+routeThreeWarps = []
 
 locationToWarpListDict = {
 'Oak Lab': oakLabWarps, 
@@ -65,7 +68,9 @@ locationToWarpListDict = {
 'Route 2': routeTwoWarps,
 'Viridian Forest Entrance': viridianForestEntranceWarps,
 'Viridian Forest': viridianForestWarps,
-'Viridian Forest Exit': viridianForestExitWarps
+'Viridian Forest Exit': viridianForestExitWarps,
+'Pewter City': pewterCityWarps,
+'Route 3': routeThreeWarps
 }
 
 def getWarpZones(location):
