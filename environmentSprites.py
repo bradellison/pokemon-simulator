@@ -7,53 +7,53 @@ overscore = chr(175)
 screenTop = '/------------------------------------------------------\\'
 screenBot = '\\------------------------------------------------------/'
 
-tree = [
+treeCol = [
 ' ' + Fore.GREEN + '@@@@' + Style.RESET_ALL + ' ',
 Fore.GREEN + '@@@@@@' + Style.RESET_ALL,
 '  ||  '
 ]
 
-water = [
+waterCol = [
 Fore.BLUE + Style.BRIGHT + '~~~~~~' + Style.RESET_ALL,
 Fore.BLUE + Style.BRIGHT + '~~~~~~' + Style.RESET_ALL,
 Fore.BLUE + Style.BRIGHT + '~~~~~~' + Style.RESET_ALL
 ]
 
-grass = [
+grassCol = [
 Fore.GREEN + '^/^/^/' + Style.RESET_ALL,
 Fore.GREEN + '/^/^/^' + Style.RESET_ALL,
 Fore.GREEN + '^/^/^/' + Style.RESET_ALL
 ]
 
-shortGrass = [
+shortGrassCol = [
 Fore.GREEN + ' `  ` ' + Style.RESET_ALL,
 Fore.GREEN + '   ` `' + Style.RESET_ALL,
 Fore.GREEN + '` `   ' + Style.RESET_ALL
 ]
 
-#tree = [
-#' @@@@ ',
-#'@@@@@@',
-#'  ||  '
-#]
+tree = [
+' @@@@ ',
+'@@@@@@',
+'  ||  '
+]
 
-#water = [
-#'~~~~~~',
-#'~~~~~~',
-#'~~~~~~'
-#]
+water = [
+'~~~~~~',
+'~~~~~~',
+'~~~~~~'
+]
 
-#grass = [
-#'^/^/^/',
-#'/^/^/^',
-#'^/^/^/'
-#]
+grass = [
+'^/^/^/',
+'/^/^/^',
+'^/^/^/'
+]
 
-#shortGrass = [
-#' `  ` ',
-#'   ` `',
-#'` `   '
-#]
+shortGrass = [
+' `  ` ',
+'   ` `',
+'` `   '
+]
 
 sign = [
 ',----,',
@@ -325,6 +325,9 @@ healMachineTopRight = [
 '__|\\  '
 ]
 
+colSpriteDict = {
+    
+}
 
 spriteDict = {
 '?': emptyStorySpot,

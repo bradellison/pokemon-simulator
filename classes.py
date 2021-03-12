@@ -18,6 +18,11 @@ class Data(object):
 		self.bscreen = BattleScreen()
 		self.expMult = 1
 
+class Settings(object):
+	def __init__(self):
+		self.colorama = True
+		self.wallClip = False
+
 class Player(object):
 	def __init__(self):
 		self.name = 'Brad'

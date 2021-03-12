@@ -3,7 +3,7 @@ from classes import Ball
 
 from battleFunctions import startBattle
 from choicesFunctions import getOptionOneOrTwoOrThree, getYesOrNo
-from overworldFunctions import directionChoice, getWildPokemon, wildBattle
+from overworldFunctions import getWildPokemon, wildBattle
 from pokemonCentreFunctions import pokemonCenter
 from mapDrawing import overworldMovement
 from text import worldText

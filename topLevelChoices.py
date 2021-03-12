@@ -8,7 +8,6 @@ from pcFunctions import getPokemonInfoViewPC
 from battleFunctions import createEnemy, startBattle, teamTotalHP
 from saveDataFunctions import loadGame
 from pokemonCentreFunctions import healAllPokemon, pokemonCenter
-from overworldFunctions import directionChoice
 
 def battleTypeChoice():
 	print('What would you like to do?')

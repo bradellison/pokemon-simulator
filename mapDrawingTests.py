@@ -1,7 +1,7 @@
 import time
 import colorama
 from gameMaps import routeOneMap, palletTownMap
-from enviromentSprites import screenTop, screenBot, spriteDict, you
+from environmentSprites import screenTop, screenBot, spriteDict, you
 
 x = 10
 y = 7
@@ -43,6 +43,8 @@ def directionChoice(data,x,y,location):
                 newy += 1
             elif choiceInput == 'd':
                 newx += 1
+            elif commands(data, choiceInput):
+                return
             if checkWall(newx, newy, location):
                 data.xCo = newx
                 data.yCo = newy
@@ -51,6 +53,14 @@ def directionChoice(data,x,y,location):
                 return
         except ValueError:
             print('Please choose an option!')
+
+def commands(data, choiceInput):
+
+
+def cheatCodes(data, choiceInput):
+    if choiceInput == 'col':
+        data.colorama = False
+
 
 def checkWall(x,y,location):
     walls = ['@', '~', 'K', '[', ']', 'D', 'R']
