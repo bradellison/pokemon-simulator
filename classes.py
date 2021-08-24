@@ -11,7 +11,7 @@ class Data(object):
 		self.player = Player()
 		self.enemy = Enemy('Trainer', 'Default', [], 0, 'Default Text')
 		self.rival = Enemy('Rival', 'Default', [], 420, 'Smell ya later!')
-		self.environment = Environment('Oak Lab','None')
+		self.environment = Environment('Pallet Town','None')
 		self.story = Story()
 		self.pc = PC()
 		self.bag = Bag()
@@ -46,10 +46,10 @@ class Player(object):
 		self.lastDirection = None
 		self.lastBattleChoice = 1
 		self.lastAttackChoice = 1
-		self.xCo = 10
-		self.yCo = 10
-		#self.xCo = 16 #Outside Oak's door default
-		#self.yCo = 16 #Outside Oak's door default
+		#self.xCo = 10
+		#self.yCo = 10
+		self.xCo = 9 #Outside Oak's door default
+		self.yCo = 11 #Outside Oak's door default
 
 class Story(object):
 	def __init__(self):
