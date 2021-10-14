@@ -12,19 +12,24 @@ from pokemonLocationsDictionaries import locationToDict
 def addLocationInformation(data, newLocation):
     data.environment.location = Location(newLocation)
 
+
 def getWildPokemon(location):
     number = randint(1,100)
     locationDict = locationToDict[location]
     while True:
         if number in locationDict:
             pokemon = locationDict[number]
-            return pokemon     
+            return pokemon
         else:
             number += 1
 
 def whitedOut(data):
     print('You whited out! You rushed to get your Pokemon healed at', data.player.lastCentre + '!')
     addLocationInformation(data, data.player.lastCentre)
+    if data.player.lastCentre != "Pallet Town":
+        data.player.xCo = 9; data.player.yCo = 7
+    else:
+        data.player.xCo = 9; data.player.yCo = 11
     pokemonCenter(data, True)
 
 def wildBattle(data):
@@ -35,3 +40,8 @@ def wildBattle(data):
     createEnemy(data,'Wild', 'Wild', wildTeam, 0, 'Damn!')
     if startBattle(data) != 'Win':
         whitedOut(data)
+
+def trainerBattle(data, enemy):
+    data.enemy = enemy
+    if startBattle(data) != 'Win':
+        whitedOut(data)   

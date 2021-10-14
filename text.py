@@ -1,5 +1,5 @@
 from screen import drawScreen
-from environmentSprites import screenTop, screenBot, spriteDict, you
+from spritesAll import screenTop, screenBot, allSpriteDict
 from time import sleep
 
 def splitIntoLines(string):
@@ -84,9 +84,9 @@ def drawOverworldText(x, y, location):
                         if [x, y] == [xAxis, yAxis]:
                             #youTile = overlayCharacterSprite(you[location], spriteDict[sprite][location], location)
                             #screenDraw += youTile
-                            screenDraw += you[location]
+                            screenDraw += allSpriteDict["Y"][location]
                         else:
-                            screenDraw += (spriteDict[sprite][location])
+                            screenDraw += (allSpriteDict[sprite][location])
                     xAxis += 1
                 screenDraw += '|\n'
                 xAxis = 0

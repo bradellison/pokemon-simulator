@@ -1,4 +1,4 @@
-elite4LorelaiTeam = [Pokemon('Dewgong',53,['Growl','Aurora Beam','Rest','Take Down']),Pokemon('Cloyster',53,['Supersonic','Clamp','Aurora Beam','Spike Cannon']),Pokemon('Slowbro',54,['Water Gun','Growl','Withdraw','Amnesia']),Pokemon('Jynz',56,['Doubleslap','Ice Punch','Body Slam','Thrash']),Pokemon('Lapras',56,['Body Slam','Confuse Ray','Hydro Pump','Blizzard'])]
+elite4LorelaiTeam = [Pokemon('Dewgong',53,['Growl','Aurora Beam','Rest','Take Down']),Pokemon('Cloyster',53,['Supersonic','Clamp','Aurora Beam','Spike Cannon']),Pokemon('Slowbro',54,['Water Gun','Growl','Withdraw','Amnesia']),Pokemon('Jynx,56,['Doubleslap','Ice Punch','Body Slam','Thrash']),Pokemon('Lapras',56,['Body Slam','Confuse Ray','Hydro Pump','Blizzard'])]
 
 elite4BrunoTeam = [Pokemon('Onix',53,['Rock Throw','Rage','Slam','Harden']),Pokemon('Hitmonchan',55,['Ice Punch','Fire Punch','Thunderpunch','Counter']),Pokemon('Hitmonlee',55,['Jump Kick','Focus Energy','Hi Jump Kick','Mega Kick']),Pokemon('Onix',56,['Rock Throw','Rage','Slam','Harden']),Pokemon('Machamp',58,['Leer','Focus Energy','Fissure','Submission'])]
 

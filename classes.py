@@ -9,8 +9,8 @@ from warpData import getWarpZones
 class Data(object):
 	def __init__(self):
 		self.player = Player()
-		self.enemy = Enemy('Trainer', 'Default', [], 0, 'Default Text')
-		self.rival = Enemy('Rival', 'Default', [], 420, 'Smell ya later!')
+		self.enemy = Enemy('Trainer', 'Default', [], 0, 'Default Text', [0,0])
+		self.rival = Enemy('Rival', 'Default', [], 420, 'Smell ya later!', [0,0])
 		self.environment = Environment('Pallet Town','None')
 		self.story = Story()
 		self.pc = PC()
@@ -83,10 +83,11 @@ class Ball(object):
 		self.quantity = quantity
 
 class Enemy(object):
-	def __init__(self, type, name, team, prizeMoney, text):
+	def __init__(self, type, name, team, prizeMoney, text, coords):
 		self.type = type
 		self.name = name
 		self.team = team
+		self.coords = coords
 		self.livingPokemon = 0
 		self.prizeMoney = prizeMoney
 		self.text = text

@@ -79,36 +79,6 @@ emptyStorySpot = [
 '      '
 ]
 
-you = [
-'  o~  ',
-' (//) ',
-'  ||  '
-]
-
-rival = [
-'  o~  ',
-' <{}> ',
-'  ||  '
-]
-
-oak = [
-'  0~  ',
-' ({}\\ ',
-'  ||  '
-]
-
-nurseJoy = [
-'  o~  ',
-' (::) ',
-'  ||  '
-]
-
-#you = [
-#'o~',
-#'(//)',
-#'||'
-#]
-
 warp = [
 '      ',
 ' WARP ',
@@ -325,20 +295,16 @@ healMachineTopRight = [
 '__|\\  '
 ]
 
-colSpriteDict = {
-    
-}
 
-spriteDict = {
+
+
+environmentSpriteDict = {
 '?': emptyStorySpot,
 '@': tree,
 '~': water,
 '%': grass,
 '=': ledge, 
 ' ': empty, 
-'Y': you, 
-'^': rival,
-'0': oak,
 '!': warp, 
 '[': houseLeft, 
 ']': houseRight, 
@@ -373,7 +339,6 @@ spriteDict = {
 'i': bigTreeTopRight,
 'j': bigTreeBottomLeft,
 'k': bigTreeBottomRight,
-'+': nurseJoy,
 'U': healMachineTopLeft,
 'I': healMachineTopRight,
 'J': healMachineBottomLeft,

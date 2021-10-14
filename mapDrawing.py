@@ -1,9 +1,10 @@
 import time
 import colorama
 from random import randint
-from gameMaps import routeOneMap, palletTownMap
-from environmentSprites import screenTop, screenBot, spriteDict, you
-from overworldFunctions import addLocationInformation, wildBattle
+from battleFunctions import startBattle
+from spritesAll import screenTop, screenBot, allSpriteDict
+from overworldFunctions import addLocationInformation, trainerBattle, wildBattle
+from enemyLocations import allTownEnemies
 from pokemonCentreFunctions import pokemonCenter
 from text import worldText
 from storyInteractionFunctions import talkGary, talkOak, starterBall, talkStarterRivalFight
@@ -21,9 +22,9 @@ def drawOverworld(x, y, location):
                         if [x, y] == [xAxis, yAxis]:
                             #youTile = overlayCharacterSprite(you[location], spriteDict[sprite][location], location)
                             #screenDraw += youTile
-                            screenDraw += you[location]
+                            screenDraw += allSpriteDict["Y"][location]
                         else:
-                            screenDraw += (spriteDict[sprite][location])
+                            screenDraw += (allSpriteDict[sprite][location])
                     xAxis += 1
                 screenDraw += '|\n'
                 xAxis = 0
@@ -73,7 +74,7 @@ def directionChoice(data,x,y,location):
             print('Please choose an option!')
 
 def checkWall(x,y,location,direction):
-    walls = ['@', '~', 'K', '[', ']', 'D', '{', '}', '_', 'b', 'w', 'W', 'm', 'M', 'c', '=', 'r', 't', 'y', 'u', 'i', 'j', 'k', 'U', 'I', 'J', 'K', 'T']
+    walls = ['@', '~', 'K', '[', ']', 'D', '{', '}', '_', 'b', 'w', 'W', 'm', 'M', 'c', '=', '-', 'r', 't', 'y', 'u', 'i', 'j', 'k', 'U', 'I', 'J', 'K', 'T']
     yAxis = 0
     for line in location:
         xAxis = 0
@@ -89,7 +90,7 @@ def checkWall(x,y,location,direction):
         yAxis += 1
 
 def checkInteraction(data,x,y,location):
-    interactions = ['^', '0', 'q', 'O', 'Q', 'o', '?', 'R']
+    interactions = ['^', '0', '+', '*', 'q', 'O', 'Q', 'o', '?', 'R']
     yAxis = 0
     for line in location:
         xAxis = 0
@@ -97,7 +98,7 @@ def checkInteraction(data,x,y,location):
             if [xAxis, yAxis] == [x,y]:
                 if sprite in interactions:
                     if sprite != '?':
-                        runInteraction(data, sprite, x, y, location)
+                        runInteraction(data, sprite, xAxis, yAxis, location)
                         return True
                     else:
                         return checkStoryInteraction(data,x,y)
@@ -122,11 +123,23 @@ def checkStoryInteraction(data,x,y):
     else:
         return False
 
-def runInteraction(data, sprite, x, y, location):
+def findCharacterInteraction(data, newX, newY):
+    characterFound = False
+    for enemy in allTownEnemies[data.environment.location.name]:
+        if enemy.coords == [newX, newY]:
+            trainerBattle(data, enemy)
+            characterFound = True
+    if characterFound == False:
+        print("No Data Found For Character Coordinates")
+
+
+def runInteraction(data, sprite, newX, newY, location):
     if sprite == '^':
         talkGary(data)
     elif sprite == '0':
         talkOak(data)
+    elif sprite == '*':
+        findCharacterInteraction(data, newX, newY)
     elif sprite == 'O':
         starterBall(data, 'Bulbasaur')
     elif sprite == 'q':

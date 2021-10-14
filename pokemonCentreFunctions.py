@@ -28,6 +28,7 @@ def pokemonCenter(data, whitedOut):
 		choice = getPokemonCenterChoice()
 		if choice == 1:
 			healAllPokemon(data)
+			data.player.lastCentre = data.environment.location.name
 		elif choice == 2:
 			usePC(data)
 		elif choice == 3:
