@@ -22,7 +22,7 @@ class Data(object):
 class Settings(object):
 	def __init__(self):
 		self.colorama = True
-		self.wallClip = True
+		self.wallClip = False
 		self.wildBattles = True
 		
 

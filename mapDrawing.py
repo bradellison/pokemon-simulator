@@ -132,13 +132,14 @@ def checkStoryInteraction(data,x,y):
         return False
 
 def checkEnemyInteration(data, newX, newY):
-    for enemy in allTownEnemies[data.environment.location.name]:
-        if [newX, newY] in enemy.aggroCoords:
-            if enemy.battleComplete == False:
-                enemy.battleReady = True
-                data.environment.battleStart = True
-                characterFound = True    
-            return True
+    if data.environment.location.name in allTownEnemies:
+        for enemy in allTownEnemies[data.environment.location.name]:
+            if [newX, newY] in enemy.aggroCoords:
+                if enemy.battleComplete == False:
+                    enemy.battleReady = True
+                    data.environment.battleStart = True
+                    characterFound = True    
+                return True
     return True
 
 def runInteraction(data, sprite, newX, newY, location):
