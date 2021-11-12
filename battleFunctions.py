@@ -1630,8 +1630,7 @@ def getPreBattleEffects(data):
 def winBattle(data):
 	if data.enemy.type != 'Wild':
 		text(data, data.enemy.text)
-		cash = randint(200,500)
-		cash += data.environment.payDayExtra
+		cash = data.enemy.prizeMoney + data.environment.payDayExtra
 		data.player.money += cash
 		text(data, 'You earned $' + str(cash), 'for winning!')
 	for i in data.player.team:

@@ -30,6 +30,8 @@ routeTwoWarpOne = [11, 73, 'Route 2', 21, 5, 'Viridian City']
 routeTwoWarpTwo = [12, 73, 'Route 2', 22, 5, 'Viridian City']
 routeTwoWarpThree = [7, 43, 'Route 2', 9, 11, 'Viridian Forest Entrance']
 routeTwoWarpFour = [7, 14, 'Route 2', 9, 5, 'Viridian Forest Exit']
+routeTwoWarpFive = [12, 3, 'Route 2', 19, 33, 'Pewter City']
+routeTwoWarpSix = [13, 3, 'Route 2', 20, 33, 'Pewter City']
 
 viridianForestEntranceWarpOne = [9, 12, 'Viridian Forest Entrance', 7, 44, 'Route 2']
 viridianForestEntranceWarpTwo = [10, 12, 'Viridian Forest Entrance', 7, 44, 'Route 2']
@@ -43,20 +45,27 @@ viridianForestWarpFour = [6, 3, 'Viridian Forest', 10, 11, 'Viridian Forest Exit
 
 viridianForestExitWarpOne = [9, 4, 'Viridian Forest Exit', 7, 13, 'Route 2']
 viridianForestExitWarpTwo = [10, 4, 'Viridian Forest Exit', 7, 13, 'Route 2']
-viridianForestExitWarpThree = [9, 12, 'Viridian Forest Exit', 20, 51, 'Viridian Forest']
-viridianForestExitWarpFour = [10, 12, 'Viridian Forest Exit', 21, 51, 'Viridian Forest']
+viridianForestExitWarpThree = [9, 12, 'Viridian Forest Exit', 5, 4, 'Viridian Forest']
+viridianForestExitWarpFour = [10, 12, 'Viridian Forest Exit', 6, 4, 'Viridian Forest']
 
+pewterCityWarpOne = [19, 34, 'Pewter City', 12, 4, 'Route 2']
+pewterCityWarpTwo = [20, 34, 'Pewter City', 13, 4, 'Route 2']
+pewterCityWarpThree = [14, 24, 'Pewter City', 9, 10, 'Pewter Center']
+
+pewterCenterWarpOne = [10, 11, 'Pewter Center', 14, 25, 'Pewter City']
+pewterCenterWarpTwo = [9, 11, 'Pewter Center', 14, 25, 'Pewter City']
 
 oakLabWarps = [oakLabWarpOne, oakLapWarpTwo]
 palletTownWarps = [palletTownWarpOne, palletTownWarpTwo, palletTownWarpThree]
 routeOneWarps = [routeOneWarpOne, routeOneWarpTwo, routeOneWarpThree, routeOneWarpFour]
 viridianCityWarps = [viridianCityWarpOne, viridianCityWarpTwo, viridianCityWarpThree, viridianCityWarpFour, viridianCityWarpFive]
 viridianCenterWarps = [viridianCenterWarpOne, viridianCenterWarpTwo]
-routeTwoWarps = [routeTwoWarpOne, routeTwoWarpTwo, routeTwoWarpThree, routeTwoWarpFour]
+routeTwoWarps = [routeTwoWarpOne, routeTwoWarpTwo, routeTwoWarpThree, routeTwoWarpFour, routeTwoWarpFive, routeTwoWarpSix]
 viridianForestEntranceWarps = [viridianForestEntranceWarpOne, viridianForestEntranceWarpTwo, viridianForestEntranceWarpThree, viridianForestEntranceWarpFour]
 viridianForestWarps = [viridianForestWarpOne, viridianForestWarpTwo, viridianForestWarpThree, viridianForestWarpFour]
 viridianForestExitWarps = [viridianForestExitWarpOne, viridianForestExitWarpTwo, viridianForestExitWarpThree, viridianForestExitWarpFour]
-pewterCityWarps = []
+pewterCityWarps = [pewterCityWarpOne, pewterCityWarpTwo, pewterCityWarpThree]
+pewterCenterWarps = [pewterCenterWarpOne, pewterCenterWarpTwo]
 routeThreeWarps = []
 
 locationToWarpListDict = {
@@ -70,6 +79,7 @@ locationToWarpListDict = {
 'Viridian Forest': viridianForestWarps,
 'Viridian Forest Exit': viridianForestExitWarps,
 'Pewter City': pewterCityWarps,
+'Pewter Center': pewterCenterWarps,
 'Route 3': routeThreeWarps
 }
 

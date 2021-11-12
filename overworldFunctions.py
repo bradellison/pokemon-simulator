@@ -12,7 +12,6 @@ from pokemonLocationsDictionaries import locationToDict
 def addLocationInformation(data, newLocation):
     data.environment.location = Location(newLocation)
 
-
 def getWildPokemon(location):
     number = randint(1,100)
     locationDict = locationToDict[location]

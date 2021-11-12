@@ -9,8 +9,9 @@ from warpData import getWarpZones
 class Data(object):
 	def __init__(self):
 		self.player = Player()
-		self.enemy = Enemy('Trainer', 'Default', [], 0, 'Default Text', [0,0])
-		self.rival = Enemy('Rival', 'Default', [], 420, 'Smell ya later!', [0,0])
+		self.settings = Settings()
+		self.enemy = Enemy('Trainer', 'Default', [], 0, 'Default Text', [0,0], 0, "Up")
+		self.rival = Enemy('Rival', 'Default', [], 420, 'Smell ya later!', [0,0], 0, "Up")
 		self.environment = Environment('Pallet Town','None')
 		self.story = Story()
 		self.pc = PC()
@@ -21,7 +22,9 @@ class Data(object):
 class Settings(object):
 	def __init__(self):
 		self.colorama = True
-		self.wallClip = False
+		self.wallClip = True
+		self.wildBattles = True
+		
 
 class Player(object):
 	def __init__(self):
@@ -83,11 +86,16 @@ class Ball(object):
 		self.quantity = quantity
 
 class Enemy(object):
-	def __init__(self, type, name, team, prizeMoney, text, coords):
+	def __init__(self, type, name, team, prizeMoney, text, coords, viewDistance, viewDirection):
 		self.type = type
 		self.name = name
 		self.team = team
 		self.coords = coords
+		self.aggroCoords = self.generateAggroCoords(coords, viewDistance, viewDirection)
+		self.battleComplete = False
+		self.battleReady = False
+		self.battleReadySignalCoords = [self.coords[0], self.coords[1] - 1]
+		self.viewDirection = viewDirection
 		self.livingPokemon = 0
 		self.prizeMoney = prizeMoney
 		self.text = text
@@ -97,6 +105,15 @@ class Enemy(object):
 		self.reflectCount = 0
 		self.mist = 0
 		self.mistCount = 0
+
+	def generateAggroCoords(self, coords, viewDistance, viewDirection):
+		directionDict = {"Up": [0, -1], "Down": [0, 1], "Left": [-1, 0], "Right": [1, 0]}
+		aggroCoords = [coords]
+		baseCoord = coords.copy()
+		for _ in range(viewDistance):
+			baseCoord = [baseCoord[0] + directionDict[viewDirection][0], baseCoord[1] + directionDict[viewDirection][1]]
+			aggroCoords.append(baseCoord)
+		return aggroCoords
 
 class Pokemon(object):
 	def __init__(self, species, level, moveSet):
@@ -170,6 +187,7 @@ class Environment(object):
 		self.weather = weather
 		self.weathercount = 0
 		self.payDayExtra = 0
+		self.battleStart = False
 		self.battleEnd = 0
 
 class Move(object):

@@ -4,12 +4,12 @@ from random import randint
 from battleFunctions import startBattle
 from spritesAll import screenTop, screenBot, allSpriteDict
 from overworldFunctions import addLocationInformation, trainerBattle, wildBattle
-from enemyLocations import allTownEnemies
+from enemyData import allTownEnemies
 from pokemonCentreFunctions import pokemonCenter
 from text import worldText
 from storyInteractionFunctions import talkGary, talkOak, starterBall, talkStarterRivalFight
 
-def drawOverworld(x, y, location):
+def drawOverworld(data, x, y, location):
     screenDraw = screenTop + '\n'
     yAxis = 0
     for line in location:
@@ -20,9 +20,18 @@ def drawOverworld(x, y, location):
                 for sprite in line:
                     if xAxis > x-5 and xAxis < x+5:
                         if [x, y] == [xAxis, yAxis]:
-                            #youTile = overlayCharacterSprite(you[location], spriteDict[sprite][location], location)
-                            #screenDraw += youTile
                             screenDraw += allSpriteDict["Y"][location]
+                        elif sprite == "*":
+                            for enemy in allTownEnemies[data.environment.location.name]:
+                                if [xAxis, yAxis] == enemy.coords:
+                                    screenDraw += allSpriteDict["*"][enemy.viewDirection][location]
+                        elif data.environment.battleStart == True:
+                            for enemy in allTownEnemies[data.environment.location.name]:
+                                if enemy.battleReady == True:
+                                    if [xAxis, yAxis] == enemy.battleReadySignalCoords:
+                                        screenDraw += allSpriteDict["!"][location]
+                                    else:
+                                        screenDraw += (allSpriteDict[sprite][location])
                         else:
                             screenDraw += (allSpriteDict[sprite][location])
                     xAxis += 1
@@ -33,16 +42,12 @@ def drawOverworld(x, y, location):
     screenDraw += screenBot
     print(screenDraw)
 
-
-
-
 def overlayCharacterSprite(you, sprite, location):
     if location == 1:
         youTile = sprite[:1] + you + sprite[-1:]
     else:
         youTile = sprite[:2] + you + sprite[-2:]
     return youTile
-
 
 def directionChoice(data,x,y,location):
     newx = x
@@ -64,16 +69,19 @@ def directionChoice(data,x,y,location):
                     newx += 1
                 if warpZone(data, newx, newy):
                     return
-                elif checkWall(newx, newy, location, choiceInput) or checkInteraction(data, newx, newy, location):
+                elif checkWall(data, newx, newy, location, choiceInput) or checkInteraction(data, newx, newy, location):
                     return
                 else:
+                    checkEnemyInteration(data, newx, newy)
                     data.player.xCo = newx
                     data.player.yCo = newy
                     return
         except ValueError:
             print('Please choose an option!')
 
-def checkWall(x,y,location,direction):
+def checkWall(data,x,y,location,direction):
+    if data.settings.wallClip == True:
+        return False
     walls = ['@', '~', 'K', '[', ']', 'D', '{', '}', '_', 'b', 'w', 'W', 'm', 'M', 'c', '=', '-', 'r', 't', 'y', 'u', 'i', 'j', 'k', 'U', 'I', 'J', 'K', 'T']
     yAxis = 0
     for line in location:
@@ -123,15 +131,15 @@ def checkStoryInteraction(data,x,y):
     else:
         return False
 
-def findCharacterInteraction(data, newX, newY):
-    characterFound = False
+def checkEnemyInteration(data, newX, newY):
     for enemy in allTownEnemies[data.environment.location.name]:
-        if enemy.coords == [newX, newY]:
-            trainerBattle(data, enemy)
-            characterFound = True
-    if characterFound == False:
-        print("No Data Found For Character Coordinates")
-
+        if [newX, newY] in enemy.aggroCoords:
+            if enemy.battleComplete == False:
+                enemy.battleReady = True
+                data.environment.battleStart = True
+                characterFound = True    
+            return True
+    return True
 
 def runInteraction(data, sprite, newX, newY, location):
     if sprite == '^':
@@ -139,7 +147,7 @@ def runInteraction(data, sprite, newX, newY, location):
     elif sprite == '0':
         talkOak(data)
     elif sprite == '*':
-        findCharacterInteraction(data, newX, newY)
+        checkEnemyInteration(data, newX, newY)
     elif sprite == 'O':
         starterBall(data, 'Bulbasaur')
     elif sprite == 'q':
@@ -148,6 +156,10 @@ def runInteraction(data, sprite, newX, newY, location):
         starterBall(data, 'Squirtle')
     elif sprite == 'R':
         pokemonCenter(data, False)
+    elif sprite == 'S':
+        pokemonCenter(data, False)
+        addLocationInformation(data, data.environment.location.name)
+        return True
 
 def checkNewSprite(x,y,location):
     yAxis = 0
@@ -159,19 +171,24 @@ def checkNewSprite(x,y,location):
             xAxis += 1
         yAxis += 1   
 
-def checkAction(data, x, y, location):
+def checkBattle(data, x, y, location):
     newSprite = checkNewSprite(x, y, location)
-    if newSprite == '%':
-        if wildBattleChance(data):
-            return True
-#    warpSprites = ['!', 'D', 'd']
-#    if newSprite in warpSprites:
-#        warpZone(data)
-#        return True      
-    if newSprite == 'S':
-        pokemonCenter(data, False)
-        addLocationInformation(data, data.environment.location.name)
-        return True
+    if data.environment.battleStart == True:
+        for enemy in allTownEnemies[data.environment.location.name]:
+            if enemy.battleReady == True:
+                print('X:', data.player.xCo, '- Y:', data.player.yCo, ' Region:', data.environment.location.name)
+                input("--")
+                trainerBattle(data, enemy)
+                enemy.battleReady = False
+                enemy.battleComplete = True
+                data.environment.battleStart = False
+                return True
+    if (checkEnemyInteration(data, x, y)):
+        if newSprite == '%':
+            if wildBattleChance(data):
+                return True
+    else:
+        return False
 
 def wildBattleChance(data):
     if randint(1,20) == 1:
@@ -187,9 +204,9 @@ def warpZone(data, newx, newy):
 
 
 def overworldMovement(data):
-    drawOverworld(data.player.xCo, data.player.yCo, data.environment.location.map)
-    if checkAction(data, data.player.xCo, data.player.yCo, data.environment.location.map):
-        drawOverworld(data.player.xCo, data.player.yCo, data.environment.location.map)
+    drawOverworld(data, data.player.xCo, data.player.yCo, data.environment.location.map)
+    if checkBattle(data, data.player.xCo, data.player.yCo, data.environment.location.map):
+        drawOverworld(data, data.player.xCo, data.player.yCo, data.environment.location.map)
     print('X:', data.player.xCo, '- Y:', data.player.yCo, ' Region:', data.environment.location.name)
     directionChoice(data, data.player.xCo, data.player.yCo, data.environment.location.map)
 

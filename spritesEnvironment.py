@@ -79,12 +79,6 @@ emptyStorySpot = [
 '      '
 ]
 
-warp = [
-'      ',
-' WARP ',
-'      '
-]
-
 houseLeft = [
 '|-----',
 '|-----',
@@ -97,9 +91,33 @@ houseRight = [
 '-----|'
 ]
 
-houseMiddle = [
+houseMiddleWindow = [
 '------',
 '-[  ]-',
+'------'
+]
+
+houseMiddle = [
+'------',
+'------',
+'------'
+]
+
+gymText = [
+'------',
+'-GYM--',
+'------'
+]
+
+pokemonCentreText = [
+'------',
+'-POKÉ-',
+'------'
+]
+
+martText = [
+'------',
+'-MART-',
 '------'
 ]
 
@@ -305,14 +323,17 @@ environmentSpriteDict = {
 '%': grass,
 '=': ledge, 
 ' ': empty, 
-'!': warp, 
 '[': houseLeft, 
 ']': houseRight, 
 'D': houseDoor, 
 'd': doormat,
 'p': plantPot,
 'P': plantTop,
-'-': houseMiddle, 
+'-': houseMiddleWindow,
+'h': houseMiddle,
+'G': gymText,
+'$': martText,
+'<': pokemonCentreText,
 'g': shortGrass, 
 'S': sign, 
 'b': bollard, 

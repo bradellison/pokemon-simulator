@@ -26,8 +26,7 @@ class Warp(object):
     def __init__(self,position):
         self.position = position
 
-
-viridianCentreMap = [
+viridianCenterMap = [
 '                    ',
 '                    ',
 '                    ',
@@ -68,9 +67,33 @@ oakLabMap = [
 '                    '
 ]
 
-
-
-
+palletTownMap = [
+'@@@@@@@@@    @%%@    @@@@@@@',
+'@@@@@@@@@    @%%@    @@@@@@@',
+'@@@@@@@@@    @%%@    @@@@@@@',
+'@@@@@@@@@@@@@@%%@@@@@@@@@@@@',
+'@@@@@@@@@@@@@@%%@@@@@@@@@@@@',
+'@@@@@@@@@@@@@@%%@@@@@@@@@@@@',
+'@@@@@@@@@@@@@@%%@@@@@@@@@@@@',
+'@@@@@         ??       @@@@@',
+'@@@@@   {__}    {__}   @@@@@',
+'@@@@@ gg[--]  gg[--]   @@@@@',
+'@@@@@ gS[D-]  gS[D-]   @@@@@',
+'@@@@@                  @@@@@',
+'@@@@@                  @@@@@',
+'@@@@@   gggg  {____}   @@@@@',
+'@@@@@   bbbS  [----]   @@@@@',
+'@@@@@         [-D--]   @@@@@',
+'@@@@@         gggggggg @@@@@',
+'@@@@@   ~~~~  bbbSbbgg @@@@@',
+'@@@@@   ~~~~           @@@@@',
+'@@@@@   ~~~~*          @@@@@',
+'@@@@@   ~~~~           @@@@@',
+'@@@@@@@@~~~~@@@@@@@@@@@@@@@@',
+'@@@@@@@@~~~~@@@@@@@@@@@@@@@@',
+'@@@@@@@@~~~~@@@@@@@@@@@@@@@@',
+'@@@@@@@@~~~~@@@@@@@@@@@@@@@@',
+]
 
 routeOneMap = [
 '     b    b  b    b     ',
@@ -121,35 +144,6 @@ routeOneMap = [
 '@@@@@@@@@@@@@@@@@@@@@@@@'
 ]
 
-
-palletTownMap = [
-'@@@@@@@@@    @%%@    @@@@@@@',
-'@@@@@@@@@    @%%@    @@@@@@@',
-'@@@@@@@@@    @%%@    @@@@@@@',
-'@@@@@@@@@@@@@@%%@@@@@@@@@@@@',
-'@@@@@@@@@@@@@@%%@@@@@@@@@@@@',
-'@@@@@@@@@@@@@@%%@@@@@@@@@@@@',
-'@@@@@@@@@@@@@@%%@@@@@@@@@@@@',
-'@@@@@         ??       @@@@@',
-'@@@@@   {__}    {__}   @@@@@',
-'@@@@@ gg[--]  gg[--]   @@@@@',
-'@@@@@ gS[D-]  gS[D-]   @@@@@',
-'@@@@@                  @@@@@',
-'@@@@@                  @@@@@',
-'@@@@@   gggg  {____}   @@@@@',
-'@@@@@   bbbS  [----]   @@@@@',
-'@@@@@         [-D--]   @@@@@',
-'@@@@@         gggggggg @@@@@',
-'@@@@@   ~~~~  bbbSbbgg @@@@@',
-'@@@@@   ~~~~           @@@@@',
-'@@@@@   ~~~~*          @@@@@',
-'@@@@@   ~~~~           @@@@@',
-'@@@@@@@@~~~~@@@@@@@@@@@@@@@@',
-'@@@@@@@@~~~~@@@@@@@@@@@@@@@@',
-'@@@@@@@@~~~~@@@@@@@@@@@@@@@@',
-'@@@@@@@@~~~~@@@@@@@@@@@@@@@@',
-]
-
 viridianCityMap = [
 '@@@@@@@@@@@@@@@@@@@@b  @@@@@@@@@@@@@@@@@@@@@@',
 '@@@@@@@@@@@@@@@@@@@@b  @@@@@@@@@@@@@@@@@@@@@@',
@@ -161,8 +155,8 @@ viridianCityMap = [
 'BBBBBBBBBL@@@@@@@@@@b   @@@@            @@@@@',
 'BBBBBBBBBL                      {____}  @@@@@',
 'BBBBBBBBBL  bbbbbb@@            [----]  @@@@@',
-'BBBBBBBBBL b@@@@@@@@b   b       [----]  @@@@@',
-'BBBBBBBBBL b@@@@@@@@b   b      S[-D--]  @@@@@',
+'BBBBBBBBBL b@@@@@@@@b   b       [--G-]  @@@@@',
+'BBBBBBBBBL b@@@@@@@@b   b      S[hDhh]  @@@@@',
 'BBBBBBBBBL b@@@@@@@@b   {__}============@@@@@',
 'BBBBBBBBBL b@@@@@@@@b   [D-]            @@@@@',
 'BBBBBBBBBL b@@@@@@@@b                   @@@@@',
@@ -173,13 +167,13 @@ viridianCityMap = [
 '    !       @@@@@@@@            {__}    @@@@@',
 '    L                S  bbbb    [--]    @@@@@',
 'LLLLLLLL                        [--]    @@@@@',
-'BBBBBBBL                        [D-]    @@@@@',
+'BBBBBBBL                        [D$]    @@@@@',
 'BBBBBBBL                                @@@@@',
 'BBBBBBBL@@@@                            @@@@@',
 'BBBBBBBL                  {__}          @@@@@',
 'BBBBBBBL    @@            [--]          @@@@@',
 'BBBBBBBL    ~~~~~~        [--]          @@@@@',
-'BBBBBBBL    ~~~~~~        [D-]          @@@@@',
+'BBBBBBBL    ~~~~~~        [D<]          @@@@@',
 'BBBBBBBL    ~~~~~~                      @@@@@',
 'LLLLLLLL====~~~~~~= === ================@@@@@',
 '       b                                @@@@@',
@@ -301,7 +295,7 @@ viridianForestMap = [
 '                                          ',
 '    wDDw                                  ',
 '    T  TuiTTTTTTTTuiTTTTTTTTTTTTTTTTTT    ',
-'    T STjk        jk                 T    ',
+'    T STjk   *    jk           *     T    ',
 '    T  Tui        ui                 T    ',
 '    T  Tjk        jk    TTTTTTTTTT   T    ',
 '    T  Tui   TT   ui   TuiuiuiuiuiT  T    ',
@@ -319,7 +313,7 @@ viridianForestMap = [
 '    T%%Tui%%%TT%%%  %%%TuiuiT  Tui%%%T    ',
 '    T%%Tjk%%%TT%%%  %%%TjkjkT STjk%%%T    ',
 '    T%%Tui%%%TT        TuiuiT        T    ',
-'    T%%Tjk%%%TT        TjkjkT        T    ',
+'    T%*Tjk%%%TT        TjkjkT      * T    ',
 '    T%%Tui%%%TuiuiuiuiuiuiuiT%%%uiT  T    ',
 '    T%%Tjk%%%TjkjkjkjkjkjkjkT%%%jkT  T    ',
 '    T%%%  %%%TuiuiuiuiuiuiuiT%%%uiT  T    ',
@@ -333,7 +327,7 @@ viridianForestMap = [
 '    T%%%%%%%%TuiuiuiuiuiuiuiT%%%uiT  T    ',
 '    T%%%%%%%%TjkjkjkjkjkjkjkT%%%jkT  T    ',
 '    uiuiui  %%%%%%%%S %TuiuiT%       T    ',
-'    jkjkjk  %%%%%%%%  %TjkjkT%       T    ',
+'    jkjkjk  %%%%%%%%  %TjkjkT%   *   T    ',
 '    uiuiui  %TuiuiT%  %TuiuiT%  uiuiui    ',
 '    jkjkjk  %TjkjkT%  %TjkjkT%  jkjkjk    ',
 '    uiuiui  %TuiuiT%  %TuiuiT%  uiuiui    ',
@@ -373,7 +367,65 @@ viridianForestExit = [
 '                    '
 ]
 
+pewterCity = [
+'gggggbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb@@@@@@',
+'BBBBL  gggg{______}{____}ggggggggggg@@@@@',
+'BBBBL  gggg[______][____]@@@@ggggggg@@@@@',
+'BBBBL  gggg[______][----]ggggggggggg@@@@@',
+'BBBBL  gggg[______][Dhhh]gg@@ggggggg@@@@@',
+'BBBBL  gggg[------]  ggggggg@ggggggg@@@@@',
+'BBBBL=== ==[hhhhDh]=========@=======@@@@@',
+'BBBBL                               @@@@@',
+'BBBBL                               @@@@@',
+'BBBBL  gggggggggggg                LBBBBB',
+'BBBBL  gggggggggggg                LBBBBB',
+'BBBBL                gggggggg{__}  LBBBBB',
+'BBBBL                gggggggg[D-]  LBBBBB',
+'BBBBL  gggg  {____}    {__}        LBBBBB',
+'BBBBL  gggg  [----]    [--]        LBBBBB',
+'BBBBL  gggg  [--G-]  gg[--]gggggg  @     ',
+'BBBBL  gggg S[---D]  gg[D$]gggggg  @     ',
+'BBBBL              @               @     ',
+'BBBBL              @              S@     ',
+'BBBBL  gggg  gggggg@ gggggggggggg  LBBBBB',
+'BBBBL@@@@@@@@@@@@@@@ gggggggggggg  LBBBBB',
+'BBBBL        {__}                  LBBBBB',
+'BBBBL        [--]      @@@S@@@@    LBBBBB',
+'BBBBL  gggggg[--]gg  g@gggggggg@g  LBBBBB',
+'BBBBL  gggggg[D<]gg  g@gggggggg@g  LBBBBB',
+'BBBBL                g@gggggggg@g  gbgggg',
+'BBBBL                g@gggggggg@g  gbgggg',
+'BBBBL  {__}gggggggg  g@gggggggg@g  gbgggg',
+'BBBBL  [D-]gggggggg Sg@=== ====@g  gbgggg',
+'BBLbb                              gbgggg',
+'BBLbb                              gbgggg',
+'BBLbbbbbbbbbb@@@@@@  @@@@@@bbbbbbbbbbgggg',
+'LLLgggggggggg@@@@@@  @@@@@@gggggggggggggg',
+'ggggggggggggg@@@@@@  @@@@@@gggggggggggggg',
+'ggggggggggggg%%%%%%  b     gggggggggggggg',
+'ggggggggggggg%%%%%%  b     gggggggggggggg',
+'ggggggggggggg%%%%%%  b     gggggggggggggg'
+]
 
-locationMapDict = {'Oak Lab': oakLabMap, 'Pallet Town': palletTownMap, 'Route 1': routeOneMap, 'Viridian City': viridianCityMap, 'Viridian Center': viridianCentreMap, 'Route 2': routeTwoMap, 'Viridian Forest': viridianForestMap, 'Viridian Forest Entrance': viridianForestEntrance, 'Viridian Forest Exit': viridianForestExit}
+pewterCenterMap = [
+'                    ',
+'                    ',
+'                    ',
+'                    ',
+'     mMUIwwwwmM     ',
+'     mMJK+   mM     ',
+'     mrttRrttyM     ',
+'     m        M     ',
+'     m        M     ',
+'     mPP    PPM     ',
+'     mpp    ppM     ',
+'     mWWWddWWWM     ',
+'                    ',
+'                    ',
+'                    ',
+'                    '
+]
+
+locationMapDict = {'Oak Lab': oakLabMap, 'Pallet Town': palletTownMap, 'Route 1': routeOneMap, 'Viridian City': viridianCityMap, 'Viridian Center': viridianCenterMap, 'Route 2': routeTwoMap, 'Viridian Forest': viridianForestMap, 'Viridian Forest Entrance': viridianForestEntrance, 'Viridian Forest Exit': viridianForestExit, 'Pewter City': pewterCity, 'Pewter Center': pewterCenterMap}
 
 #locationMapDict = {'Pallet Town': palletTownMap, 'Route 1': routeOneMap, 'Route 2': routeTwoMap, 'Viridian City': viridianCityMap, 'Viridian Forest': viridianForestMap, 'Route 22': routeTwentyTwoMap, 'Pewter City': pewterCityMap}

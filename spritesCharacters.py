@@ -1,4 +1,6 @@
 
+overscore = chr(175)
+
 you = [
 '  o~  ',
 ' (//) ',
@@ -23,10 +25,42 @@ nurseJoy = [
 '  ||  '
 ]
 
-enemyChar = [
+enemyCharDown = [
 '  *~  ',
-' (!!) ',
+' (!V) ',
 '  ||  '
+]
+
+enemyCharUp = [
+'  *~  ',
+' (!^) ',
+'  ||  '
+]
+
+enemyCharDown = [
+'  *~  ',
+' (!v) ',
+'  ||  '
+]
+
+enemyCharLeft = [
+'  *~  ',
+' (!<) ',
+'  ||  '
+]
+
+enemyCharRight = [
+'  *~  ',
+' (!>) ',
+'  ||  '
+]
+
+enemyChars = {"Down": enemyCharDown, "Up": enemyCharUp, "Left": enemyCharLeft, "Right": enemyCharRight}
+
+enemyBattleStartSign = [
+'.----.',
+'| !! |',
+overscore + overscore + "\/" + overscore + overscore
 ]
 
 characterSpriteDict = {
@@ -34,5 +68,6 @@ characterSpriteDict = {
     '^': rival,
     '0': oak,
     '+': nurseJoy,
-    '*': enemyChar
+    '*': enemyChars,
+    '!': enemyBattleStartSign
 }
