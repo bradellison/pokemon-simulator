@@ -1,6 +1,5 @@
 from screen import drawScreen
 from spritesAll import screenTop, screenBot, allSpriteDict
-from time import sleep
 
 def splitIntoLines(string):
     output = []
@@ -54,6 +53,8 @@ def text(data, *therest):
     for line in lines:
         extraSpace = getExtraSpace(line)
         print('| ' + line + extraSpace + ' |')
+    for _ in range(3 - len(lines)):
+        print('|                                                      |')
     print ('\\------------------------------------------------------/')
     input()
 
@@ -66,10 +67,6 @@ def worldText(data, *therest):
         print('| ' + line + extraSpace + ' |')
     print ('\\------------------------------------------------------/')
     input()
-
-loading = 'LOADING...'
-for i in range(len(loading)):
-    print(loading[i], sep=' ', end=' ', flush=True); sleep(0.05)
 
 def drawOverworldText(x, y, location):
     screenDraw = screenTop + '\n'

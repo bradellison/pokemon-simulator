@@ -171,3 +171,61 @@ allMoveList = ['Absorb','Acid','Acid Armor','Agility','Amnesia','Aurora Beam','B
 
 hitSelfConfusionInfo =  ['Hit Self','Typeless','Physical',40,10000,10000,'Hit self in confusion.','Self',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
+
+#Option 1 > As it is currently, full names split by line
+#|------------------------------------------------------|
+#| 1 > Poison Powder - 20/20 PP                         |
+#| 2 | High Jump Kick - 35/35 PP                        |
+#| 3 | Thunder Punch - 20/20 PP                         |
+#| 4 | Self-Destruct - 30/30 PP                         |
+#| 5 | Back                                             |
+#\------------------------------------------------------/
+#
+#Option 1 > Another example with shorter names
+#|------------------------------------------------------|
+#| 1 > Tail Whip - 20/20 PP                             |
+#| 2 | Tackle - 35/35 PP                                |
+#| 3 | Bide - 20/20 PP                                  |
+#| 4 | Struggle - 30/30 PP                              |
+#| 5 | Back                                             |
+#\------------------------------------------------------/
+#
+#////////////////////////////////////////////////////////
+#
+#Option 2 > Change to game logic, certain moves will need 
+#		   to be edited to 12 chars as below
+#|------------------------------------------------------|
+#| 1 > PoisonPowder 18/20PP  | 2 - Hi-Jump Kick 18/20PP |
+#| 3 | ThunderPunch 20/20PP  | 4 - SelfDestruct 35/35PP |
+#| 5 | Back                                             |
+#\------------------------------------------------------/
+#
+#Option 2 > Another example with shorter names
+#|------------------------------------------------------|
+#| 1 > Tail Whip 18/20PP     | 2 - Tackle 18/20PP       |
+#| 3 | Bide 20/20PP          | 4 - Struggle 35/35PP     |
+#| 5 | Back                                             |
+#\------------------------------------------------------/
+#
+#////////////////////////////////////////////////////////
+#
+#Option 3, similar to 2 but PP gets pushed to end 
+#|------------------------------------------------------|
+#| 1 > PoisonPowder 18/20PP  | 2 - Hi-Jump Kick 18/20PP |
+#| 3 | ThunderPunch 20/20PP  | 4 - SelfDestruct 35/35PP |
+#| 5 | Back                                             |
+#\------------------------------------------------------/
+#
+#Option 3, similar to 2 but PP gets pushed to end 
+#|------------------------------------------------------|	
+#| 1 > Tail Whip     18/20PP | 2 - Tackle       18/20PP |
+#| 3 | Bide          20/20PP | 4 - Struggle     35/35PP |
+#| 5 | Back                                             |
+#\------------------------------------------------------/
+#
+#
+#High Jump Kick
+#Poison Powder
+#Self-Destruct
+#Thunder Punch
+#Thunder Shock

@@ -26,25 +26,6 @@ class Warp(object):
     def __init__(self,position):
         self.position = position
 
-viridianCenterMap = [
-'                    ',
-'                    ',
-'                    ',
-'                    ',
-'     mMUIwwwwmM     ',
-'     mMJK+   mM     ',
-'     mrttRrttyM     ',
-'     m        M     ',
-'     m        M     ',
-'     mPP    PPM     ',
-'     mpp    ppM     ',
-'     mWWWddWWWM     ',
-'                    ',
-'                    ',
-'                    ',
-'                    '
-]
-
 oakLabMap = [
 '                    ',
 '                    ',
@@ -189,6 +170,24 @@ viridianCityMap = [
 '@@@@@@@@@@@@@@@@@@              @@@@@@@@@@@@@'
 ]
 
+viridianCenterMap = [
+'                    ',
+'                    ',
+'                    ',
+'                    ',
+'     mMUIwwwwmM     ',
+'     mMJK+   mM     ',
+'     mrttRrttyM     ',
+'     m        M     ',
+'     m        M     ',
+'     mPP    PPM     ',
+'     mpp    ppM     ',
+'     mWWWddWWWM     ',
+'                    ',
+'                    ',
+'                    ',
+'                    '
+]
 
 routeTwoMap = [
 '@@@@@@@@@@@@  @@@@@@@@@@@@@@',

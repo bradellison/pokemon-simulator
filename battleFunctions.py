@@ -202,11 +202,11 @@ def moveChoiceInput(data):
 					print('That move is disabled! Please choose another!')
 				else:
 					print('No PP remaining! Please choose another move!')
-			elif choiceInput == 'Back' or int(choiceInput) == len(moveSet) + 1:
+			elif choiceInput == 'Back' or int(choiceInput) == 5:
 				return 'Back'
-			print("Please choose a move from the list above!")
+			print("Please choose a valid move from the list above!")
 		except ValueError:
-			print("Please choose a move from the list above!")	
+			print("Please choose a valid move from the list above!")	
 
 def preTurnNVStatusCheck(data, person):
 	if person.pokemon.nvStatus == 2:
@@ -641,7 +641,6 @@ def getSwitchPokemon(data):
 							resetOnSwitch(oldPokemon)
 							text(data, 'You switched from', oldPokemon.name, 'into', data.player.pokemon.name + '!')
 							checkIntimidateOnSwitch(data, data.player, data.enemy)
-							print()
 							data.player.pokemon.inCurrentBattle = 1
 							data.player.pokemon.lastAttackChoice = 1
 							return 1
@@ -667,7 +666,6 @@ def checkTrapStart(data, atkPokemon, defPokemon):
 					text(data, 'The opposing', data.enemy.pokemon.name, 'is caught in a bind!')
 				else:
 					text(data, data.player.pokemon.name, 'is caught in a bind!')
-				print()
 			else:
 				text(data, 'But it failed!\n')
 		elif move == traplist[1]:
@@ -678,7 +676,6 @@ def checkTrapStart(data, atkPokemon, defPokemon):
 					text(data, 'The opposing', data.enemy.pokemon.name, 'is clamped down!')
 				else:
 					text(data, data.player.pokemon.name, 'is clamped down!')
-				print()
 			else:
 				text(data, 'But it failed!\n')
 		elif move == traplist[2]:
@@ -689,7 +686,6 @@ def checkTrapStart(data, atkPokemon, defPokemon):
 					text(data, 'The opposing', data.enemy.pokemon.name, 'is caught in a firey vortex!')
 				else:
 					text(data, data.player.pokemon.name, 'is caught in a firey vortex!')
-				print()
 			else:
 				text(data, 'But it failed!\n')
 		elif move == traplist[3]:
@@ -700,7 +696,6 @@ def checkTrapStart(data, atkPokemon, defPokemon):
 					text(data, 'The opposing', data.enemy.pokemon.name, 'is wrapped up!')
 				else:
 					text(data, data.player.pokemon.name, 'is caught in a bind!')
-				print()
 			else:
 				text(data, 'But it failed!\n')
 		elif move == traplist[4]:
@@ -1239,7 +1234,6 @@ def startPlayerTurn(data):
 	data.player.pokemon.previousMove = data.player.pokemon.move
 #	if player.pokemon.lockedInMoveNumber > 0:
 #		player.pokemon.lockedInMoveNumber -= 1
-	print()	
 
 def startEnemyTurn(data):
 	interrupt = 0
@@ -1315,7 +1309,6 @@ def startEnemyTurn(data):
 	data.enemy.pokemon.previousMove = data.enemy.pokemon.move
 #	if enemy.pokemon.lockedInMoveNumber > 0:
 #		enemy.pokemon.lockedInMoveNumber -= 1
-	print()
 
 def checkMissDamage(data,pokemon):
 	if pokemon.move.move == 'High Jump Kick' or pokemon.move.move == 'Jump Kick':
@@ -1543,7 +1536,6 @@ def getCurrentFight(data):
 			elif battleChoice == 'Run':
 				if data.enemy.type == 'Wild':
 					run = getRun(data)
-					print()
 					if run == 0:
 						if data.enemy.pokemon.lockedInMoveNumber == 0:
 							enemyChoice = getEnemyMove(data)
