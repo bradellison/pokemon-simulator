@@ -58,7 +58,7 @@
 'Harden','Normal','Status', —, —,30,'Raises user's Defense.','Self',0,1,0,0,0,0,0,0,0,"[0,0,1,0,0,0,0,0,0]",100,0
 'Haze','Ice','Status', —, —,30,'Resets all stat changes.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0
 'Headbutt','Normal','Physical',70,100,15,'May cause flinching.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0
-'High Jump Kick','Fighting','Physical',130,90,10,"'If it misses, the user loses half their HP.'",'Enemy',0,1,0,0,0,0,0,0,0,0,0,0
+'Hi-Jump Kick','Fighting','Physical',130,90,10,"'If it misses, the user loses half their HP.'",'Enemy',0,1,0,0,0,0,0,0,0,0,0,0
 'Horn Attack','Normal','Physical',65,100,25,'','Enemy',0,1,0,0,0,0,0,0,0,0,0,0
 'Horn Drill','Normal','Physical', —, —,5,"'One-Hit-KO, if it hits.'",'Enemy',0,1,0,0,0,0,0,0,0,0,0,0
 'Hydro Pump','Water','Special',110,80,5,'','Enemy',0,1,0,0,0,0,0,0,0,0,0,0
@@ -92,7 +92,7 @@
 'Petal Dance','Grass','Special',120,100,10,'User attacks for 2-3 turns but then becomes confused.','Enemy',0,3,0,0,0,0,0,0,0,0,0,0
 'Pin Missile','Bug','Physical',25,95,20,'Hits 2-5 times in one turn.','Enemy',0,1,1,2,5,0,0,0,0,0,0,0
 'Poison Gas','Poison','Status', —,90,40,'Poisons opponent.','Enemy',0,1,0,0,0,5,100,0,0,0,0,0
-'Poison Powder','Poison','Status', —,75,35,'Poisons opponent.','Enemy',0,1,0,0,0,5,100,0,0,0,0,0
+'PoisonPowder','Poison','Status', —,75,35,'Poisons opponent.','Enemy',0,1,0,0,0,5,100,0,0,0,0,0
 'Poison Sting','Poison','Physical',15,100,35,'May poison the opponent.','Enemy',0,1,0,0,0,5,20,0,0,0,0,0
 'Pound','Normal','Physical',40,100,35,'','Enemy',0,1,0,0,0,0,0,0,0,0,0,0
 'Psybeam','Psychic','Special',65,100,20,'May confuse opponent.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0
@@ -113,7 +113,7 @@
 'Scratch','Normal','Physical',40,100,35,'','Enemy',0,1,0,0,0,0,0,0,0,0,0,0
 'Screech','Normal','Status', —,85,40,'Sharply lowers opponent's Defense.','Enemy',0,1,0,0,0,0,0,0,0,"[0,0,-2,0,0,0,0,0,0]",100,0
 'Seismic Toss','Fighting','Physical', —,100,20,'Inflicts damage equal to user's level.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0
-'Self-Destruct','Normal','Physical',200,100,5,'User faints.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0
+'SelfDestruct','Normal','Physical',200,100,5,'User faints.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0
 'Sharpen','Normal','Status', —, —,30,'Raises user's Attack.','Self',0,1,0,0,0,0,0,0,0,"[0,1,0,0,0,0,0,0,0]",100,0
 'Sing','Normal','Status', —,55,15,'Puts opponent to sleep.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0
 'Skull Bash','Normal','Physical',130,100,10,"'Raises Defense on first turn, attacks on second.'",'Enemy',0,2,0,0,0,0,0,0,0,"[0,0,1,0,0,0,0,0,0]",100,0
@@ -148,8 +148,8 @@
 'Teleport','Psychic','Status', —, —,20,'Allows user to flee wild battles; also warps player to last PokéCenter.','Enemy',0,1,0,0,0,0,0,0,0,0,0,0
 'Thrash','Normal','Physical',120,100,10,'User attacks for 2-3 turns but then becomes confused.','Enemy',0,3,0,0,0,0,0,0,0,0,0,0
 'Thunder','Electric','Special',110,70,10,'May paralyze opponent.','Enemy',0,1,0,0,0,2,10,0,0,0,0,0
-'Thunder Punch','Electric','Physical',75,100,15,'May paralyze opponent.','Enemy',0,1,0,0,0,2,10,0,0,0,0,0
-'Thunder Shock','Electric','Special',40,100,30,'May paralyze opponent.','Enemy',0,1,0,0,0,2,10,0,0,0,0,0
+'ThunderPunch','Electric','Physical',75,100,15,'May paralyze opponent.','Enemy',0,1,0,0,0,2,10,0,0,0,0,0
+'ThunderShock','Electric','Special',40,100,30,'May paralyze opponent.','Enemy',0,1,0,0,0,2,10,0,0,0,0,0
 'Thunder Wave','Electric','Status', —,90,20,'Paralyzes opponent.','Enemy',0,1,0,0,0,2,100,0,0,0,0,0
 'Thunderbolt','Electric','Special',90,100,15,'May paralyze opponent.','Enemy',0,1,0,0,0,2,10,0,0,0,0,0
 'Toxic','Poison','Status', —,90,10,'Badly poisons opponent.','Enemy',0,1,0,0,0,6,100,0,0,0,0,0

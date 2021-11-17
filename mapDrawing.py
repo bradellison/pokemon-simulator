@@ -4,43 +4,10 @@ from random import randint
 from battleFunctions import startBattle
 from spritesAll import screenTop, screenBot, allSpriteDict
 from overworldFunctions import addLocationInformation, trainerBattle, wildBattle
-from enemyData import allTownEnemies
 from pokemonCentreFunctions import pokemonCenter
 from text import worldText
 from storyInteractionFunctions import talkGary, talkOak, starterBall, talkStarterRivalFight
-
-def drawOverworld(data, x, y, location):
-    screenDraw = screenTop + '\n'
-    yAxis = 0
-    for line in location:
-        if yAxis > y-4 and yAxis < y+4:
-            xAxis = 0
-            for location in range(3):
-                screenDraw += '|'
-                for sprite in line:
-                    if xAxis > x-5 and xAxis < x+5:
-                        if [x, y] == [xAxis, yAxis]:
-                            screenDraw += allSpriteDict["Y"][location]
-                        elif sprite == "*":
-                            for enemy in allTownEnemies[data.environment.location.name]:
-                                if [xAxis, yAxis] == enemy.coords:
-                                    screenDraw += allSpriteDict["*"][enemy.viewDirection][location]
-                        elif data.environment.battleStart == True:
-                            for enemy in allTownEnemies[data.environment.location.name]:
-                                if enemy.battleReady == True:
-                                    if [xAxis, yAxis] == enemy.battleReadySignalCoords:
-                                        screenDraw += allSpriteDict["!"][location]
-                                    else:
-                                        screenDraw += (allSpriteDict[sprite][location])
-                        else:
-                            screenDraw += (allSpriteDict[sprite][location])
-                    xAxis += 1
-                screenDraw += '|\n'
-                xAxis = 0
-            location += 1
-        yAxis += 1
-    screenDraw += screenBot
-    print(screenDraw)
+from drawOverworld import drawOverworld
 
 def overlayCharacterSprite(you, sprite, location):
     if location == 1:
@@ -132,15 +99,13 @@ def checkStoryInteraction(data,x,y):
         return False
 
 def checkEnemyInteration(data, newX, newY):
-    if data.environment.location.name in allTownEnemies:
-        for enemy in allTownEnemies[data.environment.location.name]:
-            if [newX, newY] in enemy.aggroCoords:
-                if enemy.battleComplete == False:
-                    enemy.battleReady = True
-                    data.environment.battleStart = True
-                    characterFound = True    
-                return True
-    return True
+    for enemy in data.environment.location.enemies:
+        if [newX, newY] in enemy.aggroCoords:
+            if enemy.battleComplete == False:
+                enemy.battleReady = True
+                data.environment.battleStart = True
+                characterFound = True    
+            return True
 
 def runInteraction(data, sprite, newX, newY, location):
     if sprite == '^':
@@ -175,9 +140,9 @@ def checkNewSprite(x,y,location):
 def checkBattle(data, x, y, location):
     newSprite = checkNewSprite(x, y, location)
     if data.environment.battleStart == True:
-        for enemy in allTownEnemies[data.environment.location.name]:
+        for enemy in data.environment.location.enemies:
             if enemy.battleReady == True:
-                print('X:', data.player.xCo, '- Y:', data.player.yCo, ' Region:', data.environment.location.name)
+                #print('X:', data.player.xCo, '- Y:', data.player.yCo, ' Region:', data.environment.location.name)
                 input("--")
                 trainerBattle(data, enemy)
                 enemy.battleReady = False
@@ -208,7 +173,7 @@ def overworldMovement(data):
     drawOverworld(data, data.player.xCo, data.player.yCo, data.environment.location.map)
     if checkBattle(data, data.player.xCo, data.player.yCo, data.environment.location.map):
         drawOverworld(data, data.player.xCo, data.player.yCo, data.environment.location.map)
-    print('X:', data.player.xCo, '- Y:', data.player.yCo, ' Region:', data.environment.location.name)
+    #print('X:', data.player.xCo, '- Y:', data.player.yCo, ' Region:', data.environment.location.name)
     directionChoice(data, data.player.xCo, data.player.yCo, data.environment.location.map)
 
 

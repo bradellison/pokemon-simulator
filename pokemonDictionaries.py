@@ -4,7 +4,7 @@ from pokemonExpGroups import *
 from pokemonEvolution import *
 from pokemonLevelUpMoves import *
 from pokemonYields import *
-from pokemonSpritesV2 import *
+from spritesPokemon import *
 from pokemonCatchRates import *
 from pokemonPossibleMovesByLevel import *
 from pokemonGenderRatio import *

@@ -4,7 +4,7 @@ from moveDictionaries import moveInfo
 from bagFunctions import getMedicineHeal, getBallModifier
 from gameMaps import locationMapDict
 from screen import BattleScreen
-from warpData import getWarpZones
+from locationData import getLocationWarpZones, getLocationEnemies
 
 class Data(object):
 	def __init__(self):
@@ -24,7 +24,6 @@ class Settings(object):
 		self.colorama = True
 		self.wallClip = False
 		self.wildBattles = True
-		
 
 class Player(object):
 	def __init__(self):
@@ -224,6 +223,19 @@ class Location(object):
 	def __init__(self, name):
 		self.name = name
 		self.map = locationMapDict[name]
-		self.warpZones = getWarpZones(name)
+		self.warpZones = getLocationWarpZones(name)
+		self.enemies = self.buildEnemyData(getLocationEnemies(name))
+		
+	def buildEnemyData(self, rawEnemies):
+		enemies = []
+		for rawEnemy in rawEnemies:
+			team = []
+			print(rawEnemy[2])
+			for pokemon in rawEnemy[2]:
+				print(pokemon)
+				team.append(Pokemon(pokemon[0], pokemon[1], pokemon[2]))
+			enemy = Enemy(rawEnemy[0], rawEnemy[1], team, rawEnemy[3], rawEnemy[4], rawEnemy[5], rawEnemy[6], rawEnemy[7])
+			enemies.append(enemy)
+		return enemies
 
 

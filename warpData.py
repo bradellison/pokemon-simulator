@@ -83,7 +83,7 @@ locationToWarpListDict = {
 'Route 3': routeThreeWarps
 }
 
-def getWarpZones(location):
+def getLocationWarpZones(location):
     warpZones = []
     warpInfo = locationToWarpListDict[location]
     for zone in warpInfo:

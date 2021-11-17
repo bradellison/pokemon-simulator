@@ -1,5 +1,6 @@
 from screen import drawScreen
 from spritesAll import screenTop, screenBot, allSpriteDict
+from drawOverworld import drawOverworld
 
 def splitIntoLines(string):
     output = []
@@ -59,36 +60,14 @@ def text(data, *therest):
     input()
 
 def worldText(data, *therest):
-    drawOverworldText(data.player.xCo, data.player.yCo, data.environment.location.map)
+    drawOverworld(data, data.player.xCo, data.player.yCo, data.environment.location.map, text=True)
     newString = turnIntoOneString(therest)
     lines = splitIntoLines(newString)
     for line in lines:
         extraSpace = getExtraSpace(line)
         print('| ' + line + extraSpace + ' |')
+    for _ in range(3 - len(lines)):
+        print('|                                                      |')
     print ('\\------------------------------------------------------/')
     input()
 
-def drawOverworldText(x, y, location):
-    screenDraw = screenTop + '\n'
-    yAxis = 0
-    for line in location:
-        if yAxis > y-4 and yAxis < y+4:
-            xAxis = 0
-            for location in range(3):
-                screenDraw += '|'
-                for sprite in line:
-                    if xAxis > x-5 and xAxis < x+5:
-                        if [x, y] == [xAxis, yAxis]:
-                            #youTile = overlayCharacterSprite(you[location], spriteDict[sprite][location], location)
-                            #screenDraw += youTile
-                            screenDraw += allSpriteDict["Y"][location]
-                        else:
-                            screenDraw += (allSpriteDict[sprite][location])
-                    xAxis += 1
-                screenDraw += '|\n'
-                xAxis = 0
-            location += 1
-        yAxis += 1
-        if yAxis == 18:
-            screenDraw += '|------------------------------------------------------|'
-            print(screenDraw)

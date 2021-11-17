@@ -1314,7 +1314,7 @@ def startEnemyTurn():
 	print()
 
 def checkMissDamage(pokemon):
-	if pokemon.move.move == 'High Jump Kick' or pokemon.move.move == 'Jump Kick':
+	if pokemon.move.move == 'Hi-Jump Kick' or pokemon.move.move == 'Jump Kick':
 		damage = int(pokemon.maxhp / 2)
 		if damage > pokemon.hp:
 			damage = pokemon.hp
@@ -1443,7 +1443,7 @@ def checkFlinch(atkMove, defPokemon):
 			defPokemon.flinch = 1
 
 def checkKamikaze(atkMove, atkPokemon):
-	if atkMove.move == 'Self-Destruct' or atkMove.move == 'Explosion':
+	if atkMove.move == 'SelfDestruct' or atkMove.move == 'Explosion':
 		damage = atkPokemon.hp
 		atkPokemon.hp -= atkPokemon.hp
 		if atkPokemon == player.pokemon:

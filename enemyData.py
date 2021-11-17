@@ -1,27 +1,29 @@
+#PokemonInfo = [["Pok1Name", Poke1Lvl, ["Poke1Mov1", "Poke1Mov2"]], "Pok2Name", Poke2Lvl, ["Poke2Mov1", "Poke2Mov2"]]]
+#enemyInfo = ["Class", "Name", team, prizeMoney, "EndBattleText", "coordinates", viewDistance, "viewDirection"]
 
-from classes import Enemy, Pokemon
 
-#oakTeam = [Pokemon('Pidgeot',61,['Wing Attack','Mirror Move','Sky Attack','Whirlwind']),Pokemon('Alakazam',59,['Psybeam','Psychic','Reflect','Recover']),Pokemon('Rhydon',61,['Leer','Tail Whip','Fury Attack','Horn Drill']),Pokemon('Exeggutor',63,['Hypnosis','Barrage','Stomp']),Pokemon('Arcanine',61,['Roar','Leer','Ember','Take Down']),Pokemon('Blastoise',65,['Hydro Pump','Blizzard','Bite','Withdraw'])]
-oakTeam = [Pokemon('Pidgeot',61,['Wing Attack']),Pokemon('Pidgeot',61,['Wing Attack','Mirror Move','Sky Attack','Whirlwind'])]
-enemyOak = Enemy("Badman", "Oak", oakTeam, 10000, "Student becomes the master, eh?", [12,19], 3, "Right")
+
+## PALLET TOWN ##
+oakTeam = [['Pidgeot',61,['Wing Attack']],['Pidgeot',61,['Wing Attack','Mirror Move','Sky Attack','Whirlwind']]]
+#oakTeam = [['Pidgeot', 61, ['Wing Attack']]]
+enemyOak = ["Badman", "Oak", oakTeam, 10000, "Student becomes the master, eh?", [12,19], 3, "Right"]
+
 palletTownEnemies = [enemyOak]
 #palletTownEnemies = []
 
 
-
 ## VIRIDIAN FOREST ##
-bugCatcherRickTeam = [Pokemon('Weedle', 7, 'Random'), Pokemon('Caterpie', 7, 'Random')]
-bugCatcherRick = Enemy("Bug Catcher", "Rick", bugCatcherRickTeam, 72, "You bug me!", [33,37], 3, "Down")
-bugCatcherDougTeam = [Pokemon('Weedle', 7, 'Random'), Pokemon('Kakuna', 7, 'Random'), Pokemon('Weedle', 7, 'Random')]
-bugCatcherDoug = Enemy("Bug Catcher", "Doug", bugCatcherDougTeam, 84, "You bug me!", [35,23], 3, "Down")
-bugCatcherAnthonyTeam = [Pokemon('Caterpie', 7, 'Random'), Pokemon('Caterpie', 8, 'Random')]
-bugCatcherAnthony = Enemy("Bug Catcher", "Anthony", bugCatcherAnthonyTeam, 84, "You bug me!", [31,5], 3, "Down")
-bugCatcherCharlieTeam = [Pokemon('Metapod', 7, 'Random'), Pokemon('Caterpie', 7, 'Random'), Pokemon('Metapod', 7, 'Random')]
-bugCatcherCharlie = Enemy("Bug Catcher", "Charlie", bugCatcherCharlieTeam, 84, "You bug me!", [13,6], 3, "Down")
-bugCatcherSammyTeam = [Pokemon('Weedle', 9, 'Random')]
-bugCatcherSammy = Enemy("Bug Catcher", "Sammy", bugCatcherSammyTeam, 84, "You bug me!", [6,23], 3, "Down")
+bugCatcherRickTeam = [['Weedle', 7, 'Random'], ['Caterpie', 7, 'Random']]
+bugCatcherRick = ["Bug Catcher", "Rick", bugCatcherRickTeam, 72, "You bug me!", [33,37], 3, "Down"]
+bugCatcherDougTeam = [['Weedle', 7, 'Random'], ['Kakuna', 7, 'Random'], ['Weedle', 7, 'Random']]
+bugCatcherDoug = ["Bug Catcher", "Doug", bugCatcherDougTeam, 84, "You bug me!", [35,23], 3, "Down"]
+bugCatcherAnthonyTeam = [['Caterpie', 7, 'Random'], ['Caterpie', 8, 'Random']]
+bugCatcherAnthony = ["Bug Catcher", "Anthony", bugCatcherAnthonyTeam, 84, "You bug me!", [31,5], 3, "Down"]
+bugCatcherCharlieTeam = [['Metapod', 7, 'Random'], ['Caterpie', 7, 'Random'], ['Metapod', 7, 'Random']]
+bugCatcherCharlie = ["Bug Catcher", "Charlie", bugCatcherCharlieTeam, 84, "You bug me!", [13,6], 3, "Down"]
+bugCatcherSammyTeam = [['Weedle', 9, 'Random']]
+bugCatcherSammy = ["Bug Catcher", "Sammy", bugCatcherSammyTeam, 84, "You bug me!", [6,23], 3, "Down"]
 viridianForestEnemies = [bugCatcherRick, bugCatcherDoug, bugCatcherAnthony, bugCatcherCharlie, bugCatcherSammy]
-
 
 
 
