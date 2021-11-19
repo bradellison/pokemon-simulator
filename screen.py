@@ -2,6 +2,7 @@ import math
 import random
 from random import randint 
 from pokemonDictionaries import pokemonSprites
+from spritesAll import screenBot, screenMid, screenTop, screenEmp
 
 class BattleScreen(object):
     def __init__(self):
@@ -45,7 +46,7 @@ def drawHealthBar(health, maxHealth):
     healthBar = ''
     spareSpaces = 20
     for _ in range (spacesFilled):
-        healthBar += '='
+        healthBar += '═'
         spareSpaces -= 1
     for _ in range (spareSpaces):
         healthBar += ' '
@@ -76,34 +77,34 @@ def reverseLine(line):
     return (line[::-1])
 
 def fullBattleScreen(data):
-    print('/------------------------------------------------------\\')
-    print('|> ' + data.bscreen.nameBarEnemy  + ' <|    ' + pokemonSprites[data.enemy.pokemon.species][0] + '|')
-    print('|(' + data.bscreen.healthBarEnemy + ')|    ' + pokemonSprites[data.enemy.pokemon.species][1] + '|')
-    print('| ' + data.bscreen.enemyStatus + ' /----------------/    ' + pokemonSprites[data.enemy.pokemon.species][2] + '|')
-    print('|----/                      ' + pokemonSprites[data.enemy.pokemon.species][3] + '|')
-    print('|' + reverseLine(pokemonSprites[data.player.pokemon.species][0]) + pokemonSprites[data.enemy.pokemon.species][4] + '|')
-    print('|' + reverseLine(pokemonSprites[data.player.pokemon.species][1]) + pokemonSprites[data.enemy.pokemon.species][5] + '|')
-    print('|' + reverseLine(pokemonSprites[data.player.pokemon.species][2]) + pokemonSprites[data.enemy.pokemon.species][6] + '|')
-    print('|' + reverseLine(pokemonSprites[data.player.pokemon.species][3]) + pokemonSprites[data.enemy.pokemon.species][7] + '|')
-    print('|' + reverseLine(pokemonSprites[data.player.pokemon.species][4]) + pokemonSprites[data.enemy.pokemon.species][8] + '|')
-    print('|' + reverseLine(pokemonSprites[data.player.pokemon.species][5]) + pokemonSprites[data.enemy.pokemon.species][9] + '|')
-    print('|' + reverseLine(pokemonSprites[data.player.pokemon.species][6]) + pokemonSprites[data.enemy.pokemon.species][10] + '|')
-    print('|' + reverseLine(pokemonSprites[data.player.pokemon.species][7]) + pokemonSprites[data.enemy.pokemon.species][11] + '|')
-    print('|' + reverseLine(pokemonSprites[data.player.pokemon.species][8]) + pokemonSprites[data.enemy.pokemon.species][12] + '|')
-    print('|' + reverseLine(pokemonSprites[data.player.pokemon.species][9]) + '    /----------------------|')
-    print('|' + reverseLine(pokemonSprites[data.player.pokemon.species][10]) + '    |> ' + data.bscreen.nameBarPlayer + ' <|')
-    print('|' + reverseLine(pokemonSprites[data.player.pokemon.species][11]) + '    |(' + data.bscreen.healthBarPlayer + ')|')
-    print('|' + reverseLine(pokemonSprites[data.player.pokemon.species][12]) + '    | ' + data.bscreen.playerStatus + '    ' + data.bscreen.extraSpaceHealthPlayer + str(data.player.pokemon.hp) + '/' + str(data.player.pokemon.maxhp) + 'HP |')
-    print('|------------------------------------------------------|')
+    print("┏━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
+    print('┃> ' + data.bscreen.nameBarEnemy  + ' <┃    ' + pokemonSprites[data.enemy.pokemon.species][0] + '┃')
+    print('┃(' + data.bscreen.healthBarEnemy + ')┃    ' + pokemonSprites[data.enemy.pokemon.species][1] + '┃')
+    print('┃ ' + data.bscreen.enemyStatus + ' ┏━━━━━━━━━━━━━━━━┛    ' + pokemonSprites[data.enemy.pokemon.species][2] + '┃')
+    print('┣━━━━━┛                     ' + pokemonSprites[data.enemy.pokemon.species][3] + '┃')
+    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][0]) + pokemonSprites[data.enemy.pokemon.species][4] + '┃')
+    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][1]) + pokemonSprites[data.enemy.pokemon.species][5] + '┃')
+    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][2]) + pokemonSprites[data.enemy.pokemon.species][6] + '┃')
+    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][3]) + pokemonSprites[data.enemy.pokemon.species][7] + '┃')
+    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][4]) + pokemonSprites[data.enemy.pokemon.species][8] + '┃')
+    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][5]) + pokemonSprites[data.enemy.pokemon.species][9] + '┃')
+    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][6]) + pokemonSprites[data.enemy.pokemon.species][10] + '┃')
+    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][7]) + pokemonSprites[data.enemy.pokemon.species][11] + '┃')
+    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][8]) + pokemonSprites[data.enemy.pokemon.species][12] + '┃')
+    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][9]) + '    ┏━━━━━━━━━━━━━━━━━━━━━━┫')
+    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][10]) + '    ┃> ' + data.bscreen.nameBarPlayer + ' <┃')
+    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][11]) + '    ┃(' + data.bscreen.healthBarPlayer + ')┃')
+    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][12]) + '    ┃ ' + data.bscreen.playerStatus + '    ' + data.bscreen.extraSpaceHealthPlayer + str(data.player.pokemon.hp) + '/' + str(data.player.pokemon.maxhp) + 'HP ┃')
+    print("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━┫")
 
 def liteBattleScreen(data):
-    print('/------------------------------------------------------\\')
-    print('|                               |> ' + data.bscreen.nameBarEnemy  + ' <|')
-    print('|----------------------\\        |(' + data.bscreen.healthBarEnemy + ')|')
-    print('|> ' + data.bscreen.nameBarPlayer + ' <|        \\----------------\\ ' + data.bscreen.enemyStatus + ' |')
-    print('|(' + data.bscreen.healthBarPlayer + ')|                          \\----|')
-    print('| ' + data.bscreen.playerStatus + '    ' + data.bscreen.extraSpaceHealthPlayer + str(data.player.pokemon.hp) + '/' + str(data.player.pokemon.maxhp) + 'HP |                               |')
-    print('|------------------------------------------------------|')
+    print(screenTop)
+    print('┃                               ┃> ' + data.bscreen.nameBarEnemy  + ' <┃')
+    print('┃━━━━━━━━━━━━━━━━━━━━━━\\        ┃(' + data.bscreen.healthBarEnemy + ')┃')
+    print('┃> ' + data.bscreen.nameBarPlayer + ' <┃        \\━━━━━━━━━━━━━━━━\\ ' + data.bscreen.enemyStatus + ' ┃')
+    print('┃(' + data.bscreen.healthBarPlayer + ')┃                          \\━━━━┃')
+    print('┃ ' + data.bscreen.playerStatus + '    ' + data.bscreen.extraSpaceHealthPlayer + str(data.player.pokemon.hp) + '/' + str(data.player.pokemon.maxhp) + 'HP ┃                               ┃')
+    print(screenMid)
 
 def drawScreen(data):
     getBattleScreenValues(data)
@@ -119,10 +120,10 @@ def battleChoiceScreen(lastChoice):
         thr = '>'
     elif lastChoice == 4:
         fou = '>'
-    print('| What would you like to do?                           |')
-    print('|    ' + one + ' 1 - Fight                ' + two + ' 2 - Pokemon          |')
-    print('|    ' + thr + ' 3 - Bag                  ' + fou + ' 4 - Run              |')
-    print('\\------------------------------------------------------/')
+    print('┃ What would you like to do?                           ┃')
+    print('┃    ' + one + ' 1 - Fight                ' + two + ' 2 - Pokemon          ┃')
+    print('┃    ' + thr + ' 3 - Bag                  ' + fou + ' 4 - Run              ┃')
+    print(screenBot)
 
 def getExtraSpaceAttackChoice(a,b,c,d,e,f,g):
     length = len(str(a)+str(b)+str(c)+str(d)+str(e)+str(f)+str(g))
@@ -137,13 +138,13 @@ def getExtraSpaceAttackChoice(a,b,c,d,e,f,g):
 #    drawScreen(data)
 #    moveSet = data.player.pokemon.moveSet
 #    for i in range(len(moveSet)):
-#        cc = '|'
+#        cc = '┃'
 #        if i + 1 == data.player.pokemon.lastAttackChoice:
 #            cc = '>'
-#        extraSpace = getExtraSpaceAttackChoice('| ', i + 1, '-', moveSet[i], '-', str(data.player.pokemon.movePPCurrent[i]) + '/' + str(data.player.pokemon.movePPMax[i]), 'PP')
-#        print('|', i + 1, cc, moveSet[i], '-', str(data.player.pokemon.movePPCurrent[i]) + '/' + str(data.player.pokemon.movePPMax[i]), 'PP' + extraSpace + '|')
-#    print('|', len(moveSet) + 1, '| Back                                             |')
-#    print('\\------------------------------------------------------/')
+#        extraSpace = getExtraSpaceAttackChoice('┃ ', i + 1, '-', moveSet[i], '-', str(data.player.pokemon.movePPCurrent[i]) + '/' + str(data.player.pokemon.movePPMax[i]), 'PP')
+#        print('┃', i + 1, cc, moveSet[i], '-', str(data.player.pokemon.movePPCurrent[i]) + '/' + str(data.player.pokemon.movePPMax[i]), 'PP' + extraSpace + '┃')
+#    print('┃', len(moveSet) + 1, '┃ Back                                             ┃')
+#    print('\\━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━/')
 
 def attackChoiceScreen(data):
     drawScreen(data)
@@ -155,15 +156,15 @@ def attackChoiceScreen(data):
         else:
             lastMoveIdentifier = '-'
         if i < len(moveSet):
-            extraSpace = getExtraSpaceAttackChoice('| ', i + 1, '-', moveSet[i], '-', str(data.player.pokemon.movePPCurrent[i]) + '/' + str(data.player.pokemon.movePPMax[i]), 'PP')
-            line += "| " + str(i+1) + " " + lastMoveIdentifier + " " + moveSet[i] + extraSpace + str(data.player.pokemon.movePPCurrent[i]) + '/' + str(data.player.pokemon.movePPMax[i]) + 'PP '
+            extraSpace = getExtraSpaceAttackChoice('┃ ', i + 1, '-', moveSet[i], '-', str(data.player.pokemon.movePPCurrent[i]) + '/' + str(data.player.pokemon.movePPMax[i]), 'PP')
+            line += "┃ " + str(i+1) + " " + lastMoveIdentifier + " " + moveSet[i] + extraSpace + str(data.player.pokemon.movePPCurrent[i]) + '/' + str(data.player.pokemon.movePPMax[i]) + 'PP '
         else:
-            line += "| " + str(i+1) + " -                      "
+            line += "┃ " + str(i+1) + " -                      "
         if i in [1,3]:
-            line += " |"
+            line += " ┃"
             print(line)
             line = ""
     if line != "":
         print(line)
-    print('| 5 | Back                                             |')
-    print('\\------------------------------------------------------/')
+    print('┃ 5 ┃ Back                                             ┃')
+    print(screenBot)

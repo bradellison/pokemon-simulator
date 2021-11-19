@@ -7,3 +7,4 @@ for i in range(len(loading)):
 
 startGame()
 testFunction()
+

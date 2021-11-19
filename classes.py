@@ -4,7 +4,7 @@ from moveDictionaries import moveInfo
 from bagFunctions import getMedicineHeal, getBallModifier
 from gameMaps import locationMapDict
 from screen import BattleScreen
-from locationData import getLocationWarpZones, getLocationEnemies
+from locationData import getLocationWarpZones, getLocationEnemies, allSignDict
 
 class Data(object):
 	def __init__(self):
@@ -24,6 +24,7 @@ class Settings(object):
 		self.colorama = True
 		self.wallClip = False
 		self.wildBattles = True
+		self.showCoords = False
 
 class Player(object):
 	def __init__(self):
@@ -113,7 +114,6 @@ class Enemy(object):
 			baseCoord = [baseCoord[0] + directionDict[viewDirection][0], baseCoord[1] + directionDict[viewDirection][1]]
 			aggroCoords.append(baseCoord)
 		return aggroCoords
-
 class Pokemon(object):
 	def __init__(self, species, level, moveSet):
 		self.species = species
@@ -225,17 +225,28 @@ class Location(object):
 		self.map = locationMapDict[name]
 		self.warpZones = getLocationWarpZones(name)
 		self.enemies = self.buildEnemyData(getLocationEnemies(name))
+		self.signs = self.buildSignData(name)
 		
 	def buildEnemyData(self, rawEnemies):
 		enemies = []
 		for rawEnemy in rawEnemies:
 			team = []
-			print(rawEnemy[2])
 			for pokemon in rawEnemy[2]:
-				print(pokemon)
 				team.append(Pokemon(pokemon[0], pokemon[1], pokemon[2]))
 			enemy = Enemy(rawEnemy[0], rawEnemy[1], team, rawEnemy[3], rawEnemy[4], rawEnemy[5], rawEnemy[6], rawEnemy[7])
 			enemies.append(enemy)
 		return enemies
 
+	def buildSignData(self, name):
+		signs = []
+		if name in allSignDict:
+			for sign in allSignDict[name]:
+				signs.append(Sign(sign[0], sign[1], sign[2]))
+		return signs
 
+
+class Sign(object):
+	def __init__(self, location, text, coords):
+		self.location = location
+		self.text = text
+		self.coords = coords

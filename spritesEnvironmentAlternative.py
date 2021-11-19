@@ -85,34 +85,16 @@ houseLeft = [
 '|-----'
 ]
 
-houseBottomLeft = [
-'|-----',
-'|-----',
-'|_____'
-]
-
 houseRight = [
 '-----|',
 '-----|',
 '-----|'
 ]
 
-houseBottomRight = [
-'-----|',
-'-----|',
-'_____|'
-]
-
 houseMiddleWindow = [
 '------',
 '-[  ]-',
 '------'
-]
-
-houseMiddleBottomWindow = [
-'------',
-'-[  ]-',
-'______'
 ]
 
 houseMiddle = [
@@ -130,19 +112,19 @@ gymText = [
 pokemonCentreText = [
 '------',
 '-POKÉ-',
-'______'
+'------'
 ]
 
 martText = [
 '------',
 '-MART-',
-'______'
+'------'
 ]
 
 houseDoor = [
 '--__--',
 '-|  |-',
-'_|  |_'
+'-|  |-'
 ]
 
 roofLeft = [
@@ -342,15 +324,12 @@ environmentSpriteDict = {
 '=': ledge, 
 ' ': empty, 
 '[': houseLeft, 
-']': houseRight,
-'(': houseBottomLeft,
-')': houseBottomRight,
+']': houseRight, 
 'D': houseDoor, 
 'd': doormat,
 'p': plantPot,
 'P': plantTop,
 '-': houseMiddleWindow,
-':': houseMiddleBottomWindow,
 'h': houseMiddle,
 'G': gymText,
 '$': martText,

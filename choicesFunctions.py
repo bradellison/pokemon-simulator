@@ -1,4 +1,7 @@
 
+from random import choice
+
+
 def getOptionsXnumber(listOfOptions):
 	if len(listOfOptions) == 2:
 		return getOptionOneOrTwo(listOfOptions[0],listOfOptions[1])
@@ -52,6 +55,42 @@ def getOptionOneOrTwoOrThreeOrFourOrFive(option1, option2, option3, option4, opt
 			choiceInput = int(input('-- '))
 			if choiceInput == 1 or choiceInput == 2 or choiceInput == 3 or choiceInput == 4 or choiceInput == 5:
 				return choiceInput
+			else:
+				print('Please choose an option!')
+		except ValueError:
+			print('Please choose an option!')
+
+
+
+def getOptionOneOrTwoOrThreeOrFourOrFiveOrSixOrSeven(option1, option2, option3, option4, option5, option6, option7, printText=False):
+	if print == True:
+		print(' 1 -', option1, '\n 2 -', option2, '\n 3 -', option3, '\n 4 -', option4, '\n 5 -', option5, '\n 6 -', option6, '\n 7 -', option7)
+	while True:
+		try:
+			choiceInput = int(input('-- '))
+			if choiceInput == 1 or choiceInput == 2 or choiceInput == 3 or choiceInput == 4 or choiceInput == 5 or choiceInput == 6 or choiceInput == 7:
+				return choiceInput
+			else:
+				print('Please choose an option!')
+		except ValueError:
+			print('Please choose an option!')
+
+def getOption(options, printOptions=False):
+	if printOptions:
+		count = 1
+		optionsString = ""
+		for option in options:
+			optionsString += " "
+			optionsString += str(count)
+			optionsString += " - "
+			optionsString += option
+			optionsString += "\n"
+		print(optionsString)
+	while True:
+		try:
+			choiceInput = int(input('-- '))
+			if choiceInput > 0 and choiceInput <= len(options):
+				return options[choiceInput - 1]
 			else:
 				print('Please choose an option!')
 		except ValueError:

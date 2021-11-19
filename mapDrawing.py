@@ -8,6 +8,7 @@ from pokemonCentreFunctions import pokemonCenter
 from text import worldText
 from storyInteractionFunctions import talkGary, talkOak, starterBall, talkStarterRivalFight
 from drawOverworld import drawOverworld
+from menu import chooseFromMenu
 
 def overlayCharacterSprite(you, sprite, location):
     if location == 1:
@@ -16,7 +17,7 @@ def overlayCharacterSprite(you, sprite, location):
         youTile = sprite[:2] + you + sprite[-2:]
     return youTile
 
-def directionChoice(data,x,y,location):
+def actionChoice(data,x,y,location):
     newx = x
     newy = y
     while True:
@@ -24,7 +25,7 @@ def directionChoice(data,x,y,location):
             choiceInput = (input('-- '))
             if choiceInput == '':
                 choiceInput = data.player.lastDirection
-            if choiceInput in ['w', 'a', 's', 'd']:
+            if choiceInput in ['w', 'a', 's', 'd', 'm', 'menu']:
                 data.player.lastDirection = choiceInput
                 if choiceInput == 'w':
                     newy -= 1
@@ -34,6 +35,8 @@ def directionChoice(data,x,y,location):
                     newy += 1
                 elif choiceInput == 'd':
                     newx += 1
+                elif choiceInput == "m" or choiceInput == "menu":
+                    return "Menu"
                 if warpZone(data, newx, newy):
                     return
                 elif checkWall(data, newx, newy, location, choiceInput) or checkInteraction(data, newx, newy, location):
@@ -49,7 +52,7 @@ def directionChoice(data,x,y,location):
 def checkWall(data,x,y,location,direction):
     if data.settings.wallClip == True:
         return False
-    walls = ['@', '~', 'K', '[', ']', 'D', '{', '}', '_', 'b', 'w', 'W', 'm', 'M', 'c', '=', '-', 'r', 't', 'y', 'u', 'i', 'j', 'k', 'U', 'I', 'J', 'K', 'T']
+    walls = ['@', '~', 'K', '[', ']', 'D', '{', '}', '_', 'b', 'w', 'W', 'm', 'M', 'c', '=', '-', 'r', 't', 'y', 'u', 'i', 'j', 'k', 'U', 'I', 'J', 'K', 'T', '(', ':', ')', '<', '$', 'h']
     yAxis = 0
     for line in location:
         xAxis = 0
@@ -65,7 +68,7 @@ def checkWall(data,x,y,location,direction):
         yAxis += 1
 
 def checkInteraction(data,x,y,location):
-    interactions = ['^', '0', '+', '*', 'q', 'O', 'Q', 'o', '?', 'R']
+    interactions = ['^', '0', '+', '*', 'q', 'O', 'Q', 'o', '?', 'R', 'S']
     yAxis = 0
     for line in location:
         xAxis = 0
@@ -123,9 +126,14 @@ def runInteraction(data, sprite, newX, newY, location):
     elif sprite == 'R':
         pokemonCenter(data, False)
     elif sprite == 'S':
-        pokemonCenter(data, False)
-        addLocationInformation(data, data.environment.location.name)
+        printSign(data, newX, newY)
         return True
+
+def printSign(data, newX, newY):
+    for sign in data.environment.location.signs:
+        if sign.coords == [newX, newY]:
+            worldText(data, sign.text)
+
 
 def checkNewSprite(x,y,location):
     yAxis = 0
@@ -169,11 +177,16 @@ def warpZone(data, newx, newy):
             return True
 
 
+
 def overworldMovement(data):
     drawOverworld(data, data.player.xCo, data.player.yCo, data.environment.location.map)
     if checkBattle(data, data.player.xCo, data.player.yCo, data.environment.location.map):
         drawOverworld(data, data.player.xCo, data.player.yCo, data.environment.location.map)
-    #print('X:', data.player.xCo, '- Y:', data.player.yCo, ' Region:', data.environment.location.name)
-    directionChoice(data, data.player.xCo, data.player.yCo, data.environment.location.map)
+    if data.settings.showCoords:
+        print('X:', data.player.xCo, '- Y:', data.player.yCo, ' Region:', data.environment.location.name)
+    action = actionChoice(data, data.player.xCo, data.player.yCo, data.environment.location.map)
+    while action == "Menu":
+        drawOverworld(data, data.player.xCo, data.player.yCo, data.environment.location.map, text=False, menu=True)
+        action = chooseFromMenu(data)
 
 
