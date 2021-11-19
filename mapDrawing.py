@@ -157,7 +157,7 @@ def checkBattle(data, x, y, location):
                 enemy.battleComplete = True
                 data.environment.battleStart = False
                 return True
-    if (checkEnemyInteration(data, x, y)):
+    if not checkEnemyInteration(data, x, y):
         if newSprite == '%':
             if wildBattleChance(data):
                 return True
