@@ -1,9 +1,10 @@
 from random import randint
-from getVariableFunctions import getNature, getRandomIV, getRandomPersonalityValue, getBaseStats, getStats, getGender, getAbility, getPokemonType, getExpGroup, getExpYieldBase, getExp, getPokemonCatchRate, getMoveSet, getMaxPP
+from getVariableFunctions import getNature, getRandomIV, getRandomPersonalityValue, getBaseStats, getStats, getGender, getAbility, getPokemonType, getExpGroup, getExpYieldBase, getExp, getPokemonCatchRate, getMoveSet, getMaxPP, getPokemonSprite
 from moveDictionaries import moveInfo
 from bagFunctions import getMedicineHeal, getBallModifier
 from gameMaps import locationMapDict
 from screen import BattleScreen
+from spritesBattle import ballRight, ballLeft, ballStraight
 from locationData import getLocationWarpZones, getLocationEnemies, allSignDict
 
 class Data(object):
@@ -21,14 +22,14 @@ class Data(object):
 
 class Settings(object):
 	def __init__(self):
-		self.colorama = True
-		self.wallClip = False
-		self.wildBattles = True
-		self.showCoords = False
+		self.settings = ["Colorama", "WallClip", "Wild Battles", "Show Co-Ords", "Triple XP", "10x XP", "Skip Story"]
+		self.settingsDict = {"Colorama":False, "WallClip": False, "Wild Battles": True, "Show Co-Ords": False, "Triple XP": False, "10x XP": False, "Skip Story": False}
+
 
 class Player(object):
 	def __init__(self):
 		self.name = 'Brad'
+		self.direction = "Down"
 		self.rival = ''
 		self.type = 'Player'
 		self.defaultTeam = []
@@ -70,20 +71,27 @@ class Box(object):
 
 class Bag(object):
 	def __init__(self):
-		self.balls = []
+		self.currentOpenIdentifier = "a"
+		self.items = []
 		self.medicine = []
+		self.keyItems = []
+		self.balls = []
+		self.openBagDict = {"a": self.items, "b": self.medicine, "c": self.keyItems, "d": self.balls}
+		self.openBag = self.items
 
-class Medicine(object):
-	def __init__(self, name, quantity):
+class Item(object):
+	def __init__(self, type, name, quantity):
+		self.type = type
 		self.name = name
-		self.heal = getMedicineHeal(name)
 		self.quantity = quantity
+		self.modifier = self.getModifier()
 
-class Ball(object):
-	def __init__(self, name, quantity):
-		self.name = name
-		self.modifier = getBallModifier(name)
-		self.quantity = quantity
+	def getModifier(self):
+		if self.type == "Healing":
+			return getMedicineHeal(self.name)
+		elif self.type == "Ball":
+			return getBallModifier(self.name)
+
 
 class Enemy(object):
 	def __init__(self, type, name, team, prizeMoney, text, coords, viewDistance, viewDirection):
@@ -120,6 +128,7 @@ class Pokemon(object):
 		self.name = species
 		self.level = level
 		self.nature = getNature(species)
+		self.sprite = getPokemonSprite(species)
 		self.lastAttackChoice = 1
 		self.iv = getRandomIV()
 		self.ev = [0,0,0,0,0,0]
@@ -132,7 +141,7 @@ class Pokemon(object):
 		self.gender = getGender(species)
 		self.ability = getAbility(species)
 		self.type = getPokemonType(self)
-		self.item = 'None'
+		self.item = Item("None", "None", 1)
 		if moveSet == 'Random':
 			self.moveSet = getMoveSet(self)
 		else:
@@ -144,6 +153,7 @@ class Pokemon(object):
 		self.nvStatusCount = 0 
 		self.expGroup = getExpGroup(species)
 		self.BaseExpYield = getExpYieldBase(species)
+		self.lastLevelExp = getExp(species, level)
 		self.exp = getExp(species, level)
 		self.nextLevelExp = getExp(species, level+1)
 		self.move = Move('None')
@@ -179,10 +189,14 @@ class Pokemon(object):
 		self.disabledCount = 0
 		self.transform = 0
 		self.flashFireMult = 1
+		self.inPokeball = False
+		self.inPokeballCount = 0
+		self.pokeballCountSpriteDict = {1: ballLeft, 2: ballRight, 3: ballLeft, 4: ballStraight}
 
 class Environment(object):
 	def __init__(self, location, weather):
 		self.location = Location(location)
+		self.locations = [self.location]
 		self.weather = weather
 		self.weathercount = 0
 		self.payDayExtra = 0

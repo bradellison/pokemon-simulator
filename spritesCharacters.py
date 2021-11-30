@@ -7,6 +7,28 @@ you = [
 '  ||  '
 ]
 
+youDown = [
+"  ⪽⪾  ",
+" (||) ",
+"  ⌋⌊  "
+]
+
+youRight = [
+"  ⪾⪾  ",
+" (||\\ ",
+"  ⌊⌊  "]
+
+youLeft = [
+"  ⪽⪽  ",
+" /||) ",
+"  ⌋⌋  "]
+
+youUp = [
+"  ⫏⫐  ",
+" (||) ",
+"  ⌋⌊  "
+]
+
 rival = [
 '  o~  ',
 ' <{}> ',
@@ -56,6 +78,7 @@ enemyCharRight = [
 ]
 
 enemyChars = {"Down": enemyCharDown, "Up": enemyCharUp, "Left": enemyCharLeft, "Right": enemyCharRight}
+youChars = {"Down": youDown, "Up": youUp, "Left": youLeft, "Right": youRight}
 
 enemyBattleStartSign = [
 '.----.',
@@ -64,7 +87,7 @@ overscore + overscore + "\/" + overscore + overscore
 ]
 
 characterSpriteDict = {
-    'Y': you, 
+    'Y': youChars, 
     '^': rival,
     '0': oak,
     '+': nurseJoy,

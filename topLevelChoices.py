@@ -1,13 +1,17 @@
 import random
 
-from classes import Pokemon, Data, Player, Medicine
+from classes import Pokemon, Data, Player, Item
 from pokemonDictionaries import allPokemonList
 from storyFunctions import mainGame
-from choicesFunctions import getOptionOneOrTwoOrThree, getOptionOneOrTwo
+from choicesFunctions import getOptionOneOrTwoOrThree, getOptionOneOrTwo, getOption
 from pcFunctions import getPokemonInfoViewPC
 from battleFunctions import createEnemy, startBattle, teamTotalHP
 from saveDataFunctions import loadGame
 from pokemonCentreFunctions import healAllPokemon, pokemonCenter
+from startScreen import showStartScreen
+from spritesAll import screenBot, screenEmp, screenMid, screenTop
+from textTools import getExtraSpace, onlyTextBox, printWithScreenSides, printWithScreenSidesAndSpacing
+
 
 def battleTypeChoice():
 	print('What would you like to do?')
@@ -24,7 +28,7 @@ def battleTypeChoice():
 
 def eliteFour(data):
 	elite4LorelaiTeam = [Pokemon('Dewgong',53,['Growl','Aurora Beam','Rest','Take Down']),Pokemon('Cloyster',53,['Supersonic','Clamp','Aurora Beam','Spike Cannon']),Pokemon('Slowbro',54,['Water Gun','Growl','Withdraw','Amnesia']),Pokemon('Jynx',56,['Double Slap','Ice Punch','Body Slam','Thrash']),Pokemon('Lapras',56,['Body Slam','Confuse Ray','Hydro Pump','Blizzard'])]
-	
+		
 	#Team below for testing moves, edit Dewgong's moveset
 #	elite4LorelaiTeam = [Pokemon('Dewgong',53,['Toxic']),Pokemon('Cloyster',53,['Supersonic','Clamp','Aurora Beam','Spike Cannon']),Pokemon('Slowbro',54,['Water Gun','Growl','Withdraw','Amnesia']),Pokemon('Jynx',56,['Double Slap','Ice Punch','Body Slam','Thrash']),Pokemon('Lapras',56,['Body Slam','Confuse Ray','Hydro Pump','Blizzard'])]
 	elite4BrunoTeam = [Pokemon('Onix',53,['Rock Throw','Rage','Slam','Harden']),Pokemon('Hitmonchan',55,['Ice Punch','Fire Punch','ThunderPunch','Counter']),Pokemon('Hitmonlee',55,['Jump Kick','Focus Energy','Hi-Jump Kick','Mega Kick']),Pokemon('Onix',56,['Rock Throw','Rage','Slam','Harden']),Pokemon('Machamp',58,['Leer','Focus Energy','Fissure','Submission'])]
@@ -128,47 +132,78 @@ def generateFrontierStartingPokemon(data):
 	data.pc.boxes[0].inventory.append(Pokemon(random.choice(allPokemonList),50, 'Random'))	
 
 def startGame():
-	print('New game or continue?')
-	newOrContinue = getOptionOneOrTwo('New Game', 'Continue') 
-	if newOrContinue == 2:
-		data = loadGame()
-	else:
-		data = Data()
-		data.player = Player()
-		data.player.defaultTeam.append(Pokemon(random.choice(allPokemonList), 100, 'Random'))
-		data.player.defaultTeam.append(Pokemon(random.choice(allPokemonList), 100, 'Random'))
-		data.player.defaultTeam.append(Pokemon(random.choice(allPokemonList), 100, 'Random'))
-		data.player.team = data.player.defaultTeam
-		data.player.pokemon = data.player.team[0]
-	while teamTotalHP(data.player) > 0:
-		choice = battleTypeChoice()
-		if choice == 1:
-			data.bag.medicine.append(Medicine('Potion', 5))
-			data.bag.medicine.append(Medicine('Super Potion', 5))
-			data.bag.medicine.append(Medicine('Hyper Potion', 5))
-			data.bag.medicine.append(Medicine('Max Potion', 5))
-			data.bag.medicine.append(Medicine('Full Restore', 5))
-			battleTrainer(data)
-		elif choice == 2:
-			wildBattleTopLevel(data)
-		elif choice == 3:
-			pokemonCenter(data, False)
-		elif choice == 4:
-			createEliteFourTeam(data)
-			eliteFour(data)
-		elif choice == 5:
-			battleFrontier(data)
-		elif choice == 6:
-			mainGame(data, newOrContinue)
+	showStartScreen()
+	gameModeScreen()
+		
+def gameModeScreen():
+	while True:
+		print(screenTop)
+		print(screenEmp)
+		title = "GAME MODE"
+		printWithScreenSidesAndSpacing(title + getExtraSpace(title, 52))
+		print(screenEmp)
+		optionsLines = []
+		count = 1
+		allGameModes = ["Main Game: New Save","Main Game: Continue","Battle Trainer","Battle E4 with random team"]
+		for gameMode in allGameModes:
+			gameModeText = str(count) + ' - ' + gameMode
+			printWithScreenSidesAndSpacing(gameModeText + getExtraSpace(gameModeText, 52))
+			count += 1
+		for _ in range(15 - count):
+			print(screenEmp)
+		print(screenMid)
+		onlyTextBox("Which game mode would you like to play?")
+		option = getOption(allGameModes)
+		if option == "Main Game: New Save":
+			topLevelNewMainGame()
+		elif option == "Main Game: Continue":
+			topLevelContinueMainGame()
+		elif option == "Battle Trainer":
+			topLevelBattleTrainer()
+		elif option == "Battle E4 with random team":
+			topLevelE4()
 
-def createEliteFourTeam(data):
-		data.player.defaultTeam = []
-		data.player.team = []
-		for _ in range(6):
-			data.player.defaultTeam.append(Pokemon(random.choice(allPokemonList), 60, 'Random'))
-		data.player.team = data.player.defaultTeam
-		data.player.pokemon = data.player.team[0]
-
-def testFunction():
+def topLevelNewMainGame():
 	data = Data()
-	directionChoice(data)
+	data.player = Player()
+	for _ in range(random.randint(1,6)):
+		data.player.defaultTeam.append(Pokemon(random.choice(allPokemonList), 60, 'Random'))
+	data.player.team = data.player.defaultTeam
+	data.player.pokemon = data.player.team[0]
+	giveItems(data)
+	mainGame(data)
+
+def topLevelContinueMainGame():
+	data = loadGame()
+	mainGame(data)
+
+def topLevelBattleTrainer():
+	data = Data()
+	data.player = Player()
+	for _ in range(random.randint(1,6)):
+		data.player.defaultTeam.append(Pokemon(random.choice(allPokemonList), 100, 'Random'))
+	data.player.team = data.player.defaultTeam
+	data.player.pokemon = data.player.team[0]
+	giveItems(data)
+	battleTrainer(data)
+
+def topLevelE4():
+	data = Data()
+	data.player = Player()
+	for _ in range(6):
+		data.player.defaultTeam.append(Pokemon(random.choice(allPokemonList), 60, 'Random'))
+	data.player.team = data.player.defaultTeam
+	data.player.pokemon = data.player.team[0]
+	eliteFour(data)
+	mainGame(data)
+
+def giveItems(data):
+	data.bag.medicine.append(Item('Healing','Potion', 5))
+	data.bag.medicine.append(Item('Healing','Super Potion', 5))
+	data.bag.medicine.append(Item('Healing','Hyper Potion', 5))
+	data.bag.medicine.append(Item('Healing','Max Potion', 5))
+	data.bag.medicine.append(Item('Healing','Full Restore', 5))
+	data.bag.balls.append(Item('Ball','PokeBall', 5))
+	data.bag.balls.append(Item('Ball','Great Ball', 5))
+	data.bag.balls.append(Item('Ball','Ultra Ball', 5))
+	data.bag.balls.append(Item('Ball','Master Ball', 5))

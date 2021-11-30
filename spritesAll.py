@@ -1,5 +1,5 @@
 from spritesCharacters import characterSpriteDict
-from spritesEnvironment import environmentSpriteDict
+from spritesEnvironment import environmentSpriteDict, environmentSpriteColDict
 from spritesScreen import screenTop, screenBot, screenMid, screenEmp, menuSprite
 
 

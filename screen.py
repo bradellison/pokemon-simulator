@@ -2,6 +2,7 @@ import math
 import random
 from random import randint 
 from pokemonDictionaries import pokemonSprites
+from spritesBattle import emptySprite
 from spritesAll import screenBot, screenMid, screenTop, screenEmp
 
 class BattleScreen(object):
@@ -77,25 +78,35 @@ def reverseLine(line):
     return (line[::-1])
 
 def fullBattleScreen(data):
+    enemySprite = getEnemySprite(data)
+    pokemonSprites[data.enemy.pokemon.species]
     print("┏━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
-    print('┃> ' + data.bscreen.nameBarEnemy  + ' <┃    ' + pokemonSprites[data.enemy.pokemon.species][0] + '┃')
-    print('┃(' + data.bscreen.healthBarEnemy + ')┃    ' + pokemonSprites[data.enemy.pokemon.species][1] + '┃')
-    print('┃ ' + data.bscreen.enemyStatus + ' ┏━━━━━━━━━━━━━━━━┛    ' + pokemonSprites[data.enemy.pokemon.species][2] + '┃')
-    print('┣━━━━━┛                     ' + pokemonSprites[data.enemy.pokemon.species][3] + '┃')
-    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][0]) + pokemonSprites[data.enemy.pokemon.species][4] + '┃')
-    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][1]) + pokemonSprites[data.enemy.pokemon.species][5] + '┃')
-    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][2]) + pokemonSprites[data.enemy.pokemon.species][6] + '┃')
-    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][3]) + pokemonSprites[data.enemy.pokemon.species][7] + '┃')
-    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][4]) + pokemonSprites[data.enemy.pokemon.species][8] + '┃')
-    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][5]) + pokemonSprites[data.enemy.pokemon.species][9] + '┃')
-    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][6]) + pokemonSprites[data.enemy.pokemon.species][10] + '┃')
-    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][7]) + pokemonSprites[data.enemy.pokemon.species][11] + '┃')
-    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][8]) + pokemonSprites[data.enemy.pokemon.species][12] + '┃')
+    print('┃> ' + data.bscreen.nameBarEnemy  + ' <┃    ' + enemySprite[0] + '┃')
+    print('┃(' + data.bscreen.healthBarEnemy + ')┃    ' + enemySprite[1] + '┃')
+    print('┃ ' + data.bscreen.enemyStatus + ' ┏━━━━━━━━━━━━━━━━┛    ' + enemySprite[2] + '┃')
+    print('┣━━━━━┛                     ' + enemySprite[3] + '┃')
+    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][0]) + enemySprite[4] + '┃')
+    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][1]) + enemySprite[5] + '┃')
+    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][2]) + enemySprite[6] + '┃')
+    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][3]) + enemySprite[7] + '┃')
+    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][4]) + enemySprite[8] + '┃')
+    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][5]) + enemySprite[9] + '┃')
+    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][6]) + enemySprite[10] + '┃')
+    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][7]) + enemySprite[11] + '┃')
+    print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][8]) + enemySprite[12] + '┃')
     print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][9]) + '    ┏━━━━━━━━━━━━━━━━━━━━━━┫')
     print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][10]) + '    ┃> ' + data.bscreen.nameBarPlayer + ' <┃')
     print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][11]) + '    ┃(' + data.bscreen.healthBarPlayer + ')┃')
     print('┃' + reverseLine(pokemonSprites[data.player.pokemon.species][12]) + '    ┃ ' + data.bscreen.playerStatus + '    ' + data.bscreen.extraSpaceHealthPlayer + str(data.player.pokemon.hp) + '/' + str(data.player.pokemon.maxhp) + 'HP ┃')
     print("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━┫")
+
+def getEnemySprite(data):
+    enemySprite = pokemonSprites[data.enemy.pokemon.species]
+    if data.enemy.pokemon.inPokeballCount >= 1:
+        enemySprite = data.enemy.pokemon.pokeballCountSpriteDict[data.enemy.pokemon.inPokeballCount]
+    if data.enemy.pokemon.hp == 0:
+        enemySprite = emptySprite
+    return enemySprite
 
 def liteBattleScreen(data):
     print(screenTop)
@@ -133,6 +144,8 @@ def getExtraSpaceAttackChoice(a,b,c,d,e,f,g):
     for _ in range(spareSpaces):
         space += ' '
     return space
+
+
 
 #def attackChoiceScreen(data):
 #    drawScreen(data)

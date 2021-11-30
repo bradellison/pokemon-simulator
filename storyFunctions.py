@@ -1,5 +1,4 @@
-from classes import Pokemon
-from classes import Ball
+from classes import Pokemon, Item
 
 from battleFunctions import startBattle
 from choicesFunctions import getOptionOneOrTwoOrThree, getYesOrNo
@@ -9,7 +8,7 @@ from mapDrawing import overworldMovement
 from text import worldText
 import time
 
-def mainGame(data, newOrContinue):
+def mainGame(data):
     while True:
         overworldMovement(data)        
 

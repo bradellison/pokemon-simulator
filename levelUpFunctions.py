@@ -1,6 +1,9 @@
+from choicesFunctions import getOption
 from pokemonDictionaries import pokemonLevelUpMoves, pokemonEvolutionDetails
-from getVariableFunctions import getExp, getBaseStats, getPokemonType, getOneMaxPP, gethpStat, getStats
+from getVariableFunctions import getExp, getBaseStats, getPokemonSprite, getPokemonType, getOneMaxPP, gethpStat, getStats
+from screen import drawScreen
 from text import text
+from textTools import onlyTextBox, onlyTextBoxWithOptions
 
 
 def getPokemonLevelUpMoves(pokemon):
@@ -18,7 +21,7 @@ def getExpYield(data):
 			inBattleCount += 1
 	for i in data.player.team:
 		if i.level != 100:
-			a = 1; e = 1; f = 1; p = 1; s = 1; t = 1; v = 1; x = data.expMult; z = inBattleCount
+			a = 1; e = 1; f = 1; p = 1; s = 1; t = 1; v = 1; x = 1; y = 1; z = inBattleCount
 			if data.enemy.type != 'Wild':
 				a = 1.5
 			b = data.enemy.pokemon.BaseExpYield
@@ -27,20 +30,25 @@ def getExpYield(data):
 			if i.affection >= 2:
 				f = 1.2
 			l = data.enemy.pokemon.level
+			if data.settings.settingsDict["Triple XP"]:
+				x = 3
+			if data.settings.settingsDict["10x XP"]:
+				y = 10
 			#p is for exp point power, not yet implemented
 			if data.player.expShare == 1 and i.inCurrentBattle == 0:
 				s = 2
 			if data.player.expShare != 0 or i.inCurrentBattle != 0:
 				#t is for traded pokemon, not implemented
 				#v is for pokemon that could have evolved already, not implemented
-				expYield = int((a * b * e * f * l * p * t * v * x) / (7 * s * z))
+				expYield = int((a * b * e * f * l * p * t * v * x * y) / (7 * s * z))
 				i.exp += expYield
 				text(data, i.name, 'gained', expYield, 'exp!')
 				while i.exp > i.nextLevelExp and i.level < 100:
 					levelUpPokemon(data, i)
 					text(data, i.name, 'went up one level and is now level', str(i.level) + '!')
+					i.lastLevelExp = getExp(i.species, i.level)
 					i.nextLevelExp = getExp(i.species, i.level + 1)
-					getMoveLearn(i)
+					getMoveLearn(data, i)
 					evolutionDetails = getPokemonEvolutionDetails(i.species)
 					if evolutionDetails['Evolve'] == 'Yes':
 						if evolutionDetails['Type'] == 'Level':
@@ -59,56 +67,58 @@ def levelUpPokemon(data, pokemon):
 def evolvePokemon(data, pokemon):
 	evolutionDetails = getPokemonEvolutionDetails(pokemon.species)
 	evolveInto = evolutionDetails['Pokemon']
-	text(data, pokemon.name, 'evolved into', evolveInto + '!')
+	oldPokemonName = pokemon.name
 	if pokemon.name == pokemon.species:
 		pokemon.name = evolveInto
 	pokemon.species = evolveInto
-	print(pokemon.species)
+	pokemon.sprite = getPokemonSprite(pokemon.species)
+	text(data, oldPokemonName, 'evolved into', evolveInto + '!')
+	pokemon.species = evolveInto
 	pokemon.baseStats = getBaseStats(pokemon.species)
 	pokemon.type = getPokemonType(pokemon)
 	oldMaxHealth = pokemon.maxhp
 	pokemon.maxhp = gethpStat(pokemon)
+	
 	increase = pokemon.maxhp - oldMaxHealth
 	pokemon.hp += increase
-	getMoveLearn(pokemon)
+	getMoveLearn(data, pokemon, justEvolved=True)
 
-def getMoveLearn(i):
+def getMoveLearn(data, i, justEvolved=False):
 	tempDict = getPokemonLevelUpMoves(i.species)
-	if i.level in tempDict:
-		newMove = tempDict[i.level]
-		# wants to learn a move
-		if newMove not in i.moveSet:
-			if len(i.moveSet) < 4:
-				i.moveSet.append(newMove)
-				newPP = getOneMaxPP(newMove)
-				i.movePPMax.append(newPP)
-				i.movePPCurrent.append(newPP)
-				print(i.name, 'learnt', newMove + '!')
-			else:
-				print(i.name, 'wants to learn a new move! What move should be forgotten?')
-				getMoveLearnReplace(i, newMove, i.name)
+	levels = [i.level]
+	if justEvolved:
+		levels.append(1)
+	for level in levels:
+		if level in tempDict:
+			newMove = tempDict[level]
+			# wants to learn a move
+			if newMove not in i.moveSet:
+				if len(i.moveSet) < 4:
+					i.moveSet.append(newMove)
+					newPP = getOneMaxPP(newMove)
+					i.movePPMax.append(newPP)
+					i.movePPCurrent.append(newPP)
+					drawScreen(data)
+					onlyTextBox(i.name + " learnt " + newMove + "!", pauseAfter=True)
+				else:
+					drawScreen(data)
+					onlyTextBox(i.name + ' wants to learn ' + newMove + '! What move should be forgotten?', pauseAfter=True)
+					getMoveLearnReplace(data, i, newMove, i.name)
 
-def getMoveLearnReplace(pokemon, newMove, name):
-	moveSet = pokemon.moveSet
-	print('Current Moves:')
-	for i in range(1,5):
-		print('', i, '-', moveSet[i-1])
-	print('New Move:')
-	print('', i+1, '-', newMove)
-	while True:
-		try:
-			choiceInput = int(input('-- '))
-			if choiceInput < 5 and choiceInput > 0:
-				print(name, 'forgot', moveSet[choiceInput - 1], 'and learnt', newMove + '!')
-				moveSet[choiceInput - 1] = newMove
-				newPP = getOneMaxPP(newMove)
-				pokemon.movePPMax[choiceInput - 1] = newPP
-				pokemon.movePPCurrent[choiceInput - 1] = newPP
-				return
-			elif choiceInput == 5:
-				print(name, 'did not learn', newMove + '!')
-				return
-			else:
-				print("Please choose a move from the list above!")
-		except ValueError:
-			print("Please choose a move from the list above!")		
+def getMoveLearnReplace(data, pokemon, newMove, name):
+	moveSet = pokemon.moveSet.copy()
+	drawScreen(data)
+	onlyTextBoxWithOptions("Which move to forget?   5 - Don't learn " + newMove, moveSet)
+	moveSet.append(newMove)
+	moveToForget = getOption(moveSet)
+	if moveToForget == newMove:
+		drawScreen(data)
+		onlyTextBox(name + " did not learn " + newMove + "!", pauseAfter=True)
+	else:
+		onlyTextBox(name + " forgot " + moveToForget + " and learnt " + newMove + "!")
+		index = pokemon.moveSet.index(moveToForget)
+		pokemon.moveSet[index] = newMove
+		newPP = getOneMaxPP(newMove)
+		pokemon.movePPMax[index] = newPP
+		pokemon.movePPCurrent[index] = newPP
+			

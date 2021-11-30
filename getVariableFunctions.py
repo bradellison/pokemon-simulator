@@ -1,7 +1,7 @@
 import random
 from random import randint
 
-from pokemonDictionaries import pokemonStats, natureDictionary, pokemonStatStageToMult, pokemonTypes, pokemonCatchRates, pokemonExpGroup, pokemonYields, pokemonGenderRatio, allNaturesList, pokemonAbilities, pokemonPossibleMovesByLevel
+from pokemonDictionaries import pokemonStats, natureDictionary, pokemonStatStageToMult, pokemonTypes, pokemonCatchRates, pokemonExpGroup, pokemonYields, pokemonGenderRatio, allNaturesList, pokemonAbilities, pokemonPossibleMovesByLevel, pokemonSprites
 from moveDictionaries import moveInfo
 
 def getRandomIV():
@@ -137,6 +137,8 @@ def getExpYieldBase(species):
 def getExp(pokemon,level):
 	expGroup = getExpGroup(pokemon)
 	n = level
+	if n > 100:
+		n = 100
 	if expGroup == 'Erratic':
 		if n <= 50:
 			exp = ((n**3)*(100-n))/50
@@ -213,3 +215,6 @@ def getMaxPP(id):
 def getOneMaxPP(move):
 	moveDetails = moveInfo[move]
 	return moveDetails[5]
+
+def getPokemonSprite(id):
+	return pokemonSprites[id]

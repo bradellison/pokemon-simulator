@@ -22,7 +22,7 @@ def drawOverworld(data, x, y, location, text=False, menu=False):
                         elif menuDrawn == True:
                             pass
                         elif [x, y] == [xAxis, yAxis]:
-                            screenDraw += allSpriteDict["Y"][location]
+                            screenDraw += allSpriteDict["Y"][data.player.direction][location]
                         elif sprite == "*":
                             for enemy in data.environment.location.enemies:
                                 if [xAxis, yAxis] == enemy.coords:

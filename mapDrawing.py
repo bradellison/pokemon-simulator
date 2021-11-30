@@ -20,46 +20,47 @@ def overlayCharacterSprite(you, sprite, location):
 def actionChoice(data,x,y,location):
     newx = x
     newy = y
-    while True:
-        try:
-            choiceInput = (input('-- '))
-            if choiceInput == '':
-                choiceInput = data.player.lastDirection
-            if choiceInput in ['w', 'a', 's', 'd', 'm', 'menu']:
-                data.player.lastDirection = choiceInput
-                if choiceInput == 'w':
-                    newy -= 1
-                elif choiceInput == 'a':
-                    newx -= 1
-                elif choiceInput == 's':
-                    newy += 1
-                elif choiceInput == 'd':
-                    newx += 1
-                elif choiceInput == "m" or choiceInput == "menu":
-                    return "Menu"
-                if warpZone(data, newx, newy):
-                    return
-                elif checkWall(data, newx, newy, location, choiceInput) or checkInteraction(data, newx, newy, location):
-                    return
-                else:
-                    checkEnemyInteration(data, newx, newy)
-                    data.player.xCo = newx
-                    data.player.yCo = newy
-                    return
-        except ValueError:
-            print('Please choose an option!')
+    choiceInput = (input('-- '))
+    if choiceInput == '':
+        choiceInput = data.player.lastDirection
+    if choiceInput in ['w', 'a', 's', 'd', 'm', 'menu']:
+        data.player.lastDirection = choiceInput
+        if choiceInput == 'w':
+            data.player.direction = "Up"
+            newy -= 1
+        elif choiceInput == 'a':
+            data.player.direction = "Left"
+            newx -= 1
+        elif choiceInput == 's':
+            data.player.direction = "Down"
+            newy += 1
+        elif choiceInput == 'd':
+            data.player.direction = "Right"
+            newx += 1
+        elif choiceInput == "m" or choiceInput == "menu":
+            return "Menu"
+        if warpZone(data, newx, newy):
+            return
+        elif checkWall(data, newx, newy, location, choiceInput) or checkInteraction(data, newx, newy, location):
+            return
+        else:
+            checkEnemyInteration(data, newx, newy)
+            data.player.xCo = newx
+            data.player.yCo = newy
+            return
+
 
 def checkWall(data,x,y,location,direction):
-    if data.settings.wallClip == True:
+    if data.settings.settingsDict["WallClip"] == True:
         return False
-    walls = ['@', '~', 'K', '[', ']', 'D', '{', '}', '_', 'b', 'w', 'W', 'm', 'M', 'c', '=', '-', 'r', 't', 'y', 'u', 'i', 'j', 'k', 'U', 'I', 'J', 'K', 'T', '(', ':', ')', '<', '$', 'h']
+    walls = ['@', '~', 'K', '[', ']', 'D', '{', '}', '_', 'b', 'w', 'W', 'm', 'M', 'c', '=', '-', 'r', 't', 'y', 'u', 'i', 'j', 'k', 'U', 'I', 'J', 'K', 'T', '(', ':', ')', '<', '$', 'h', 'B', 'L', 's']
     yAxis = 0
     for line in location:
         xAxis = 0
         for sprite in line:
             if [xAxis, yAxis] == [x,y]:
                 if sprite in walls:
-                    if sprite == '=' and direction == 's':
+                    if sprite == '=' and direction != 'w':
                         return False
                     return True
                 else:
@@ -182,7 +183,7 @@ def overworldMovement(data):
     drawOverworld(data, data.player.xCo, data.player.yCo, data.environment.location.map)
     if checkBattle(data, data.player.xCo, data.player.yCo, data.environment.location.map):
         drawOverworld(data, data.player.xCo, data.player.yCo, data.environment.location.map)
-    if data.settings.showCoords:
+    if data.settings.settingsDict["Show Co-Ords"]:
         print('X:', data.player.xCo, '- Y:', data.player.yCo, ' Region:', data.environment.location.name)
     action = actionChoice(data, data.player.xCo, data.player.yCo, data.environment.location.map)
     while action == "Menu":

@@ -3,6 +3,7 @@ from colorama import Fore, Back, Style, init
 init()
 
 overscore = chr(175)
+print(overscore)
 
 screenTop = '/------------------------------------------------------\\'
 screenBot = '\\------------------------------------------------------/'
@@ -248,6 +249,12 @@ plantPot = [
 ]
 
 plantTop = [
+'@@  @@',
+' @@@@ ',
+'@@||@@'
+]
+
+plantTopCol = [
 Fore.GREEN + '@@' + Style.RESET_ALL + '  ' + Fore.GREEN +  '@@' + Style.RESET_ALL,
 ' ' + Fore.GREEN + '@@@@' + Style.RESET_ALL + ' ',
 Fore.GREEN + '@@' + Style.RESET_ALL + '||' + Fore.GREEN +  '@@' + Style.RESET_ALL,
@@ -313,6 +320,18 @@ healMachineBottomLeft = [
 '/ |___'
 ]
 
+floorboard = [
+'──────',
+'──────',
+'──────'
+]
+
+sand = [
+'   .  ',
+' .   .',
+'  .   '
+]
+
 healMachineBottomRight = [
 '   |_ ',
 '   |_\\',
@@ -349,6 +368,61 @@ environmentSpriteDict = {
 'd': doormat,
 'p': plantPot,
 'P': plantTop,
+'-': houseMiddleWindow,
+':': houseMiddleBottomWindow,
+'h': houseMiddle,
+'G': gymText,
+'$': martText,
+'<': pokemonCentreText,
+'g': shortGrass, 
+'S': sign, 
+'b': bollard, 
+'{': roofLeft, 
+'_': roofMid, 
+'}': roofRight, 
+'B': boulder, 
+'L': boulderSide,
+'w': insideWallTop,
+'W': insideWallBottom,
+'m': insideVerticalWallLeft,
+'M': insideVerticalWallRight,
+'o': ballOnGround,
+'q': ballOnTableMiddle,
+'O': ballOnTableLeft,
+'Q': ballOnTableRight,
+'c': bookcase,
+'r': tableLeft,
+'t': tableMiddle,
+'y': TableRight,
+'R': TableRightAction,
+'T': treetrunk,
+'u': bigTreeTopLeft,
+'i': bigTreeTopRight,
+'j': bigTreeBottomLeft,
+'k': bigTreeBottomRight,
+'U': healMachineTopLeft,
+'I': healMachineTopRight,
+'J': healMachineBottomLeft,
+'K': healMachineBottomRight,
+'f': floorboard,
+'s': sand
+}
+
+environmentSpriteColDict = {
+'?': emptyStorySpot,
+'@': tree,
+'~': water,
+'%': grass,
+'=': ledge, 
+' ': empty, 
+'[': houseLeft, 
+']': houseRight,
+'(': houseBottomLeft,
+')': houseBottomRight,
+'D': houseDoor, 
+'d': doormat,
+'p': plantPot,
+'P': plantTopCol,
 '-': houseMiddleWindow,
 ':': houseMiddleBottomWindow,
 'h': houseMiddle,

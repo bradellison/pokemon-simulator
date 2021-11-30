@@ -8,8 +8,8 @@ oakTeam = [['Pidgeot',61,['Wing Attack']],['Pidgeot',61,['Wing Attack','Mirror M
 #oakTeam = [['Pidgeot', 61, ['Wing Attack']]]
 enemyOak = ["Badman", "Oak", oakTeam, 10000, "Student becomes the master, eh?", [12,19], 3, "Right"]
 
-palletTownEnemies = [enemyOak]
-#palletTownEnemies = []
+#palletTownEnemies = [enemyOak]
+palletTownEnemies = []
 
 
 ## VIRIDIAN FOREST ##
@@ -20,11 +20,18 @@ bugCatcherDoug = ["Bug Catcher", "Doug", bugCatcherDougTeam, 84, "You bug me!", 
 bugCatcherAnthonyTeam = [['Caterpie', 7, 'Random'], ['Caterpie', 8, 'Random']]
 bugCatcherAnthony = ["Bug Catcher", "Anthony", bugCatcherAnthonyTeam, 84, "You bug me!", [31,5], 3, "Down"]
 bugCatcherCharlieTeam = [['Metapod', 7, 'Random'], ['Caterpie', 7, 'Random'], ['Metapod', 7, 'Random']]
-bugCatcherCharlie = ["Bug Catcher", "Charlie", bugCatcherCharlieTeam, 84, "You bug me!", [13,6], 3, "Down"]
+bugCatcherCharlie = ["Bug Catcher", "Charlie", bugCatcherCharlieTeam, 84, "You bug me!", [13,5], 3, "Down"]
 bugCatcherSammyTeam = [['Weedle', 9, 'Random']]
 bugCatcherSammy = ["Bug Catcher", "Sammy", bugCatcherSammyTeam, 84, "You bug me!", [6,23], 3, "Down"]
 viridianForestEnemies = [bugCatcherRick, bugCatcherDoug, bugCatcherAnthony, bugCatcherCharlie, bugCatcherSammy]
 
 
 
-allTownEnemies = {"Pallet Town": palletTownEnemies, "Viridian Forest": viridianForestEnemies}
+## PEWTER GYM ##
+camperLiamTeam = [["Geodude", 10, 'Random'], ['Sandshrew', 11, 'Random']]
+camperLiam = ["Camper", "Liam", camperLiamTeam, 220, "You might be better than me, but you won't beat Brock!", [7,10], 3, "Right"]
+gymLeaderBrockTeam = [["Geodude", 12, "Random"], ["Onix", 14, "Random"]]
+gymLeaderBrock = ["Gym Leader", "Brock", gymLeaderBrockTeam, 1400, "Wow, what a fight! Here, take this Boulder Badge!", [10,7], 0, "Down"]
+pewterGymEnemies = [camperLiam, gymLeaderBrock]
+
+allTownEnemies = {"Pallet Town": palletTownEnemies, "Viridian Forest": viridianForestEnemies, "Pewter Gym": pewterGymEnemies}

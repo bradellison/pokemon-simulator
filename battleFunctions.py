@@ -7,12 +7,13 @@ from abilityFunctions import checkShedSkin, getAccuracyAbilityMult, getAbilityMu
 from getVariableFunctions import getBattleAccStat, getBattleAtkStat, getBattleDefStat, getBattleSpAtkStat, getBattleSpDefStat, getBattleSpdStat, getBattleEvasStat, getBattleCritStage, getPokemonType
 from pokemonDictionaries import pokemonCritStageToMult, effectivenessScale, statDict
 from moveDictionaries import allMoveList
-from choicesFunctions import getYesOrNo
+from choicesFunctions import getOption, getYesOrNo
 from bagFunctions import openBag
+from screenPokemonSelection import openPokemonSelectionScreen
 from typeInfo import allType
 from levelUpFunctions import getExpYield, evolvePokemon
 from pcFunctions import getPokemonInfoViewChoiceTeam
-from text import text
+from text import text, onlyTextBoxWithOptions
 from screen import drawScreen, battleChoiceScreen, attackChoiceScreen
 
 def getStabBonus(id,move):
@@ -142,10 +143,8 @@ def battleChoiceInput(data):
 			if choiceInput == 'Run' or int(choiceInput) == 4:
 				data.player.lastBattleChoice = 4
 				return 'Run'
-			print("Please choose an option from the list above!")
 		except ValueError:
-			print("Please choose an option from the list above!")
-
+			pass
 def getTotalPP(pokemon):
 	totalPP = 0
 	for i in range(len(pokemon.moveSet)):
@@ -510,7 +509,7 @@ def getNVEffectImmunities(data, nvEffect, defPokemon):
 def moveNVEffectPlayer(data):
 	if data.player.pokemon.move.nvEffect != 0 and randint(1,100) <= data.player.pokemon.move.nvEffectChance:
 		if data.enemy.pokemon.nvStatus == 0 and data.enemy.pokemon.substitute == 0:
-			if checkShieldDust(data.enemy.pokemon, data.player.pokemon) == False:
+			if checkShieldDust(data.player.pokemon, data.enemy.pokemon) == False:
 				if getNVEffectImmunities(data, data.player.pokemon.move.nvEffect, data.enemy.pokemon):
 					text(data, 'But it failed!')
 					return
@@ -525,7 +524,7 @@ def moveNVEffectPlayer(data):
 def moveNVEffectEnemy(data):
 	if data.enemy.pokemon.move.nvEffect != 0 and randint(1,100) <= data.enemy.pokemon.move.nvEffectChance:
 		if data.player.pokemon.nvStatus == 0 and data.player.pokemon.substitute == 0:
-			if checkShieldDust(data.player.pokemon, data.enemy.pokemon) == False:
+			if checkShieldDust(data.enemy.pokemon, data.player.pokemon) == False:
 				if getNVEffectImmunities(data, data.enemy.pokemon.move.nvEffect, data.player.pokemon):
 					text(data, 'But it failed!')
 					return
@@ -558,9 +557,11 @@ def getEnemySwitchPokemon(data):
 		choice = random.choice(data.enemy.team)
 		if choice != oldPokemon and choice.hp != 0:
 			resetOnSwitch(oldPokemon)
-			text(data, 'The', data.enemy.type, data.enemy.name, 'is about to send out', choice.name + '.', 'Would you like to switch?')
+			drawScreen(data)
+			onlyTextBoxWithOptions("The " + data.enemy.type + " " + data.enemy.name + ' is about to send out ' + choice.name + '. Would you like to switch?', ["Yes", "No"])
+			outcome = getOption(["Yes", "No"])
 			data.enemy.pokemon = choice
-			break
+			return outcome
 
 def getEnemySwitchPokemonForce(data):
 	oldPokemon = data.enemy.pokemon
@@ -787,7 +788,7 @@ def checkTrapEffect(data, pokemon):
 		else:
 			text(data, 'The opposing', data.enemy.pokemon.name, 'took', damage, 'HP damage due to it\'s leeching! It has', data.enemy.pokemon.hp, '/', data.enemy.pokemon.maxhp, 'HP remaining!' )			
 
-	
+		
 def checkMetronome(data, pokemon):
 	if pokemon.move.move == 'Metronome':
 		randomMove = (random.choice(allMoveList))
@@ -1485,6 +1486,17 @@ def checkConfusion(atkMove, defPokemon):
 			confusion = 1
 	return confusion
 
+def startSwitchPokemon(data):
+	oldPokemon = data.player.pokemon
+	switch = openPokemonSelectionScreen(data, battle=True)	
+	if switch:
+		resetOnSwitch(oldPokemon)
+		text(data, 'You switched from', oldPokemon.name, 'into', data.player.pokemon.name + '!')
+		checkIntimidateOnSwitch(data, data.player, data.enemy)
+		data.player.pokemon.inCurrentBattle = 1
+		data.player.pokemon.lastAttackChoice = 1
+		return "Switch"
+
 def getCurrentFight(data):
 		while data.player.pokemon.hp > 0 and data.enemy.pokemon.hp > 0 and data.environment.battleEnd == 0:
 			drawScreen(data)
@@ -1514,8 +1526,8 @@ def getCurrentFight(data):
 						if data.player.pokemon.hp != 0 and data.environment.battleEnd == 0:
 							startPlayerTurn(data)
 			elif battleChoice == 'Pokemon':
-				switch = getSwitchPokemon(data)
-				if switch == 1:
+				switch = startSwitchPokemon(data)
+				if switch == "Switch":
 					if data.enemy.pokemon.lockedInMoveNumber == 0:
 						enemyChoice = getEnemyMove(data)
 						data.enemy.pokemon.move = Move(enemyChoice)					
@@ -1523,8 +1535,8 @@ def getCurrentFight(data):
 				else:
 					interrupt = 1
 			elif battleChoice == 'Bag':
-				choice = openBag(data)
-				if choice == 1:
+				choice = openBag(data, battle=True)
+				if choice == "None":
 					interrupt = 1
 				elif choice == 'Catch':
 					return 'End'
@@ -1559,9 +1571,10 @@ def getCurrentFight(data):
 					if teamTotalHP(data.player) > 0:
 						data.player.livingPokemon -= 1
 						data.player.pokemon.inCurrentBattle = 0
-						switch = getSwitchPokemon(data)
+						switch = startSwitchPokemon(data)
 						while switch == 0:
-							switch = getSwitchPokemon(data)		
+							switch = startSwitchPokemon(data)
+							
 				if data.enemy.pokemon.hp != 0:
 					postTurnNVStatusCheckEnemy(data, data.enemy)
 				if data.player.pokemon.hp != 0:
@@ -1571,10 +1584,9 @@ def getCurrentFight(data):
 					if teamTotalHP(data.enemy) > 0:
 						data.enemy.livingPokemon -= 1
 						getResetInBattle(data)
-						getEnemySwitchPokemon(data)
-						choice = getYesOrNo()
-						if choice == 1:
-							getSwitchPokemon(data)
+						choice = getEnemySwitchPokemon(data)
+						if choice == "Yes":
+							startSwitchPokemon(data)
 							checkStartBattleIntimidate(data)
 						else:
 							checkIntimidateOnSwitch(data, data.enemy,data.player)
@@ -1588,7 +1600,7 @@ def getFirstPokemonForFight(data):
 	if data.player.team[0].hp == 0:
 		for pokemon in data.player.team:
 			if pokemon.hp != 0:
-				j = pokemon.team.index(pokemon)
+				j = data.player.team.index(pokemon)
 				data.player.team[j], data.player.team[0] = data.player.team[0], data.player.team[j]
 				break
 	else:
@@ -1627,8 +1639,10 @@ def winBattle(data):
 		text(data, 'You earned $' + str(cash), 'for winning!')
 	for i in data.player.team:
 		if i.shouldEvolve == 1:
-			print('Something is happening to', i.name + '! Let it continue?')
-			if getYesOrNo() == 1:
+			drawScreen(data)
+			onlyTextBoxWithOptions(i.name + " wants to evolve! Let it continue?", ["Yes", "No"])
+			choice = getOption(["Yes", "No"])
+			if choice == "Yes":
 				evolvePokemon(data, i)
 	endBattlePokemonInfo(data)
 

@@ -1,7 +1,9 @@
 from screen import drawScreen
+import math
 from spritesAll import screenTop, screenBot, screenEmp, allSpriteDict
-from textTools import splitIntoLines, getExtraSpace, turnIntoOneString
+from textTools import splitIntoLines, getExtraSpace, turnIntoOneString, onlyTextBoxWithOptions
 from drawOverworld import drawOverworld
+from choicesFunctions import getOption
 
 def text(data, *therest):
     drawScreen(data)
@@ -15,7 +17,7 @@ def text(data, *therest):
     print(screenBot)
     input()
 
-def worldText(data, *therest, menu=False):
+def worldText(data, *therest, menu=False, response=False):
     drawOverworld(data, data.player.xCo, data.player.yCo, data.environment.location.map, text=True, menu=menu)
     newString = turnIntoOneString(therest)
     lines = splitIntoLines(newString, 52)
@@ -25,5 +27,14 @@ def worldText(data, *therest, menu=False):
     for _ in range(3 - len(lines)):
         print(screenEmp)
     print(screenBot)
-    input()
+    if response == False:
+        input()
 
+def worldTextOptions(data, *therest, options, menu=False, response=False):
+    drawOverworld(data, data.player.xCo, data.player.yCo, data.environment.location.map, text=True, menu=menu)
+    string = turnIntoOneString(therest)
+    onlyTextBoxWithOptions(string, options)
+    option = getOption(options)
+    if response == False:
+        input()
+    return option

@@ -1,8 +1,9 @@
-from text import text, worldText
+from text import text, worldText, worldTextOptions
 from choicesFunctions import getOptionOneOrTwoOrThree, getYesOrNo
-from classes import Pokemon, Ball
+from classes import Pokemon, Item
 from battleFunctions import startBattle
 from bagFunctions import getNamePokemon
+from pokemonCentreFunctions import healPokemon
 
 
 def talkGary(data):
@@ -19,15 +20,15 @@ def starterBall(data, starter):
 
 def chooseStarter(data, starter):
     if starter == 'Bulbasaur':
-        worldText(data, 'Would you like Bulbasaur, the grass-type Pokemon?')
+        outcome = worldTextOptions(data, 'Would you like Bulbasaur, the grass-type Pokemon?', options=["Yes", "No"], response=True)
     elif starter == 'Charmander':
-        worldText(data, 'Would you like Charmander, the fire-type Pokemon?')
+        outcome = worldTextOptions(data, 'Would you like Charmander, the fire-type Pokemon?', options=["Yes", "No"], response=True)
     elif starter == 'Squirtle':
-        worldText(data, 'Would you like Squirtle, the water-type Pokemon?')
-    if(getYesOrNo() == 1):
+        outcome = worldTextOptions(data, 'Would you like Squirtle, the water-type Pokemon?', options=["Yes", "No"], response=True)
+    if outcome == "Yes":
         getStarter(data, starter)
         worldText(data, '> Congratulations, you got a', data.player.team[0].name + '! <')
-        getNamePokemon(data.player.team[0])
+        getNamePokemon(data, data.player.team[0], battle=False)
         worldText(data, data.rival.name + ': Alright then, I\'ll take the', data.rival.team[0].name + '!')
     
 def getStarter(data, starter):
@@ -58,9 +59,11 @@ def talkStarterRivalFight(data):
         text(data, data.rival.name + ': Just as I expected, easy.')
         worldText(data, data.rival.name + ': Better luck next time. Anyway, smell ya later!')
     data.story.starterRivalFightCompleted = True
-    worldText(data, 'Oak: In any case', data.player.name + ', great effort! Here, take 5 PokeBalls and go and start your Pokemon adventure!')
+    worldText(data, 'Oak: In any case', data.player.name + ", great effort! Let me heal your " + data.player.pokemon.name + " up.")
+    healPokemon(data.player.pokemon)
+    worldText(data, "Here, take 5 PokeBalls and go and start your Pokemon adventure!")
     worldText(data, '> Congratulations, you received 5 PokeBalls!')
-    data.bag.balls.append(Ball('PokeBall', 5))  
+    #data.bag.balls.append(Ball('PokeBall', 5))  
 
 
 #    pokemonChoice = getOptionOneOrTwoOrThree('Bulbasaur - the grass-type Pokemon.','Charmander - the fire-type Pokemon.','Squirtle - the water-type Pokemon.')
@@ -80,9 +83,9 @@ def talkStarterRivalFight(data):
 
 def oakOpeningMonologue(data):
     worldText(data, 'Oak: Hello and welcome to the wonderful world of Pokemon!')
-    worldText(data, 'Oak: My name is Professor Oak! What\'s your name?')
+    worldText(data, 'Oak: My name is Professor Oak! What\'s your name?', response=True)
     data.player.name = chooseCharacterName(data)
-    worldText(data, 'Oak: Ah yes, lovely to meet you. My grandson lives closeby too, any idea what his name is?')
+    worldText(data, 'Oak: Ah yes, lovely to meet you. My grandson lives closeby too, any idea what his name is?', response=True)
     data.rival.name = chooseCharacterName(data)
     worldText(data, data.rival.name + ': Grandpa! Did you forget my name again?!')
     worldText(data, 'Oak: Ahem, no, of course not! I was just joking around. Now let\'s get down to business.')
@@ -97,7 +100,7 @@ def chooseCharacterName(data):
             choiceInput = input('-- ')
             if choiceInput != '':
                 return choiceInput
-            worldText(data, 'Oak: Sorry, I missed that. Say again?')
+            worldText(data, 'Oak: Sorry, I missed that. Say again?', response=True)
         except ValueError:
-            worldText(data, 'Oak: Sorry, I missed that. Say again?')
+            worldText(data, 'Oak: Sorry, I missed that. Say again?', response=True)
 

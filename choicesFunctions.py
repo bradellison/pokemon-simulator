@@ -75,7 +75,7 @@ def getOptionOneOrTwoOrThreeOrFourOrFiveOrSixOrSeven(option1, option2, option3, 
 		except ValueError:
 			print('Please choose an option!')
 
-def getOption(options, printOptions=False):
+def getOption(options, printOptions=False, backWithE=True):
 	if printOptions:
 		count = 1
 		optionsString = ""
@@ -88,13 +88,18 @@ def getOption(options, printOptions=False):
 		print(optionsString)
 	while True:
 		try:
-			choiceInput = int(input('-- '))
+			choiceInput = input('-- ')
+			if choiceInput in ["e","E"] and backWithE == True:
+				return "Back"
+			if choiceInput in options:
+				return choiceInput
+			choiceInput = int(choiceInput)
 			if choiceInput > 0 and choiceInput <= len(options):
 				return options[choiceInput - 1]
 			else:
-				print('Please choose an option!')
+				return "None"
 		except ValueError:
-			print('Please choose an option!')
+			return "None"
 
 def getYesOrNo():
 	print(' 1 - Yes\n 2 - No')
@@ -107,3 +112,4 @@ def getYesOrNo():
 				print('Please choose an option!')
 		except ValueError:
 			print('Please choose an option!')	
+

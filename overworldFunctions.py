@@ -10,7 +10,13 @@ from classes import Pokemon, Location
 from pokemonLocationsDictionaries import locationToDict
 
 def addLocationInformation(data, newLocation):
-    data.environment.location = Location(newLocation)
+    for location in  data.environment.locations:
+        if location.name == newLocation:
+            data.environment.location = location
+            return
+    newLocationObject = Location(newLocation)
+    data.environment.location = newLocationObject
+    data.environment.locations.append(newLocationObject)
 
 def getWildPokemon(location):
     number = randint(1,100)

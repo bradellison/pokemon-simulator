@@ -5,12 +5,12 @@ class WarpZone(object):
 		self.warpTargetGrid = targetGrid
 		self.warpTargetLocation = targetLocation
 
-oakLabWarpOne = [9, 14, 'Oak Lab', 16, 16, 'Pallet Town']
-oakLapWarpTwo = [10, 14, 'Oak Lab', 16, 16, 'Pallet Town']
+oakLabWarpOne = [9, 15, 'Oak Lab', 16, 16, 'Pallet Town']
+oakLapWarpTwo = [10, 15, 'Oak Lab', 16, 16, 'Pallet Town']
 
 palletTownWarpOne = [14, 3, 'Pallet Town', 11, 41, 'Route 1']
 palletTownWarpTwo = [15, 3, 'Pallet Town', 12, 41, 'Route 1']
-palletTownWarpThree = [16, 15, 'Pallet Town', 9, 13, 'Oak Lab']
+palletTownWarpThree = [16, 15, 'Pallet Town', 9, 14, 'Oak Lab']
 
 routeOneWarpOne = [11, 42, 'Route 1', 14, 4, 'Pallet Town']
 routeOneWarpTwo = [12, 42, 'Route 1', 15, 4, 'Pallet Town']
@@ -51,9 +51,12 @@ viridianForestExitWarpFour = [10, 12, 'Viridian Forest Exit', 6, 4, 'Viridian Fo
 pewterCityWarpOne = [19, 34, 'Pewter City', 12, 4, 'Route 2']
 pewterCityWarpTwo = [20, 34, 'Pewter City', 13, 4, 'Route 2']
 pewterCityWarpThree = [14, 24, 'Pewter City', 9, 10, 'Pewter Center']
+pewterCityWarpFour = [17, 16, 'Pewter City', 10, 17, 'Pewter Gym']
 
 pewterCenterWarpOne = [10, 11, 'Pewter Center', 14, 25, 'Pewter City']
 pewterCenterWarpTwo = [9, 11, 'Pewter Center', 14, 25, 'Pewter City']
+
+pewterGymWarpOne = [10, 18, 'Pewter Gym', 17, 17, 'Pewter City']
 
 oakLabWarps = [oakLabWarpOne, oakLapWarpTwo]
 palletTownWarps = [palletTownWarpOne, palletTownWarpTwo, palletTownWarpThree]
@@ -64,8 +67,9 @@ routeTwoWarps = [routeTwoWarpOne, routeTwoWarpTwo, routeTwoWarpThree, routeTwoWa
 viridianForestEntranceWarps = [viridianForestEntranceWarpOne, viridianForestEntranceWarpTwo, viridianForestEntranceWarpThree, viridianForestEntranceWarpFour]
 viridianForestWarps = [viridianForestWarpOne, viridianForestWarpTwo, viridianForestWarpThree, viridianForestWarpFour]
 viridianForestExitWarps = [viridianForestExitWarpOne, viridianForestExitWarpTwo, viridianForestExitWarpThree, viridianForestExitWarpFour]
-pewterCityWarps = [pewterCityWarpOne, pewterCityWarpTwo, pewterCityWarpThree]
+pewterCityWarps = [pewterCityWarpOne, pewterCityWarpTwo, pewterCityWarpThree, pewterCityWarpFour]
 pewterCenterWarps = [pewterCenterWarpOne, pewterCenterWarpTwo]
+pewterGymWarps = [pewterGymWarpOne]
 routeThreeWarps = []
 
 locationToWarpListDict = {
@@ -80,6 +84,7 @@ locationToWarpListDict = {
 'Viridian Forest Exit': viridianForestExitWarps,
 'Pewter City': pewterCityWarps,
 'Pewter Center': pewterCenterWarps,
+'Pewter Gym': pewterGymWarps,
 'Route 3': routeThreeWarps
 }
 

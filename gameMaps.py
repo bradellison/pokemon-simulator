@@ -68,7 +68,7 @@ palletTownMap = [
 '@@@@@         gggggggg @@@@@',
 '@@@@@   ~~~~  bbbSbbgg @@@@@',
 '@@@@@   ~~~~           @@@@@',
-'@@@@@   ~~~~*          @@@@@',
+'@@@@@   ~~~~           @@@@@',
 '@@@@@   ~~~~           @@@@@',
 '@@@@@@@@~~~~@@@@@@@@@@@@@@@@',
 '@@@@@@@@~~~~@@@@@@@@@@@@@@@@',
@@ -425,6 +425,31 @@ pewterCenterMap = [
 '                    '
 ]
 
-locationMapDict = {'Oak Lab': oakLabMap, 'Pallet Town': palletTownMap, 'Route 1': routeOneMap, 'Viridian City': viridianCityMap, 'Viridian Center': viridianCenterMap, 'Route 2': routeTwoMap, 'Viridian Forest': viridianForestMap, 'Viridian Forest Entrance': viridianForestEntrance, 'Viridian Forest Exit': viridianForestExit, 'Pewter City': pewterCity, 'Pewter Center': pewterCenterMap}
+pewterGymMap = [
+'                      ',
+'                      ',
+'                      ',
+'                      ',
+'    mwwwwwwwwwwwM     ',
+'    mffssBsBssffM     ',
+'    mfssssfssssfM     ',
+'    msssBf*fBsssM     ',
+'    msssfffffsssM     ',
+'    mssBsBfBsBssM     ',
+'    mBs*ffffffsBM     ',
+'    msssBsfsBsssM     ',
+'    mBssfffffssBM     ',
+'    msssssfsssssM     ',
+'    mfffffffffffM     ',
+'    mfffffffffffM     ',
+'    mfffffffffffM     ',
+'    mWWWWWdWWWWWM     ',
+'                      ',
+'                      ',
+'                      ',
+'                      ',
+]
+
+locationMapDict = {'Oak Lab': oakLabMap, 'Pallet Town': palletTownMap, 'Route 1': routeOneMap, 'Viridian City': viridianCityMap, 'Viridian Center': viridianCenterMap, 'Route 2': routeTwoMap, 'Viridian Forest': viridianForestMap, 'Viridian Forest Entrance': viridianForestEntrance, 'Viridian Forest Exit': viridianForestExit, 'Pewter City': pewterCity, 'Pewter Center': pewterCenterMap, 'Pewter Gym': pewterGymMap}
 
 #locationMapDict = {'Pallet Town': palletTownMap, 'Route 1': routeOneMap, 'Route 2': routeTwoMap, 'Viridian City': viridianCityMap, 'Viridian Forest': viridianForestMap, 'Route 22': routeTwentyTwoMap, 'Pewter City': pewterCityMap}
