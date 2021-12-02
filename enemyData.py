@@ -14,7 +14,7 @@ palletTownEnemies = []
 
 ## VIRIDIAN FOREST ##
 bugCatcherRickTeam = [['Weedle', 7, 'Random'], ['Caterpie', 7, 'Random']]
-bugCatcherRick = ["Bug Catcher", "Rick", bugCatcherRickTeam, 72, "You bug me!", [33,37], 3, "Down"]
+bugCatcherRick = ["Bug Catcher", "Rick", bugCatcherRickTeam, 72, "You bug me!", [33,37], 3, "Left"]
 bugCatcherDougTeam = [['Weedle', 7, 'Random'], ['Kakuna', 7, 'Random'], ['Weedle', 7, 'Random']]
 bugCatcherDoug = ["Bug Catcher", "Doug", bugCatcherDougTeam, 84, "You bug me!", [35,23], 3, "Down"]
 bugCatcherAnthonyTeam = [['Caterpie', 7, 'Random'], ['Caterpie', 8, 'Random']]
@@ -22,7 +22,7 @@ bugCatcherAnthony = ["Bug Catcher", "Anthony", bugCatcherAnthonyTeam, 84, "You b
 bugCatcherCharlieTeam = [['Metapod', 7, 'Random'], ['Caterpie', 7, 'Random'], ['Metapod', 7, 'Random']]
 bugCatcherCharlie = ["Bug Catcher", "Charlie", bugCatcherCharlieTeam, 84, "You bug me!", [13,5], 3, "Down"]
 bugCatcherSammyTeam = [['Weedle', 9, 'Random']]
-bugCatcherSammy = ["Bug Catcher", "Sammy", bugCatcherSammyTeam, 84, "You bug me!", [6,23], 3, "Down"]
+bugCatcherSammy = ["Bug Catcher", "Sammy", bugCatcherSammyTeam, 84, "You bug me!", [6,23], 3, "Left"]
 viridianForestEnemies = [bugCatcherRick, bugCatcherDoug, bugCatcherAnthony, bugCatcherCharlie, bugCatcherSammy]
 
 

@@ -1488,7 +1488,9 @@ def checkConfusion(atkMove, defPokemon):
 
 def startSwitchPokemon(data):
 	oldPokemon = data.player.pokemon
-	switch = openPokemonSelectionScreen(data, battle=True)	
+	switch = openPokemonSelectionScreen(data, battle=True)
+	if switch == "Back":
+		return False
 	if switch:
 		resetOnSwitch(oldPokemon)
 		text(data, 'You switched from', oldPokemon.name, 'into', data.player.pokemon.name + '!')
@@ -1639,9 +1641,12 @@ def winBattle(data):
 		text(data, 'You earned $' + str(cash), 'for winning!')
 	for i in data.player.team:
 		if i.shouldEvolve == 1:
-			drawScreen(data)
-			onlyTextBoxWithOptions(i.name + " wants to evolve! Let it continue?", ["Yes", "No"])
-			choice = getOption(["Yes", "No"])
+			choice = "None"
+			while choice == "None":
+				drawScreen(data)
+				onlyTextBoxWithOptions(i.name + " wants to evolve! Let it continue?", ["Yes", "No"])
+				choice = getOption(["Yes", "No"])
+				print(choice)
 			if choice == "Yes":
 				evolvePokemon(data, i)
 	endBattlePokemonInfo(data)

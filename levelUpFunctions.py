@@ -33,7 +33,7 @@ def getExpYield(data):
 			if data.settings.settingsDict["Triple XP"]:
 				x = 3
 			if data.settings.settingsDict["10x XP"]:
-				y = 10
+				y = 100
 			#p is for exp point power, not yet implemented
 			if data.player.expShare == 1 and i.inCurrentBattle == 0:
 				s = 2
@@ -107,15 +107,20 @@ def getMoveLearn(data, i, justEvolved=False):
 
 def getMoveLearnReplace(data, pokemon, newMove, name):
 	moveSet = pokemon.moveSet.copy()
-	drawScreen(data)
-	onlyTextBoxWithOptions("Which move to forget?   5 - Don't learn " + newMove, moveSet)
 	moveSet.append(newMove)
-	moveToForget = getOption(moveSet)
+	moveToForget = "None"
+
+	while moveToForget == "None":
+		drawScreen(data)
+		onlyTextBoxWithOptions("Which move to forget?   5 - Don't learn " + newMove, pokemon.moveSet)
+		moveToForget = getOption(moveSet, backWithE=False)
+
 	if moveToForget == newMove:
 		drawScreen(data)
 		onlyTextBox(name + " did not learn " + newMove + "!", pauseAfter=True)
 	else:
-		onlyTextBox(name + " forgot " + moveToForget + " and learnt " + newMove + "!")
+		drawScreen(data)
+		onlyTextBox(name + " forgot " + moveToForget + " and learnt " + newMove + "!", pauseAfter=True)
 		index = pokemon.moveSet.index(moveToForget)
 		pokemon.moveSet[index] = newMove
 		newPP = getOneMaxPP(newMove)
